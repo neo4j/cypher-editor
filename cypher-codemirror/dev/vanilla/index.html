@@ -1,0 +1,113 @@
+<!doctype html>
+<!--
+  ~ Copyright (c) 2002-2017 "Neo Technology,"
+  ~ Network Engine for Objects in Lund AB [http://neotechnology.com]
+  ~
+  ~ This file is part of Neo4j.
+  ~
+  ~ Neo4j is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CodeMirror Cypher: Vanilla</title>
+    <link href="cypher-codemirror.min.css" rel="stylesheet"/>
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: lavender;
+            font-family: 'Merriweather', Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+
+        .columns {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: stretch;
+        }
+
+        .columns > div {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .schema {
+            padding: 10px;
+            font-size: 10pt;
+        }
+
+        .CodeMirror {
+            height: 100vh !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="columns">
+        <div id="content"></div>
+        <div>
+            <div class="schema">
+                <button id="light">Light theme</button>
+                <button id="dark">Dark theme</button>
+                <pre id="schema"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="codemirror-bundle.js"></script>
+<script src="cypher-codemirror.min.js"></script>
+<script src="common.min.js"></script>
+
+<script>
+  document.getElementById("content");
+  var codemirror = CypherCodeMirror.createCypherEditor(document.getElementById("content"), common.codeMirrorSettings);
+  codemirror.editorSupport.setSchema(common.neo4jSchema);
+  document.getElementById("schema").innerText += JSON.stringify(common.neo4jSchema, null, 2);
+
+  document.getElementById('light').addEventListener('click', function(event) {
+    codemirror.editor.setOption('theme', 'cypher');
+  });
+
+  document.getElementById('dark').addEventListener('click', function(event) {
+    codemirror.editor.setOption('theme', 'cypher cypher-dark');
+  });
+</script>
+</body>
+</html>
+
