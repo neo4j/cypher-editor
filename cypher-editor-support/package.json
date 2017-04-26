@@ -1,6 +1,6 @@
 {
   "name": "cypher-editor-support",
-  "description": "",
+  "description": "Core functionality to support Cypher integration into editors",
   "keywords": ["cypher"],
   "version": "0.1.0-dev",
   "author": "Neo Technology Inc.",

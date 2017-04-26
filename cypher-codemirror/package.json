@@ -1,6 +1,6 @@
 {
   "name": "cypher-codemirror",
-  "description": "",
+  "description": "Cypher query language integration with CodeMirror editor",
   "keywords": ["cypher", "codemirror"],
   "version": "0.1.0-dev",
   "author": "Neo Technology Inc.",
