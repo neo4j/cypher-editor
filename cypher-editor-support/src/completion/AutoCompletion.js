@@ -168,13 +168,25 @@ export class AutoCompletion {
     this.updateSchema({});
   }
 
-  getItems(types, { query = null, filter = '' }) {
+  getItems(types, { query = null, filter = '', elementType = '' }) {
     const text = filter.toLowerCase();
+
+    let completionItemFilter = () => true;
+
+    if (elementType === CypherTypes.VARIABLE_CONTEXT) {
+      completionItemFilter = (completionItem) => {
+        if (completionItem.type === CompletionTypes.VARIABLE && completionItem.content === filter) {
+          return false;
+        }
+        return true;
+      };
+    }
 
     const list = [this.schemaBased, this.queryBased]
       .filter(s => s != null)
       .map(t => t.complete(types, query))
-      .reduce((acc, items) => [...acc, ...items], []);
+      .reduce((acc, items) => [...acc, ...items], [])
+      .filter(completionItemFilter);
 
     if (text) {
       return fuzzySearch(list, text, { key: 'view' });

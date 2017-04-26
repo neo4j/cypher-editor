@@ -86,17 +86,17 @@ describe('AutoCompletion - Mixed', () => {
   describe('with filters', () => {
     it('yields function name and variable list in expression', () => {
       const expected = {
-        from: { line: 1, column: 7 },
-        to: { line: 1, column: 9 },
+        from: { line: 1, column: 21 },
+        to: { line: 1, column: 23 },
         items: [
-          { type: 'variable', view: 'at', content: 'at', postfix: null },
+          { type: 'variable', view: 'atern', content: 'atern', postfix: null },
           { type: 'function', view: 'toFloat', content: 'toFloat', postfix: 'expression' },
         ],
       };
 
-      checkCompletion('return at▼', expected, true);
-      checkCompletion('return a▼t', expected, true);
-      checkCompletion('return ▼at', expected, true);
+      checkCompletion('MATCH (atern) RETURN at▼', expected, true);
+      checkCompletion('MATCH (atern) RETURN a▼t', expected, true);
+      checkCompletion('MATCH (atern) RETURN ▼at', expected, true);
     });
   });
 });

@@ -165,7 +165,11 @@ export class CypherEditorSupport {
 
     const filter = doFilter && found && shouldBeReplaced ? element.getText() : '';
     return {
-      items: this.completion.getItems(types, { filter, query }),
+      items: this.completion.getItems(types, {
+        filter,
+        query,
+        elementType: element ? element.constructor.name : 'unknown',
+      }),
       ...replaceRange,
     };
   }

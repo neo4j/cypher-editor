@@ -22,7 +22,6 @@ import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
-
   it('should successfully parse simple command', () => {
     const b = new CypherEditorSupport(':play;');
     assert.deepEqual(b.parseErrors, []);

@@ -71,13 +71,24 @@ describe('AutoCompletion - Variable', () => {
         from: { line: 1, column: 28 },
         to: { line: 1, column: 29 },
         items: [
-          { type: 'variable', view: 'a', content: 'a', postfix: null },
           { type: 'variable', view: 'an', content: 'an', postfix: null },
         ],
       };
 
       checkCompletion('MATCH (n) MATCH (an) MATCH (a▼', exptected, true);
       checkCompletion('MATCH (n) MATCH (an) MATCH (▼a', exptected, true);
+    });
+
+    it('yields variable list without variable under cursor', () => {
+      const exptected = {
+        from: { line: 1, column: 19 },
+        to: { line: 1, column: 21 },
+        items: [
+          { type: 'variable', view: 'var', content: 'var', postfix: null },
+        ],
+      };
+
+      checkCompletion('MATCH (var) RETURN va▼', exptected, true);
     });
   });
 });
