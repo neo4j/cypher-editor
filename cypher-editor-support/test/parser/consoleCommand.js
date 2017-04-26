@@ -22,6 +22,7 @@ import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
+
   it('should successfully parse simple command', () => {
     const b = new CypherEditorSupport(':play;');
     assert.deepEqual(b.parseErrors, []);
@@ -54,6 +55,16 @@ describe('Parser - Console commands', () => {
 
   it('should successfully parse command with map literal and something else', () => {
     const b = new CypherEditorSupport(':play "http://link.com" {hello: "world", key: true, pop: 125.45};');
+    assert.deepEqual(b.parseErrors, []);
+  });
+
+  it('should successfully parse command with dashes', () => {
+    const b = new CypherEditorSupport(':play-this-now;');
+    assert.deepEqual(b.parseErrors, []);
+  });
+
+  it('should successfully parse command with key value literal', () => {
+    const b = new CypherEditorSupport(":config n: 'xxx';");
     assert.deepEqual(b.parseErrors, []);
   });
 });

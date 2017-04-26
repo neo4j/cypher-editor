@@ -22,16 +22,19 @@ cypherPart : ( cypherConsoleCommand | cypherQuery ) ;
 
 cypherConsoleCommand : cypherConsoleCommandName ( SP cypherConsoleCommandParameters )? ;
 
-cypherConsoleCommandName : ':' UnescapedSymbolicName ;
+cypherConsoleCommandName : ':' UnescapedSymbolicName ( '-' UnescapedSymbolicName )* ;
 
 cypherConsoleCommandParameters : cypherConsoleCommandParameter ( SP cypherConsoleCommandParameter )* ;
 
 cypherConsoleCommandParameter : mapLiteral
+                              | keyValueLiteral
                               | StringLiteral
                               | numberLiteral
                               | booleanLiteral
                               | symbolicName
                               ;
+
+keyValueLiteral: variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
 
 cypherQuery : queryOptions statement ;
 
