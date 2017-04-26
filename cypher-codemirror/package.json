@@ -28,6 +28,14 @@
     "eslint-fix": "eslint --fix src/**/**.js dev/**/**.js",
     "verify": "npm run eslint && npm run build"
   },
+  "files": [
+    "src/",
+    "dist/",
+    "README.md",
+    "yarn.lock",
+    "webpack.config.js",
+    "postcss.config.js"
+  ],
   "dependencies": {
     "cypher-editor-support": "file:../cypher-editor-support"
   },

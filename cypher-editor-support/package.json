@@ -20,6 +20,13 @@
     "eslint-fix": "eslint --fix src/** test/**",
     "verify": "npm run eslint && npm run test && npm run build"
   },
+  "files": [
+    "src/",
+    "dist/",
+    "README.md",
+    "yarn.lock",
+    "webpack.config.js"
+  ],
   "dependencies": {
     "antlr4": "4.6.0",
     "fuzzaldrin": "2.1.0",
