@@ -26,7 +26,8 @@
     "build-demo-vanilla": "npm run build && webpack --config webpack.demo-vanilla.config.js && cp dist/* demo/vanilla/",
     "eslint": "eslint src/**/**.js dev/**/**.js",
     "eslint-fix": "eslint --fix src/**/**.js dev/**/**.js",
-    "verify": "npm run eslint && npm run build"
+    "verify": "npm run eslint && npm run build",
+    "prepublish": "npm run verify"
   },
   "files": [
     "src/",
