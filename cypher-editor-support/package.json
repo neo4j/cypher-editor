@@ -1,7 +1,9 @@
 {
   "name": "cypher-editor-support",
   "description": "Core functionality to support Cypher integration into editors",
-  "keywords": ["cypher"],
+  "keywords": [
+    "cypher"
+  ],
   "version": "0.1.0-dev",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
@@ -11,7 +13,7 @@
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
   },
   "bugs": {
-    "url" : "https://github.com/neo4j-contrib/cypher-editor/issues"
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
   },
   "scripts": {
     "build": "rm -rf && webpack",

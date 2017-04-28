@@ -1,7 +1,10 @@
 {
   "name": "cypher-codemirror",
   "description": "Cypher query language integration with CodeMirror editor",
-  "keywords": ["cypher", "codemirror"],
+  "keywords": [
+    "cypher",
+    "codemirror"
+  ],
   "version": "0.1.0-dev",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
@@ -11,7 +14,7 @@
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
   },
   "bugs": {
-    "url" : "https://github.com/neo4j-contrib/cypher-editor/issues"
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
   },
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config webpack.demo-react.config.js --content-base dev/",
