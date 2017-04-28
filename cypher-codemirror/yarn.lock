@@ -1373,13 +1373,13 @@ csso@~2.3.1:
     clap "^1.0.9"
     source-map "^0.5.3"
 
-"cypher-editor-support@file:../cypher-editor-support":
-  version "0.1.0"
+cypher-editor-support@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.0.0.tgz#d1a4427fd72213cb9337d94a899ff3a91c416303"
   dependencies:
     antlr4 "4.6.0"
-    babel-polyfill "6.23.0"
-    fuzzaldrin "^2.1.0"
-    lodash "^4.17.4"
+    fuzzaldrin "2.1.0"
+    lodash "4.17.4"
 
 d@1:
   version "1.0.0"
@@ -3501,7 +3501,7 @@ postcss-calc@^5.0.0, postcss-calc@^5.2.0:
     postcss-message-helpers "^2.0.0"
     reduce-css-calc "^1.2.6"
 
-postcss-cli@^3.1.1:
+postcss-cli@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/postcss-cli/-/postcss-cli-3.1.1.tgz#cccc4f8db12ad7e3058bf87aade68eaef2b4b7f1"
   dependencies:
@@ -4042,7 +4042,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
+prop-types@15.5.8, prop-types@^15.5.7, prop-types@~15.5.7:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:

@@ -5,7 +5,7 @@
     "cypher",
     "codemirror"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1-dev",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-codemirror.js",
@@ -30,7 +30,7 @@
     "eslint": "eslint src/**/**.js dev/**/**.js",
     "eslint-fix": "eslint --fix src/**/**.js dev/**/**.js",
     "verify": "npm run eslint && npm run build",
-    "prepublish": "npm run verify"
+    "prepublishOnly": "npm run verify"
   },
   "files": [
     "src/",
@@ -41,7 +41,7 @@
     "postcss.config.js"
   ],
   "dependencies": {
-    "cypher-editor-support": "file:../cypher-editor-support"
+    "cypher-editor-support": "1.0.0"
   },
   "peerDependencies": {
     "react": "15.5.4",

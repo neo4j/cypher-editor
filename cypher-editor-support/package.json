@@ -4,7 +4,8 @@
   "keywords": [
     "cypher"
   ],
-  "version": "1.0.0",
+  "keywords": ["cypher"],
+  "version": "1.0.1-dev",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-editor-support.js",
@@ -20,7 +21,8 @@
     "test": "mocha --compilers js:babel-core/register --recursive",
     "eslint": "eslint src/** test/**",
     "eslint-fix": "eslint --fix src/** test/**",
-    "verify": "npm run eslint && npm run test && npm run build"
+    "verify": "npm run eslint && npm run test && npm run build",
+    "prepublishOnly": "npm run verify"
   },
   "files": [
     "src/",
