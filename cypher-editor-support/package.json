@@ -4,8 +4,7 @@
   "keywords": [
     "cypher"
   ],
-  "keywords": ["cypher"],
-  "version": "1.0.1-dev",
+  "version": "1.0.1",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-editor-support.js",
