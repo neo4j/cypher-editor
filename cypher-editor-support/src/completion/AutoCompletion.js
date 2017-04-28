@@ -19,6 +19,7 @@
  */
 
 import { filter as fuzzySearch } from 'fuzzaldrin';
+import _ from 'lodash';
 import * as CypherTypes from '../lang/CypherTypes';
 import * as CompletionTypes from './CompletionTypes';
 import CypherKeywords from '../lang/CypherKeywords';
@@ -72,6 +73,27 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
       }
       return [];
     },
+    [CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND]: (schema, typeData) => {
+      const { filterLastElement, path } = typeData;
+
+      const length = filterLastElement ? path.length - 1 : path.length;
+      let currentLevel = schema.consoleCommands;
+      for (let i = 0; i < length; i++) {
+        const foundCommand = _.find(currentLevel, ['name', path[i]]);
+        if (foundCommand) {
+          currentLevel = foundCommand.commands || [];
+        } else {
+          return [];
+        }
+      }
+
+      return currentLevel.map(({ name, description }) => ({
+        type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
+        view: name,
+        content: name,
+        postfix: description || null,
+      }));
+    },
   };
 
   constructor(schema = {}) {
@@ -115,9 +137,9 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
       [CompletionTypes.CONSOLE_COMMAND_NAME]: (schema.consoleCommands || [])
         .map(consoleCommandName => ({
           type: CompletionTypes.CONSOLE_COMMAND_NAME,
-          view: consoleCommandName,
-          content: consoleCommandName,
-          postfix: null,
+          view: consoleCommandName.name,
+          content: consoleCommandName.name,
+          postfix: consoleCommandName.description || null,
         })),
     });
     this.schema = schema;

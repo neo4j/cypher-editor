@@ -55,13 +55,24 @@ SET variable.propKey = 1;`,
 
 export const neo4jSchema = {
   consoleCommands: [
-    ':clear',
-    ':play',
-    ':help',
-    ':server',
-    ':schema',
-    ':history',
-    ':queries',
+    { name: ':clear' },
+    { name: ':play' },
+    { name: ':help', description: 'this is help command' },
+    {
+      name: ':server',
+      commands: [
+        {
+          name: 'user',
+          commands: [
+            { name: 'list', description: 'listdesc' },
+            { name: 'add' },
+          ]
+        }
+      ]
+    },
+    { name: ':schema' },
+    { name: ':history' },
+    { name: ':queries' },
   ],
   labels: [
     ':Legislator',

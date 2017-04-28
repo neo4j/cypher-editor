@@ -30,6 +30,38 @@ describe('AutoCompletion - Console Command', () => {
     it('yields consoleCommand type at the command name', () => {
       checkCompletionTypes(':▼p', true, [{ type: CompletionTypes.CONSOLE_COMMAND_NAME }]);
     });
+
+    it('yields consoleCommand at subcommand', () => {
+      checkCompletionTypes(':help▼ ', true, [{
+        type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
+        path: [':help'],
+        filterLastElement: false,
+      }]);
+    });
+
+    it('yields consoleCommand at subcommand partly', () => {
+      checkCompletionTypes(':help m▼a', true, [{
+        type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
+        path: [':help', 'ma'],
+        filterLastElement: true,
+      }]);
+    });
+
+    it('yields consoleCommand at subcommand at subcommand', () => {
+      checkCompletionTypes(':server user▼ ', true, [{
+        type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
+        path: [':server', 'user'],
+        filterLastElement: false,
+      }]);
+    });
+
+    it('yields consoleCommand at subcommand at subcommand partly', () => {
+      checkCompletionTypes(':server user l▼i', true, [{
+        type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
+        path: [':server', 'user', 'li'],
+        filterLastElement: true,
+      }]);
+    });
   });
 
   describe('without filters', () => {
@@ -40,6 +72,8 @@ describe('AutoCompletion - Console Command', () => {
         items: [
           { type: 'consoleCommand', view: ':clear', content: ':clear', postfix: null },
           { type: 'consoleCommand', view: ':play', content: ':play', postfix: null },
+          { type: 'consoleCommand', view: ':help', content: ':help', postfix: 'helpdesc' },
+          { type: 'consoleCommand', view: ':server', content: ':server', postfix: null },
         ],
       };
       checkCompletion(':▼', expected);
@@ -52,6 +86,8 @@ describe('AutoCompletion - Console Command', () => {
         items: [
           { type: 'consoleCommand', view: ':clear', content: ':clear', postfix: null },
           { type: 'consoleCommand', view: ':play', content: ':play', postfix: null },
+          { type: 'consoleCommand', view: ':help', content: ':help', postfix: 'helpdesc' },
+          { type: 'consoleCommand', view: ':server', content: ':server', postfix: null },
         ],
       };
       checkCompletion(':▼pl', expected);
@@ -70,6 +106,61 @@ describe('AutoCompletion - Console Command', () => {
       };
       checkCompletion(':▼pl', expected, true);
       checkCompletion(':pl▼', expected, true);
+    });
+
+    it('yields help subcommand', () => {
+      const expected = {
+        from: { line: 1, column: 6 },
+        to: { line: 1, column: 6 },
+        items: [
+          { type: 'consoleCommandSubcommand', view: 'match', content: 'match', postfix: null },
+          { type: 'consoleCommandSubcommand', view: 'create', content: 'create', postfix: null },
+        ],
+      };
+      checkCompletion(':help ▼', expected, true);
+    });
+
+    it('yields help subcommand partly', () => {
+      const expected = {
+        from: { line: 1, column: 6 },
+        to: { line: 1, column: 8 },
+        items: [
+          { type: 'consoleCommandSubcommand', view: 'match', content: 'match', postfix: null },
+        ],
+      };
+      checkCompletion(':help ma▼', expected, true);
+    });
+
+    it('yields server subcommand subcommand', () => {
+      const expected = {
+        from: { line: 1, column: 13 },
+        to: { line: 1, column: 13 },
+        items: [
+          { type: 'consoleCommandSubcommand', view: 'list', content: 'list', postfix: 'listdesc' },
+          { type: 'consoleCommandSubcommand', view: 'add', content: 'add', postfix: null },
+        ],
+      };
+      checkCompletion(':server user ▼', expected, true);
+    });
+
+    it('yields server subcommand subcommand partly', () => {
+      const expected = {
+        from: { line: 1, column: 13 },
+        to: { line: 1, column: 15 },
+        items: [
+          { type: 'consoleCommandSubcommand', view: 'list', content: 'list', postfix: 'listdesc' },
+        ],
+      };
+      checkCompletion(':server user li▼', expected, true);
+    });
+
+    it('yields server subcommand subcommand no subcommand', () => {
+      const expected = {
+        from: { line: 1, column: 18 },
+        to: { line: 1, column: 18 },
+        items: [],
+      };
+      checkCompletion(':server user list ▼', expected, true);
     });
   });
 });

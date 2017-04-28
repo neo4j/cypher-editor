@@ -30,6 +30,9 @@ export const PARAMETER_CONTEXT = CypherParser.ParameterContext.prototype.constru
 export const FUNCTION_NAME_CONTEXT = CypherParser.FunctionInvocationBodyContext.prototype.constructor.name;
 export const PROCEDURE_NAME_CONTEXT = CypherParser.ProcedureInvocationBodyContext.prototype.constructor.name;
 export const CONSOLE_COMMAND_NAME_CONTEXT = CypherParser.CypherConsoleCommandNameContext.prototype.constructor.name;
+export const CONSOLE_COMMAND_CONTEXT = CypherParser.CypherConsoleCommandContext.prototype.constructor.name;
+export const CONSOLE_COMMAND_PARAMETERS_CONTEXT = CypherParser.CypherConsoleCommandParametersContext.prototype.constructor.name;
+export const CONSOLE_COMMAND_PARAMETER_CONTEXT = CypherParser.CypherConsoleCommandParameterContext.prototype.constructor.name;
 export const PROCEDURE_OUTPUT_CONTEXT = CypherParser.ProcedureOutputContext.prototype.constructor.name;
 export const PROCEDURE_RESULTS_CONTEXT = CypherParser.ProcedureResultsContext.prototype.constructor.name;
 
