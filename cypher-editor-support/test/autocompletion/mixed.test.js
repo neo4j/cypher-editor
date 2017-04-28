@@ -98,5 +98,18 @@ describe('AutoCompletion - Mixed', () => {
       checkCompletion('MATCH (atern) RETURN a▼t', expected, true);
       checkCompletion('MATCH (atern) RETURN ▼at', expected, true);
     });
+    xit('yields label and variable list in backticks', () => {
+      const expected = {
+        from: { line: 1, column: 7 },
+        to: { line: 1, column: 11 },
+        items: [
+          { type: CompletionTypes.VARIABLE, view: '`at`', content: '`at`', postfix: null },
+          { type: CompletionTypes.LABEL, view: ':`y`', content: ':`y`', postfix: null },
+        ],
+      };
+
+      checkCompletion('return `at▼`', expected, true);
+      checkCompletion('MATCH(:`y▼`)', expected, true);
+    });
   });
 });

@@ -254,6 +254,13 @@ export class AutoCompletion {
       return false;
     }
 
+    if (text === ':' && parent != null && parent.constructor.name === CypherTypes.NODE_LABELS_CONTEXT) {
+      return false;
+    }
+
+    if (text === ':' && parent != null && parent.constructor.name === CypherTypes.NODE_LABEL_CONTEXT) {
+      return true;
+    }
     return true;
   }
 

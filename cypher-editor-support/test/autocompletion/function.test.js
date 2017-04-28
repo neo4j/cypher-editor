@@ -27,6 +27,15 @@ describe('AutoCompletion - Function', () => {
       checkCompletionTypes('return ▼fun()', true, [{ type: CompletionTypes.FUNCTION_NAME }],
       );
     });
+    it('yields function name with backticks', () => {
+      checkCompletionTypes('return ▼`fun`()', true, [{ type: CompletionTypes.FUNCTION_NAME }],
+      );
+    });
+
+    it('yields function name after backtick and first char typed', () => {
+      checkCompletionTypes('return `f▼un`()', true, [{ type: CompletionTypes.FUNCTION_NAME }],
+      );
+    });
   });
 
   describe('without filters', () => {
@@ -71,5 +80,18 @@ describe('AutoCompletion - Function', () => {
       checkCompletion('return h▼e()', expected, true);
       checkCompletion('return ▼he()', expected, true);
     });
+  });
+
+  xit('yields function name list with backticks', () => {
+    const expected = {
+      from: { line: 1, column: 7 },
+      to: { line: 1, column: 23 },
+      items: [
+        { type: 'function', view: '`toFloat`', content: '`toFloat`', postfix: 'expression' },
+        { type: 'function', view: '`head`', content: '`head`', postfix: 'expression' },
+      ],
+    };
+    checkCompletion('return `▼name.space.fun`()', expected);
+    // checkCompletion('return `name.space.fun`()', expected);
   });
 });

@@ -38,6 +38,17 @@ describe('AutoCompletion - Property Key', () => {
     it('yields property key with no first char typed after in an expression', () => {
       checkCompletionTypes('MATCH (a) WHERE a.name > "name" AND a▼.', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
     });
+    xit('yields property key with backticks', () => {
+      checkCompletionTypes('MATCH (a) RETURN a.`▼', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
+    });
+
+    xit('yields property key with backticks and first char typed', () => {
+      checkCompletionTypes('MATCH (a) RETURN a.`b▼', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
+    });
+
+    it('yields property key with both backticks', () => {
+      checkCompletionTypes('MATCH (a) RETURN a.`▼`', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
+    });
   });
 
   describe('without filters', () => {
@@ -91,6 +102,49 @@ describe('AutoCompletion - Property Key', () => {
       checkCompletion('MATCH (a) RETURN a.p1▼', expected, true);
       checkCompletion('MATCH (a) RETURN a.p▼1', expected, true);
       checkCompletion('MATCH (a) RETURN a.▼p1', expected, true);
+    });
+    xit('yields property key list with first backtick typed', () => {
+      const expected = {
+        from: { line: 1, column: 20 },
+        to: { line: 1, column: 20 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (a) RETURN a.`▼', expected, true);
+    });
+
+    xit('yields property key list with first backtick and first char typed', () => {
+      const expected = {
+        from: { line: 1, column: 21 },
+        to: { line: 1, column: 21 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (a) RETURN a.`p▼', expected, true);
+    });
+
+    xit('yields property key list with both backticks', () => {
+      const expected = {
+        from: { line: 1, column: 19 },
+        to: { line: 1, column: 21 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (a) RETURN a.`▼`', expected, true);
+    });
+
+    xit('yields property key list with both backticks and a first char typed', () => {
+      const expected = {
+        from: { line: 1, column: 19 },
+        to: { line: 1, column: 22 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (a) RETURN a.`p▼`', expected, true);
     });
   });
 })
