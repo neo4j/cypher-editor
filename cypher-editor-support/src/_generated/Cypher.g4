@@ -31,7 +31,7 @@ cypherConsoleCommandParameter : mapLiteral
                               | StringLiteral
                               | numberLiteral
                               | booleanLiteral
-                              | symbolicName
+                              | ( symbolicName ( '-' symbolicName )* )
                               ;
 
 keyValueLiteral: variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
