@@ -125,5 +125,17 @@ describe('AutoCompletion - Relationship Pattern', () => {
       };
       checkCompletion('MATCH (a)-[:r▼', expected, true);
     });
+
+    xit('yields relationship type if after colon with space', () => {
+      const expected = {
+        from: { line: 1, column: 11 },
+        to: { line: 1, column: 18 },
+        items: [
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH ()-[:▼ return n;', expected, true);
+    });
   });
 });

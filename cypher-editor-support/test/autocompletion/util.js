@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { CompletionTypeResolver } from '../../src/completion/CompletionTypeResolver';
 
@@ -80,7 +79,7 @@ export function checkCompletion(queryWithCursor, expectedItems, doFilter = false
   backend.setSchema(schema);
   const completion = backend.getCompletion(1, pos, doFilter);
 
-  assert.deepEqual(completion, expectedItems);
+  expect(completion).toEqual(expectedItems);
 }
 
 
@@ -92,7 +91,7 @@ export function checkCompletionTypes(queryWithCursor, found, expectedTypes) {
   const el = backend.getElementForCompletion(1, pos);
   const types = CompletionTypeResolver.getTypes(el);
 
-  assert.deepEqual(types, {
+  expect(types).toEqual({
     found,
     types: expectedTypes,
   });
