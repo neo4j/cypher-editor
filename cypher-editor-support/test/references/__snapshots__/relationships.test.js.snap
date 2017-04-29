@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reference Traverser - Relationships returns reference for multiple relationship types 1`] = `
+Array [
+  Object {
+    "rule": "RelTypeNameContext",
+    "start": Object {
+      "column": 11,
+      "line": 1,
+    },
+    "stop": Object {
+      "column": 14,
+      "line": 1,
+    },
+    "text": "TYPE",
+  },
+  Object {
+    "rule": "RelTypeNameContext",
+    "start": Object {
+      "column": 31,
+      "line": 1,
+    },
+    "stop": Object {
+      "column": 34,
+      "line": 1,
+    },
+    "text": "TYPE",
+  },
+]
+`;
+
+exports[`Reference Traverser - Relationships returns reference for relationship types 1`] = `
+Array [
+  Object {
+    "rule": "RelTypeNameContext",
+    "start": Object {
+      "column": 11,
+      "line": 1,
+    },
+    "stop": Object {
+      "column": 14,
+      "line": 1,
+    },
+    "text": "TYPE",
+  },
+]
+`;
+
+exports[`Reference Traverser - Relationships returns references for multiple queries 1`] = `
+Array [
+  Object {
+    "rule": "RelTypeNameContext",
+    "start": Object {
+      "column": 11,
+      "line": 1,
+    },
+    "stop": Object {
+      "column": 14,
+      "line": 1,
+    },
+    "text": "TYPE",
+  },
+  Object {
+    "rule": "RelTypeNameContext",
+    "start": Object {
+      "column": 32,
+      "line": 1,
+    },
+    "stop": Object {
+      "column": 35,
+      "line": 1,
+    },
+    "text": "TYPE",
+  },
+]
+`;

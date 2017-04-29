@@ -17,11 +17,19 @@
   },
   "scripts": {
     "build": "rm -rf && webpack",
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "jest",
     "eslint": "eslint src/** test/**",
     "eslint-fix": "eslint --fix src/** test/**",
     "verify": "npm run eslint && npm run test && npm run build",
     "prepublishOnly": "npm run verify"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/test/"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   },
   "files": [
     "src/",
@@ -38,6 +46,7 @@
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.2",
+    "babel-jest": "19.0.0",
     "babel-loader": "6.4.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
@@ -47,7 +56,7 @@
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
-    "mocha": "3.2.0",
+    "jest": "19.0.2",
     "webpack": "2.4.1"
   }
 }

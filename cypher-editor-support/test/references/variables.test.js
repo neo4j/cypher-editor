@@ -18,56 +18,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import assert from 'assert';
-import { CypherEditorSupport } from '../../src/CypherEditorSupport';
-import { reduceElement } from '../util';
+import { CypherEditorSupport } from "../../src/CypherEditorSupport";
+import { reduceElement } from "../util";
 
 describe('Reference Traverser - Variables', () => {
   it('returns reference for a single variable', () => {
     const b = new CypherEditorSupport('RETURN n');
 
     const refs = b.getReferences(1, 7);
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'VariableContext',
-      start: { line: 1, column: 7 },
-      stop: { line: 1, column: 7 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 
   it('returns references for a multiple variables', () => {
     const b = new CypherEditorSupport('MATCH (n)-[r]->(n) RETURN n');
 
     const refs = b.getReferences(1, 7);
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'VariableContext',
-      start: { line: 1, column: 7 },
-      stop: { line: 1, column: 7 },
-    }, {
-      rule: 'VariableContext',
-      start: { line: 1, column: 16 },
-      stop: { line: 1, column: 16 },
-    }, {
-      rule: 'VariableContext',
-      start: { line: 1, column: 26 },
-      stop: { line: 1, column: 26 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 
   it('returns references for a single query', () => {
     const b = new CypherEditorSupport('MATCH (n) RETURN n; MATCH (n) RETURN n');
 
     const refs = b.getReferences(1, 7);
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'VariableContext',
-      start: { line: 1, column: 7 },
-      stop: { line: 1, column: 7 },
-    }, {
-      rule: 'VariableContext',
-      start: { line: 1, column: 17 },
-      stop: { line: 1, column: 17 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 });

@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
@@ -27,12 +26,7 @@ describe('Reference Traverser - Parameters', () => {
     const b = new CypherEditorSupport('RETURN $param;');
 
     const refs = b.getReferences(1, 10);
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'ParameterNameContext',
-      start: { line: 1, column: 8 },
-      stop: { line: 1, column: 12 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 
   it('returns reference for multiple parameters', () => {
@@ -40,16 +34,7 @@ describe('Reference Traverser - Parameters', () => {
 
     const refs = b.getReferences(1, 45);
 
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'ParameterNameContext',
-      start: { line: 1, column: 23 },
-      stop: { line: 1, column: 27 },
-    }, {
-      rule: 'ParameterNameContext',
-      start: { line: 1, column: 42 },
-      stop: { line: 1, column: 46 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 
   it('returns references for multiple queries', () => {
@@ -57,23 +42,6 @@ describe('Reference Traverser - Parameters', () => {
           MATCH (n) SET n.key = $param SET n.key = {param};`);
 
     const refs = b.getReferences(1, 25);
-    assert.deepEqual(refs.map(r => reduceElement(r)), [{
-      rule: 'ParameterNameContext',
-      start: { line: 1, column: 23 },
-      stop: { line: 1, column: 27 },
-    }, {
-      rule: 'ParameterNameContext',
-      start: { line: 1, column: 42 },
-      stop: { line: 1, column: 46 },
-    }, {
-      rule: 'ParameterNameContext',
-      start: { line: 2, column: 83 },
-      stop: { line: 2, column: 87 },
-    }, {
-      rule: 'ParameterNameContext',
-      start: { line: 2, column: 102 },
-      stop: { line: 2, column: 106 },
-    }],
-    );
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 });

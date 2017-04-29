@@ -18,19 +18,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
-describe('Parser - getElement', () => {
-  it('should identify rule at cursor position', () => {
-    const b = new CypherEditorSupport('MATCH (n)-[r]->(n) RETURN n');
+describe('Reference Traverser - Relationships', () => {
+  it('returns reference for relationship types', () => {
+    const b = new CypherEditorSupport('MATCH ()-[:TYPE]-()');
 
-    assert.deepEqual(reduceElement(b.getElement(1, 12).getParent()), {
-      rule: 'RelationshipDetailContext',
-      start: { line: 1, column: 10 },
-      stop: { line: 1, column: 12 },
-    },
-    );
+    const refs = b.getReferences(1, 13);
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+  });
+
+  it('returns reference for multiple relationship types', () => {
+    const b = new CypherEditorSupport('MATCH ()-[:TYPE]-() MATCH ()-[:TYPE]-()');
+
+    const refs = b.getReferences(1, 13);
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+  });
+
+  it('returns references for multiple queries', () => {
+    const b = new CypherEditorSupport('MATCH ()-[:TYPE]-(); MATCH ()-[:TYPE]-()');
+
+    const refs = b.getReferences(1, 13);
+    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
   });
 });

@@ -18,40 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export function reduceElement(pt) {
-  const e = {
-    rule: pt.constructor.name,
-    text: pt.getText(),
-    start: {},
-    stop: {},
-  };
+import { CypherEditorSupport } from '../../src/CypherEditorSupport';
+import { reduceElement } from '../util';
 
-  const { start, stop } = pt;
+describe('Parser - getElement', () => {
+  it('should identify rule at cursor position', () => {
+    const b = new CypherEditorSupport('MATCH (n)-[r]->(n) RETURN n');
 
-  if (start != null) {
-    e.start = {
-      line: start.line,
-      column: start.start,
-    };
-  }
-
-  if (pt.stop != null) {
-    e.stop = {
-      line: stop.line,
-      column: stop.stop,
-    };
-  }
-
-  return e;
-}
-
-export function reduceTree(pt) {
-  const e = { ...reduceElement(pt), children: [] };
-
-  const children = pt.getChildCount();
-  for (let i = 0; i < children; i++) {
-    e.children.push(reduceTree(pt.getChild(i)));
-  }
-
-  return e;
-}
+    expect(reduceElement(b.getElement(1, 12).getParent())).toEqual({
+      rule: 'RelationshipDetailContext',
+      start: { line: 1, column: 10 },
+      stop: { line: 1, column: 12 },
+      text: '[r]'
+    });
+  });
+});
