@@ -22,7 +22,7 @@ cypherPart : ( cypherConsoleCommand | cypherQuery ) ;
 
 cypherConsoleCommand : cypherConsoleCommandName ( SP cypherConsoleCommandParameters )? ;
 
-cypherConsoleCommandName : ':' UnescapedSymbolicName ( '-' UnescapedSymbolicName )* ;
+cypherConsoleCommandName : ':' symbolicName ( '-' symbolicName )* ;
 
 cypherConsoleCommandParameters : cypherConsoleCommandParameter ( SP cypherConsoleCommandParameter )* ;
 
@@ -32,9 +32,12 @@ cypherConsoleCommandParameter : mapLiteral
                               | numberLiteral
                               | booleanLiteral
                               | subCommand
+                              | commandPath
                               ;
 
 keyValueLiteral : variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
+
+commandPath : ( '/' ( symbolicName | numberLiteral ) )+ '/'? ;
 
 subCommand : ( symbolicName ( '-' symbolicName )* ) ;
 
@@ -184,7 +187,7 @@ returnItem : ( expression SP AS SP variable )
 
 call :  CALL SP procedureInvocation SP? procedureResults? ;
 
-procedureInvocation : procedureInvocationBody SP? procedureArguments ;
+procedureInvocation : procedureInvocationBody SP? procedureArguments? ;
 
 procedureInvocationBody : namespace procedureName ;
 

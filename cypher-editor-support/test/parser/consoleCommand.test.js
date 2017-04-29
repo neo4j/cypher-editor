@@ -18,57 +18,81 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import assert from 'assert';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
   it('should successfully parse simple command', () => {
     const b = new CypherEditorSupport(':play;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with parameter', () => {
     const b = new CypherEditorSupport(':play 1 \'string\' true;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command and query', () => {
     const b = new CypherEditorSupport(':play "url"; match (n);');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with variable', () => {
     const b = new CypherEditorSupport(':play variable;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with multiple variable', () => {
     const b = new CypherEditorSupport(':play variable anotherVariable;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with map literal', () => {
     const b = new CypherEditorSupport(':play {hello: "world", key: true, pop: 125.45};');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with map literal and something else', () => {
     const b = new CypherEditorSupport(':play "http://link.com" {hello: "world", key: true, pop: 125.45};');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with dashes', () => {
     const b = new CypherEditorSupport(':play-this-now;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command with key value literal', () => {
     const b = new CypherEditorSupport(":config n: 'xxx';");
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
   });
 
   it('should successfully parse command variable-with-dashes', () => {
     const b = new CypherEditorSupport(':config variable-with-dashes;');
-    assert.deepEqual(b.parseErrors, []);
+    expect(b.parseErrors).toEqual([]);
+  });
+
+  it('should successfully parse command variable-with-dashes', () => {
+    const b = new CypherEditorSupport(':config variable-with-dashes;');
+    expect(b.parseErrors).toEqual([]);
+  });
+
+  it('should successfully parse command with get', () => {
+    const b = new CypherEditorSupport(':GET /db/data/labels');
+    expect(b.parseErrors).toEqual([]);
+  });
+
+  it('should successfully parse command with delete', () => {
+    const b = new CypherEditorSupport(':DELETE /db/data/transaction/2');
+    expect(b.parseErrors).toEqual([]);
+  });
+
+  it('should successfully parse command with post', () => {
+    const b = new CypherEditorSupport(':POST /db/data/node { name:"Tiberius" }');
+    expect(b.parseErrors).toEqual([]);
+  });
+
+  it('should successfully parse command with put', () => {
+    const b = new CypherEditorSupport(':PUT /db/data/node/198/properties/foo "Delia"');
+    expect(b.parseErrors).toEqual([]);
   });
 });
