@@ -29,7 +29,7 @@ describe('Parser - getElement', () => {
       rule: 'RelationshipDetailContext',
       start: { line: 1, column: 10 },
       stop: { line: 1, column: 12 },
-      text: '[r]'
+      text: '[r]',
     });
   });
 });

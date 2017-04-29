@@ -22,7 +22,6 @@ import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
 describe('Reference Traverser - Property keys', () => {
-
   it('returns reference for a single key', () => {
     const b = new CypherEditorSupport('RETURN n.key');
 

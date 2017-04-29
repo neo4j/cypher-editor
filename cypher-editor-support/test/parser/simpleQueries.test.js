@@ -40,8 +40,8 @@ describe('Parser - Simple queries', () => {
       rule: 'CypherContext',
       start: { line: 1, column: 0 },
       stop: { line: 1, column: 5 },
-      text: "POTATO",
-      children: [{ rule: 'ErrorNodeImpl', start: {}, stop: {}, children: [], text: "POTATO" }],
+      text: 'POTATO',
+      children: [{ rule: 'ErrorNodeImpl', start: {}, stop: {}, children: [], text: 'POTATO' }],
     });
   });
 

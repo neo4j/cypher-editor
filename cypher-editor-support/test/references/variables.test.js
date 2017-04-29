@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CypherEditorSupport } from "../../src/CypherEditorSupport";
-import { reduceElement } from "../util";
+import { CypherEditorSupport } from '../../src/CypherEditorSupport';
+import { reduceElement } from '../util';
 
 describe('Reference Traverser - Variables', () => {
   it('returns reference for a single variable', () => {
