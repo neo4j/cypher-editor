@@ -25,6 +25,7 @@ export const codeMirrorSettings = {
   value: `// line comment
 /* block comment */
 :play "http://example.com";
+:play incommand-dash;
 MATCH (variable)
 MATCH (:Label)
 MATCH ()-[:RelationshipType]-()

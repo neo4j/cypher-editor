@@ -31,10 +31,12 @@ cypherConsoleCommandParameter : mapLiteral
                               | StringLiteral
                               | numberLiteral
                               | booleanLiteral
-                              | ( symbolicName ( '-' symbolicName )* )
+                              | subCommand
                               ;
 
-keyValueLiteral: variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
+keyValueLiteral : variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
+
+subCommand : ( symbolicName ( '-' symbolicName )* ) ;
 
 cypherQuery : queryOptions statement ;
 

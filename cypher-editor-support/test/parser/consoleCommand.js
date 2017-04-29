@@ -68,7 +68,7 @@ describe('Parser - Console commands', () => {
   });
 
   it('should successfully parse command variable-with-dashes', () => {
-    const b = new CypherEditorSupport(":config variable-with-dashes;");
+    const b = new CypherEditorSupport(':config variable-with-dashes;');
     assert.deepEqual(b.parseErrors, []);
   });
 });

@@ -105,6 +105,11 @@ export class CypherSyntaxHighlight {
         return true;
       }
 
+      if (e.constructor.name === CypherTypes.CONSOLE_COMMAND_SUBCOMMAND_CONTEXT) {
+        callback(e, 'property');
+        return true;
+      }
+
       return false;
     });
   }

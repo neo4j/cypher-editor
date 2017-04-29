@@ -74,6 +74,15 @@ CypherListener.prototype.exitKeyValueLiteral = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#subCommand.
+CypherListener.prototype.enterSubCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#subCommand.
+CypherListener.prototype.exitSubCommand = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#cypherQuery.
 CypherListener.prototype.enterCypherQuery = function(ctx) {
 };
