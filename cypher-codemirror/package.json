@@ -5,7 +5,7 @@
     "cypher",
     "codemirror"
   ],
-  "version": "1.0.2-dev",
+  "version": "1.0.2",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-codemirror.js",
@@ -41,7 +41,7 @@
     "postcss.config.js"
   ],
   "dependencies": {
-    "cypher-editor-support": "1.0.1"
+    "cypher-editor-support": "1.0.2"
   },
   "peerDependencies": {
     "react": "15.5.4",
