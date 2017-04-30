@@ -1373,9 +1373,9 @@ csso@~2.3.1:
     clap "^1.0.9"
     source-map "^0.5.3"
 
-cypher-editor-support@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.0.0.tgz#d1a4427fd72213cb9337d94a899ff3a91c416303"
+cypher-editor-support@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.0.3.tgz#224c3e73c585b95ff763810d38f5d9946eb8ad65"
   dependencies:
     antlr4 "4.6.0"
     fuzzaldrin "2.1.0"
