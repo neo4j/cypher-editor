@@ -195,7 +195,7 @@ export class AutoCompletion {
 
     const completionItemFilter = () => true;
 
-    const list = [this.schemaBased, this.queryBased]
+    const list = [this.queryBased, this.schemaBased]
       .filter(s => s != null)
       .map(t => t.complete(types, query))
       .reduce((acc, items) => [...acc, ...items], [])

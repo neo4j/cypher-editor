@@ -36,6 +36,7 @@ const keywordRegexes = CypherKeywords.map(w => new RegExp(w, 'i'));
 const lineCommentRegex = /\/\/[^\r\n]*/;
 const blockCommentRegex = /\/\*([\S\s]*?)\*\//;
 const stringRegex = /('([^'\\]|\\.)*'|"([^"\\]|\\.)*")/;
+const stringStartRegex = /('([^'\\]|\\.)*|"([^"\\]|\\.)*)/; // match just opened and not closed string as string
 const integerRegex = /[+-]?(([1-9][0-9]+)|([0-9]))/;
 const decimalRegex = /[+-]?(([1-9][0-9]+)|([0-9]))\.[0-9]+/;
 
@@ -55,6 +56,8 @@ CodeMirror.defineMode('cypher', (config) => {
       return 'operator';
     } else if (keywordRegexes.find(k => stream.match(k))) {
       return 'keyword';
+    } else if (stream.match(stringStartRegex)) {
+      return 'string';
     }
 
     stream.next();
