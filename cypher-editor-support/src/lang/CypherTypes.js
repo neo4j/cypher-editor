@@ -64,6 +64,7 @@ export const MAP_LITERAL_CONTEXT = CypherParser.MapLiteralContext.prototype.cons
 export const PROPERTIES_CONTEXT = CypherParser.PropertiesContext.prototype.constructor.name;
 export const MAP_LITERAL_ENTRY = CypherParser.LiteralEntryContext.prototype.constructor.name;
 export const STRING_LITERAL_CONTEXT = CypherParser.StringLiteralContext.prototype.constructor.name;
+export const ATOM_CONTEXT = CypherParser.AtomContext.prototype.constructor.name;
 
 export const QUERY_CONTEXT = CypherParser.CypherQueryContext.prototype.constructor.name;
 export const SYMBOLIC_NAME_CONTEXT = CypherParser.SymbolicNameContext.prototype.constructor.name;

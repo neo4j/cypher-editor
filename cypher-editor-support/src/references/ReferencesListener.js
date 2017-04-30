@@ -32,14 +32,32 @@ class Index {
     this.referencesByQueryAndName.push({});
   }
 
-  add(ctx) {
+  add(ctx, addName = true) {
     const queryIndex = this.namesByQuery.length - 1;
     const text = ctx.getText();
-    this.names[text] = true;
-    this.namesByQuery[queryIndex][text] = true;
+    if (addName) {
+      this.names[text] = true;
+      this.namesByQuery[queryIndex][text] = true;
+    }
     this.referencesByName[text] = [...(this.referencesByName[text] || []), ctx];
     const index = this.referencesByQueryAndName[queryIndex];
     index[text] = [...(index[text] || []), ctx];
+  }
+
+  /**
+   * Variables have specific rules, because they participate in autocompletion.
+   * We should not add to the names list variables that are in expression.
+   */
+  addVariable(ctx) {
+    let addName = true;
+
+    // If variable is inside atom, then variable is inside expression.
+    // Therefore, variables is node defined here.
+    const parent = ctx.parentCtx;
+    if (parent && parent.constructor.name === CypherTypes.ATOM_CONTEXT) {
+      addName = false;
+    }
+    this.add(ctx, addName);
   }
 }
 
@@ -69,7 +87,7 @@ export class ReferencesListener extends CypherListener {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.VARIABLE_CONTEXT].add(ctx);
+    this.indexes[CypherTypes.VARIABLE_CONTEXT].addVariable(ctx);
   }
 
   exitLabelName(ctx) {

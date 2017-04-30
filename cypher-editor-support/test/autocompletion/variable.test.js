@@ -68,15 +68,15 @@ describe('AutoCompletion - Variable', () => {
   describe('with filters', () => {
     it('yields variable list', () => {
       const exptected = {
-        from: { line: 1, column: 28 },
-        to: { line: 1, column: 29 },
+        from: { line: 1, column: 36 },
+        to: { line: 1, column: 40 },
         items: [
-          { type: 'variable', view: 'an', content: 'an', postfix: null },
+          { type: 'variable', view: 'markus', content: 'markus', postfix: null },
         ],
       };
 
-      checkCompletion('MATCH (n) MATCH (an) MATCH (a▼', exptected, true);
-      checkCompletion('MATCH (n) MATCH (an) MATCH (▼a', exptected, true);
+      checkCompletion('MATCH (penny) MATCH (markus) RETURN mark▼', exptected, true);
+      checkCompletion('MATCH (penny) MATCH (markus) RETURN mar▼k', exptected, true);
     });
 
     it('yields variable list without variable under cursor', () => {
@@ -89,6 +89,18 @@ describe('AutoCompletion - Variable', () => {
       };
 
       checkCompletion('MATCH (var) RETURN va▼', exptected, true);
+    });
+
+    it('yields variable list if variable under cursor matces', () => {
+      const exptected = {
+        from: { line: 1, column: 19 },
+        to: { line: 1, column: 22 },
+        items: [
+          { type: 'variable', view: 'var', content: 'var', postfix: null },
+        ],
+      };
+
+      checkCompletion('MATCH (var) RETURN var▼', exptected, true);
     });
   });
 });

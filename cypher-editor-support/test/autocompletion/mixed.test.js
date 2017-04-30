@@ -36,16 +36,16 @@ describe('AutoCompletion - Mixed', () => {
   describe('without filters', () => {
     it('yields function name and variable list in expression', () => {
       const expected = {
-        from: { line: 1, column: 7 },
-        to: { line: 1, column: 10 },
+        from: { line: 1, column: 19 },
+        to: { line: 1, column: 22 },
         items: [
           { type: 'function', view: 'toFloat', content: 'toFloat', postfix: 'expression' },
           { type: 'function', view: 'head', content: 'head', postfix: 'expression' },
           { type: 'variable', view: 'fun', content: 'fun', postfix: null },
         ],
       };
-      checkCompletion('return ▼fun', expected);
-      checkCompletion('return fun▼', expected);
+      checkCompletion('match (fun) return ▼fun', expected);
+      checkCompletion('match (fun) return fun▼', expected);
     });
 
     it('yields only keywords at the start of a query', () => {

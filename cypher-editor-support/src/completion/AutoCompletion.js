@@ -190,19 +190,10 @@ export class AutoCompletion {
     this.updateSchema({});
   }
 
-  getItems(types, { query = null, filter = '', elementType = '' }) {
+  getItems(types, { query = null, filter = '' }) {
     const text = filter.toLowerCase();
 
-    let completionItemFilter = () => true;
-
-    if (elementType === CypherTypes.VARIABLE_CONTEXT) {
-      completionItemFilter = (completionItem) => {
-        if (completionItem.type === CompletionTypes.VARIABLE && completionItem.content === filter) {
-          return false;
-        }
-        return true;
-      };
-    }
+    const completionItemFilter = () => true;
 
     const list = [this.schemaBased, this.queryBased]
       .filter(s => s != null)
