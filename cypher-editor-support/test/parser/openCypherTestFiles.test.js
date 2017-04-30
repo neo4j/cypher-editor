@@ -18,10 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import cypherLegacy from './openCypherTestFiles/cypher-legacy';
 import cypher from './openCypherTestFiles/cypher';
-import { reduceTree } from '../util';
 
 describe('openCypher test files', () => {
   describe('cypherLegacy', () => {
@@ -30,8 +30,7 @@ describe('openCypher test files', () => {
       i += 1;
       it(`cypher-legacy-query-${i}`, () => {
         const b = new CypherEditorSupport(query);
-        expect(b.parseErrors).toEqual([]);
-        expect(reduceTree(b.parseTree)).toMatchSnapshot();
+        expect(b.parseErrors).to.deep.equal([]);
       });
     });
   });
@@ -42,8 +41,7 @@ describe('openCypher test files', () => {
       i += 1;
       it(`cypher-query-${i}`, () => {
         const b = new CypherEditorSupport(query);
-        expect(b.parseErrors).toEqual([]);
-        expect(reduceTree(b.parseTree)).toMatchSnapshot();
+        expect(b.parseErrors).to.deep.equal([]);
       });
     });
   });

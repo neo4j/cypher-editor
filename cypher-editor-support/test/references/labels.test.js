@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
@@ -26,20 +27,84 @@ describe('Reference Traverser - Labels', () => {
     const b = new CypherEditorSupport('MATCH (n:Label)');
 
     const refs = b.getReferences(1, 10);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'LabelNameContext',
+        start: {
+          column: 9,
+          line: 1,
+        },
+        stop: {
+          column: 13,
+          line: 1,
+        },
+        text: 'Label',
+      },
+    ],
+    );
   });
 
   it('returns references for a multiple labels', () => {
     const b = new CypherEditorSupport('MATCH (n:Label) MATCH (m:Label)');
 
     const refs = b.getReferences(1, 10);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'LabelNameContext',
+        start: {
+          column: 9,
+          line: 1,
+        },
+        stop: {
+          column: 13,
+          line: 1,
+        },
+        text: 'Label',
+      },
+      {
+        rule: 'LabelNameContext',
+        start: {
+          column: 25,
+          line: 1,
+        },
+        stop: {
+          column: 29,
+          line: 1,
+        },
+        text: 'Label',
+      },
+    ]);
   });
 
   it('returns references for multiple queries', () => {
     const b = new CypherEditorSupport('MATCH (n:Label); MATCH (n:Label);');
 
     const refs = b.getReferences(1, 10);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'LabelNameContext',
+        start: {
+          column: 9,
+          line: 1,
+        },
+        stop: {
+          column: 13,
+          line: 1,
+        },
+        text: 'Label',
+      },
+      {
+        rule: 'LabelNameContext',
+        start: {
+          column: 26,
+          line: 1,
+        },
+        stop: {
+          column: 30,
+          line: 1,
+        },
+        text: 'Label',
+      },
+    ]);
   });
 });

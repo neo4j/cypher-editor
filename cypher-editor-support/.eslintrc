@@ -4,7 +4,7 @@
   "env": {
     "browser": true,
     "node": true,
-    "jest": true
+    "mocha": true
   },
   "rules": {
     "import/prefer-default-export": "off",

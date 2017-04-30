@@ -18,16 +18,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Call clause', () => {
   it('should successfully parse call with arguments', () => {
     const b = new CypherEditorSupport('CALL procedure()');
-    expect(b.parseErrors).toEqual([]);
+    expect(b.parseErrors).to.deep.equal([]);
   });
 
   it('should successfully parse call without arguments', () => {
     const b = new CypherEditorSupport('CALL procedure');
-    expect(b.parseErrors).toEqual([]);
+    expect(b.parseErrors).to.deep.equal([]);
   });
 });

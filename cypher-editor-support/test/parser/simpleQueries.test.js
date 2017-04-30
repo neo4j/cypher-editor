@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceTree } from '../util';
 
@@ -25,18 +26,18 @@ describe('Parser - Simple queries', () => {
   it('should return correct ast for simple query', () => {
     const backend = new CypherEditorSupport('RETURN 42;');
 
-    expect(backend.parseErrors).toEqual([]);
+    expect(backend.parseErrors).to.deep.equal([]);
   });
 
   it('should return errors for incorrect query', () => {
     const b = new CypherEditorSupport('POTATO');
 
-    expect(b.parseErrors).toEqual([{
+    expect(b.parseErrors).to.deep.equal([{
       line: 1,
       col: 0,
       msg: "extraneous input 'POTATO' expecting {<EOF>, ':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
     }]);
-    expect(reduceTree(b.parseTree)).toEqual({
+    expect(reduceTree(b.parseTree)).to.deep.equal({
       rule: 'CypherContext',
       start: { line: 1, column: 0 },
       stop: { line: 1, column: 5 },
@@ -48,7 +49,7 @@ describe('Parser - Simple queries', () => {
   it('should return errors if error in lexer', () => {
     const b = new CypherEditorSupport('WITH a` WITH 1;');
 
-    expect(b.parseErrors).toEqual([
+    expect(b.parseErrors).to.deep.equal([
       {
         col: 6,
         line: 1,

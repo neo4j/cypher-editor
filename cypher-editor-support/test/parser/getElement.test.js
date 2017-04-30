@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
@@ -25,7 +26,7 @@ describe('Parser - getElement', () => {
   it('should identify rule at cursor position', () => {
     const b = new CypherEditorSupport('MATCH (n)-[r]->(n) RETURN n');
 
-    expect(reduceElement(b.getElement(1, 12).getParent())).toEqual({
+    expect(reduceElement(b.getElement(1, 12).getParent())).to.deep.equal({
       rule: 'RelationshipDetailContext',
       start: { line: 1, column: 10 },
       stop: { line: 1, column: 12 },

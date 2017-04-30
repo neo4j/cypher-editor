@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
@@ -26,20 +27,84 @@ describe('Reference Traverser - Relationships', () => {
     const b = new CypherEditorSupport('MATCH ()-[:TYPE]-()');
 
     const refs = b.getReferences(1, 13);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'RelTypeNameContext',
+        start: {
+          column: 11,
+          line: 1,
+        },
+        stop: {
+          column: 14,
+          line: 1,
+        },
+        text: 'TYPE',
+      },
+    ],
+    );
   });
 
   it('returns reference for multiple relationship types', () => {
     const b = new CypherEditorSupport('MATCH ()-[:TYPE]-() MATCH ()-[:TYPE]-()');
 
     const refs = b.getReferences(1, 13);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'RelTypeNameContext',
+        start: {
+          column: 11,
+          line: 1,
+        },
+        stop: {
+          column: 14,
+          line: 1,
+        },
+        text: 'TYPE',
+      },
+      {
+        rule: 'RelTypeNameContext',
+        start: {
+          column: 31,
+          line: 1,
+        },
+        stop: {
+          column: 34,
+          line: 1,
+        },
+        text: 'TYPE',
+      },
+    ]);
   });
 
   it('returns references for multiple queries', () => {
     const b = new CypherEditorSupport('MATCH ()-[:TYPE]-(); MATCH ()-[:TYPE]-()');
 
     const refs = b.getReferences(1, 13);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'RelTypeNameContext',
+        start: {
+          column: 11,
+          line: 1,
+        },
+        stop: {
+          column: 14,
+          line: 1,
+        },
+        text: 'TYPE',
+      },
+      {
+        rule: 'RelTypeNameContext',
+        start: {
+          column: 32,
+          line: 1,
+        },
+        stop: {
+          column: 35,
+          line: 1,
+        },
+        text: 'TYPE',
+      },
+    ]);
   });
 });

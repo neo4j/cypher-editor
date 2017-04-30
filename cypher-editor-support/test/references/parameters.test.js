@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { reduceElement } from '../util';
 
@@ -26,7 +27,20 @@ describe('Reference Traverser - Parameters', () => {
     const b = new CypherEditorSupport('RETURN $param;');
 
     const refs = b.getReferences(1, 10);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 8,
+          line: 1,
+        },
+        stop: {
+          column: 12,
+          line: 1,
+        },
+        text: 'param',
+      },
+    ]);
   });
 
   it('returns reference for multiple parameters', () => {
@@ -34,7 +48,32 @@ describe('Reference Traverser - Parameters', () => {
 
     const refs = b.getReferences(1, 45);
 
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 23,
+          line: 1,
+        },
+        stop: {
+          column: 27,
+          line: 1,
+        },
+        text: 'param',
+      },
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 42,
+          line: 1,
+        },
+        stop: {
+          column: 46,
+          line: 1,
+        },
+        text: 'param',
+      },
+    ]);
   });
 
   it('returns references for multiple queries', () => {
@@ -42,6 +81,55 @@ describe('Reference Traverser - Parameters', () => {
           MATCH (n) SET n.key = $param SET n.key = {param};`);
 
     const refs = b.getReferences(1, 25);
-    expect(refs.map(r => reduceElement(r))).toMatchSnapshot();
+    expect(refs.map(r => reduceElement(r))).to.deep.equal([
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 23,
+          line: 1,
+        },
+        stop: {
+          column: 27,
+          line: 1,
+        },
+        text: 'param',
+      },
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 42,
+          line: 1,
+        },
+        stop: {
+          column: 46,
+          line: 1,
+        },
+        text: 'param',
+      },
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 83,
+          line: 2,
+        },
+        stop: {
+          column: 87,
+          line: 2,
+        },
+        text: 'param',
+      },
+      {
+        rule: 'ParameterNameContext',
+        start: {
+          column: 102,
+          line: 2,
+        },
+        stop: {
+          column: 106,
+          line: 2,
+        },
+        text: 'param',
+      },
+    ]);
   });
 });
