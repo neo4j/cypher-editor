@@ -108,9 +108,9 @@ describe('AutoCompletion - Node pattern', () => {
         from: { line: 1, column: 17 },
         to: { line: 1, column: 17 },
         items: [
+          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
           { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
           { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
-          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
         ],
       };
 
@@ -164,9 +164,9 @@ describe('AutoCompletion - Node pattern', () => {
         from: { line: 1, column: 17 },
         to: { line: 1, column: 17 },
         items: [
+          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
           { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
           { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
-          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
         ],
       };
 

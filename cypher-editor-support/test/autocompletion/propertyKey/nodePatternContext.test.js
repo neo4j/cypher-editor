@@ -102,12 +102,6 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
         from: { line: 1, column: 8 },
         to: { line: 1, column: 10 },
         items: [
-          {
-            content: 'p1',
-            postfix: null,
-            type: 'parameter',
-            view: 'p1',
-          },
           { type: CompletionTypes.PROPERTY_KEY, view: 'prop1', content: 'prop1', postfix: null },
         ],
       };

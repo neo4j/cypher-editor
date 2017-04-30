@@ -29,7 +29,7 @@ describe('AutoCompletion - Parameter', () => {
   });
 
   describe('without filters', () => {
-    it('yields parameter name list', () => {
+    xit('yields parameter name list', () => {
       const expected = {
         from: { line: 1, column: 14 },
         to: { line: 1, column: 15 },
@@ -42,7 +42,7 @@ describe('AutoCompletion - Parameter', () => {
       checkCompletion('RETURN {b} + $a▼', expected);
     });
 
-    it('yields parameter name list after first symbol', () => {
+    xit('yields parameter name list after first symbol', () => {
       const expected = {
         from: { line: 1, column: 13 },
         to: { line: 1, column: 14 },
@@ -57,7 +57,7 @@ describe('AutoCompletion - Parameter', () => {
   });
 
   describe('with filters', () => {
-    it('yields parameter name list', () => {
+    xit('yields parameter name list', () => {
       const expected = {
         from: { line: 1, column: 14 },
         to: { line: 1, column: 15 },
@@ -70,7 +70,7 @@ describe('AutoCompletion - Parameter', () => {
       checkCompletion('RETURN {b} + $▼a', expected, true);
     });
 
-    it('yields legacy parameter name list', () => {
+    xit('yields legacy parameter name list', () => {
       const expected = {
         from: { line: 1, column: 8 },
         to: { line: 1, column: 9 },

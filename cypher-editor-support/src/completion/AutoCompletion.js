@@ -165,6 +165,7 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
           content: name,
           postfix: null,
         })),
+      /*
       [CompletionTypes.PARAMETER]: () => (referenceProviders[CypherTypes.PARAMETER_NAME_CONTEXT] || this.emptyProvider)
         .getNames()
         .map(parameter => ({
@@ -173,6 +174,7 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
           content: parameter,
           postfix: null,
         })),
+       */
     };
   }
 

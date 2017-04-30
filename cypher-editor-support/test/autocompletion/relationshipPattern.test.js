@@ -106,9 +106,9 @@ describe('AutoCompletion - Relationship Pattern', () => {
         from: { line: 1, column: 10 },
         to: { line: 1, column: 10 },
         items: [
+          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
-          { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-▼[', expected, true);
