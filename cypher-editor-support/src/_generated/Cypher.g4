@@ -374,13 +374,15 @@ atom : literal
      ;
 
 literal : numberLiteral
-        | StringLiteral
+        | stringLiteral
         | booleanLiteral
         | NULL
         | mapLiteral
         | listLiteral
         | mapProjection
         ;
+
+stringLiteral : StringLiteral ;
 
 booleanLiteral : TRUE
                | FALSE

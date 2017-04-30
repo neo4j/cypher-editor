@@ -21,7 +21,6 @@
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Call clause', () => {
-
   it('should successfully parse call with arguments', () => {
     const b = new CypherEditorSupport('CALL procedure()');
     expect(b.parseErrors).toEqual([]);

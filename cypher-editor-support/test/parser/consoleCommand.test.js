@@ -21,7 +21,6 @@
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
-
   it('should successfully parse simple command', () => {
     const b = new CypherEditorSupport(':play;');
     expect(b.parseErrors).toEqual([]);

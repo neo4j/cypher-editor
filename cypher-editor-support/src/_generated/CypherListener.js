@@ -1226,6 +1226,15 @@ CypherListener.prototype.exitLiteral = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#stringLiteral.
+CypherListener.prototype.enterStringLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#stringLiteral.
+CypherListener.prototype.exitStringLiteral = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#booleanLiteral.
 CypherListener.prototype.enterBooleanLiteral = function(ctx) {
 };

@@ -30,6 +30,10 @@ export const CONSOLE_COMMAND_NAME = 'consoleCommand';
 export const CONSOLE_COMMAND_SUBCOMMAND = 'consoleCommandSubcommand';
 export const PROCEDURE_OUTPUT = 'procedureOutput';
 
+// Return no autocompletion
+export const NOOP = 'noop';
+
+// Default
 export const ALL = [
   VARIABLE,
   PARAMETER,

@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "rm -rf && webpack",
-    "test": "jest",
+    "test": "npm run eslint-fix && jest",
+    "test:watch": "jest --watch",
     "eslint": "eslint src/** test/**",
     "eslint-fix": "eslint --fix src/** test/**",
     "verify": "npm run eslint && npm run test && npm run build",
