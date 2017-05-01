@@ -102,6 +102,8 @@ command : createIndex
         | dropIndex
         | createUniqueConstraint
         | dropUniqueConstraint
+        | createNodeKeyConstraint
+        | dropNodeKeyConstraint
         | createNodePropertyExistenceConstraint
         | dropNodePropertyExistenceConstraint
         | createRelationshipPropertyExistenceConstraint
@@ -109,6 +111,8 @@ command : createIndex
         ;
 
 createUniqueConstraint : CREATE SP uniqueConstraint ;
+
+createNodeKeyConstraint : CREATE SP nodeKeyConstraint ;
 
 createNodePropertyExistenceConstraint : CREATE SP nodePropertyExistenceConstraint ;
 
@@ -118,15 +122,19 @@ createIndex : CREATE SP index ;
 
 dropUniqueConstraint : DROP SP uniqueConstraint ;
 
+dropNodeKeyConstraint : DROP SP nodeKeyConstraint ;
+
 dropNodePropertyExistenceConstraint : DROP SP nodePropertyExistenceConstraint ;
 
 dropRelationshipPropertyExistenceConstraint : DROP SP relationshipPropertyExistenceConstraint ;
 
 dropIndex : DROP SP index ;
 
-index : INDEX SP ON SP? nodeLabel '(' propertyKeyName ')' ;
+index : INDEX SP ON SP? nodeLabel SP? '(' SP? propertyKeys SP? ')' ;
 
-uniqueConstraint : CONSTRAINT SP ON SP? '(' variable nodeLabel ')' SP? ASSERT SP propertyExpression SP IS SP UNIQUE ;
+uniqueConstraint : CONSTRAINT SP ON SP? '(' SP? variable nodeLabel SP? ')' SP? ASSERT SP propertyExpression SP IS SP UNIQUE ;
+
+nodeKeyConstraint : CONSTRAINT SP ON SP? '(' SP? variable nodeLabel SP? ')' SP? ASSERT SP '(' SP? propertyExpressions SP? ')' SP IS SP NODE SP KEY ;
 
 nodePropertyExistenceConstraint : CONSTRAINT SP ON SP? '(' variable nodeLabel ')' SP? ASSERT SP EXISTS SP? '(' propertyExpression ')' ;
 
@@ -212,7 +220,9 @@ limit : LIMIT SP expression ;
 
 sortItem : expression ( SP? ( ASCENDING | ASC | DESCENDING | DESC ) SP? )? ;
 
-hint : SP? ( ( USING SP INDEX SP variable nodeLabel '(' propertyKeyName ')' ) | ( USING SP JOIN SP ON SP variable ( SP? ',' SP? variable )* ) | ( USING SP SCAN SP variable nodeLabel ) ) ;
+hint : SP? ( ( USING SP INDEX SP variable nodeLabel SP? '(' SP? propertyKeys SP? ')' )
+     | ( USING SP JOIN SP ON SP variable ( SP? ',' SP? variable )* )
+     | ( USING SP SCAN SP variable nodeLabel ) ) ;
 
 startClause : START SP startPoint ( SP? ',' SP? startPoint )* where? ;
 
@@ -465,7 +475,11 @@ parameterName : symbolicName
               | DecimalInteger
               ;
 
+propertyExpressions : propertyExpression ( SP? ',' SP? propertyExpression )* ;
+
 propertyExpression : atom ( SP? propertyLookup )+ ;
+
+propertyKeys : propertyKeyName ( SP? ',' SP? propertyKeyName )* ;
 
 propertyKeyName : symbolicName ;
 
@@ -607,6 +621,7 @@ symbolicName : UnescapedSymbolicName
              | HexLetter
              | CALL
              | YIELD
+             | KEY
              ;
 
 CYPHER : ( 'C' | 'c' ) ( 'Y' | 'y' ) ( 'P' | 'p' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' )  ;
@@ -762,6 +777,8 @@ THEN : ( 'T' | 't' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'N' | 'n' )  ;
 CALL : ('C' | 'c') ('A' | 'a') ('L' | 'l') ('L' | 'l')  ;
 
 YIELD : ('Y' | 'y') ('I' | 'i') ('E' | 'e') ('L' | 'l') ('D' | 'd')  ;
+
+KEY : ('K' | 'k') ('E' | 'e') ('Y' | 'y')  ;
 
 UnescapedSymbolicName : IdentifierStart ( IdentifierPart )* ;
 

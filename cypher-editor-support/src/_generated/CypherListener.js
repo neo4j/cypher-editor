@@ -263,6 +263,15 @@ CypherListener.prototype.exitCreateUniqueConstraint = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#createNodeKeyConstraint.
+CypherListener.prototype.enterCreateNodeKeyConstraint = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#createNodeKeyConstraint.
+CypherListener.prototype.exitCreateNodeKeyConstraint = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#createNodePropertyExistenceConstraint.
 CypherListener.prototype.enterCreateNodePropertyExistenceConstraint = function(ctx) {
 };
@@ -296,6 +305,15 @@ CypherListener.prototype.enterDropUniqueConstraint = function(ctx) {
 
 // Exit a parse tree produced by CypherParser#dropUniqueConstraint.
 CypherListener.prototype.exitDropUniqueConstraint = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#dropNodeKeyConstraint.
+CypherListener.prototype.enterDropNodeKeyConstraint = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#dropNodeKeyConstraint.
+CypherListener.prototype.exitDropNodeKeyConstraint = function(ctx) {
 };
 
 
@@ -341,6 +359,15 @@ CypherListener.prototype.enterUniqueConstraint = function(ctx) {
 
 // Exit a parse tree produced by CypherParser#uniqueConstraint.
 CypherListener.prototype.exitUniqueConstraint = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#nodeKeyConstraint.
+CypherListener.prototype.enterNodeKeyConstraint = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#nodeKeyConstraint.
+CypherListener.prototype.exitNodeKeyConstraint = function(ctx) {
 };
 
 
@@ -1496,12 +1523,30 @@ CypherListener.prototype.exitParameterName = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#propertyExpressions.
+CypherListener.prototype.enterPropertyExpressions = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#propertyExpressions.
+CypherListener.prototype.exitPropertyExpressions = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#propertyExpression.
 CypherListener.prototype.enterPropertyExpression = function(ctx) {
 };
 
 // Exit a parse tree produced by CypherParser#propertyExpression.
 CypherListener.prototype.exitPropertyExpression = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#propertyKeys.
+CypherListener.prototype.enterPropertyKeys = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#propertyKeys.
+CypherListener.prototype.exitPropertyKeys = function(ctx) {
 };
 
 
