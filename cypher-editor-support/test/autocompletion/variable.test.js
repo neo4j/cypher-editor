@@ -174,5 +174,27 @@ describe('AutoCompletion - Variable', () => {
 
     checkCompletion('MATCH (var) RETURN var▼', exptected, true);
     });
+    xit('yields variable with open brace and open backtick but w/o first symbol', () => {
+      const exptected = {
+        from: { line: 1, column: 22 },
+        to: { line: 1, column: 22 },
+        items: [
+          { type: 'variable', view: '`', content: '`', postfix: null },
+          { type: 'variable', view: '`var`', content: '`var`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (`var`) MATCH (`▼', exptected, true);
+    });
+    it('yields variable with open brace and both backticks but w/o first symbol', () => {
+      const exptected = {
+        from: { line: 1, column: 21 },
+        to: { line: 1, column: 23 },
+        items: [
+          { type: 'variable', view: '``', content: '``', postfix: null },
+          { type: 'variable', view: '`var`', content: '`var`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (`var`) MATCH (`▼`', exptected, true);
+    });
   });
 });
