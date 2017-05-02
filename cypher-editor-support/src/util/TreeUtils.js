@@ -32,6 +32,7 @@ export class TreeUtils {
       el = el.parentCtx;
     }
   }
+
   static findAnyParent(pt, types = []) {
     let el = pt;
     while (true) { // eslint-disable-line no-constant-condition
@@ -83,5 +84,26 @@ export class TreeUtils {
     }
 
     return null;
+  }
+
+  static hasErrorNode(element) {
+    if (element == null) {
+      return false;
+    }
+
+    if (element.isErrorNode && element.isErrorNode()) {
+      return true;
+    }
+
+    if (element.children != null) {
+      for (const e of element.children) {
+        const childHasErrorNode = TreeUtils.hasErrorNode(e);
+        if (childHasErrorNode) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

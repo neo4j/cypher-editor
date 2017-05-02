@@ -181,20 +181,20 @@ RETURN 99882.04000§
 CREATE ()-[v:R{prop:42}]->()§
 CREATE ()-[   v:R{prop:42}]->()§
 CREATE ()-[   v   :R{prop:42}]->()§
-CREATE ()-[   v   :   R{prop:42}]->()§
-CREATE ()-[   v   :   R   {prop:42}]->()§
-CREATE ()-[   v   :   R   {   prop:42}]->()§
-CREATE ()-[   v   :   R   {   prop   :42}]->()§
-CREATE ()-[   v   :   R   {   prop   :   42}]->()§
-CREATE ()-[   v   :   R   {   prop   :   42   }]->()§
-CREATE ()-[   v   :   R   {   prop   :   42   }   ]->()§
+CREATE ()-[   v   :R{prop:42}]->()§
+CREATE ()-[   v   :R   {prop:42}]->()§
+CREATE ()-[   v   :R   {   prop:42}]->()§
+CREATE ()-[   v   :R   {   prop   :42}]->()§
+CREATE ()-[   v   :R   {   prop   :   42}]->()§
+CREATE ()-[   v   :R   {   prop   :   42   }]->()§
+CREATE ()-[   v   :R   {   prop   :   42   }   ]->()§
 MATCH (n) SET n.prop=10§
 MATCH (n) SET   n.prop=10§
 MATCH (n) SET   n.prop   =10§
 MATCH (n) SET   n.prop   =   10§
 MATCH (n) SET n:Label§
 MATCH (n) SET n   :Label§
-MATCH (n) SET n   :   Label§
+MATCH (n) SET n   :Label§
 MATCH (n) SET n=$param§
 MATCH (n) SET n   =$param§
 MATCH (n) SET n   =   $param§
@@ -212,10 +212,10 @@ RETURN [   (a)-->()WHERE a:Label|55 + a.prop]§
 RETURN [   (a)-->()   WHERE a:Label|55 + a.prop]§
 RETURN [   (a)-->()   WHERE   a:Label|55 + a.prop]§
 RETURN [   (a)-->()   WHERE   a   :Label|55 + a.prop]§
-RETURN [   (a)-->()   WHERE   a   :   Label|55 + a.prop]§
-RETURN [   (a)-->()   WHERE   a   :   Label   |55 + a.prop]§
-RETURN [   (a)-->()   WHERE   a   :   Label   |   55 + a.prop]§
-RETURN [   (a)-->()   WHERE   a   :   Label   |   55 + a.prop   ]§
+RETURN [   (a)-->()   WHERE   a   :Label|55 + a.prop]§
+RETURN [   (a)-->()   WHERE   a   :Label   |55 + a.prop]§
+RETURN [   (a)-->()   WHERE   a   :Label   |   55 + a.prop]§
+RETURN [   (a)-->()   WHERE   a   :Label   |   55 + a.prop   ]§
 RETURN [p=(a)-->()WHERE a:Label|55 + a.prop]§
 RETURN [   p=(a)-->()WHERE a:Label|55 + a.prop]§
 RETURN [   p   =(a)-->()WHERE a:Label|55 + a.prop]§

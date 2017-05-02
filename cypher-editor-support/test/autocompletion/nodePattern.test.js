@@ -92,7 +92,7 @@ describe('AutoCompletion - Node pattern', () => {
 
     it('yields label list if only colon is present and closing brace present', () => {
       const expected = {
-        from: { line: 1, column: 9 },
+        from: { line: 1, column: 8 },
         to: { line: 1, column: 9 },
         items: [
           { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
@@ -148,7 +148,7 @@ describe('AutoCompletion - Node pattern', () => {
 
     it('yields label list if only colon is present and closing brace present', () => {
       const expected = {
-        from: { line: 1, column: 9 },
+        from: { line: 1, column: 8 },
         to: { line: 1, column: 9 },
         items: [
           { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },

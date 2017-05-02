@@ -23,6 +23,7 @@ import _ from 'lodash';
 import * as CypherTypes from '../lang/CypherTypes';
 import * as CompletionTypes from './CompletionTypes';
 import CypherKeywords from '../lang/CypherKeywords';
+import { TreeUtils } from '../util/TreeUtils';
 
 export const KEYWORD_ITEMS = CypherKeywords.map(keyword => ({
   type: CompletionTypes.KEYWORD,
@@ -166,14 +167,14 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
           postfix: null,
         })),
       /*
-      [CompletionTypes.PARAMETER]: () => (referenceProviders[CypherTypes.PARAMETER_NAME_CONTEXT] || this.emptyProvider)
-        .getNames()
-        .map(parameter => ({
-          type: CompletionTypes.PARAMETER,
-          view: parameter,
-          content: parameter,
-          postfix: null,
-        })),
+       [CompletionTypes.PARAMETER]: () => (referenceProviders[CypherTypes.PARAMETER_NAME_CONTEXT] || this.emptyProvider)
+       .getNames()
+       .map(parameter => ({
+       type: CompletionTypes.PARAMETER,
+       view: parameter,
+       content: parameter,
+       postfix: null,
+       })),
        */
     };
   }
@@ -229,7 +230,7 @@ export class AutoCompletion {
     const parent = element.parentCtx;
 
     // If element is whitespace
-    if (/\s+/.test(text)) {
+    if (/^\s+$/.test(text)) {
       return false;
     }
     // If element is opening bracket (e.g. start of relationship pattern)
@@ -254,5 +255,20 @@ export class AutoCompletion {
     }
 
     return true;
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  static calculateSmartReplaceRange(element, start, stop) {
+    // If we are in relationship type or label and we have error nodes in there.
+    // This means that we typed in just ':' and Antlr consumed other tokens in element
+    // In this case replace only ':'
+    if (element.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT
+      || element.constructor.name === CypherTypes.NODE_LABEL_CONTEXT) {
+      if (TreeUtils.hasErrorNode(element)) {
+        return { filterText: ':', start, stop: start };
+      }
+    }
+
+    return null;
   }
 }

@@ -284,13 +284,13 @@ relType : ':' SP? relTypeName ;
 
 relationshipTypes : relationshipType ( SP? '|' relationshipTypeOptionalColon )* ;
 
-relationshipType : ':' SP? relTypeName ;
+relationshipType : ':' relTypeName ;
 
-relationshipTypeOptionalColon : ':'? SP? relTypeName ;
+relationshipTypeOptionalColon : ':'? relTypeName ;
 
 nodeLabels : nodeLabel ( SP? nodeLabel )* ;
 
-nodeLabel : ':' SP? labelName ;
+nodeLabel : ':' labelName ;
 
 rangeLiteral : '*' SP? ( integerLiteral SP? )? ( '..' SP? ( integerLiteral SP? )? )? ;
 

@@ -155,15 +155,30 @@ export class CypherEditorSupport {
       from: { line, column },
       to: { line, column },
     };
+    let filter = null;
 
     const shouldBeReplaced = AutoCompletion.shouldBeReplaced(element);
     if (found && shouldBeReplaced) {
+      // There are number of situations where we need to be smarter than default behavior
       const { start, stop } = TreeUtils.getPosition(element);
-      replaceRange.from = this.positionConverter.toRelative(start);
-      replaceRange.to = this.positionConverter.toRelative(stop + 1);
+
+      const smartReplaceRange = AutoCompletion.calculateSmartReplaceRange(element, start, stop);
+      if (smartReplaceRange) {
+        replaceRange.from = this.positionConverter.toRelative(smartReplaceRange.start);
+        replaceRange.to = this.positionConverter.toRelative(smartReplaceRange.stop + 1);
+
+        if (smartReplaceRange.filterText) {
+          filter = smartReplaceRange.filterText;
+        }
+      } else {
+        replaceRange.from = this.positionConverter.toRelative(start);
+        replaceRange.to = this.positionConverter.toRelative(stop + 1);
+      }
     }
 
-    const filter = doFilter && found && shouldBeReplaced ? element.getText() : '';
+    if (filter === null) {
+      filter = doFilter && found && shouldBeReplaced ? element.getText() : '';
+    }
     return {
       items: this.completion.getItems(types, {
         filter,
