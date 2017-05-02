@@ -24,6 +24,7 @@ import * as CypherTypes from '../lang/CypherTypes';
 import * as CompletionTypes from './CompletionTypes';
 import CypherKeywords from '../lang/CypherKeywords';
 import { TreeUtils } from '../util/TreeUtils';
+import { StringUtils } from '../util/StringUtils';
 
 export const KEYWORD_ITEMS = CypherKeywords.map(keyword => ({
   type: CompletionTypes.KEYWORD,
@@ -203,7 +204,10 @@ export class AutoCompletion {
       .map(t => t.complete(types, query))
       .reduce((acc, items) => [...acc, ...items], [])
       .filter(completionItemFilter);
-
+    if (text[0] === ':') {
+      const newText = StringUtils.removeFistSymbol(text);
+      return fuzzySearch(list, newText, { key: 'view' });
+    }
     if (text) {
       return fuzzySearch(list, text, { key: 'view' });
     }
