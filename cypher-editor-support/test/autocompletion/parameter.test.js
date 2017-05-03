@@ -26,29 +26,37 @@ describe('AutoCompletion - Parameter', () => {
     it('yields parameter name', () => {
       checkCompletionTypes('RETURN $▼a', true, [{ type: CompletionTypes.PARAMETER }]);
     });
+
+    it('yields parameter name w/o first char typed', () => {
+      checkCompletionTypes('RETURN ▼$', true, [{ type: CompletionTypes.PARAMETER }]);
+    });
+
+    it('yields parameter name with first char typed and both curly braces', () => {
+      checkCompletionTypes('RETURN {▼p}', true, [{ type: CompletionTypes.PARAMETER }]);
+    });
   });
 
   describe('without filters', () => {
-    xit('yields parameter name list', () => {
+    it('yields parameter name list', () => {
       const expected = {
         from: { line: 1, column: 14 },
         to: { line: 1, column: 15 },
         items: [
-          { type: 'parameter', view: 'b', content: 'b', postfix: null },
-          { type: 'parameter', view: 'a', content: 'a', postfix: null },
+          { type: 'parameter', view: 'param1', content: 'param1', postfix: null },
+          { type: 'parameter', view: 'param2', content: 'param2', postfix: null },
         ],
       };
       checkCompletion('RETURN {b} + $▼a', expected);
       checkCompletion('RETURN {b} + $a▼', expected);
     });
 
-    xit('yields parameter name list after first symbol', () => {
+    it('yields parameter name list after first symbol', () => {
       const expected = {
         from: { line: 1, column: 13 },
         to: { line: 1, column: 14 },
         items: [
-          { type: 'parameter', view: 'b', content: 'b', postfix: null },
-          { type: 'parameter', view: 'a', content: 'a', postfix: null },
+          { type: 'parameter', view: 'param1', content: 'param1', postfix: null },
+          { type: 'parameter', view: 'param2', content: 'param2', postfix: null },
         ],
       };
       checkCompletion('RETURN $b + {▼a}', expected);
@@ -57,12 +65,13 @@ describe('AutoCompletion - Parameter', () => {
   });
 
   describe('with filters', () => {
-    xit('yields parameter name list', () => {
+    it('yields parameter name list', () => {
       const expected = {
         from: { line: 1, column: 14 },
         to: { line: 1, column: 15 },
         items: [
-          { type: 'parameter', view: 'a', content: 'a', postfix: null },
+          { type: 'parameter', view: 'param1', content: 'param1', postfix: null },
+          { type: 'parameter', view: 'param2', content: 'param2', postfix: null },
         ],
       };
 
@@ -70,15 +79,16 @@ describe('AutoCompletion - Parameter', () => {
       checkCompletion('RETURN {b} + $▼a', expected, true);
     });
 
-    xit('yields legacy parameter name list', () => {
+    it('yields legacy parameter name list', () => {
       const expected = {
         from: { line: 1, column: 8 },
         to: { line: 1, column: 9 },
         items: [
-          { type: 'parameter', view: 'b', content: 'b', postfix: null },
+          { type: 'parameter', view: 'param1', content: 'param1', postfix: null },
+          { type: 'parameter', view: 'param2', content: 'param2', postfix: null },
         ],
       };
-      checkCompletion('RETURN {b▼}', expected, true);
+      checkCompletion('RETURN {p▼}', expected, true);
     });
   });
 });

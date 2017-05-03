@@ -27,6 +27,7 @@ const orderedCompletionRules = [
   rules.ruleVariableInExpressionPossibleFunction,
   rules.ruleLiteralEntry,
   rules.rulePropInMapLiteral,
+  rules.ruleParamStartsWithDollar,
   rules.ruleSpecificParent,
   rules.ruleNodePattern,
   rules.ruleRelationshipPattern,

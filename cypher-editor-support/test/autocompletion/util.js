@@ -26,6 +26,7 @@ export const schema = {
   labels: [':y', ':x'],
   relationshipTypes: [':rel1', ':rel2'],
   propertyKeys: ['prop1', 'prop2'],
+  parameters: ['param1', 'param2'],
   functions: [
     { name: 'toFloat', signature: 'expression' },
     { name: 'head', signature: 'expression' },

@@ -103,6 +103,7 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
         to: { line: 1, column: 10 },
         items: [
           { type: CompletionTypes.PROPERTY_KEY, view: 'prop1', content: 'prop1', postfix: null },
+          { type: CompletionTypes.PARAMETER, view: 'param1', content: 'param1', postfix: null },
         ],
       };
       checkCompletion('MATCH ({p1▼ });', expected, true);
@@ -115,6 +116,8 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
         items: [
           { type: CompletionTypes.PROPERTY_KEY, view: 'prop1', content: 'prop1', postfix: null },
           { type: CompletionTypes.PROPERTY_KEY, view: 'prop2', content: 'prop2', postfix: null },
+          { type: CompletionTypes.PARAMETER, view: 'param1', content: 'param1', postfix: null },
+          { type: CompletionTypes.PARAMETER, view: 'param2', content: 'param2', postfix: null },
         ],
       };
       checkCompletion('MATCH (n {▼', expected, true);
@@ -125,6 +128,18 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
         from: { line: 1, column: 12 },
         to: { line: 1, column: 12 },
         items: [
+          {
+            type: CompletionTypes.PARAMETER,
+            view: 'param1',
+            content: 'param1',
+            postfix: null
+          },
+          {
+            type: CompletionTypes.PARAMETER,
+            view: 'param2',
+            content: 'param2',
+            postfix: null
+          },
           {
             content: 'prop1',
             postfix: null,
@@ -160,6 +175,18 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
         from: { line: 1, column: 12 },
         to: { line: 1, column: 12 },
         items: [
+          {
+            type: CompletionTypes.PARAMETER,
+            view: 'param1',
+            content: 'param1',
+            postfix: null
+          },
+          {
+            type: CompletionTypes.PARAMETER,
+            view: 'param2',
+            content: 'param2',
+            postfix: null
+          },
           {
             content: 'prop1',
             postfix: null,
