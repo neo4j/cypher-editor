@@ -30,6 +30,7 @@ import rulePropInMapLiteral from './rulePropInMapLiteral';
 import ruleLiteralEntry from './ruleLiteralEntry';
 import ruleConsoleCommandSubcommands from './ruleConsoleCommandSubcommands';
 import ruleNoop from './ruleNoop';
+import ruleParameter from './ruleParameter';
 
 export {
   ruleSpecificParent,
@@ -44,4 +45,5 @@ export {
   ruleLiteralEntry,
   ruleConsoleCommandSubcommands,
   ruleNoop,
+  ruleParameter,
 };

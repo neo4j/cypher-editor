@@ -24,6 +24,7 @@ import * as rules from './rules';
 // Rules are sorted starting with specific ones, and finishing with more generic ones.
 const orderedCompletionRules = [
   rules.ruleNoop,
+  rules.ruleParameter,
   rules.ruleVariableInExpressionPossibleFunction,
   rules.ruleLiteralEntry,
   rules.rulePropInMapLiteral,

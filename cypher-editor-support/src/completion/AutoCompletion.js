@@ -142,6 +142,13 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
           content: consoleCommandName.name,
           postfix: consoleCommandName.description || null,
         })),
+      [CompletionTypes.PARAMETER]: (schema.parameters || [])
+        .map(parameter => ({
+          type: CompletionTypes.PARAMETER,
+          view: parameter,
+          content: parameter,
+          postfix: null,
+        })),
     });
     this.schema = schema;
   }
@@ -249,7 +256,9 @@ export class AutoCompletion {
     if (text === '{') {
       return false;
     }
-
+    if (text === '$') {
+      return false;
+    }
     if (text === ':' && parent != null && parent.constructor.name === CypherTypes.MAP_LITERAL_ENTRY) {
       return false;
     }

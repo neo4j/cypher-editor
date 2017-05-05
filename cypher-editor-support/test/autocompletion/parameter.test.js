@@ -26,6 +26,10 @@ describe('AutoCompletion - Parameter', () => {
     it('yields parameter name', () => {
       checkCompletionTypes('RETURN $▼a', true, [{ type: CompletionTypes.PARAMETER }]);
     });
+
+    it('yields parameter name w/o first char typed', () => {
+      checkCompletionTypes('RETURN ▼$', true, [{ type: CompletionTypes.PARAMETER }]);
+    });
   });
 
   describe('without filters', () => {
