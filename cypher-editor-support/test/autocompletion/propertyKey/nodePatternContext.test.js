@@ -82,6 +82,29 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
     it('yields property key after key and first char typed with closing curly brace', () => {
       checkCompletionTypes('MATCH (n {key: 1, ▼k});', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
     });
+    xit('yields property key with no first char typed inside map literal with backtick', () => {
+      checkCompletionTypes('MATCH (n {`▼});', true, [
+        { type: CompletionTypes.PROPERTY_KEY },
+      ]);
+    });
+
+    xit('yields property key with first char typed inside map literal with backtick', () => {
+      checkCompletionTypes('MATCH (n {`p▼});', true, [
+        { type: CompletionTypes.PROPERTY_KEY },
+      ]);
+    });
+
+    xit('yields property key with no first char typed inside map literal with both backticks', () => {
+      checkCompletionTypes('MATCH (n {`▼`});', true, [
+        { type: CompletionTypes.PROPERTY_KEY },
+      ]);
+    });
+
+    xit('yields property key with first char typed inside map literal with both backticks', () => {
+      checkCompletionTypes('MATCH ({`p▼`});', true, [
+        { type: CompletionTypes.PROPERTY_KEY },
+      ]);
+    });
   });
 
   describe('autocompletion', () => {
@@ -97,11 +120,64 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
       checkCompletion('MATCH ({▼});', expected, true);
     });
 
+    xit('yields property key list from within map with first backtick opened', () => {
+      const expected = {
+        from: { line: 1, column: 8 },
+        to: { line: 1, column: 8 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop2`', content: '`prop2`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH ({`▼});', expected, true);
+    });
+
+    xit('yields property key list from within map with both backticks', () => {
+      const expected = {
+        from: { line: 1, column: 8 },
+        to: { line: 1, column: 11 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop2`', content: '`prop2`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH ({`p▼`});', expected, true);
+    });
+
+    xit('yields property key list from within map with both backticks and no first char typed', () => {
+      const expected = {
+        from: { line: 1, column: 8 },
+        to: { line: 1, column: 11 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop2`', content: '`prop2`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH ({`▼`});', expected, true);
+    });
+
+    xit('yields property key list from within map with both backticks and first char typed', () => {
+      const expected = {
+        from: { line: 1, column: 8 },
+        to: { line: 1, column: 11 },
+        items: [
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop1`', content: '`prop1`', postfix: null },
+          { type: CompletionTypes.PROPERTY_KEY, view: '`prop2`', content: '`prop2`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH ({`p▼`});', expected, true);
+    });
     it('yields property keys and param in properties context', () => {
       const expected = {
         from: { line: 1, column: 8 },
         to: { line: 1, column: 10 },
         items: [
+          {
+            content: 'p1',
+            postfix: null,
+            type: 'parameter',
+            view: 'p1',
+          },
           { type: CompletionTypes.PROPERTY_KEY, view: 'prop1', content: 'prop1', postfix: null },
         ],
       };

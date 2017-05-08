@@ -42,6 +42,41 @@ describe('AutoCompletion - Node pattern', () => {
       ]);
     });
 
+    xit('yields label in backticks w/o first char present', () => {
+      checkCompletionTypes('MATCH (a:`▼', true, [{ type: CompletionTypes.LABEL }]);
+    });
+
+    xit('yields label in backticks with first char present', () => {
+      checkCompletionTypes('MATCH (a:`b▼', true, [{ type: CompletionTypes.LABEL }]);
+    });
+
+    it('yields label in backticks with both backticks typed', () => {
+      checkCompletionTypes('MATCH (a:`▼`', true, [{ type: CompletionTypes.LABEL }]);
+    });
+    xit('yields label and variable if beginning of node pattern in chain with open backtick', () => {
+      checkCompletionTypes('MATCH (`n`) MATCH ()--()--(▼`', true, [
+        { type: CompletionTypes.VARIABLE },
+        { type: CompletionTypes.LABEL },
+      ]);
+    });
+
+    it('yields label and variable if beginning of node pattern in chain w/o backtick', () => {
+      checkCompletionTypes('MATCH (`n`) MATCH ()--()--▼(', true, [
+        { type: CompletionTypes.VARIABLE },
+        { type: CompletionTypes.LABEL },
+      ]);
+    });
+    xit('yields label type if colon and backtick is present', () => {
+      checkCompletionTypes('MATCH (`n`) MATCH (:▼`', true, [
+        { type: CompletionTypes.LABEL },
+      ]);
+    });
+
+    it('yields label type if only colon is present w/o backtick', () => {
+      checkCompletionTypes('MATCH (n) MATCH (▼:', true, [
+        { type: CompletionTypes.LABEL },
+      ]);
+    });
     it('yields label and variable if beginning of node pattern in chain', () => {
       checkCompletionTypes('MATCH (n) MATCH ()--()--▼(', true, [
         { type: CompletionTypes.VARIABLE },
@@ -55,6 +90,11 @@ describe('AutoCompletion - Node pattern', () => {
       ]);
     });
 
+    // it('yields label type if only colon is present', () => {
+    //   checkCompletionTypes('MATCH (n) MATCH (▼:', true, [
+    //     { type: CompletionTypes.LABEL },
+    //   ]);
+    // });
     it('yields label type when multiple labels', () => {
       checkCompletionTypes('MATCH (:SomeLabel▼:', true, [
         { type: CompletionTypes.LABEL },
@@ -68,8 +108,8 @@ describe('AutoCompletion - Node pattern', () => {
         from: { line: 1, column: 18 },
         to: { line: 1, column: 20 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -79,11 +119,11 @@ describe('AutoCompletion - Node pattern', () => {
 
     it('yields label list if only colon is present', () => {
       const expected = {
-        from: { line: 1, column: 18 },
+        from: { line: 1, column: 19 },
         to: { line: 1, column: 19 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -92,11 +132,11 @@ describe('AutoCompletion - Node pattern', () => {
 
     it('yields label list if only colon is present and closing brace present', () => {
       const expected = {
-        from: { line: 1, column: 8 },
+        from: { line: 1, column: 9 },
         to: { line: 1, column: 9 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -109,8 +149,8 @@ describe('AutoCompletion - Node pattern', () => {
         to: { line: 1, column: 17 },
         items: [
           { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -124,7 +164,8 @@ describe('AutoCompletion - Node pattern', () => {
         from: { line: 1, column: 18 },
         to: { line: 1, column: 20 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -135,24 +176,24 @@ describe('AutoCompletion - Node pattern', () => {
 
     it('yields label list if only color is present', () => {
       const expected = {
-        from: { line: 1, column: 18 },
+        from: { line: 1, column: 19 },
         to: { line: 1, column: 19 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
-      checkCompletion('MATCH (n) MATCH (a▼:', expected, true);
+      checkCompletion('MATCH (n) MATCH (a:▼', expected, true);
     });
 
     it('yields label list if only colon is present and closing brace present', () => {
       const expected = {
-        from: { line: 1, column: 8 },
+        from: { line: 1, column: 9 },
         to: { line: 1, column: 9 },
         items: [
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
@@ -165,12 +206,23 @@ describe('AutoCompletion - Node pattern', () => {
         to: { line: 1, column: 17 },
         items: [
           { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':y', content: ':y', postfix: null },
-          { type: CompletionTypes.LABEL, view: ':x', content: ':x', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'y', content: 'y', postfix: null },
+          { type: CompletionTypes.LABEL, view: 'x', content: 'x', postfix: null },
         ],
       };
 
       checkCompletion('MATCH (a) MATCH (▼', expected, true);
+    });
+    xit('yields label list if color and open backtick is present', () => {
+      const expected = {
+        from: { line: 1, column: 18 },
+        to: { line: 1, column: 19 },
+        items: [
+          { type: CompletionTypes.LABEL, view: ':`y`', content: ':`y`', postfix: null },
+          { type: CompletionTypes.LABEL, view: ':`x`', content: ':`x`', postfix: null },
+        ],
+      };
+      checkCompletion('MATCH (n) MATCH (a:▼`', expected, true);
     });
   });
 });

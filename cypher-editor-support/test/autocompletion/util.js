@@ -23,7 +23,7 @@ import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 import { CompletionTypeResolver } from '../../src/completion/CompletionTypeResolver';
 
 export const schema = {
-  labels: [':y', ':x'],
+  labels: ['y', 'x'],
   relationshipTypes: [':rel1', ':rel2'],
   propertyKeys: ['prop1', 'prop2'],
   functions: [
