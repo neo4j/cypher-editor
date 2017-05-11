@@ -3,11 +3,35 @@ Cypher Editor Support
 
 The package provides all the core functionality that is needed to power Cypher integration in editors.
 
-### Development
+### Getting started
+Ensure that yarn is installed globally: 
 
-1. Ensure that yarn is installed globally: `npm install -g yarn`
-2. Install project dependencies: `yarn install`
+```sh
+# npm install -g yarn
+```
+Go to cypher-codemirror directory
 
-To run tests: `yarn test`  
-To run linter and automatically fix error: `yarn eslint-fix`  
-To create ES5 compatible build: `yarn build`
+```sh
+$ cd cypher-codemirror
+```
+
+Install project dependencies
+```sh
+# yarn install
+```
+
+Start development server
+```sh
+# yarn start
+```
+By default your development server will start on `localhost:8080`
+
+### Scripts
+
+| Command | Description |
+| --- | --- |
+| `yarn install` | Install project dependencies |
+| `yarn start` | Run development server |
+| `yarn build` | Create ES5 compatible build |
+| `yarn test` | Run tests |
+| `yarn eslint-fix` | Run linter and automatically fix error |
