@@ -5,7 +5,9 @@ The goal of this project is to provide feature-rich support
 of [Cypher](http://www.opencypher.org/) query language in
 JavaScript-based editors. 
 
-It includes, but not limited to functionality such as:
+![neo4j-browser](https://cloud.githubusercontent.com/assets/24562497/25952124/6942acb6-3668-11e7-8323-05802debdefc.png)
+
+### Key Features
 
 * Syntax highlight
 * Error reporting
@@ -14,8 +16,26 @@ It includes, but not limited to functionality such as:
 ### Supported editors
 
 * [CodeMirror](cypher-codemirror/)
+* [Cypher-editor](cypher-editor-support)
 
-### Cypher editor support
 
-[Cypher editor support](cypher-editor-support/) package provides all the core
-functionality that is needed to power Cypher integration in editors.
+### Prerequisites
+
+You will need **node.js** and **yarn** to be installed in your system.
+
+### Project structure
+
+    cypher-editor
+    ├── cypher-codemirror     # Cypher Editor Support integration with codemirror
+    ├── cypher-editor-support # Provides core functionality for Cypher integration in editors
+    └── tools                 # Useful scripts
+
+### Documentation
+Will be here very soon 
+
+### Contributing
+Interested in contributing? Check out [Contributing.MD](CONTRIBUTING.md)
+
+### License
+
+This project is licensed under the GNU License - see the [GNU General Public License](cypher-editor-support/LICENSE.md) file for details.
