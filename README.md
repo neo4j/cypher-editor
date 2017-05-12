@@ -9,9 +9,9 @@ JavaScript-based editors.
 
 ### Key Features
 
-* Syntax highlight
-* Error reporting
-* Autocompletion
+* Syntax highlighting
+* Auto-complete for labels, relationship types, properties and variables
+* Command auto-complete
 
 ### Supported editors
 
@@ -34,8 +34,8 @@ You will need **node.js** and **yarn** to be installed in your system.
 Will be here very soon 
 
 ### Contributing
-Interested in contributing? Check out [Contributing.MD](CONTRIBUTING.md)
+Interested in contributing? Check out [Contributing instructions](CONTRIBUTING.md).
 
 ### License
 
-This project is licensed under the GNU License - see the [GNU General Public License](cypher-editor-support/LICENSE.md) file for details.
+This project is licensed under the GNU License - see the [GNU General Public License](LICENSE) file for details.
