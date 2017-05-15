@@ -7,7 +7,7 @@ Package provides Cypher Editor Support integration with [CodeMirror](https://cod
 Ensure that yarn is installed globally: 
 
 ```sh
-# npm install -g yarn
+$ npm install -g yarn
 ```
 Go to cypher-codemirror directory
 
@@ -17,14 +17,14 @@ $ cd cypher-codemirror
 
 Install project dependencies
 ```sh
-# yarn install
+$ yarn install
 ```
 
 Start development server
 ```sh
-# yarn start
+$ yarn start
 ```
-By default your development server will start on `localhost:8080`
+By default your development server will start on `http://localhost:8080`
 
 ### Scripts
 
