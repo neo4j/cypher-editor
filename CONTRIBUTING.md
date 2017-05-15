@@ -12,11 +12,11 @@ top of things.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
 * Fork the repository on GitHub.
-* [Make necessary changes](##Making Changes).
+* [Make necessary changes](https://github.com/neo4j-contrib/cypher-editor/blob/project_documentation/CONTRIBUTING.md#making-changes).
 * Write tests to ensure that changes do not broke anything.
 * Run _all_ the tests.
 * Run eslint to check your codestyle.
-* [Push to repository](##Submitting Changes).
+* [Push to repository](https://github.com/neo4j-contrib/cypher-editor/blob/project_documentation/CONTRIBUTING.md#submitting-changes).
 * [Make a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
 ## Making Changes 
