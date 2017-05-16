@@ -67,9 +67,9 @@ export const neo4jSchema = {
           commands: [
             { name: 'list', description: 'listdesc' },
             { name: 'add' },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     { name: ':schema' },
     { name: ':history' },
@@ -94,6 +94,11 @@ export const neo4jSchema = {
     ':REFERRED_TO',
     ':SERVES_ON',
     ':DEALS_WITH',
+  ],
+  parameters: [
+    'age',
+    'name',
+    'surname',
   ],
   propertyKeys: [
     'bioguideID',

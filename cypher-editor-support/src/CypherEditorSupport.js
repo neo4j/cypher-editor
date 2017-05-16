@@ -161,7 +161,6 @@ export class CypherEditorSupport {
     if (found && shouldBeReplaced) {
       // There are number of situations where we need to be smarter than default behavior
       const { start, stop } = TreeUtils.getPosition(element);
-
       const smartReplaceRange = AutoCompletion.calculateSmartReplaceRange(element, start, stop);
       if (smartReplaceRange) {
         replaceRange.from = this.positionConverter.toRelative(smartReplaceRange.start);

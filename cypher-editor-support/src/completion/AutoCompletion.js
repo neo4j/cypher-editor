@@ -142,6 +142,13 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
           content: consoleCommandName.name,
           postfix: consoleCommandName.description || null,
         })),
+      [CompletionTypes.PARAMETER]: (schema.parameters || [])
+        .map(parameter => ({
+          type: CompletionTypes.PARAMETER,
+          view: parameter,
+          content: parameter,
+          postfix: null,
+        })),
     });
     this.schema = schema;
   }
@@ -166,16 +173,6 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
           content: name,
           postfix: null,
         })),
-      /*
-       [CompletionTypes.PARAMETER]: () => (referenceProviders[CypherTypes.PARAMETER_NAME_CONTEXT] || this.emptyProvider)
-       .getNames()
-       .map(parameter => ({
-       type: CompletionTypes.PARAMETER,
-       view: parameter,
-       content: parameter,
-       postfix: null,
-       })),
-       */
     };
   }
 
@@ -195,6 +192,7 @@ export class AutoCompletion {
 
   getItems(types, { query = null, filter = '' }) {
     const text = filter.toLowerCase();
+    const filteredText = AutoCompletion.filterText(text);
 
     const completionItemFilter = () => true;
 
@@ -204,6 +202,9 @@ export class AutoCompletion {
       .reduce((acc, items) => [...acc, ...items], [])
       .filter(completionItemFilter);
 
+    if (filteredText) {
+      return fuzzySearch(list, filteredText, { key: 'view' });
+    }
     if (text) {
       return fuzzySearch(list, text, { key: 'view' });
     }
@@ -249,12 +250,20 @@ export class AutoCompletion {
     if (text === '{') {
       return false;
     }
-
+    if (text === '$') {
+      return false;
+    }
     if (text === ':' && parent != null && parent.constructor.name === CypherTypes.MAP_LITERAL_ENTRY) {
       return false;
     }
 
     return true;
+  }
+
+  static filterText(text) {
+    if (text.startsWith('$')) {
+      return text.slice(1);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
