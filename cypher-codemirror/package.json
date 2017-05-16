@@ -24,7 +24,7 @@
     "build-css-completion": "postcss -c postcss.config.js -o dist/cypher-codemirror-completion.css src/css/completion.css",
     "build-css-editor": "postcss -c postcss.config.js -o dist/cypher-codemirror-editor.css src/css/editor.css",
     "build-css-syntax": "postcss -c postcss.config.js -o dist/cypher-codemirror-syntax.css src/css/syntax.css",
-    "build-demo": "rm -rf demo/ && npm run build-demo-react && npm run build-demo-vanilla && cp dev/index.html demo/index.html",
+    "build-demo": "rm -rf demo/ && npm run build-demo-react && cp dev/index.html demo/index.html",
     "build-demo-react": "webpack --config webpack.demo-react.config.js",
     "build-demo-vanilla": "npm run build && webpack --config webpack.demo-vanilla.config.js && cp dist/* demo/vanilla/",
     "eslint": "eslint src/**/**.js dev/**/**.js",
