@@ -38,7 +38,7 @@ MATCH (variable {propKey: 1})
 SET variable.propKey = 1;`,
   mode: 'application/x-cypher-query',
   indentWithTabs: true,
-  smartIndent: true,
+  smartIndent: false,
   lineNumbers: true,
   matchBrackets: true,
   autofocus: true,
@@ -52,6 +52,11 @@ SET variable.propKey = 1;`,
     alignWithWord: true,
     async: true,
   },
+  gutters: ['cypher-hints'],
+  lineWrapping: true,
+  autoCloseBrackets: {
+    explode: ''
+  }
 };
 
 export const neo4jSchema = {
