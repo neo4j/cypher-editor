@@ -70,7 +70,7 @@ export class CypherEditorSupport {
     this.input = input;
     this.parseTree = parser.cypher();
     this.parseErrors = errorListener.errors;
-
+    this.removeErrListenerForConsoleCommands();
     const { queries, indexes } = referencesListener;
 
     this.referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce((acc, t) => ({
@@ -124,6 +124,15 @@ export class CypherEditorSupport {
       : null;
 
     return this.referencesProviders[type].getReferences(e.getText(), query);
+  }
+
+  removeErrListenerForConsoleCommands() {
+    const element = this.getElement(this.parseTree);
+    const consoleCommandCtx = TreeUtils.findParent(
+      element, CypherTypes.CONSOLE_COMMAND_CONTEXT);
+    if (consoleCommandCtx) {
+      this.parseErrors = [];
+    }
   }
 
   getCompletionInfo(line, column) {
