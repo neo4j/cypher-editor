@@ -201,7 +201,7 @@ procedureInvocationBody : namespace procedureName ;
 
 procedureArguments : '(' SP? expression? ( SP? ',' SP? expression )* SP? ')' ;
 
-procedureResults : YIELD SP procedureResult ( SP? ',' SP? procedureResult )* ;
+procedureResults : YIELD SP procedureResult ( SP? ',' SP? procedureResult )* (SP where)?;
 
 procedureResult : aliasedProcedureResult
                 | simpleProcedureResult ;
@@ -536,7 +536,7 @@ doubleLiteral : ExponentDecimalReal
               | RegularDecimalReal
               ;
 
-ExponentDecimalReal : ( ( Digit )+ | ( ( Digit )+ '.' ( Digit )+ ) | ( '.' ( Digit )+ ) ) ( ( 'E' | 'e' ) | ( 'E' | 'e' ) ) '-'? ( Digit )+ ;
+ExponentDecimalReal : ( ( Digit )+ | ( ( Digit )+ '.' ( Digit )+ ) | ( '.' ( Digit )+ ) ) ( ( 'E' | 'e' ) ) '-'? ( Digit )+ ;
 
 RegularDecimalReal : ( Digit )* '.' ( Digit )+ ;
 

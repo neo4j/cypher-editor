@@ -31,4 +31,9 @@ describe('Parser - Call clause', () => {
     const b = new CypherEditorSupport('CALL procedure');
     expect(b.parseErrors).to.deep.equal([]);
   });
+
+  it('should successfully parse call with where after yield', () => {
+    const b = new CypherEditorSupport('CALL procedure() YIELD name WHERE true RETURN name;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
 });
