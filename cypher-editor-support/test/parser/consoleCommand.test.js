@@ -96,4 +96,9 @@ describe('Parser - Console commands', () => {
     const b = new CypherEditorSupport(':PUT /db/data/node/198/properties/foo "Delia"');
     expect(b.parseErrors).to.deep.equal([]);
   });
+
+  it('should not report error in invalid console command', () => {
+    const b = new CypherEditorSupport(':PUT ao*51 fagas 8(!');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
 });
