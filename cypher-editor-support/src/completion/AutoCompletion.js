@@ -62,15 +62,15 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
 
   static providers = {
     [CompletionTypes.PROCEDURE_OUTPUT]: (schema, typeData) => {
-      for (const e of schema.procedures) {
-        if (e.name === typeData.name && e.returnItems !== []) {
-          return e.returnItems.map(({ name, signature }) => ({
-            type: CompletionTypes.PROCEDURE_OUTPUT,
-            view: name,
-            content: name,
-            postfix: ` :: ${signature}`,
-          }));
-        }
+      const findByName = e => e.name === typeData.name && e.returnItems !== [];
+      const procedure = _.find(schema.procedures, findByName);
+      if (procedure) {
+        return procedure.returnItems.map(({ name, signature }) => ({
+          type: CompletionTypes.PROCEDURE_OUTPUT,
+          view: name,
+          content: name,
+          postfix: ` :: ${signature}`,
+        }));
       }
       return [];
     },
@@ -79,7 +79,7 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
 
       const length = filterLastElement ? path.length - 1 : path.length;
       let currentLevel = schema.consoleCommands;
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < length; i += 1) {
         const foundCommand = _.find(currentLevel, ['name', path[i]]);
         if (foundCommand) {
           currentLevel = foundCommand.commands || [];
@@ -165,14 +165,15 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
   constructor(referenceProviders = {}) {
     super();
     this.providers = {
-      [CompletionTypes.VARIABLE]: query => (referenceProviders[CypherTypes.VARIABLE_CONTEXT] || this.emptyProvider)
-        .getNames(query)
-        .map(name => ({
-          type: CompletionTypes.VARIABLE,
-          view: name,
-          content: name,
-          postfix: null,
-        })),
+      [CompletionTypes.VARIABLE]:
+        query => (referenceProviders[CypherTypes.VARIABLE_CONTEXT] || this.emptyProvider)
+          .getNames(query)
+          .map(name => ({
+            type: CompletionTypes.VARIABLE,
+            view: name,
+            content: name,
+            postfix: null,
+          })),
     };
   }
 
@@ -182,7 +183,6 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
 }
 
 export class AutoCompletion {
-
   queryBased = null;
   schemaBased = null;
 
@@ -264,6 +264,7 @@ export class AutoCompletion {
     if (text.startsWith('$')) {
       return text.slice(1);
     }
+    return text;
   }
 
   // eslint-disable-next-line no-unused-vars

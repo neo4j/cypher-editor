@@ -62,7 +62,6 @@ class Index {
 }
 
 export class ReferencesListener extends CypherListener {
-
   queries = [];
   indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce((acc, t) => ({
     ...acc, [t]: new Index(t),
@@ -117,5 +116,4 @@ export class ReferencesListener extends CypherListener {
     }
     this.indexes[CypherTypes.PARAMETER_NAME_CONTEXT].add(ctx);
   }
-
 }

@@ -23,17 +23,39 @@ import * as CompletionTypes from '../CompletionTypes';
 import { TreeUtils } from '../../util/TreeUtils';
 
 const childToParentTypeMapping = {
-  [CypherTypes.VARIABLE_CONTEXT]: [{ type: CompletionTypes.VARIABLE }],
-  [CypherTypes.PARAMETER_NAME_CONTEXT]: [{ type: CompletionTypes.PARAMETER }],
-  [CypherTypes.PROPERTY_KEY_NAME_CONTEXT]: [{ type: CompletionTypes.PROPERTY_KEY }],
-  [CypherTypes.FUNCTION_NAME_CONTEXT]: [{ type: CompletionTypes.FUNCTION_NAME }],
-  [CypherTypes.PROCEDURE_NAME_CONTEXT]: [{ type: CompletionTypes.PROCEDURE_NAME }],
-  [CypherTypes.NODE_LABEL_CONTEXT]: [{ type: CompletionTypes.LABEL }],
-  [CypherTypes.RELATIONSHIP_TYPE_CONTEXT]: [{ type: CompletionTypes.RELATIONSHIP_TYPE }],
-  [CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT]: [{ type: CompletionTypes.RELATIONSHIP_TYPE }],
-  [CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT]: [{ type: CompletionTypes.CONSOLE_COMMAND_NAME }],
-  [CypherTypes.NODE_LABELS_CONTEXT]: [{ type: CompletionTypes.LABEL }],
-  [CypherTypes.RELATIONSHIP_TYPES_CONTEXT]: [{ type: CompletionTypes.RELATIONSHIP_TYPE }],
+  [CypherTypes.VARIABLE_CONTEXT]: [
+    { type: CompletionTypes.VARIABLE },
+  ],
+  [CypherTypes.PARAMETER_NAME_CONTEXT]: [
+    { type: CompletionTypes.PARAMETER },
+  ],
+  [CypherTypes.PROPERTY_KEY_NAME_CONTEXT]: [
+    { type: CompletionTypes.PROPERTY_KEY },
+  ],
+  [CypherTypes.FUNCTION_NAME_CONTEXT]: [
+    { type: CompletionTypes.FUNCTION_NAME },
+  ],
+  [CypherTypes.PROCEDURE_NAME_CONTEXT]: [
+    { type: CompletionTypes.PROCEDURE_NAME },
+  ],
+  [CypherTypes.NODE_LABEL_CONTEXT]: [
+    { type: CompletionTypes.LABEL },
+  ],
+  [CypherTypes.RELATIONSHIP_TYPE_CONTEXT]: [
+    { type: CompletionTypes.RELATIONSHIP_TYPE },
+  ],
+  [CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT]: [
+    { type: CompletionTypes.RELATIONSHIP_TYPE },
+  ],
+  [CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT]: [
+    { type: CompletionTypes.CONSOLE_COMMAND_NAME },
+  ],
+  [CypherTypes.NODE_LABELS_CONTEXT]: [
+    { type: CompletionTypes.LABEL },
+  ],
+  [CypherTypes.RELATIONSHIP_TYPES_CONTEXT]: [
+    { type: CompletionTypes.RELATIONSHIP_TYPE },
+  ],
 };
 
 // Check that element is inside specific parent context

@@ -30,13 +30,12 @@ function traverse(element, callback) {
   if (c === 0) {
     return;
   }
-  for (let i = 0; i < c; i++) {
+  for (let i = 0; i < c; i += 1) {
     traverse(element.getChild(i), callback);
   }
 }
 
 export class CypherSyntaxHighlight {
-
   static process(parseTree, callback) {
     traverse(parseTree, (e) => {
       const { start, stop } = TreeUtils.getPosition(e) || { start: 0, stop: 0 };

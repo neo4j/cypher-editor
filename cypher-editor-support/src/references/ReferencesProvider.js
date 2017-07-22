@@ -19,7 +19,6 @@
  */
 
 export class ReferencesProvider {
-
   queries = [];
   index = {};
 
@@ -49,5 +48,4 @@ export class ReferencesProvider {
     const pos = this.queries.indexOf(query);
     return this.index.namesByQuery[pos] || [];
   }
-
 }

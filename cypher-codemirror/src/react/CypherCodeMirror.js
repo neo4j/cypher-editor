@@ -21,6 +21,26 @@
 import * as React from 'react';
 import { createCypherEditor } from '../codemirror-cypher';
 
+function triggerAutocompletion(cm, changed) {
+  if (changed.text.length !== 1) {
+    return;
+  }
+
+  const text = changed.text[0];
+  const shouldTriggerAutocompletion = text === '.' ||
+    text === ':' ||
+    text === '[]' ||
+    text === '()' ||
+    text === '{}' ||
+    text === '[' ||
+    text === '(' ||
+    text === '{' ||
+    text === '$';
+  if (shouldTriggerAutocompletion) {
+    cm.execCommand('autocomplete');
+  }
+}
+
 export default class CypherCodeMirror extends React.Component {
 
   constructor(props) {
@@ -42,7 +62,7 @@ export default class CypherCodeMirror extends React.Component {
     const { editor, editorSupport } = createCypherEditor(this.input, this.settings);
     this.editor = editor;
     this.editorSupport = editorSupport;
-    this.editor.on('change', this.triggerAutocompletion.bind(this));
+    this.editor.on('change', triggerAutocompletion);
     this.editorSupport.setSchema(this.schema);
   }
 
@@ -59,30 +79,10 @@ export default class CypherCodeMirror extends React.Component {
     }
   }
 
-  triggerAutocompletion(cm, changed) {
-    if (changed.text.length !== 1) {
-      return;
-    }
-
-    const text = changed.text[0];
-    const triggerAutocompletion = text === '.' ||
-      text === ':' ||
-      text === '[]' ||
-      text === '()' ||
-      text === '{}' ||
-      text === '[' ||
-      text === '(' ||
-      text === '{' ||
-      text === '$'
-    if (triggerAutocompletion) {
-      cm.execCommand('autocomplete');
-    }
-  }
-
   render() {
     const setInput = (input) => {
       this.input = input;
     };
-    return <div className="Codemirror-Container" ref={setInput}/>;
+    return <div className="Codemirror-Container" ref={setInput} />;
   }
 }

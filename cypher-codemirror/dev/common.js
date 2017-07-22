@@ -55,8 +55,8 @@ SET variable.propKey = 1;`,
   gutters: ['cypher-hints'],
   lineWrapping: true,
   autoCloseBrackets: {
-    explode: ''
-  }
+    explode: '',
+  },
 };
 
 export const neo4jSchema = {

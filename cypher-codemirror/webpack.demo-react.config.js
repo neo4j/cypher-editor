@@ -25,7 +25,7 @@ const settings = require('./webpack.common');
 module.exports = {
   entry: './dev/react/index.js',
   output: {
-    filename: `cypher-codemirror-demo-react.js`,
+    filename: 'cypher-codemirror-demo-react.js',
     path: path.resolve(__dirname, 'demo', 'react'),
   },
   module: {

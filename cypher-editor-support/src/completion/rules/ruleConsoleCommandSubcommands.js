@@ -43,18 +43,21 @@ export default (element) => {
   }
 
   // Find current parameter or space
-  const currentElement = TreeUtils.findParent(element, CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT) || element;
+  const currentElement = TreeUtils
+    .findParent(element, CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT) || element;
 
   const path = [];
   let currentElementInParameter = false;
 
   // Iterate over parameters, and stop when we found current one.
-  for (const child of consoleCommand.children) {
+  for (let i = 0; i < consoleCommand.children.length; i += 1) {
+    const child = consoleCommand.children[i];
     if (child.constructor.name === CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
       path.push(child.getText());
     }
     if (child.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT) {
-      for (const parameterChild of child.children) {
+      for (let j = 0; j < child.children.length; j += 1) {
+        const parameterChild = child.children[j];
         if (parameterChild.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT) {
           path.push(parameterChild.getText());
           currentElementInParameter = true;

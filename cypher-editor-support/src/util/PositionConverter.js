@@ -22,7 +22,7 @@ export class PositionConverter {
   newLines = [];
 
   constructor(input) {
-    for (let i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i += 1) {
       if (input[i] === '\n') {
         this.newLines.push(i);
       }
@@ -34,7 +34,7 @@ export class PositionConverter {
   }
 
   toRelative(abs) {
-    for (let i = this.newLines.length - 1; i >= 0; i--) {
+    for (let i = this.newLines.length - 1; i >= 0; i -= 1) {
       const column = abs - this.newLines[i];
       if (column >= 1) {
         return { line: i + 2, column: column - 1 };

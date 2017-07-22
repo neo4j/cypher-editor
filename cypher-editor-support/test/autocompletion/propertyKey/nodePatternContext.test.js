@@ -132,13 +132,13 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
             type: CompletionTypes.PARAMETER,
             view: 'param1',
             content: 'param1',
-            postfix: null
+            postfix: null,
           },
           {
             type: CompletionTypes.PARAMETER,
             view: 'param2',
             content: 'param2',
-            postfix: null
+            postfix: null,
           },
           {
             content: 'prop1',
@@ -179,13 +179,13 @@ describe('AutoCompletion - Property Key - Node pattern context', () => {
             type: CompletionTypes.PARAMETER,
             view: 'param1',
             content: 'param1',
-            postfix: null
+            postfix: null,
           },
           {
             type: CompletionTypes.PARAMETER,
             view: 'param2',
             content: 'param2',
-            postfix: null
+            postfix: null,
           },
           {
             content: 'prop1',

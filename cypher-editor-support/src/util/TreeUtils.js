@@ -19,7 +19,6 @@
  */
 
 export class TreeUtils {
-
   static findParent(pt, type) {
     let el = pt;
     while (true) { // eslint-disable-line no-constant-condition
@@ -56,7 +55,8 @@ export class TreeUtils {
     }
 
     if (element.children != null) {
-      for (const e of element.children) {
+      for (let i = 0; i < element.children.length; i += 1) {
+        const e = element.children[i];
         const result = TreeUtils.findChild(e, type);
         if (result != null) {
           return result;
@@ -96,7 +96,8 @@ export class TreeUtils {
     }
 
     if (element.children != null) {
-      for (const e of element.children) {
+      for (let i = 0; i < element.children.length; i += 1) {
+        const e = element.children[i];
         const childHasErrorNode = TreeUtils.hasErrorNode(e);
         if (childHasErrorNode) {
           return true;

@@ -39,7 +39,8 @@ const orderedCompletionRules = [
 ];
 
 function evaluateRules(element) {
-  for (const rule of orderedCompletionRules) {
+  for (let i = 0; i < orderedCompletionRules.length; i += 1) {
+    const rule = orderedCompletionRules[i];
     const types = rule(element);
     if (types.length > 0) {
       return types;
@@ -50,7 +51,6 @@ function evaluateRules(element) {
 }
 
 export class CompletionTypeResolver {
-
   static getTypes(element) {
     // If element is null, then no types
     if (element == null) {

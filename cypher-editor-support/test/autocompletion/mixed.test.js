@@ -54,16 +54,16 @@ describe('AutoCompletion - Mixed', () => {
         to: { line: 1, column: 0 },
         items: [
           {
-            content: "param1",
+            content: 'param1',
             postfix: null,
-            type: "parameter",
-            view: "param1",
+            type: 'parameter',
+            view: 'param1',
           },
           {
-            content: "param2",
+            content: 'param2',
             postfix: null,
-            type: "parameter",
-            view: "param2",
+            type: 'parameter',
+            view: 'param2',
           },
           {
             content: 'prop1',

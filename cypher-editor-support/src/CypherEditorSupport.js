@@ -99,7 +99,7 @@ export class CypherEditorSupport {
         return pt;
       }
 
-      for (let i = 0; i < c; i++) {
+      for (let i = 0; i < c; i += 1) {
         const e = getElement(pt.getChild(i));
         if (e != null) {
           return e;

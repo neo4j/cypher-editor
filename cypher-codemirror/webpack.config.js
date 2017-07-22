@@ -29,7 +29,7 @@ module.exports = {
   },
   devtool: 'source-map',
   output: {
-    filename: `[name].js`,
+    filename: '[name].js',
     library: 'CypherCodeMirror',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),

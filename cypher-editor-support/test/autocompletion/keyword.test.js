@@ -30,8 +30,8 @@ describe('AutoCompletion - Keyword', () => {
   describe('with filters', () => {
     it('yields keyword list', () => {
       const expected = {
-        from: { line: 1, column: 0 },
-        to: { line: 1, column: 2 },
+        from: { line: 1, column: 10 },
+        to: { line: 1, column: 12 },
         items: [
           { type: 'keyword', view: 'WHEN', content: 'WHEN', postfix: null },
           { type: 'keyword', view: 'WHERE', content: 'WHERE', postfix: null },
@@ -39,9 +39,9 @@ describe('AutoCompletion - Keyword', () => {
         ],
       };
 
-      checkCompletion('wH▼', expected, true);
-      checkCompletion('w▼H', expected, true);
-      checkCompletion('▼wH', expected, true);
+      checkCompletion('MATCH (n) wH▼', expected, true);
+      checkCompletion('MATCH (n) w▼H', expected, true);
+      checkCompletion('MATCH (n) ▼wH', expected, true);
     });
   });
 });

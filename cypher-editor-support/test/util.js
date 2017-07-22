@@ -49,7 +49,7 @@ export function reduceTree(pt) {
   const e = { ...reduceElement(pt), children: [] };
 
   const children = pt.getChildCount();
-  for (let i = 0; i < children; i++) {
+  for (let i = 0; i < children; i += 1) {
     e.children.push(reduceTree(pt.getChild(i)));
   }
 

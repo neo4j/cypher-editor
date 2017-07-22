@@ -25,8 +25,11 @@ export class ErrorListener extends antlr4.error.ErrorListener {
 
   // eslint-disable-next-line no-unused-vars
   syntaxError(rec, sym, line, col, msg, e) {
+    if (msg === "mismatched input '<EOF>' expecting {';', SP}") {
+        // suppress error about missing semicolon at the end of a query
+      return;
+    }
     if (msg === "missing ';' at '<EOF>'") {
-      // suppress error about missing semicolon at the end of a query
       return;
     }
     this.errors.push({ line, col, msg });
