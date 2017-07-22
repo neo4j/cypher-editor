@@ -161,7 +161,7 @@ createClause : CREATE SP? pattern ;
 
 createUniqueClause : CREATE SP UNIQUE SP? pattern ;
 
-setClause : SET SP? setItem ( ',' setItem )* ;
+setClause : SET SP? setItem ( SP? ',' SP? setItem )* ;
 
 setItem : ( propertyExpression SP? '=' SP? expression )
         | ( variable SP? '=' SP? expression )
