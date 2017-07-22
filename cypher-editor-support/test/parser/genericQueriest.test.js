@@ -28,6 +28,10 @@ const queries = [
   'SET a=a ,b=b',
   'SET a=a, b=b',
   'SET a=a , b=b',
+  'RETURN a ORDER BY a,b;',
+  'RETURN a ORDER BY a ,b;',
+  'RETURN a ORDER BY a, b;',
+  'RETURN a ORDER BY a , b;',
 ];
 
 describe('Parser - Generic queries', () => {

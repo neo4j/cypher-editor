@@ -212,7 +212,7 @@ simpleProcedureResult : procedureOutput ;
 
 procedureOutput : symbolicName ;
 
-order : ORDER SP BY SP sortItem ( ',' SP? sortItem )* ;
+order : ORDER SP BY SP sortItem ( SP? ',' SP? sortItem )* ;
 
 skip : L_SKIP SP expression ;
 
