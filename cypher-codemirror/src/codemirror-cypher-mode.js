@@ -92,7 +92,7 @@ CodeMirror.defineMode('cypher', (config) => {
     },
     token(stream, state) {
       if (stream.sol()) {
-        if (state.context && (state.context.align == null)) {
+        if (state.context && state.context.align == null) {
           state.context.align = false;
         }
         state.indent = stream.indentation();
@@ -101,7 +101,7 @@ CodeMirror.defineMode('cypher', (config) => {
         return null;
       }
       const style = state.tokenize(stream, state);
-      if (style !== 'comment' && state.context && (state.context.align == null) && state.context.type !== 'pattern') {
+      if (style !== 'comment' && state.context && state.context.align == null && state.context.type !== 'pattern') {
         state.context.align = true;
       }
       if (curPunc === '(') {
@@ -150,7 +150,9 @@ CodeMirror.modeExtensions.cypher = {
   autoFormatLineBreaks: (text) => {
     const lines = text.split('\n');
     const reProcessedPortion = /\s+\b(return|where|order by|match|with|skip|limit|create|delete|set)\b\s/g;
-    for (let i = 0; i < lines.length; i++) { lines[i] = lines[i].replace(reProcessedPortion, ' \n$1 ').trim(); }
+    for (let i = 0; i < lines.length; i++) {
+      lines[i] = lines[i].replace(reProcessedPortion, ' \n$1 ').trim();
+    }
     return lines.join('\n');
   },
 };
