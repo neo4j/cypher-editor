@@ -63,13 +63,19 @@ class Index {
 
 export class ReferencesListener extends CypherListener {
   queries = [];
-  indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce((acc, t) => ({
-    ...acc, [t]: new Index(t),
-  }), {});
+  queriesAndCommands = [];
+  indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
+    (acc, t) => ({
+      ...acc,
+      [t]: new Index(t),
+    }),
+    {},
+  );
 
   inConsoleCommand = false;
 
-  enterCypherConsoleCommand() {
+  enterCypherConsoleCommand(ctx) {
+    this.queriesAndCommands.push(ctx);
     this.inConsoleCommand = true;
   }
 
@@ -79,6 +85,7 @@ export class ReferencesListener extends CypherListener {
 
   enterCypherQuery(ctx) {
     this.queries.push(ctx);
+    this.queriesAndCommands.push(ctx);
     Object.keys(this.indexes).forEach(k => this.indexes[k].addQuery());
   }
 

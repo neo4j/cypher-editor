@@ -41,6 +41,7 @@ export class CypherEditorSupport {
   parseErrors = [];
   referencesProviders = {};
   completion = new AutoCompletion();
+  queriesAndCommands = [];
 
   constructor(input = '') {
     this.update(input);
@@ -71,8 +72,7 @@ export class CypherEditorSupport {
     this.parseTree = parser.cypher();
 
     const consoleCommandExists = () => {
-      const ctx = TreeUtils
-        .findChild(this.parseTree, CypherTypes.CONSOLE_COMMAND_CONTEXT);
+      const ctx = TreeUtils.findChild(this.parseTree, CypherTypes.CONSOLE_COMMAND_CONTEXT);
       return ctx != null;
     };
 
@@ -83,11 +83,16 @@ export class CypherEditorSupport {
       this.parseErrors = errorListener.errors;
     }
 
-    const { queries, indexes } = referencesListener;
+    const { queries, indexes, queriesAndCommands } = referencesListener;
+    this.queriesAndCommands = queriesAndCommands;
 
-    this.referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce((acc, t) => ({
-      ...acc, [t]: new ReferencesProvider(queries, indexes[t]),
-    }), {});
+    this.referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
+      (acc, t) => ({
+        ...acc,
+        [t]: new ReferencesProvider(queries, indexes[t]),
+      }),
+      {},
+    );
 
     this.completion.updateReferenceProviders(this.referencesProviders);
   }
@@ -102,7 +107,7 @@ export class CypherEditorSupport {
 
     function getElement(pt) {
       const pos = TreeUtils.getPosition(pt);
-      if (pos != null && ((abs < pos.start) || (abs > pos.stop))) {
+      if (pos != null && (abs < pos.start || abs > pos.stop)) {
         return null;
       }
 
@@ -118,7 +123,7 @@ export class CypherEditorSupport {
         }
       }
 
-      return (pos != null) ? pt : null;
+      return pos != null ? pt : null;
     }
 
     return getElement(this.parseTree);
@@ -131,9 +136,10 @@ export class CypherEditorSupport {
     }
 
     const type = e.constructor.name;
-    const query = type === CypherTypes.VARIABLE_CONTEXT
-      ? TreeUtils.findAnyParent(e, [CypherTypes.QUERY_CONTEXT])
-      : null;
+    const query =
+      type === CypherTypes.VARIABLE_CONTEXT
+        ? TreeUtils.findAnyParent(e, [CypherTypes.QUERY_CONTEXT])
+        : null;
 
     return this.referencesProviders[type].getReferences(e.getText(), query);
   }
