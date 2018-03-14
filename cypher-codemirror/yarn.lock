@@ -95,9 +95,9 @@ ansi-styles@^3.1.0:
   dependencies:
     color-convert "^1.0.0"
 
-antlr4@4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/antlr4/-/antlr4-4.6.0.tgz#0d7e8b4b4692ebf1d9470ae59cf627428bcc6dec"
+antlr4@4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/antlr4/-/antlr4-4.7.0.tgz#297f956ddc06f83397fc0990ecf2e0cf20bfbbee"
 
 anymatch@^1.3.0:
   version "1.3.0"
@@ -1592,11 +1592,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cypher-editor-support@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.0.4.tgz#c9b9f3d77d06ad734a09d1c0e646a6701ef9075f"
+cypher-editor-support@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.0.7.tgz#0d7e6b4fd00f6da8b8615a98cf657e3905e5f0b8"
   dependencies:
-    antlr4 "4.6.0"
+    antlr4 "4.7.0"
     fuzzaldrin "2.1.0"
     lodash "4.17.4"
 
