@@ -30,6 +30,7 @@
     "eslint": "eslint src/**/**.js dev/**/**.js",
     "eslint-fix": "eslint --fix src/**/**.js dev/**/**.js",
     "verify": "yarn eslint && yarn build",
+    "version": "yarn add cypher-editor-support@$npm_package_version",
     "prepublishOnly": "yarn verify"
   },
   "files": [
