@@ -5,7 +5,7 @@
     "cypher",
     "codemirror"
   ],
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-codemirror.js",
@@ -46,7 +46,7 @@
     "node": ">=8.2.0"
   },
   "dependencies": {
-    "cypher-editor-support": "1.0.7"
+    "cypher-editor-support": "1.0.8"
   },
   "peerDependencies": {
     "codemirror": "^5.25.0",
