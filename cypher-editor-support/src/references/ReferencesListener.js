@@ -76,6 +76,7 @@ export class ReferencesListener extends CypherListener {
 
   enterCypherConsoleCommand(ctx) {
     this.queriesAndCommands.push(ctx);
+    Object.keys(this.indexes).forEach(k => this.indexes[k].addQuery());
     this.inConsoleCommand = true;
   }
 
