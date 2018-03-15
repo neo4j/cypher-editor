@@ -27,7 +27,8 @@ function triggerAutocompletion(cm, changed) {
   }
 
   const text = changed.text[0];
-  const shouldTriggerAutocompletion = text === '.' ||
+  const shouldTriggerAutocompletion =
+    text === '.' ||
     text === ':' ||
     text === '[]' ||
     text === '()' ||
@@ -42,7 +43,6 @@ function triggerAutocompletion(cm, changed) {
 }
 
 export default class CypherCodeMirror extends React.Component {
-
   constructor(props) {
     super(props);
     this.settings = props.settings || {};
