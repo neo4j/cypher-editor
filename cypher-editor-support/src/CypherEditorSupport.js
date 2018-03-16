@@ -91,22 +91,9 @@ export class CypherEditorSupport {
     }
     this.positionConverter = new PositionConverter(input);
 
-    const errorListener = new ErrorListener();
-    const referencesListener = new ReferencesListener();
-
-    const chars = new antlr4.InputStream(input);
-    const lexer = new CypherLexer(chars);
-    lexer.removeErrorListeners();
-    lexer.addErrorListener(errorListener);
-    const tokens = new antlr4.CommonTokenStream(lexer);
-    const parser = new CypherParser(tokens);
-    parser.buildParseTrees = true;
-    parser.removeErrorListeners();
-    parser.addErrorListener(errorListener);
-    parser.addParseListener(referencesListener);
-
     this.input = input;
-    this.parseTree = parser.cypher();
+    const { parseTree, referencesListener, errorListener } = this.parse(input);
+    this.parseTree = parseTree;
 
     const consoleCommandExists = () => {
       const ctx = TreeUtils.findChild(this.parseTree, CypherTypes.CONSOLE_COMMAND_CONTEXT);
@@ -139,6 +126,23 @@ export class CypherEditorSupport {
   setSchema(schema) {
     this.schema = schema;
     this.completion.updateSchema(this.schema);
+  }
+
+  parse(input) {
+    const referencesListener = new ReferencesListener();
+    const errorListener = new ErrorListener();
+    const chars = new antlr4.InputStream(input);
+    const lexer = new CypherLexer(chars);
+    lexer.removeErrorListeners();
+    lexer.addErrorListener(errorListener);
+    const tokens = new antlr4.CommonTokenStream(lexer);
+    const parser = new CypherParser(tokens);
+    parser.buildParseTrees = true;
+    parser.removeErrorListeners();
+    parser.addErrorListener(errorListener);
+    parser.addParseListener(referencesListener);
+    const parseTree = parser.cypher();
+    return { parseTree, referencesListener, errorListener };
   }
 
   getElement(line, column) {
