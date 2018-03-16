@@ -20,12 +20,8 @@
 
 import { CypherEditorSupport } from './CypherEditorSupport';
 import { TreeUtils } from './util/TreeUtils';
+import { parse } from './util/parse';
 import * as CypherTypes from './lang/CypherTypes';
 import CypherKeywords from './lang/CypherKeywords';
 
-export {
-  CypherEditorSupport,
-  CypherTypes,
-  CypherKeywords,
-  TreeUtils,
-};
+export { CypherEditorSupport, CypherTypes, CypherKeywords, TreeUtils, parse };
