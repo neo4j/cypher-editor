@@ -19,7 +19,7 @@
  */
 
 import * as React from 'react';
-import { createCypherEditor } from '../codemirror-cypher';
+import { createCypherEditor, parse } from '../codemirror-cypher';
 
 function triggerAutocompletion(cm, changed) {
   if (changed.text.length !== 1) {
@@ -84,7 +84,11 @@ export default class CypherCodeMirror extends React.Component {
     });
     this.editorSupport.setSchema(this.schema);
   }
-
+  parseContent = () => {
+    const { referencesListener } = parse(this.editor.getValue());
+    const { queriesAndCommands } = referencesListener;
+    console.log('queriesAndCommands: ', queriesAndCommands);
+  };
   componentWillUpdate(nextProps) {
     if (nextProps.schema) {
       this.schema = nextProps.schema;
@@ -102,6 +106,11 @@ export default class CypherCodeMirror extends React.Component {
     const setInput = (input) => {
       this.input = input;
     };
-    return <div className="Codemirror-Container" ref={setInput} />;
+    return (
+      <div>
+        <button onClick={this.parseContent}>Manually parse content</button>
+        <div className="Codemirror-Container" ref={setInput} />
+      </div>
+    );
   }
 }

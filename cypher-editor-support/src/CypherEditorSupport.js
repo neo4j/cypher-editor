@@ -18,11 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import antlr4 from 'antlr4';
-import { CypherParser } from './_generated/CypherParser';
-import { CypherLexer } from './_generated/CypherLexer';
-import { ErrorListener } from './errors/ErrorListener';
-import { ReferencesListener } from './references/ReferencesListener';
 import { ReferencesProvider } from './references/ReferencesProvider';
 import { CompletionTypeResolver } from './completion/CompletionTypeResolver';
 import { AutoCompletion } from './completion/AutoCompletion';
@@ -31,6 +26,7 @@ import { CypherSyntaxHighlight } from './highlight/CypherSyntaxHighlight';
 import { TreeUtils } from './util/TreeUtils';
 import { PositionConverter } from './util/PositionConverter';
 import { retryOperation } from './util/retryOperation';
+import { parse } from './util/parse';
 
 export class CypherEditorSupport {
   schema = {};
@@ -91,22 +87,9 @@ export class CypherEditorSupport {
     }
     this.positionConverter = new PositionConverter(input);
 
-    const errorListener = new ErrorListener();
-    const referencesListener = new ReferencesListener();
-
-    const chars = new antlr4.InputStream(input);
-    const lexer = new CypherLexer(chars);
-    lexer.removeErrorListeners();
-    lexer.addErrorListener(errorListener);
-    const tokens = new antlr4.CommonTokenStream(lexer);
-    const parser = new CypherParser(tokens);
-    parser.buildParseTrees = true;
-    parser.removeErrorListeners();
-    parser.addErrorListener(errorListener);
-    parser.addParseListener(referencesListener);
-
     this.input = input;
-    this.parseTree = parser.cypher();
+    const { parseTree, referencesListener, errorListener } = parse(input);
+    this.parseTree = parseTree;
 
     const consoleCommandExists = () => {
       const ctx = TreeUtils.findChild(this.parseTree, CypherTypes.CONSOLE_COMMAND_CONTEXT);
