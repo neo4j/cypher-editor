@@ -55,7 +55,8 @@ function fixColors(editor, editorSupport) {
 codemirror.registerHelper('lint', 'cypher', (text, options, editor) => {
   const editorSupport = editor.editorSupport;
   if (!editorSupport) return [];
-  editorSupport.update(text);
+  const version = editor.newContentVersion();
+  editorSupport.update(text, version);
 
   fixColors(editor, editorSupport);
 
@@ -102,6 +103,12 @@ export function createCypherEditor(input, settings) {
   const editor = codemirror(input, { ...settings, value: '' });
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
+  editor.version = 1;
+  editor.newContentVersion = function newContentVersion() {
+    this.version += 1;
+    return this.version;
+  };
+  editor.newContentVersion.bind(editor);
   editor.setValue(settings.value || '');
 
   return { editor, editorSupport };

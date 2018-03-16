@@ -30,6 +30,7 @@ import * as CypherTypes from './lang/CypherTypes';
 import { CypherSyntaxHighlight } from './highlight/CypherSyntaxHighlight';
 import { TreeUtils } from './util/TreeUtils';
 import { PositionConverter } from './util/PositionConverter';
+import { retryOperation } from './util/retryOperation';
 
 export class CypherEditorSupport {
   schema = {};
@@ -42,16 +43,52 @@ export class CypherEditorSupport {
   referencesProviders = {};
   completion = new AutoCompletion();
   queriesAndCommands = [];
+  listeners = [];
+  version = 0;
 
   constructor(input = '') {
     this.update(input);
   }
 
-  update(input = '') {
+  ensureVersion = (version, delay = 30, times = 5) =>
+    retryOperation(
+      () =>
+        new Promise((resolve, reject) => {
+          if (version === this.version) {
+            return resolve();
+          }
+          return reject();
+        }),
+      delay,
+      times,
+    );
+
+  on(eventName, cb) {
+    this.listeners[eventName] = Array.isArray(this.listeners[eventName])
+      ? this.listeners[eventName].concat([cb])
+      : (this.listeners[eventName] = [cb]);
+  }
+
+  off(eventName, cb) {
+    if (!this.listeners[eventName]) return;
+    const index = this.listeners[eventName].indexOf(cb);
+    if (index > -1) {
+      this.listeners[eventName].splice(index, 1);
+    }
+  }
+
+  trigger(eventName, args = []) {
+    if (!this.listeners[eventName]) return;
+    this.listeners[eventName].forEach(cb => cb(...args));
+  }
+
+  update(input = '', version) {
+    this.trigger('update');
     if (input === this.input) {
+      this.version = version || this.version;
+      this.trigger('updated');
       return;
     }
-
     this.positionConverter = new PositionConverter(input);
 
     const errorListener = new ErrorListener();
@@ -95,6 +132,8 @@ export class CypherEditorSupport {
     );
 
     this.completion.updateReferenceProviders(this.referencesProviders);
+    this.version = version || this.version;
+    this.trigger('updated');
   }
 
   setSchema(schema) {
