@@ -44,21 +44,17 @@ export class CypherEditorSupport {
   completion = new AutoCompletion();
   queriesAndCommands = [];
   listeners = [];
-  version = null;
+  version = 0;
 
   constructor(input = '') {
     this.update(input);
   }
 
-  getVersion() {
-    return this.version;
-  }
-
-  ensureVersion = (v, delay = 30, times = 5) =>
+  ensureVersion = (version, delay = 30, times = 5) =>
     retryOperation(
       () =>
         new Promise((resolve, reject) => {
-          if (v === this.getVersion()) {
+          if (version === this.version) {
             return resolve();
           }
           return reject();
@@ -67,29 +63,30 @@ export class CypherEditorSupport {
       times,
     );
 
-  on(evt, cb) {
-    this.listeners[evt] = Array.isArray(this.listeners[evt])
-      ? this.listeners[evt].concat([cb])
-      : (this.listeners[evt] = [cb]);
+  on(eventName, cb) {
+    this.listeners[eventName] = Array.isArray(this.listeners[eventName])
+      ? this.listeners[eventName].concat([cb])
+      : (this.listeners[eventName] = [cb]);
   }
 
-  off(evt, cb) {
-    if (!this.listeners[evt]) return;
-    const index = this.listeners[evt].indexOf(cb);
+  off(eventName, cb) {
+    if (!this.listeners[eventName]) return;
+    const index = this.listeners[eventName].indexOf(cb);
     if (index > -1) {
-      this.listeners[evt].splice(index, 1);
+      this.listeners[eventName].splice(index, 1);
     }
   }
 
-  did(evt) {
-    if (!this.listeners[evt]) return;
-    this.listeners[evt].forEach(cb => cb(this));
+  trigger(eventName, args = []) {
+    if (!this.listeners[eventName]) return;
+    this.listeners[eventName].forEach(cb => cb(...args));
   }
 
   update(input = '', version) {
-    this.did('update');
+    this.trigger('update');
     if (input === this.input) {
       this.version = version || this.version;
+      this.trigger('updated');
       return;
     }
     this.positionConverter = new PositionConverter(input);
@@ -136,7 +133,7 @@ export class CypherEditorSupport {
 
     this.completion.updateReferenceProviders(this.referencesProviders);
     this.version = version || this.version;
-    this.did('updated');
+    this.trigger('updated');
   }
 
   setSchema(schema) {
