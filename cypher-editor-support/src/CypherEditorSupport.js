@@ -81,7 +81,12 @@ export class CypherEditorSupport {
     this.trigger('update');
     if (input === this.input) {
       this.version = version || this.version;
-      this.trigger('updated');
+      this.trigger('updated', [
+        {
+          queriesAndCommands: this.queriesAndCommands,
+          referencesProviders: this.referencesProviders,
+        },
+      ]);
       return;
     }
     this.positionConverter = new PositionConverter(input);
@@ -108,7 +113,12 @@ export class CypherEditorSupport {
 
     this.completion.updateReferenceProviders(this.referencesProviders);
     this.version = version || this.version;
-    this.trigger('updated');
+    this.trigger('updated', [
+      {
+        queriesAndCommands: this.queriesAndCommands,
+        referencesProviders: this.referencesProviders,
+      },
+    ]);
   }
 
   setSchema(schema) {
