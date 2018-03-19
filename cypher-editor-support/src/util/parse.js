@@ -21,7 +21,7 @@ export const parse = (input) => {
   parser.addParseListener(referencesListener);
   const parseTree = parser.cypher();
   const { queries, indexes } = referencesListener;
-  
+
   const referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
     (acc, t) => ({
       ...acc,

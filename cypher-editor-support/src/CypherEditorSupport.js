@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ReferencesProvider } from './references/ReferencesProvider';
 import { CompletionTypeResolver } from './completion/CompletionTypeResolver';
 import { AutoCompletion } from './completion/AutoCompletion';
 import * as CypherTypes from './lang/CypherTypes';
