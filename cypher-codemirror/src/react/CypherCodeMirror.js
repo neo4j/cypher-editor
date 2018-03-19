@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* eslint-disable no-console */
 import * as React from 'react';
 import { createCypherEditor, parse } from '../codemirror-cypher';
 
@@ -84,12 +85,6 @@ export default class CypherCodeMirror extends React.Component {
     });
     this.editorSupport.setSchema(this.schema);
   }
-  parseContent = () => {
-    const { referencesListener, referencesProviders } = parse(this.editor.getValue());
-    const { queriesAndCommands } = referencesListener;
-    console.log('queriesAndCommands: ', queriesAndCommands);
-    console.log('referencesProviders: ', referencesProviders);
-  };
   componentWillUpdate(nextProps) {
     if (nextProps.schema) {
       this.schema = nextProps.schema;
@@ -102,7 +97,12 @@ export default class CypherCodeMirror extends React.Component {
       this.editor.setOption('theme', this.theme);
     }
   }
-
+  parseContent = () => {
+    const { referencesListener, referencesProviders } = parse(this.editor.getValue());
+    const { queriesAndCommands } = referencesListener;
+    console.log('queriesAndCommands: ', queriesAndCommands);
+    console.log('referencesProviders: ', referencesProviders);
+  };
   render() {
     const setInput = (input) => {
       this.input = input;
