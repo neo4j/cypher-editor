@@ -88,7 +88,7 @@ export class CypherEditorSupport {
     this.positionConverter = new PositionConverter(input);
 
     this.input = input;
-    const { parseTree, referencesListener, errorListener } = parse(input);
+    const { parseTree, referencesListener, errorListener, referencesProviders } = parse(input);
     this.parseTree = parseTree;
 
     const consoleCommandExists = () => {
@@ -103,16 +103,9 @@ export class CypherEditorSupport {
       this.parseErrors = errorListener.errors;
     }
 
-    const { queries, indexes, queriesAndCommands } = referencesListener;
+    const { queriesAndCommands } = referencesListener;
     this.queriesAndCommands = queriesAndCommands;
-
-    this.referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
-      (acc, t) => ({
-        ...acc,
-        [t]: new ReferencesProvider(queries, indexes[t]),
-      }),
-      {},
-    );
+    this.referencesProviders = referencesProviders;
 
     this.completion.updateReferenceProviders(this.referencesProviders);
     this.version = version || this.version;

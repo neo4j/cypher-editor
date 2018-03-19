@@ -85,9 +85,10 @@ export default class CypherCodeMirror extends React.Component {
     this.editorSupport.setSchema(this.schema);
   }
   parseContent = () => {
-    const { referencesListener } = parse(this.editor.getValue());
+    const { referencesListener, referencesProviders } = parse(this.editor.getValue());
     const { queriesAndCommands } = referencesListener;
     console.log('queriesAndCommands: ', queriesAndCommands);
+    console.log('referencesProviders: ', referencesProviders);
   };
   componentWillUpdate(nextProps) {
     if (nextProps.schema) {

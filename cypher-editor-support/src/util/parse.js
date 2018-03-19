@@ -1,4 +1,6 @@
 import antlr4 from 'antlr4';
+import { ReferencesProvider } from '../references/ReferencesProvider';
+import * as CypherTypes from '../lang/CypherTypes';
 import { CypherParser } from '../_generated/CypherParser';
 import { CypherLexer } from '../_generated/CypherLexer';
 import { ErrorListener } from '../errors/ErrorListener';
@@ -18,5 +20,15 @@ export const parse = (input) => {
   parser.addErrorListener(errorListener);
   parser.addParseListener(referencesListener);
   const parseTree = parser.cypher();
-  return { parseTree, referencesListener, errorListener };
+  const { queries, indexes } = referencesListener;
+  
+  const referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
+    (acc, t) => ({
+      ...acc,
+      [t]: new ReferencesProvider(queries, indexes[t]),
+    }),
+    {},
+  );
+
+  return { parseTree, referencesListener, errorListener, referencesProviders };
 };
