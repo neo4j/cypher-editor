@@ -20,20 +20,49 @@ cypher : ( SP? cypherPart SP? ';' SP? )*;
 
 cypherPart : ( cypherConsoleCommand | cypherQuery ) ;
 
-cypherConsoleCommand : cypherConsoleCommandName ( SP cypherConsoleCommandParameters )? ;
+cypherConsoleCommand : (paramConsoleCommand | commonConsoleCommand) ;
+
+paramConsoleCommand : ':' PARAM SP symbolicName SP? '=>' SP? paramCommandParameter;
+
+paramCommandParameter : expression;
+
+commonConsoleCommand : cypherConsoleCommandName ( SP cypherConsoleCommandParameters )? ;
 
 cypherConsoleCommandName : ':' symbolicName ( '-' symbolicName )* ;
 
 cypherConsoleCommandParameters : cypherConsoleCommandParameter ( SP cypherConsoleCommandParameter )* ;
 
-cypherConsoleCommandParameter : mapLiteral
+cypherConsoleCommandParameter : json
+                              | mapLiteral
                               | keyValueLiteral
-                              | StringLiteral
+                              | stringLiteral
                               | numberLiteral
                               | booleanLiteral
                               | subCommand
                               | commandPath
                               ;
+
+json : value
+   ;
+
+obj : '{' SP? pair SP? (',' SP? pair SP?)* '}'
+   | '{' SP? '}'
+   ;
+
+pair : stringLiteral SP? ':' SP? value
+   ;
+
+array : '[' SP? value SP? (',' SP? value SP?)* ']'
+   | '[' SP? ']'
+   ;
+
+value : stringLiteral
+   | numberLiteral
+   | obj
+   | array
+   | booleanLiteral
+   | NULL
+   ;
 
 keyValueLiteral : variable ':' SP ( StringLiteral | numberLiteral | booleanLiteral | symbolicName) ;
 
@@ -623,6 +652,8 @@ symbolicName : UnescapedSymbolicName
              | YIELD
              | KEY
              ;
+
+PARAM : ( 'P' | 'p' ) ( 'A' | 'a' ) ( 'R' | 'r' ) ( 'A' | 'a' ) ( 'M' | 'm' ) ;
 
 CYPHER : ( 'C' | 'c' ) ( 'Y' | 'y' ) ( 'P' | 'p' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' )  ;
 
