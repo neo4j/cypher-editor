@@ -22,6 +22,46 @@ import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
+  it('should successfully parse param command with function', () => {
+    const b = new CypherEditorSupport(':param num => rand();');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with int', () => {
+    const b = new CypherEditorSupport(':param myInt => 1;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with double', () => {
+    const b = new CypherEditorSupport(':param myDouble => 1.1;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with string', () => {
+    const b = new CypherEditorSupport(':param myString => "hello";');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with map', () => {
+    const b = new CypherEditorSupport(':param obj => {x: 1, y: 2};');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with array', () => {
+    const b = new CypherEditorSupport(':param arr => [1, 2, 3];');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse command with json parameter and something else', () => {
+    const b = new CypherEditorSupport(':play "http://link.com" {"hello": "world", "key": true, "pop": 125.45};');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse command with json parameter', () => {
+    const b = new CypherEditorSupport(':play {"hello": "world", "key": true, "pop": 125.45};');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
   it('should successfully parse simple command', () => {
     const b = new CypherEditorSupport(':play;');
     expect(b.parseErrors).to.deep.equal([]);
@@ -64,11 +104,6 @@ describe('Parser - Console commands', () => {
 
   it('should successfully parse command with key value literal', () => {
     const b = new CypherEditorSupport(":config n: 'xxx';");
-    expect(b.parseErrors).to.deep.equal([]);
-  });
-
-  it('should successfully parse command variable-with-dashes', () => {
-    const b = new CypherEditorSupport(':config variable-with-dashes;');
     expect(b.parseErrors).to.deep.equal([]);
   });
 
