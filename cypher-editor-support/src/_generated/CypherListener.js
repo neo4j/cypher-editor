@@ -38,6 +38,33 @@ CypherListener.prototype.exitCypherConsoleCommand = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#paramConsoleCommand.
+CypherListener.prototype.enterParamConsoleCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#paramConsoleCommand.
+CypherListener.prototype.exitParamConsoleCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#paramCommandParameter.
+CypherListener.prototype.enterParamCommandParameter = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#paramCommandParameter.
+CypherListener.prototype.exitParamCommandParameter = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#commonConsoleCommand.
+CypherListener.prototype.enterCommonConsoleCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#commonConsoleCommand.
+CypherListener.prototype.exitCommonConsoleCommand = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#cypherConsoleCommandName.
 CypherListener.prototype.enterCypherConsoleCommandName = function(ctx) {
 };
@@ -62,6 +89,51 @@ CypherListener.prototype.enterCypherConsoleCommandParameter = function(ctx) {
 
 // Exit a parse tree produced by CypherParser#cypherConsoleCommandParameter.
 CypherListener.prototype.exitCypherConsoleCommandParameter = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#json.
+CypherListener.prototype.enterJson = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#json.
+CypherListener.prototype.exitJson = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#obj.
+CypherListener.prototype.enterObj = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#obj.
+CypherListener.prototype.exitObj = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#pair.
+CypherListener.prototype.enterPair = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#pair.
+CypherListener.prototype.exitPair = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#array.
+CypherListener.prototype.enterArray = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#array.
+CypherListener.prototype.exitArray = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#value.
+CypherListener.prototype.enterValue = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#value.
+CypherListener.prototype.exitValue = function(ctx) {
 };
 
 
