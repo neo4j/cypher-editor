@@ -32,6 +32,9 @@ export class ErrorListener extends antlr4.error.ErrorListener {
     if (msg === "missing ';' at '<EOF>'") {
       return;
     }
+    if (msg === "mismatched input '<EOF>' expecting {CYPHER, EXPLAIN, PROFILE, USING, PERIODIC, COMMIT, UNION, ALL, CREATE, DROP, INDEX, ON, CONSTRAINT, ASSERT, IS, UNIQUE, EXISTS, LOAD, CSV, WITH, HEADERS, FROM, AS, FIELDTERMINATOR, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, IN, DISTINCT, RETURN, ORDER, BY, L_SKIP, LIMIT, ASCENDING, ASC, DESCENDING, DESC, JOIN, SCAN, START, NODE, RELATIONSHIP, REL, WHERE, SHORTESTPATH, ALLSHORTESTPATHS, OR, XOR, AND, NOT, STARTS, ENDS, CONTAINS, NULL, COUNT, FILTER, EXTRACT, ANY, NONE, SINGLE, TRUE, FALSE, REDUCE, CASE, ELSE, END, WHEN, THEN, CALL, YIELD, KEY, HexLetter, UnescapedSymbolicName, EscapedSymbolicName}") {
+      return;
+    }
     this.errors.push({ line, col, msg });
   }
 }
