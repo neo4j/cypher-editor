@@ -29,13 +29,13 @@ describe('Parser - Simple queries', () => {
     expect(backend.parseErrors).to.deep.equal([]);
   });
 
-  xit('should return errors for incorrect query', () => {
+  it('should return errors for incorrect query', () => {
     const b = new CypherEditorSupport('POTATO');
 
     expect(b.parseErrors).to.deep.equal([{
       line: 1,
       col: 0,
-      msg: "extraneous input 'POTATO' expecting {<EOF>, ':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
+      msg: "mismatched input 'POTATO' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
     }]);
     expect(reduceTree(b.parseTree)).to.deep.equal({
       rule: 'CypherContext',
@@ -53,7 +53,12 @@ describe('Parser - Simple queries', () => {
       {
         col: 6,
         line: 1,
-        msg: "token recognition error at: '` WITH 1;'",
+        msg: "extraneous input '`' expecting {';', SP}",
+      },
+      {
+        col: 8,
+        line: 1,
+        msg: "missing ';' at 'WITH'",
       },
     ]);
   });

@@ -95,17 +95,7 @@ export class CypherEditorSupport {
     const { parseTree, referencesListener, errorListener, referencesProviders } = parse(input);
     this.parseTree = parseTree;
 
-    const consoleCommandExists = () => {
-      const ctx = TreeUtils.findChild(this.parseTree, CypherTypes.CONSOLE_COMMAND_CONTEXT);
-      return ctx != null;
-    };
-
-    if (consoleCommandExists()) {
-      // Do not show errors for console commands, because they are too complex.
-      this.parseErrors = [];
-    } else {
-      this.parseErrors = errorListener.errors;
-    }
+    this.parseErrors = errorListener.errors;
 
     const { queriesAndCommands } = referencesListener;
     this.queriesAndCommands = queriesAndCommands;

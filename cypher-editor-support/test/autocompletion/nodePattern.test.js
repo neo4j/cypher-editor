@@ -56,7 +56,9 @@ describe('AutoCompletion - Node pattern', () => {
     });
 
     it('yields label type when multiple labels', () => {
-      checkCompletionTypes('MATCH (:SomeLabel▼:', true, [
+      // without the space at the end of unfinished query
+      // parser recognizes ':' as start of the next statement
+      checkCompletionTypes('MATCH (:SomeLabel▼: ', true, [
         { type: CompletionTypes.LABEL },
       ]);
     });
