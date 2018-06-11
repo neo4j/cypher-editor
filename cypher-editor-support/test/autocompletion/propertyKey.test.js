@@ -36,7 +36,7 @@ describe('AutoCompletion - Property Key', () => {
     });
 
     it('yields property key with no first char typed after in an expression', () => {
-      checkCompletionTypes('MATCH (a) WHERE a.name > "name" AND a▼.', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
+      checkCompletionTypes('MATCH (a) WHERE a.name > "name" AND a▼. ', true, [{ type: CompletionTypes.PROPERTY_KEY }]);
     });
   });
 

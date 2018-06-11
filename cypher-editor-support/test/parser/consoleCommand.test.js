@@ -22,6 +22,34 @@ import { expect } from 'chai';
 import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 
 describe('Parser - Console commands', () => {
+  it('should successfully parse common param command use case', () => {
+    const b = new CypherEditorSupport(':play http://guides.neo4j.com/reco;\n' +
+        ':param x => 1;\n' +
+        'RETURN $x;\n' +
+        ':play reco;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse multiple param commands with query', () => {
+    const b = new CypherEditorSupport(':param age => 25;' +
+        ':param interests => [\'football\', \'fishing\'];\n' +
+        'MATCH (n)\n' +
+        'WHERE n.age > $age\n' +
+        'AND n.interest IN $interests\n' +
+        'RETURN n;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with and other command', () => {
+    const b = new CypherEditorSupport(':play http://something.com; :play;\n');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully parse param command with url', () => {
+    const b = new CypherEditorSupport(':play http://something.com/something.html;');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
   it('should successfully parse param command with function', () => {
     const b = new CypherEditorSupport(':param num => rand();');
     expect(b.parseErrors).to.deep.equal([]);
@@ -113,12 +141,12 @@ describe('Parser - Console commands', () => {
   });
 
   it('should successfully parse command with get', () => {
-    const b = new CypherEditorSupport(':GET /db/data/labels');
+    const b = new CypherEditorSupport(':GET /db/data/labels;');
     expect(b.parseErrors).to.deep.equal([]);
   });
 
   it('should successfully parse command with delete', () => {
-    const b = new CypherEditorSupport(':DELETE /db/data/transaction/2');
+    const b = new CypherEditorSupport(':DELETE /db/data/transaction/2;');
     expect(b.parseErrors).to.deep.equal([]);
   });
 
@@ -132,8 +160,24 @@ describe('Parser - Console commands', () => {
     expect(b.parseErrors).to.deep.equal([]);
   });
 
-  it('should not report error in invalid console command', () => {
-    const b = new CypherEditorSupport(':PUT ao*51 fagas 8(!');
-    expect(b.parseErrors).to.deep.equal([]);
+  it('should recover to second statement after facing invalid command', () => {
+    const b = new CypherEditorSupport(':PUT ao*51 fagas 8(!; :play;');
+    expect(b.parseErrors).to.deep.equal([
+      {
+        col: 7,
+        line: 1,
+        msg: "mismatched input '*' expecting {';', SP}",
+      },
+      {
+        col: 11,
+        line: 1,
+        msg: "mismatched input 'fagas' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+      },
+      {
+        col: 17,
+        line: 1,
+        msg: "mismatched input '8' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+      },
+    ]);
   });
 });
