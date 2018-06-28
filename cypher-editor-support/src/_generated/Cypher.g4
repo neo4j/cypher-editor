@@ -17,7 +17,7 @@
  */
 grammar Cypher;
 
-cypher: cypherPart+;
+cypher: cypherPart+ EOF;
 
 cypherPart: SP? (cypherQuery | cypherConsoleCommand) SP? ';' SP? ;
 
