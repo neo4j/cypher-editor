@@ -46,7 +46,7 @@ describe('Parser - Console commands', () => {
   });
 
   it('should successfully parse param command with url', () => {
-    const b = new CypherEditorSupport(':play http://something.com;');
+    const b = new CypherEditorSupport(':play http://something.com/something.html;');
     expect(b.parseErrors).to.deep.equal([]);
   });
 

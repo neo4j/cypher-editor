@@ -74,7 +74,7 @@ search: searchparameter ('&' searchparameter)*;
 
 searchparameter: string ('=' (string | urlDigits | UrlHex))?;
 
-string: symbolicName ('+' symbolicName)*? ;
+string: symbolicName (('+'| '.')? symbolicName)*? ;
 
 urlDigits: integerLiteral+;
 
@@ -247,7 +247,7 @@ foreachClause : FOREACH SP? '(' SP? variable SP IN SP expression SP? '|' ( SP cl
 
 withClause : WITH ( SP? DISTINCT )? SP returnBody ( SP? where )? ;
 
-returnClause : RETURN ( SP? DISTINCT )? SP returnBody ;
+returnClause : RETURN ( SP? DISTINCT )? SP? returnBody ;
 
 returnBody : returnItems ( SP order )? ( SP skip )? ( SP limit )? ;
 
