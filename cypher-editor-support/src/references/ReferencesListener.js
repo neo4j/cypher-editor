@@ -64,6 +64,7 @@ class Index {
 export class ReferencesListener extends CypherListener {
   queries = [];
   queriesAndCommands = [];
+  statements = []
   indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
     (acc, t) => ({
       ...acc,
@@ -73,6 +74,16 @@ export class ReferencesListener extends CypherListener {
   );
 
   inConsoleCommand = false;
+
+  enterCypherPart(ctx) {
+    this.statements.push(ctx);
+  }
+
+  exitCypher(ctx) {
+    if (this.statements.length === 0) {
+      this.statements.push(ctx);
+    }
+  }
 
   enterCypherConsoleCommand(ctx) {
     this.queriesAndCommands.push(ctx);

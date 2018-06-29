@@ -38,6 +38,7 @@ export class CypherEditorSupport {
   referencesProviders = {};
   completion = new AutoCompletion();
   queriesAndCommands = [];
+  statements = [];
   listeners = [];
   version = 0;
 
@@ -97,7 +98,8 @@ export class CypherEditorSupport {
 
     this.parseErrors = errorListener.errors;
 
-    const { queriesAndCommands } = referencesListener;
+    const { queriesAndCommands, statements } = referencesListener;
+    this.statements = statements;
     this.queriesAndCommands = queriesAndCommands;
     this.referencesProviders = referencesProviders;
 
