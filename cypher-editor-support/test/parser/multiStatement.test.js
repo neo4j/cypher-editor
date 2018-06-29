@@ -24,15 +24,52 @@ import { CypherEditorSupport } from '../../src/CypherEditorSupport';
 describe('Parser - Multi statement commands', () => {
   it('should catch an error on second statement', () => {
     const b = new CypherEditorSupport('RETURN 1;\n' +
-      'sdfsfsdfsdfsdf;\n' +
+      'POTATO;\n' +
       'RETURN rand();');
     expect(b.parseErrors).to.deep.equal([
       {
         col: 0,
         line: 2,
-        msg: "extraneous input 'sdfsfsdfsdfsdf' expecting {<EOF>, ':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
+        msg: "mismatched input 'POTATO' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
       },
     ]);
+  });
+
+  it('should successfully parse common param ase', () => {
+    const b = new CypherEditorSupport(':play;\n' +
+        'hello;\n' +
+        ':param x => 1;\n' +
+        'hello2;\n' +
+        ':play reco;');
+    expect(b.parseErrors).to.deep.equal([
+      {
+        col: 0,
+        line: 2,
+        msg: "mismatched input 'hello' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+      },
+      {
+        col: 0,
+        line: 4,
+        msg: "mismatched input 'hello2' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+      }]);
+  });
+
+  it('should successfully parse common dasdad ase', () => {
+    const b = new CypherEditorSupport('hello;\n' +
+        ':param x => 1;\n' +
+        'hello2;\n' +
+        ':play reco;');
+    expect(b.parseErrors).to.deep.equal([
+      {
+        col: 0,
+        line: 1,
+        msg: "mismatched input 'hello' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
+      },
+      {
+        col: 0,
+        line: 3,
+        msg: "mismatched input 'hello2' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+      }]);
   });
 
   it('should successfully parse common param command use case', () => {
@@ -59,17 +96,7 @@ describe('Parser - Multi statement commands', () => {
       {
         col: 7,
         line: 1,
-        msg: "mismatched input '*' expecting {';', SP}",
-      },
-      {
-        col: 11,
-        line: 1,
-        msg: "mismatched input 'fagas' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
-      },
-      {
-        col: 17,
-        line: 1,
-        msg: "mismatched input '8' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}",
+        msg: "mismatched input '*' expecting {<EOF>, ';'}",
       },
     ]);
   });

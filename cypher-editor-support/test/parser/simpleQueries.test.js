@@ -38,11 +38,46 @@ describe('Parser - Simple queries', () => {
       msg: "mismatched input 'POTATO' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL, SP}",
     }]);
     expect(reduceTree(b.parseTree)).to.deep.equal({
+      children: [
+        {
+          children: [
+            {
+              children: [],
+              rule: 'ErrorNodeImpl',
+              start: {},
+              stop: {},
+              text: 'POTATO',
+            },
+          ],
+          rule: 'CypherPartContext',
+          start: {
+            column: 0,
+            line: 1,
+          },
+          stop: {
+            column: 5,
+            line: 1,
+          },
+          text: 'POTATO',
+        },
+        {
+          children: [],
+          rule: 'TerminalNodeImpl',
+          start: {},
+          stop: {},
+          text: '<EOF>',
+        },
+      ],
       rule: 'CypherContext',
-      start: { line: 1, column: 0 },
-      stop: { line: 1, column: 5 },
-      text: 'POTATO',
-      children: [{ rule: 'ErrorNodeImpl', start: {}, stop: {}, children: [], text: 'POTATO' }],
+      start: {
+        column: 0,
+        line: 1,
+      },
+      stop: {
+        column: 5,
+        line: 1,
+      },
+      text: 'POTATO<EOF>',
     });
   });
 
@@ -53,12 +88,7 @@ describe('Parser - Simple queries', () => {
       {
         col: 6,
         line: 1,
-        msg: "extraneous input '`' expecting {';', SP}",
-      },
-      {
-        col: 8,
-        line: 1,
-        msg: "missing ';' at 'WITH'",
+        msg: "mismatched input '`' expecting {<EOF>, ';'}",
       },
     ]);
   });
