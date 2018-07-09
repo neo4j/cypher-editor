@@ -36,4 +36,14 @@ describe('Parser - Call clause', () => {
     const b = new CypherEditorSupport('CALL procedure() YIELD name WHERE true RETURN name;');
     expect(b.parseErrors).to.deep.equal([]);
   });
+
+  it('should successfully past call where string contains cypher', () => {
+    const b = new CypherEditorSupport('CALL foo.bar("RETURN 1")');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
+
+  it('should successfully past call where string contains cypher with new lines', () => {
+    const b = new CypherEditorSupport('CALL foo.bar("MATCH (n) \nRETURN n")');
+    expect(b.parseErrors).to.deep.equal([]);
+  });
 });

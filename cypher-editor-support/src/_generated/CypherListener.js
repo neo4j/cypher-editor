@@ -1,4 +1,4 @@
-// Generated from /home/sergey/work/projects/cypher/cypher-editor/cypher-editor-support/src/_generated/Cypher.g4 by ANTLR 4.7
+// Generated from cypher-editor-support/src/_generated/Cypher.g4 by ANTLR 4.7
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 

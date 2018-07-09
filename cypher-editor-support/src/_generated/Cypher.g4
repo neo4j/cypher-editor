@@ -732,8 +732,8 @@ CALL: C A L L;
 YIELD: Y I E L D;
 KEY: K E Y;
 
-StringLiteral: ('"' (~["\\\r\n] | '\\' (. | EOF))* '"')
-	| ( '\'' (~['\\\r\n] | '\\' (. | EOF))* '\'');
+StringLiteral: ('"' (~["\\] | '\\' (. | EOF))* '"')
+	| ( '\'' (~['\\] | '\\' (. | EOF))* '\'');
 
 //UrlString : ([a-zA-Z~0-9] | UrlHex) ([a-zA-Z0-9.-] | UrlHex)* ;
 
