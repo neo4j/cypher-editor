@@ -2,7 +2,7 @@
  * Copyright (c) 2002-2017 "Neo Technology,"
  * Network Engine for Objects in Lund AB [http://neotechnology.com]
  *
- * This file is part of Neo4j.
+ * This file is part of Neo4j.;
  *
  * Neo4j is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CypherListener } from '../_generated/CypherListener';
+import { CypherListener } from '../_generated.simple/CypherListener';
 import * as CypherTypes from '../lang/CypherTypes';
 
 class Index {

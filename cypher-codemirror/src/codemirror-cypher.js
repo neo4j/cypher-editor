@@ -19,7 +19,7 @@
  */
 
 import codemirror from 'codemirror';
-import { CypherEditorSupport, TreeUtils, parse as importedParse } from 'cypher-editor-support/src/index';
+import { CypherEditorSupport, TreeUtils, parse as importedParse, extractStatements as importedExtractStatements } from 'cypher-editor-support/src/index';
 import './codemirror-cypher-mode';
 
 function translatePosition(from, to) {
@@ -115,3 +115,4 @@ export function createCypherEditor(input, settings) {
 }
 
 export const parse = importedParse;
+export const extractStatements = importedExtractStatements;
