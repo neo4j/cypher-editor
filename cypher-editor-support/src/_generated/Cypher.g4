@@ -251,8 +251,11 @@ returnClause : RETURN ( SP? DISTINCT )? SP? returnBody ;
 
 returnBody : returnItems ( SP order )? ( SP skip )? ( SP limit )? ;
 
+func : procedureInvocation SP? procedureResults? ;
+
 returnItems : ( '*' ( SP? ',' SP? returnItem )* )
             | ( returnItem ( SP? ',' SP? returnItem )* )
+			| func
             ;
 
 returnItem : ( expression SP AS SP variable )

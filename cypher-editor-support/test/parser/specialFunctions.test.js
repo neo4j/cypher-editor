@@ -47,4 +47,8 @@ describe('Parser - special functions', () => {
     const b = new CypherEditorSupport('RETURN n.prop AS prop1, exists((n)-[:SOMETHING]->()) AS something;');
     assert.deepEqual(b.parseErrors, []);
   });
+  it('should successfully parse 3rd party functions', () => {
+    const b = new CypherEditorSupport('RETURN a.b();');
+    assert.deepEqual(b.parseErrors, []);
+  });
 });
