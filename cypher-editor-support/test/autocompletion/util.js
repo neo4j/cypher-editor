@@ -24,7 +24,7 @@ import { CompletionTypeResolver } from '../../src/completion/CompletionTypeResol
 
 export const schema = {
   labels: [':y', ':x'],
-  relationshipTypes: [':rel1', ':rel2'],
+  relationshipTypes: [':rel1', ':rel 2'],
   propertyKeys: ['prop1', 'prop2'],
   parameters: ['param1', 'param2'],
   functions: [
