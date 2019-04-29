@@ -24,6 +24,7 @@ import * as CypherTypes from '../lang/CypherTypes';
 import * as CompletionTypes from './CompletionTypes';
 import CypherKeywords from '../lang/CypherKeywords';
 import { TreeUtils } from '../util/TreeUtils';
+import { ecsapeCypher } from '../util/ecsapeCypher';
 
 export const KEYWORD_ITEMS = CypherKeywords.map(keyword => ({
   type: CompletionTypes.KEYWORD,
@@ -104,28 +105,28 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
         .map(label => ({
           type: CompletionTypes.LABEL,
           view: label,
-          content: label,
+          content: ecsapeCypher(label),
           postfix: null,
         })),
       [CompletionTypes.RELATIONSHIP_TYPE]: (schema.relationshipTypes || [])
         .map(relType => ({
           type: CompletionTypes.RELATIONSHIP_TYPE,
           view: relType,
-          content: relType,
+          content: ecsapeCypher(relType),
           postfix: null,
         })),
       [CompletionTypes.PROPERTY_KEY]: (schema.propertyKeys || [])
         .map(propKey => ({
           type: CompletionTypes.PROPERTY_KEY,
           view: propKey,
-          content: propKey,
+          content: ecsapeCypher(propKey),
           postfix: null,
         })),
       [CompletionTypes.FUNCTION_NAME]: (schema.functions || [])
         .map(({ name, signature }) => ({
           type: CompletionTypes.FUNCTION_NAME,
           view: name,
-          content: name,
+          content: ecsapeCypher(name),
           postfix: signature,
         })),
       [CompletionTypes.PROCEDURE_NAME]: (schema.procedures || [])

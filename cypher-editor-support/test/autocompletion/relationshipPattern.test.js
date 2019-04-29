@@ -54,7 +54,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         to: { line: 1, column: 14 },
         items: [
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-[a:▼b]-', expected);
@@ -67,7 +67,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         to: { line: 1, column: 13 },
         items: [
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-[a▼:]-()', expected);
@@ -95,7 +95,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         to: { line: 1, column: 13 },
         items: [
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-[a▼:]-()', expected, true);
@@ -108,7 +108,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         items: [
           { type: CompletionTypes.VARIABLE, view: 'a', content: 'a', postfix: null },
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-▼[', expected, true);
@@ -120,7 +120,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         to: { line: 1, column: 13 },
         items: [
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-[:r▼', expected, true);
@@ -132,7 +132,7 @@ describe('AutoCompletion - Relationship Pattern', () => {
         to: { line: 1, column: 12 },
         items: [
           { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel1', content: ':rel1', postfix: null },
-          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel2', content: ':rel2', postfix: null },
+          { type: CompletionTypes.RELATIONSHIP_TYPE, view: ':rel 2', content: ':`rel 2`', postfix: null },
         ],
       };
       checkCompletion('MATCH (a)-[:▼ return n;', expected, true);
