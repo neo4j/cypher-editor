@@ -1592,9 +1592,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cypher-editor-support@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.1.4.tgz#8098fef843e0bcaab517e310c21a4808c8d8c9e5"
+cypher-editor-support@1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.1.5.tgz#b0824d88e6ffe3f1e57cff853c9253c62c6f53ff"
+  integrity sha512-KNLlmPeycZgI+sy227k2ZjpXeXlzWsE47SYTNbZln8EhcUB+y+7A0jdjuXmywVHha4u1A82UhiayFYZLo3gObg==
   dependencies:
     antlr4 "4.7.0"
     fuzzaldrin "2.1.0"
