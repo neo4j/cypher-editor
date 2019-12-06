@@ -461,6 +461,357 @@ CypherListener.prototype.exitCommand = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#systemCommand.
+CypherListener.prototype.enterSystemCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#systemCommand.
+CypherListener.prototype.exitSystemCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#multidatabaseCommand.
+CypherListener.prototype.enterMultidatabaseCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#multidatabaseCommand.
+CypherListener.prototype.exitMultidatabaseCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#userCommand.
+CypherListener.prototype.enterUserCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#userCommand.
+CypherListener.prototype.exitUserCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#privilegeCommand.
+CypherListener.prototype.enterPrivilegeCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#privilegeCommand.
+CypherListener.prototype.exitPrivilegeCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#showRoles.
+CypherListener.prototype.enterShowRoles = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#showRoles.
+CypherListener.prototype.exitShowRoles = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#createRole.
+CypherListener.prototype.enterCreateRole = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#createRole.
+CypherListener.prototype.exitCreateRole = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#copyRole.
+CypherListener.prototype.enterCopyRole = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#copyRole.
+CypherListener.prototype.exitCopyRole = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#dropRole.
+CypherListener.prototype.enterDropRole = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#dropRole.
+CypherListener.prototype.exitDropRole = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#showUsers.
+CypherListener.prototype.enterShowUsers = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#showUsers.
+CypherListener.prototype.exitShowUsers = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#createUser.
+CypherListener.prototype.enterCreateUser = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#createUser.
+CypherListener.prototype.exitCreateUser = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#dropUser.
+CypherListener.prototype.enterDropUser = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#dropUser.
+CypherListener.prototype.exitDropUser = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#alterUser.
+CypherListener.prototype.enterAlterUser = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#alterUser.
+CypherListener.prototype.exitAlterUser = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#showPrivileges.
+CypherListener.prototype.enterShowPrivileges = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#showPrivileges.
+CypherListener.prototype.exitShowPrivileges = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#grantPrivilege.
+CypherListener.prototype.enterGrantPrivilege = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#grantPrivilege.
+CypherListener.prototype.exitGrantPrivilege = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#denyPrivilege.
+CypherListener.prototype.enterDenyPrivilege = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#denyPrivilege.
+CypherListener.prototype.exitDenyPrivilege = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#revokePrivilege.
+CypherListener.prototype.enterRevokePrivilege = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#revokePrivilege.
+CypherListener.prototype.exitRevokePrivilege = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#revokePart.
+CypherListener.prototype.enterRevokePart = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#revokePart.
+CypherListener.prototype.exitRevokePart = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#databaseScope.
+CypherListener.prototype.enterDatabaseScope = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#databaseScope.
+CypherListener.prototype.exitDatabaseScope = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#graphScope.
+CypherListener.prototype.enterGraphScope = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#graphScope.
+CypherListener.prototype.exitGraphScope = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#roles.
+CypherListener.prototype.enterRoles = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#roles.
+CypherListener.prototype.exitRoles = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#grantableGraphPrivileges.
+CypherListener.prototype.enterGrantableGraphPrivileges = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#grantableGraphPrivileges.
+CypherListener.prototype.exitGrantableGraphPrivileges = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#revokeableGraphPrivileges.
+CypherListener.prototype.enterRevokeableGraphPrivileges = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#revokeableGraphPrivileges.
+CypherListener.prototype.exitRevokeableGraphPrivileges = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#datasbasePrivilege.
+CypherListener.prototype.enterDatasbasePrivilege = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#datasbasePrivilege.
+CypherListener.prototype.exitDatasbasePrivilege = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#dbmsPrivilege.
+CypherListener.prototype.enterDbmsPrivilege = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#dbmsPrivilege.
+CypherListener.prototype.exitDbmsPrivilege = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#elementScope.
+CypherListener.prototype.enterElementScope = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#elementScope.
+CypherListener.prototype.exitElementScope = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#propertiesList.
+CypherListener.prototype.enterPropertiesList = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#propertiesList.
+CypherListener.prototype.exitPropertiesList = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#propertyScope.
+CypherListener.prototype.enterPropertyScope = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#propertyScope.
+CypherListener.prototype.exitPropertyScope = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#showDatabase.
+CypherListener.prototype.enterShowDatabase = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#showDatabase.
+CypherListener.prototype.exitShowDatabase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#createDatabase.
+CypherListener.prototype.enterCreateDatabase = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#createDatabase.
+CypherListener.prototype.exitCreateDatabase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#dropDatabase.
+CypherListener.prototype.enterDropDatabase = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#dropDatabase.
+CypherListener.prototype.exitDropDatabase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#startDatabase.
+CypherListener.prototype.enterStartDatabase = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#startDatabase.
+CypherListener.prototype.exitStartDatabase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#stopDatabase.
+CypherListener.prototype.enterStopDatabase = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#stopDatabase.
+CypherListener.prototype.exitStopDatabase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#ifNotExists.
+CypherListener.prototype.enterIfNotExists = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#ifNotExists.
+CypherListener.prototype.exitIfNotExists = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#ifExists.
+CypherListener.prototype.enterIfExists = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#ifExists.
+CypherListener.prototype.exitIfExists = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#orReplace.
+CypherListener.prototype.enterOrReplace = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#orReplace.
+CypherListener.prototype.exitOrReplace = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#setPassword.
+CypherListener.prototype.enterSetPassword = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#setPassword.
+CypherListener.prototype.exitSetPassword = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#passwordStatus.
+CypherListener.prototype.enterPasswordStatus = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#passwordStatus.
+CypherListener.prototype.exitPasswordStatus = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#setStatus.
+CypherListener.prototype.enterSetStatus = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#setStatus.
+CypherListener.prototype.exitSetStatus = function(ctx) {
+};
+
+
+// Enter a parse tree produced by CypherParser#userStatus.
+CypherListener.prototype.enterUserStatus = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#userStatus.
+CypherListener.prototype.exitUserStatus = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#createUniqueConstraint.
 CypherListener.prototype.enterCreateUniqueConstraint = function(ctx) {
 };
