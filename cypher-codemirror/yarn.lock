@@ -1592,14 +1592,14 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cypher-editor-support@1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.1.5.tgz#b0824d88e6ffe3f1e57cff853c9253c62c6f53ff"
-  integrity sha512-KNLlmPeycZgI+sy227k2ZjpXeXlzWsE47SYTNbZln8EhcUB+y+7A0jdjuXmywVHha4u1A82UhiayFYZLo3gObg==
+cypher-editor-support@1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/cypher-editor-support/-/cypher-editor-support-1.1.6.tgz#a9bad1e9c67a91d8bcd7066e0498130de43ed84a"
+  integrity sha512-cmhPMcNTVARXK2jiljcqoD6u6qMlplFWkMrKxuIOnWtAYooWqh63P7tOrfdN3nydPS+dAplsM+B9z5GOv1Kqdw==
   dependencies:
     antlr4 "4.7.0"
     fuzzaldrin "2.1.0"
-    lodash "4.17.4"
+    lodash "4.17.15"
 
 d@1:
   version "1.0.0"
@@ -3264,7 +3264,12 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.17.4, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
+lodash@4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
+lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
