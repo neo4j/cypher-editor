@@ -37,7 +37,7 @@
   "dependencies": {
     "antlr4": "4.7.0",
     "fuzzaldrin": "2.1.0",
-    "lodash": "4.17.4"
+    "lodash": "4.17.15"
   },
   "devDependencies": {
     "babel-core": "6.25.0",
