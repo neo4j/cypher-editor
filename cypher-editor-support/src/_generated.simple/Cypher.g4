@@ -656,7 +656,23 @@ keyword: CYPHER
 	| THEN
 	| CALL
 	| YIELD
-	| KEY;
+	| KEY
+	| BTREE
+	| EXIST
+	| FOR
+	| OPTIONS
+	| EXECUTE
+	| DEFINED
+	| FUNCTION
+	| FUNCTIONS
+	| BOOSTED
+	| PROCEDURE
+	| PROCEDURES
+	| ADMIN
+	| ADMINISTRATOR
+	| BRIEF
+	| VERBOSE
+	| OUTPUT;
 
 CYPHER: C Y P H E R;
 EXPLAIN: E X P L A I N;
@@ -736,6 +752,22 @@ THEN: T H E N;
 CALL: C A L L;
 YIELD: Y I E L D;
 KEY: K E Y;
+BTREE: B T R E E;
+EXIST: E X I S T;
+FOR: F O R ; 
+OPTIONS: O P T I O N S;
+EXECUTE: E X E C U T E;
+DEFINED: D E F I N E D;
+FUNCTION: F U N C T I O N;
+FUNCTIONS: F U N C T I O N S;
+BOOSTED: B O O S T E D;
+PROCEDURE: P R O C E D U R E;
+PROCEDURES: P R O C E D U R E S;
+ADMIN: A D M I N;
+ADMINISTRATOR: A D M I N I S T R A T O R;
+BRIEF: B R I E F;
+VERBOSE: V E R B O S E;
+OUTPUT: O U T P U T;
 
 StringLiteral: ('"' (~["\\] | '\\' (. | EOF))* '"')
 	| ( '\'' (~['\\] | '\\' (. | EOF))* '\'');
