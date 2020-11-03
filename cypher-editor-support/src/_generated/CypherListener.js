@@ -749,6 +749,15 @@ CypherListener.prototype.exitReturnBody = function(ctx) {
 };
 
 
+// Enter a parse tree produced by CypherParser#func.
+CypherListener.prototype.enterFunc = function(ctx) {
+};
+
+// Exit a parse tree produced by CypherParser#func.
+CypherListener.prototype.exitFunc = function(ctx) {
+};
+
+
 // Enter a parse tree produced by CypherParser#returnItems.
 CypherListener.prototype.enterReturnItems = function(ctx) {
 };
