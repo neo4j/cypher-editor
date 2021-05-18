@@ -672,7 +672,16 @@ keyword: CYPHER
 	| ADMINISTRATOR
 	| BRIEF
 	| VERBOSE
-	| OUTPUT;
+	| OUTPUT
+    | BUILT 
+    | EACH
+    | EXECUTABLE
+    | EXISTENCE
+    | FULLTEXT
+    | HOME
+    | LOOKUP
+    | RENAME
+	;
 
 CYPHER: C Y P H E R;
 EXPLAIN: E X P L A I N;
@@ -768,6 +777,14 @@ ADMINISTRATOR: A D M I N I S T R A T O R;
 BRIEF: B R I E F;
 VERBOSE: V E R B O S E;
 OUTPUT: O U T P U T;
+BUILT: B U I L T;
+EACH: E A C H;
+EXECUTABLE: E X E C U T A B L E;
+EXISTENCE: E X I S T E N C E;
+FULLTEXT: F U L L T E X T;
+HOME: H O M E;
+LOOKUP: L O O K U P;
+RENAME: R E N A M E;
 
 StringLiteral: ('"' (~["\\] | '\\' (. | EOF))* '"')
 	| ( '\'' (~['\\] | '\\' (. | EOF))* '\'');

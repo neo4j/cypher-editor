@@ -820,56 +820,56 @@ keyword: CYPHER
 	| YIELD
 	| KEY
 	| CATALOG
-    | SHOW
-    | DEFAULT
-    | DBMS
-    | DATABASE
-    | DATABASES
-    | GRAPH
-    | GRAPHS
-    | REPLACE
-    | IF
-    | STOP
-    | ROLE
-    | ROLES
-    | USER
-    | USERS
-    | POPULATED
-    | PASSWORD
-    | CHANGE
-    | REQUIRED
-    | STATUS
-    | ACTIVE
-    | SUSPENDED
-    | ALTER
-    | CURRENT
-    | TO
-    | PRIVILEGES
-    | GRANT
-    | DENY
-    | REVOKE
-    | RELATIONSHIPS
-    | NODES
-    | ELEMENT
-    | ELEMENTS
-    | COPY
-    | OF
-    | TRAVERSE
-    | READ
-    | WRITE
-    | ACCESS
-    | INDEXES
-    | MANAGEMENT
-    | NEW
-    | LABEL
-    | LABELS
-    | NAME
-    | NAMES
-    | TYPE
-    | TYPES
-    | PROPERTY
-    | CONSTRAINTS
-    | ASSIGN
+   | SHOW
+   | DEFAULT
+   | DBMS
+   | DATABASE
+   | DATABASES
+   | GRAPH
+   | GRAPHS
+   | REPLACE
+   | IF
+   | STOP
+   | ROLE
+   | ROLES
+   | USER
+   | USERS
+   | POPULATED
+   | PASSWORD
+   | CHANGE
+   | REQUIRED
+   | STATUS
+   | ACTIVE
+   | SUSPENDED
+   | ALTER
+   | CURRENT
+   | TO
+   | PRIVILEGES
+   | GRANT
+   | DENY
+   | REVOKE
+   | RELATIONSHIPS
+   | NODES
+   | ELEMENT
+   | ELEMENTS
+   | COPY
+   | OF
+   | TRAVERSE
+   | READ
+   | WRITE
+   | ACCESS
+   | INDEXES
+   | MANAGEMENT
+   | NEW
+   | LABEL
+   | LABELS
+   | NAME
+   | NAMES
+   | TYPE
+   | TYPES
+   | PROPERTY
+   | CONSTRAINTS
+   | ASSIGN
 	| BTREE
 	| EXIST
 	| FOR
@@ -885,7 +885,15 @@ keyword: CYPHER
 	| ADMINISTRATOR
 	| BRIEF
 	| VERBOSE
-	| OUTPUT;
+	| OUTPUT
+   | BUILT 
+   | EACH
+   | EXECUTABLE
+   | EXISTENCE
+   | FULLTEXT
+   | HOME
+   | LOOKUP
+   ;
 
 CYPHER: C Y P H E R;
 EXPLAIN: E X P L A I N;
@@ -1032,6 +1040,14 @@ ADMINISTRATOR: A D M I N I S T R A T O R;
 BRIEF: B R I E F;
 VERBOSE: V E R B O S E;
 OUTPUT: O U T P U T;
+BUILT: B U I L T;
+EACH: E A C H;
+EXECUTABLE: E X E C U T A B L E;
+EXISTENCE: E X I S T E N C E;
+FULLTEXT: F U L L T E X T;
+HOME: H O M E;
+LOOKUP: L O O K U P;
+RENAME: R E N A M E;
 
 StringLiteral: ('"' (~["\\] | '\\' (. | EOF))* '"')
 	| ( '\'' (~['\\] | '\\' (. | EOF))* '\'');
