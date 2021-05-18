@@ -130,6 +130,7 @@ configurationOption : symbolicName SP? '=' SP? symbolicName ;
 
 statement : command
           | query
+          | ( CATALOG SP )? systemCommand
           ;
 
 query : regularQuery
@@ -177,6 +178,169 @@ command : createIndex
         | createRelationshipPropertyExistenceConstraint
         | dropRelationshipPropertyExistenceConstraint
         ;
+
+systemCommand : multidatabaseCommand
+              | userCommand
+              | privilegeCommand
+              ;
+
+multidatabaseCommand : showDatabase
+                     | createDatabase
+                     | dropDatabase
+                     | startDatabase
+                     | stopDatabase
+                     ;
+
+userCommand: showRoles
+           | createRole
+           | dropRole
+           | showUsers
+           | createUser
+           | dropUser
+           | alterUser
+           ;
+
+privilegeCommand: showPrivileges
+                | grantPrivilege
+                | denyPrivilege
+                | revokePrivilege
+                ;
+
+showRoles: SHOW SP ( ALL SP )? ROLES ( SP WITH SP USERS )?
+         | SHOW SP ( POPULATED SP )? ROLES ( SP WITH SP USERS )?
+         ;
+
+createRole: CREATE SP ROLE SP symbolicName ( SP ifNotExists )? ( SP copyRole )?
+          | CREATE SP ( orReplace SP )? ROLE SP symbolicName ( SP copyRole )?
+          ;
+
+copyRole: AS SP COPY SP OF SP symbolicName ;
+
+dropRole: DROP SP ROLE SP symbolicName ( SP IF SP EXISTS )? ;
+
+showUsers: SHOW SP USERS ;
+
+createUser: CREATE SP USER SP user SP ( SP ifNotExists )? setPassword ( SP setStatus )?
+          | CREATE SP ( orReplace SP )? USER SP user SP setPassword ( SP setStatus )?
+          ;
+
+dropUser: DROP SP USER SP user ( SP ifExists )? ;
+
+alterUser: ALTER SP CURRENT SP USER SP SET SP PASSWORD SP FROM SP ( password | parameter ) TO SP ( password | parameter )
+         | ALTER SP USER SP user SP setPassword ( SP setStatus )?
+         | ALTER SP USER SP user SP setStatus
+         ;
+
+showPrivileges: SHOW SP ( ALL SP )? PRIVILEGES
+              | SHOW SP ( ROLE SP symbolicName SP )? PRIVILEGES
+              | SHOW SP ( USER SP user SP )? PRIVILEGES
+              ;
+
+grantPrivilege: GRANT SP ROLE SP roles SP TO SP user
+              | GRANT SP datasbasePrivilege SP ON SP databaseScope SP TO roles
+              | GRANT SP grantableGraphPrivileges SP ON SP graphScope SP elementScope SP TO roles
+              | GRANT SP dbmsPrivilege SP ON SP DBMS SP TO roles
+              ;
+
+denyPrivilege: DENY SP ROLE SP roles SP TO SP user
+             | DENY SP datasbasePrivilege SP ON SP databaseScope SP TO roles
+             | DENY SP grantableGraphPrivileges SP ON SP graphScope SP elementScope SP TO roles
+             | DENY SP dbmsPrivilege SP ON SP DBMS SP TO roles
+             ;
+
+revokePrivilege: REVOKE SP ROLE SP roles SP FROM SP user
+               | REVOKE ( SP ( GRANT | DENY ) )? revokePart SP FROM SP roles;
+
+revokePart: datasbasePrivilege SP ON SP databaseScope
+          | revokeableGraphPrivileges SP ON SP graphScope
+          | dbmsPrivilege SP ON SP DBMS
+          ;
+
+databaseScope: ( DATABASE | DATABASES ) SP '*'
+             | ( DATABASE | DATABASES ) SP symbolicName ( SP? ',' SP? symbolicName )*
+             ;
+
+graphScope: ( GRAPH | GRAPHS ) SP '*'
+          | ( GRAPH | GRAPHS ) SP symbolicName ( SP? ',' SP? symbolicName )*
+          ;
+
+roles: symbolicName ( SP? ',' SP? symbolicName )* ;
+
+grantableGraphPrivileges: revokeableGraphPrivileges
+                        | MATCH SP '{' SP? propertiesList '}'
+                        ;
+
+revokeableGraphPrivileges: TRAVERSE
+                         | READ SP '{' SP? propertiesList '}'
+                         | WRITE
+                         ;
+
+datasbasePrivilege: ACCESS
+                  | START
+                  | STOP
+                  | CREATE SP ( INDEX | INDEXES )
+                  | DROP SP ( INDEX | INDEXES )
+                  | ( INDEX | INDEXES ) SP MANAGEMENT
+                  | CREATE SP ( CONSTRAINT | CONSTRAINTS )
+                  | DROP SP ( CONSTRAINT | CONSTRAINTS )
+                  | ( CONSTRAINT | CONSTRAINTS ) SP MANAGEMENT
+                  | CREATE SP NEW SP ( NODE SP )? ( LABEL | LABELS )
+                  | CREATE SP NEW SP ( RELATIONSHIP SP )? ( TYPE | TYPES )
+                  | CREATE SP NEW SP ( PROPERTY SP )? ( NAME | NAMES )
+                  | NAME ( SP MANAGEMENT )?
+                  | ALL ( SP ( DATABASE SP )? PRIVILEGES )?
+                  ;
+
+dbmsPrivilege: ROLE SP MANAGEMENT
+             | CREATE SP ROLE
+             | DROP SP ROLE
+             | ASSIGN SP ROLE
+             | REMOVE SP ROLE
+             | SHOW SP ROLE
+             ;
+
+elementScope: ( RELATIONSHIP | RELATIONSHIPS ) SP propertiesList ( SP propertyScope )?
+            | ( NODE | NODES ) SP propertiesList ( SP propertyScope )?
+            | ( ELEMENT | ELEMENTS ) SP propertiesList ( SP propertyScope )?
+            ;
+
+propertiesList: '*'
+              | symbolicName ( SP? ',' SP? symbolicName)*
+              ;
+
+propertyScope: '(' SP? '*' SP? ')' ;
+
+showDatabase : SHOW SP ( DEFAULT SP )? DATABASE
+             | SHOW SP DATABASES
+             ;
+
+createDatabase: CREATE SP DATABASE SP symbolicName ( SP ifNotExists )?
+              | CREATE SP ( orReplace SP )? DATABASE SP symbolicName
+              ;
+
+dropDatabase: DROP SP DATABASE SP symbolicName ( SP ifExists )? ;
+
+startDatabase: START SP DATABASE SP symbolicName ;
+
+stopDatabase: STOP SP DATABASE SP symbolicName ;
+
+ifNotExists: IF SP NOT SP EXISTS ;
+
+ifExists: IF SP EXISTS ;
+
+orReplace: OR SP REPLACE ;
+
+setPassword: SET SP PASSWORD SP ( password | parameter ) ( SP passwordStatus )?
+           | SET SP PASSWORD SP passwordStatus
+           ;
+
+passwordStatus: CHANGE SP ( NOT SP )? REQUIRED;
+
+setStatus: SET SP STATUS SP userStatus ;
+
+userStatus: ACTIVE
+          | SUSPENDED
+          ;
 
 createUniqueConstraint : CREATE SP uniqueConstraint ;
 
@@ -657,6 +821,57 @@ keyword: CYPHER
 	| CALL
 	| YIELD
 	| KEY
+	| CATALOG
+    | SHOW
+    | DEFAULT
+    | DBMS
+    | DATABASE
+    | DATABASES
+    | GRAPH
+    | GRAPHS
+    | REPLACE
+    | IF
+    | STOP
+    | ROLE
+    | ROLES
+    | USER
+    | USERS
+    | POPULATED
+    | PASSWORD
+    | CHANGE
+    | REQUIRED
+    | STATUS
+    | ACTIVE
+    | SUSPENDED
+    | ALTER
+    | CURRENT
+    | TO
+    | PRIVILEGES
+    | GRANT
+    | DENY
+    | REVOKE
+    | RELATIONSHIPS
+    | NODES
+    | ELEMENT
+    | ELEMENTS
+    | COPY
+    | OF
+    | TRAVERSE
+    | READ
+    | WRITE
+    | ACCESS
+    | INDEXES
+    | MANAGEMENT
+    | NEW
+    | LABEL
+    | LABELS
+    | NAME
+    | NAMES
+    | TYPE
+    | TYPES
+    | PROPERTY
+    | CONSTRAINTS
+    | ASSIGN
 	| BTREE
 	| EXIST
 	| FOR
@@ -761,6 +976,57 @@ THEN: T H E N;
 CALL: C A L L;
 YIELD: Y I E L D;
 KEY: K E Y;
+CATALOG: C A T A L O G;
+SHOW: S H O W;
+DEFAULT: D E F A U L T;
+DBMS: D B M S;
+DATABASE: D A T A B A S E;
+DATABASES: D A T A B A S E S;
+GRAPH: G R A P H;
+GRAPHS: G R A P H S;
+REPLACE: R E P L A C E;
+IF: I F;
+STOP: S T O P;
+ROLE: R O L E;
+ROLES: R O L E S;
+USER: U S E R;
+USERS: U S E R S;
+POPULATED: P O P U L A T E D;
+PASSWORD: P A S S W O R D;
+CHANGE: C H A N G E;
+REQUIRED: R E Q U I R E D;
+STATUS: S T A T U S;
+ACTIVE: A C T I V E;
+SUSPENDED: S U S P E N D E D;
+ALTER: A L T E R;
+CURRENT: C U R R E N T;
+TO: T O;
+PRIVILEGES: P R I V I L E G E S;
+GRANT: G R A N T;
+DENY: D E N Y;
+REVOKE: R E V O K E;
+RELATIONSHIPS: R E L A T I O N S H I P S;
+NODES: N O D E S;
+ELEMENT: E L E M E N T;
+ELEMENTS: E L E M E N T S;
+COPY: C O P Y;
+OF: O F;
+TRAVERSE: T R A V E R S E;
+READ: R E A D;
+WRITE: W R I T E;
+ACCESS: A C C E S S;
+INDEXES: I N D E X E S;
+MANAGEMENT: M A N A G E M E N T;
+NEW: N E W;
+LABEL: L A B E L;
+LABELS: L A B E L S;
+NAME: N A M E;
+NAMES: N A M E S;
+TYPE: T Y P E;
+TYPES: T Y P E S;
+PROPERTY: P R O P E R T Y;
+CONSTRAINTS: C O N S T R A I N T S;
+ASSIGN: A S S I G N;
 BTREE: B T R E E;
 EXIST: E X I S T;
 FOR: F O R ; 
