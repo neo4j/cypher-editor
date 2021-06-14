@@ -63,6 +63,7 @@ export const neo4jSchema = {
   consoleCommands: [
     { name: ':clear' },
     { name: ':play' },
+    { name: ':guide' },
     { name: ':help', description: 'this is help command' },
     {
       name: ':server',

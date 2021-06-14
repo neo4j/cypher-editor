@@ -51,6 +51,9 @@ export const schema = {
       name: ':play',
     },
     {
+      name: ':guide',
+    },
+    {
       name: ':help',
       description: 'helpdesc',
       commands: [
