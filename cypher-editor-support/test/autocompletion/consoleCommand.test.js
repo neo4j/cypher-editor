@@ -72,6 +72,7 @@ describe('AutoCompletion - Console Command', () => {
         items: [
           { type: 'consoleCommand', view: ':clear', content: ':clear', postfix: null },
           { type: 'consoleCommand', view: ':play', content: ':play', postfix: null },
+          { type: 'consoleCommand', view: ':guide', content: ':guide', postfix: null },
           { type: 'consoleCommand', view: ':help', content: ':help', postfix: 'helpdesc' },
           { type: 'consoleCommand', view: ':server', content: ':server', postfix: null },
         ],
@@ -86,6 +87,7 @@ describe('AutoCompletion - Console Command', () => {
         items: [
           { type: 'consoleCommand', view: ':clear', content: ':clear', postfix: null },
           { type: 'consoleCommand', view: ':play', content: ':play', postfix: null },
+          { type: 'consoleCommand', view: ':guide', content: ':guide', postfix: null },
           { type: 'consoleCommand', view: ':help', content: ':help', postfix: 'helpdesc' },
           { type: 'consoleCommand', view: ':server', content: ':server', postfix: null },
         ],
