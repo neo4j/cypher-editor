@@ -4,7 +4,7 @@
   "keywords": [
     "cypher"
   ],
-  "version": "1.1.8",
+  "version": "1.1.9",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "main": "./dist/cypher-editor-support.js",
@@ -25,24 +25,22 @@
     "prepublishOnly": "yarn verify"
   },
   "files": [
-    "src/",
     "dist/",
     "README.md",
     "yarn.lock",
-    "types.d.ts",
-    "webpack.config.js"
+    "types.d.ts"
   ],
   "engineStrict": true,
   "engines": {
     "node": ">=8.2.0"
   },
   "dependencies": {
+    "@types/antlr4": "^4.7.2",
     "antlr4": "4.7.0",
     "fuzzaldrin": "2.1.0",
     "lodash": "4.17.15"
   },
   "devDependencies": {
-    "@types/antlr4": "^4.7.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-loader": "7.1.1",
