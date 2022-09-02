@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "cross-env NODE_ENV=\"development\" webpack serve",
-    "startLocal": "cross-env NODE_ENV=\"development\" webpack serve --config ./webpack.local.config.js",
+    "startNoLocal": "cross-env NODE_ENV=\"development\" webpack serve",
+    "start": "cross-env NODE_ENV=\"development\" webpack serve --config ./webpack.local.config.js",
     "deploy": "npm run deploy-clean && cross-env NODE_ENV=\"production\" webpack",
     "deploy-clean": "rimraf dist",
     "check": "svelte-check --tsconfig ./tsconfig.json"
