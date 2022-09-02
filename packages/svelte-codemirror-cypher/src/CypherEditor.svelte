@@ -4,7 +4,7 @@
   import "cypher-codemirror/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror";
 
-  export let initialPosition = { line: 1, column: 0 };
+  export let initialPosition = undefined;
 
   export let options = undefined;
 

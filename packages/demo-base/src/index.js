@@ -91,3 +91,5 @@ export const serverInfoQuery =
 `CALL dbms.components() YIELD name, versions, edition`;
 
 export const defaultQuery = metaQuery;
+
+export const initialPosition = { line: 2, column: 3 };

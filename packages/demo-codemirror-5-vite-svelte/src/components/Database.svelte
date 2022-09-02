@@ -2,7 +2,7 @@
 
 	import neo4j from 'neo4j-driver';
 	import CypherEditor from 'svelte-codemirror5-cypher';
-	import { neo4jSchema, defaultQuery } from 'demo-base';
+	import { neo4jSchema, defaultQuery, initialPosition } from 'demo-base';
 
 	const driver = neo4j.driver("neo4j://localhost:7687",
 		neo4j.auth.basic("neo4j", "asdfgh")
@@ -35,7 +35,7 @@
 
 <main>
 
-  <CypherEditor {onValueChange} autoCompleteSchema={neo4jSchema} bind:cypher={cypher} bind:theme={theme} />
+  <CypherEditor {onValueChange} {initialPosition} autoCompleteSchema={neo4jSchema} bind:cypher={cypher} bind:theme={theme} />
 	<button on:click={lightTheme}>Light theme</button>
 	<button on:click={darkTheme}>Dark theme</button>
 	<button on:click={send}>

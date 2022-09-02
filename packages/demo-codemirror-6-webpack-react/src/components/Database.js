@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import neo4j from 'neo4j-driver';
 import CypherEditor from 'react-codemirror-cypher';
-import { neo4jSchema, defaultQuery } from 'demo-base';
+import { neo4jSchema, defaultQuery, initialPosition } from 'demo-base';
 
 const driver = neo4j.driver("neo4j://localhost:7687",
   neo4j.auth.basic("neo4j", "asdfgh")
@@ -52,7 +52,7 @@ const Database = () => {
 
   return (
     <main>
-      <CypherEditor onValueChange={onValueChange} autoCompleteSchema={neo4jSchema} cypher={cypher} theme={theme} />
+      <CypherEditor onValueChange={onValueChange} initialPosition={initialPosition} autoCompleteSchema={neo4jSchema} cypher={cypher} theme={theme} />
       <button onClick={lightTheme}>Light theme</button>
       <button onClick={darkTheme}>Dark theme</button>
       <button onClick={send}>

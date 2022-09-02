@@ -203,7 +203,7 @@ export const getExtensions = () => {
   ];
 };
 
-export function createCypherEditor(parent, { text = '', extensions } = {}) {
+export function createCypherEditor(parentDOMElement, { text = '', extensions } = {}) {
   
   let theme = 'light'; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
 
@@ -255,7 +255,7 @@ export function createCypherEditor(parent, { text = '', extensions } = {}) {
   });
 
   let editor = new EditorView({
-    parent,
+    parent: parentDOMElement,
     state: initialState
   });
 

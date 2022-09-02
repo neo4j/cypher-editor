@@ -97,10 +97,10 @@ codemirror.registerHelper('hint', 'cypher', (editor) => {
   };
 });
 
-export function createCypherEditor(input, settings) {
+export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
-  const editor = codemirror(input, { ...settings, value: '' });
+  const editor = codemirror(parentDOMElement, { ...settings, value: '' });
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
   editor.version = 1;

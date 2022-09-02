@@ -84,7 +84,7 @@ class CypherEditor extends Component {
   };
 
   componentDidMount() {
-    const { options, autoCompleteSchema, cypher = 'MATCH (n) RETURN n LIMIT 10', initialPosition = { line: 1, column: 0 }, theme = THEME_LIGHT } = this.props;
+    const { options, autoCompleteSchema, cypher = 'MATCH (n) RETURN n LIMIT 10', initialPosition, theme = THEME_LIGHT } = this.props;
     
     let lineNumberFormatter;
 

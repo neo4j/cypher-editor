@@ -14,7 +14,7 @@
   const THEME_LIGHT = 'cypher';
   const THEME_DARK = 'cypher cypher-dark';
 
-  export let initialPosition = { line: 1, column: 0 };
+  export let initialPosition = undefined;
 
   export let options = undefined;
 
