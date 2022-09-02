@@ -4,11 +4,11 @@
   "keywords": [
     "cypher"
   ],
-  "version": "1.1.10",
+  "version": "1.0.0",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
-  "main": "./dist/cypher-editor-support.js",
-  "typings": "./types.d.ts",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
@@ -17,43 +17,36 @@
     "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
   },
   "scripts": {
-    "build": "rm -rf dist/ && webpack",
-    "test": "yarn eslint-fix && mocha --compilers js:babel-core/register --recursive --reporter=dot --slow=300",
-    "eslint": "eslint src/** test/**",
-    "eslint-fix": "eslint --fix src/** test/**",
-    "verify": "yarn eslint && yarn test && yarn build",
-    "prepublishOnly": "yarn verify"
+    "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
+    "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
+    "build": "npm run build-lib && npm run build-es",
+    "build-clean": "rimraf lib && rimraf es"
   },
   "files": [
-    "dist/",
-    "README.md",
-    "yarn.lock",
-    "types.d.ts"
+    "es/",
+    "lib/",
+    "README.md"
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=8.2.0"
+    "node": ">=14.0.0"
   },
   "dependencies": {
-    "@types/antlr4": "^4.7.2",
-    "antlr4": "4.7.0",
-    "fuzzaldrin": "2.1.0",
-    "lodash": "^4.17.21"
+    "antlr4": "4.10.1",
+    "cypher-antlr4": "*",
+    "cypher-antlr4-simple": "*",
+    "fuse.js": "^6.6.2",
+    "lodash.find": "^4.6.0",
+    "lodash.includes": "^4.3.0"
   },
   "devDependencies": {
-    "babel-core": "6.25.0",
-    "babel-eslint": "7.2.3",
-    "babel-loader": "7.1.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "6.23.0",
-    "babel-preset-es2015": "6.24.1",
-    "chai": "4.1.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "15.0.2",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "mocha": "3.4.2",
-    "webpack": "3.3.0"
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
+    "@babel/plugin-transform-regenerator": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.9",
+    "@babel/preset-env": "^7.18.9"
   }
 }
+

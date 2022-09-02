@@ -23,27 +23,6 @@ module.exports = {
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-transform-runtime',
-    // [
-    //   'module-resolver',
-    //   {
-    //     // Avoid "Could not resolve ... in ..." warnings
-    //     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    //     // Resolve alias
-    //     alias: {
-    //       // '^@neo4j-importer/(.+)': ([, name]) =>
-    //       //   path.join(__dirname, `packages/${name}/src/${name}`),
-    //       '@neo4j-importer/user-interface': path.join(__dirname, 'packages/user-interface/src'),
-    //       '@neo4j-importer/data-model': path.join(__dirname, 'packages/data-model/src'),
-    //       '@neo4j-importer/file-loader': path.join(__dirname, 'packages/file-loader/src'),
-    //       '@neo4j-importer/cypher-generator': path.join(__dirname, 'packages/cypher-generator/src'),
-    //       '@neo4j-importer/cypher-runner-worker': path.join(
-    //         __dirname,
-    //         'packages/cypher-runner-worker/src',
-    //       ),
-    //       '@neo4j-importer/arrows': path.join(__dirname, 'packages/arrows/src')
-    //     }
-    //   }
-    // ]
+    '@babel/plugin-transform-runtime'
   ]
 };

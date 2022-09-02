@@ -93,8 +93,10 @@ export class CypherEditorSupport {
     this.positionConverter = new PositionConverter(input);
 
     this.input = input;
+    // const startTime = new Date();
     const { parseTree, referencesListener, errorListener, referencesProviders } = parse(input);
     this.parseTree = parseTree;
+    // console.log('updated parse tree: ', input, version, 'time: ' + (new Date() - startTime));
 
     this.parseErrors = errorListener.errors;
 
@@ -142,7 +144,9 @@ export class CypherEditorSupport {
       return pos != null ? pt : null;
     }
 
-    return getElement(this.parseTree);
+    // TODO remove debug
+    const element = getElement(this.parseTree);
+    return element;
   }
 
   getReferences(line, column) {

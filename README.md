@@ -7,6 +7,10 @@
     <em>The example above is using cypher-editor. Check it out at <a href="https://github.com/neo4j/neo4j-browser">neo4j/neo4j-browser</a>.</em>
 </p>
 
+### TODO
+
+Update this page for the monorepo, and added codemirror 6 support
+
 ### Key Features
 
 * Syntax highlighting

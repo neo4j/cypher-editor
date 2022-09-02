@@ -1,0 +1,38 @@
+{
+  "name": "svelte-codemirror-cypher",
+  "description": "Svelte CodeMirror 6 Cypher editor",
+  "keywords": [
+    "svelte",
+    "cypher",
+    "codemirror",
+    "codemirror 6"
+  ],
+  "version": "1.0.0",
+  "author": "Neo Technology Inc.",
+  "license": "GPL-3.0",
+  "svelte": "src/CypherEditor.svelte",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "cypher-codemirror": "*"
+  },
+  "peerDependencies": {
+    "codemirror": "^6.0.1",
+    "svelte": "^3.49.0"
+  },
+  "devDependencies": {
+  }
+}

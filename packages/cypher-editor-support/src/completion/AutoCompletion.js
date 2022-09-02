@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { filter as fuzzySearch } from 'fuzzaldrin';
-import _ from 'lodash';
+import Fuse from 'fuse.js';
+import _find from 'lodash.find';
 import * as CypherTypes from '../lang/CypherTypes';
 import * as CompletionTypes from './CompletionTypes';
 import CypherKeywords from '../lang/CypherKeywords';
@@ -32,6 +32,11 @@ export const KEYWORD_ITEMS = CypherKeywords.map(keyword => ({
   content: keyword,
   postfix: null,
 }));
+
+const fuzzySearch = (list, text, key) => {
+  const fuse = new Fuse(list, { keys: [key] });
+  return fuse.search(text).map(({ item }) => item);
+}
 
 class AbstractCachingCompletion {
   cache = {};
@@ -64,7 +69,7 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
   static providers = {
     [CompletionTypes.PROCEDURE_OUTPUT]: (schema, typeData) => {
       const findByName = e => e.name === typeData.name && e.returnItems !== [];
-      const procedure = _.find(schema.procedures, findByName);
+      const procedure = _find(schema.procedures, findByName);
       if (procedure) {
         return procedure.returnItems.map(({ name, signature }) => ({
           type: CompletionTypes.PROCEDURE_OUTPUT,
@@ -81,7 +86,7 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
       const length = filterLastElement ? path.length - 1 : path.length;
       let currentLevel = schema.consoleCommands;
       for (let i = 0; i < length; i += 1) {
-        const foundCommand = _.find(currentLevel, ['name', path[i]]);
+        const foundCommand = _find(currentLevel, ['name', path[i]]);
         if (foundCommand) {
           currentLevel = foundCommand.commands || [];
         } else {
@@ -204,10 +209,10 @@ export class AutoCompletion {
       .filter(completionItemFilter);
 
     if (filteredText) {
-      return fuzzySearch(list, filteredText, { key: 'view' });
+      return fuzzySearch(list, filteredText, 'view');
     }
     if (text) {
-      return fuzzySearch(list, text, { key: 'view' });
+      return fuzzySearch(list, text, 'view');
     }
     return list;
   }

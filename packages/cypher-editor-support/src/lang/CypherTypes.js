@@ -19,7 +19,7 @@
  */
 
 /* eslint-disable max-len */
-import { CypherParser } from '../_generated/CypherParser';
+import { CypherParser } from 'cypher-antlr4';
 
 export const VARIABLE_CONTEXT = CypherParser.VariableContext.prototype.constructor.name;
 export const LABEL_NAME_CONTEXT = CypherParser.LabelNameContext.prototype.constructor.name;

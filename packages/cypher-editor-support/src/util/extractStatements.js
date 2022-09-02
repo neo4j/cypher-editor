@@ -1,8 +1,7 @@
 import antlr4 from 'antlr4';
 import { ReferencesProvider } from '../references/ReferencesProvider';
 import * as CypherTypes from '../lang/CypherTypes';
-import { CypherParser } from '../_generated.simple/CypherParser';
-import { CypherLexer } from '../_generated.simple/CypherLexer';
+import { CypherParser, CypherLexer } from 'cypher-antlr4-simple';
 import { ErrorListener } from '../errors/ErrorListener';
 import { ReferencesListener } from '../references/ReferencesListener.simple';
 

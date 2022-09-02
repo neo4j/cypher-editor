@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CypherListener } from '../_generated/CypherListener';
+import { CypherListener } from 'cypher-antlr4';
 import * as CypherTypes from '../lang/CypherTypes';
 
 class Index {

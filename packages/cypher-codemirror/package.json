@@ -1,14 +1,16 @@
 {
   "name": "cypher-codemirror",
-  "description": "Cypher query language integration with CodeMirror editor",
+  "description": "Cypher query language integration with CodeMirror 6 editor",
   "keywords": [
     "cypher",
-    "codemirror"
+    "codemirror",
+    "codemirror 6"
   ],
-  "version": "1.1.6",
+  "version": "1.0.0",
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
-  "main": "./dist/cypher-codemirror.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
@@ -17,71 +19,42 @@
     "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
   },
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --config webpack.demo-react.config.js --content-base dev/",
-    "build": "rm -rf dist/ && webpack && yarn build-css",
-    "build-css": "yarn build-css-all && yarn build-css-completion && yarn build-css-editor && yarn build-css-syntax",
-    "build-css-all": "postcss -c postcss.config.js -o dist/cypher-codemirror-all.css src/codemirror-cypher.css",
-    "build-css-completion": "postcss -c postcss.config.js -o dist/cypher-codemirror-completion.css src/css/completion.css",
-    "build-css-editor": "postcss -c postcss.config.js -o dist/cypher-codemirror-editor.css src/css/editor.css",
-    "build-css-syntax": "postcss -c postcss.config.js -o dist/cypher-codemirror-syntax.css src/css/syntax.css",
-    "build-demo": "rm -rf demo/ && yarn build-demo-react && cp dev/index.html demo/index.html",
-    "build-demo-react": "webpack --config webpack.demo-react.config.js",
-    "build-demo-vanilla": "yarn build && webpack --config webpack.demo-vanilla.config.js && cp dist/* demo/vanilla/",
-    "eslint": "eslint src/**/**.js dev/**/**.js",
-    "eslint-fix": "eslint --fix src/**/**.js dev/**/**.js",
-    "verify": "yarn eslint && yarn build",
-    "version": "yarn add cypher-editor-support@$npm_package_version",
-    "prepublishOnly": "yarn verify"
+    "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
+    "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
+    "build": "npm run build-lib && npm run build-es",
+    "build-clean": "rimraf lib && rimraf es"
   },
   "files": [
-    "src/",
-    "dist/",
-    "README.md",
-    "yarn.lock",
-    "webpack.config.js",
-    "postcss.config.js"
+    "css/",
+    "es/",
+    "lib/",
+    "README.md"
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=8.2.0"
+    "node": ">=14"
   },
   "dependencies": {
-    "cypher-editor-support": "1.1.6"
+    "cypher-editor-support": "*"
   },
   "peerDependencies": {
-    "codemirror": "^5.25.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "@codemirror/autocomplete": "^6.1.0",
+    "@codemirror/commands": "^6.1.0",
+    "@codemirror/language": "^6.2.1",
+    "@codemirror/lint": "^6.0.0",
+    "@codemirror/search": "^6.1.0",
+    "@codemirror/state": "^6.1.1",
+    "@codemirror/view": "^6.2.0",
+    "@lezer/highlight": "^1.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "6.23.0",
-    "babel-polyfill": "6.23.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-react": "6.24.1",
-    "codemirror": "^5.28.0",
-    "css-loader": "^0.28.4",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "15.0.2",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^2.29.0",
-    "mocha": "^3.4.2",
-    "postcss-cli": "^4.1.0",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-import": "^10.0.0",
-    "postcss-loader": "^2.0.6",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "style-loader": "^0.18.2",
-    "webpack": "^3.3.0",
-    "webpack-dev-server": "^2.5.1"
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
+    "@babel/plugin-transform-regenerator": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.9",
+    "@babel/preset-env": "^7.18.9"
   }
 }
+
