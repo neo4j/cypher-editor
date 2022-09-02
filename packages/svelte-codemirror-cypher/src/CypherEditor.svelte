@@ -1,5 +1,5 @@
 <script lang="js">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from "svelte";
 
   import "cypher-codemirror/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror";
@@ -20,19 +20,24 @@
 
   export let cypher = "MATCH (n) RETURN n LIMIT 10";
 
-  const THEME_LIGHT = 'light';
-  const THEME_DARK = 'dark';
+  const THEME_LIGHT = "light";
+  const THEME_DARK = "dark";
 
   export let theme = THEME_LIGHT;
 
   let cypherEditorOptions = { ...(options || {}) };
 
-  let schema = autoCompleteSchema;
-  
   let cypherEditorRef;
   let cypherEditor;
+  let cypherEditorSupport;
 
-  $: editorClassNames = (classNames ? classNames : []).concat(theme !== THEME_DARK ? [] : ['cm-dark']).join(' ');
+  $: if (autoCompleteSchema && cypherEditorSupport) {
+    cypherEditorSupport.setSchema(autoCompleteSchema);
+  }
+
+  $: editorClassNames = (classNames ? classNames : [])
+    .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
+    .join(" ");
 
   const triggerAutocompletion = (changes) => {
     let changedText = [];
@@ -46,15 +51,15 @@
 
     const text = changedText[0];
     const shouldTriggerAutocompletion =
-      text === '.' ||
-      text === ':' ||
-      text === '[]' ||
-      text === '()' ||
-      text === '{}' ||
-      text === '[' ||
-      text === '(' ||
-      text === '{' ||
-      text === '$';
+      text === "." ||
+      text === ":" ||
+      text === "[]" ||
+      text === "()" ||
+      text === "{}" ||
+      text === "[" ||
+      text === "(" ||
+      text === "{" ||
+      text === "$";
     if (shouldTriggerAutocompletion) {
       cypherEditor.showAutoComplete();
     }
@@ -65,7 +70,7 @@
     onValueChange && onValueChange(value);
   };
 
-  const focusChanged = focused => {
+  const focusChanged = (focused) => {
     onFocusChange && onFocusChange(focused);
   };
 
@@ -77,7 +82,7 @@
     focusChanged(false);
   };
 
-  const scrollChanged = scrollInfo => {
+  const scrollChanged = (scrollInfo) => {
     onScroll && onScroll(scrollInfo);
   };
 
@@ -87,23 +92,22 @@
       cypherEditorOptions
     );
     cypherEditor = editor;
+    cypherEditorSupport = editorSupport;
 
     cypherEditor.focus();
     cypherEditor.setValue(cypher);
     if (initialPosition) {
       cypherEditor.goToPosition(initialPosition);
     }
-    cypherEditor.on('change', valueChanged);
+    cypherEditor.on("change", valueChanged);
     cypherEditor.on("focus", focused);
     cypherEditor.on("blur", blurred);
     cypherEditor.on("scroll", scrollChanged);
-
-    editorSupport.setSchema(schema);
   });
 
   onDestroy(() => {
     if (cypherEditor) {
-      cypherEditor.off('change', valueChanged);
+      cypherEditor.off("change", valueChanged);
       cypherEditor.off("focus", focused);
       cypherEditor.off("blur", blurred);
       cypherEditor.off("scroll", scrollChanged);
@@ -112,5 +116,4 @@
   });
 </script>
 
-<div class={editorClassNames} bind:this={cypherEditorRef}>
-</div>
+<div class={editorClassNames} bind:this={cypherEditorRef} />
