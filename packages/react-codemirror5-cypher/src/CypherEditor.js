@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { createCypherEditor } from "cypher-codemirror5";
 
 import "codemirror/addon/lint/lint";
@@ -159,18 +159,10 @@ class CypherEditor extends Component {
   render() {
     const { classNames } = this.props;
     const { focused } = this.state;
-    const editorClassNames = (classNames || []).concat(['ReactCodeMirror']).concat(focused ? ['ReactCodeMirror--focused'] : []).join(' ')
-
-    const editorStyle = {
-      textAlign: 'left',
-      minWidth: '100%',
-      minHeight: '240px'
-    }
+    const editorClassNames = (classNames || []).concat(['ReactCodeMirror']).concat(focused ? ['ReactCodeMirror--focused'] : []).join(' ');
 
     return (
-      <Fragment>
-        <div className={editorClassNames} ref={this.setEditorRef} style={editorStyle}></div>
-      </Fragment>
+      <div className={editorClassNames} ref={this.setEditorRef}></div>
     )
   }
 };

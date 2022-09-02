@@ -165,11 +165,3 @@
 
 <div class={editorClassNames} bind:this={cypherEditorRef}>
 </div>
-
-<style>
-	div {
-    text-align: left;
-		min-width: 100%;
-    min-height: 240px;
-	}
-</style>

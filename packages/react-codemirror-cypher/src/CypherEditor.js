@@ -103,14 +103,8 @@ class CypherEditor extends Component {
     const { classNames, theme = THEME_LIGHT } = this.props;
     const editorClassNames = (classNames ? classNames : []).concat(theme !== THEME_DARK ? [] : ['cm-dark']).join(' ');
 
-    const editorStyle = {
-      textAlign: 'left',
-      minWidth: '100%',
-      minHeight: '240px'
-    }
-
     return (
-      <div className={editorClassNames} ref={this.setEditorRef} style={editorStyle}></div>
+      <div className={editorClassNames} ref={this.setEditorRef}></div>
     )
   }
 };
