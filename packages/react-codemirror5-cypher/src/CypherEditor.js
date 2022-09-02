@@ -87,30 +87,6 @@ class CypherEditor extends Component {
     const { options, autoCompleteSchema, cypher = 'MATCH (n) RETURN n LIMIT 10', initialPosition, theme = THEME_LIGHT } = this.props;
     
     let lineNumberFormatter;
-
-    const demoSettings = { // Copied, currently also in demo-base
-      mode: 'application/x-cypher-query',
-      indentWithTabs: true,
-      smartIndent: false,
-      lineNumbers: true,
-      matchBrackets: true,
-      autofocus: true,
-      theme: 'cypher cypher-dark',
-      lint: true,
-      styleActiveLine: true,
-      extraKeys: { 'Ctrl-Space': 'autocomplete' },
-      hintOptions: {
-        completeSingle: false,
-        closeOnUnfocus: false,
-        alignWithWord: true,
-        async: true
-      },
-      gutters: ['cypher-hints'],
-      lineWrapping: true,
-      autoCloseBrackets: {
-        explode: ''
-      }
-    };
   
     const defaultOptions = {
       lineNumbers: true,
