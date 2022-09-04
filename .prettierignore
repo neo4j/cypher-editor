@@ -1,0 +1,9 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+packages/cypher-antlr4/src/Cypher*
+packages/cypher-antlr4-simple/src/Cypher*
+lib
+es
+dist

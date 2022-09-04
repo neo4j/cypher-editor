@@ -26,7 +26,8 @@
     "prepublishOnly": "lerna run build",
     "start": "lerna run start --scope demo --stream",
     "deploy": "lerna run build && lerna run deploy --scope demo --stream",
-    "deploy-clean": "lerna run deploy-clean"
+    "deploy-clean": "lerna run deploy-clean",
+    "prettier": "prettier --write ."
   },
   "name": "cypher-editor"
 }
