@@ -18,12 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
-import { TreeUtils } from '../../util/TreeUtils';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
+import { TreeUtils } from "../../util/TreeUtils";
 
 export default (element) => {
-  const literalEntry = TreeUtils.findParent(element, CypherTypes.MAP_LITERAL_ENTRY);
+  const literalEntry = TreeUtils.findParent(
+    element,
+    CypherTypes.MAP_LITERAL_ENTRY
+  );
   if (!literalEntry) {
     return [];
   }
@@ -34,4 +37,3 @@ export default (element) => {
   }
   return [];
 };
-

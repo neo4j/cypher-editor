@@ -41,6 +41,5 @@
     "codemirror": "^6.0.1",
     "react": ">=16"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

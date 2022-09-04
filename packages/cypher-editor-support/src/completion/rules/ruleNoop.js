@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
 
 // Specify place where no autocompletion should be triggered
 export default (element) => {

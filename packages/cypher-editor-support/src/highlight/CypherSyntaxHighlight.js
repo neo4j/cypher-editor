@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TreeUtils } from '../util/TreeUtils';
-import * as CypherTypes from '../lang/CypherTypes';
+import { TreeUtils } from "../util/TreeUtils";
+import * as CypherTypes from "../lang/CypherTypes";
 
 function traverse(element, callback) {
   if (callback(element)) {
@@ -45,68 +45,77 @@ export class CypherSyntaxHighlight {
       }
 
       if (e.constructor.name === CypherTypes.VARIABLE_CONTEXT) {
-        callback(e, 'variable');
+        callback(e, "variable");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.NODE_LABEL_CONTEXT) {
-        callback(e, 'label');
+        callback(e, "label");
         return true;
       }
 
-      if (e.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT
-        || e.constructor.name === CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT) {
-        callback(e, 'relationshipType');
+      if (
+        e.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT ||
+        e.constructor.name ===
+          CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT
+      ) {
+        callback(e, "relationshipType");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.PROPERTY_KEY_NAME_CONTEXT) {
-        callback(e, 'property');
+        callback(e, "property");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.PROCEDURE_NAME_CONTEXT) {
-        callback(e, 'procedure');
+        callback(e, "procedure");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.PROCEDURE_OUTPUT_CONTEXT) {
-        callback(e, 'procedureOutput');
+        callback(e, "procedureOutput");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.FUNCTION_NAME_CONTEXT) {
-        callback(e, 'function');
+        callback(e, "function");
         return true;
       }
 
-      if (e.constructor.name === CypherTypes.ALL_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.REDUCE_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.FILTER_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.NONE_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.EXTRACT_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.SHORTEST_PATH_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.ALL_SHORTEST_PATH_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.SINGLE_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.EXISTS_FUNCTION_NAME_CONTEXT
-        || e.constructor.name === CypherTypes.ANY_FUNCTION_NAME_CONTEXT) {
-        callback(e, 'function');
+      if (
+        e.constructor.name === CypherTypes.ALL_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.REDUCE_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.FILTER_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.NONE_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.EXTRACT_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name ===
+          CypherTypes.SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name ===
+          CypherTypes.ALL_SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.SINGLE_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.EXISTS_FUNCTION_NAME_CONTEXT ||
+        e.constructor.name === CypherTypes.ANY_FUNCTION_NAME_CONTEXT
+      ) {
+        callback(e, "function");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.PARAMETER_CONTEXT) {
-        callback(e, 'parameter');
+        callback(e, "parameter");
         return true;
       }
 
       if (e.constructor.name === CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
-        callback(e, 'consoleCommand');
+        callback(e, "consoleCommand");
         return true;
       }
 
-      if (e.constructor.name === CypherTypes.CONSOLE_COMMAND_SUBCOMMAND_CONTEXT
-        || e.constructor.name === CypherTypes.CONSOLE_COMMAND_PATH_CONTEXT) {
-        callback(e, 'property');
+      if (
+        e.constructor.name === CypherTypes.CONSOLE_COMMAND_SUBCOMMAND_CONTEXT ||
+        e.constructor.name === CypherTypes.CONSOLE_COMMAND_PATH_CONTEXT
+      ) {
+        callback(e, "property");
         return true;
       }
 

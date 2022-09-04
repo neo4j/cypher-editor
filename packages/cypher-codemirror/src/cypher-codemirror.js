@@ -1,16 +1,34 @@
 // All of these packages are dependencies of "codemirror" package version >= 6;
-import { autocompletion, completionKeymap, startCompletion } from '@codemirror/autocomplete';
-import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
-import { StreamLanguage, indentOnInput, foldKeymap, syntaxHighlighting, HighlightStyle } from "@codemirror/language";
-import { lintKeymap, linter } from '@codemirror/lint';
-import { searchKeymap } from '@codemirror/search';
+import {
+  autocompletion,
+  completionKeymap,
+  startCompletion
+} from "@codemirror/autocomplete";
+import { history, defaultKeymap, historyKeymap } from "@codemirror/commands";
+import {
+  StreamLanguage,
+  indentOnInput,
+  foldKeymap,
+  syntaxHighlighting,
+  HighlightStyle
+} from "@codemirror/language";
+import { lintKeymap, linter } from "@codemirror/lint";
+import { searchKeymap } from "@codemirror/search";
 import { EditorState, StateEffect, StateField } from "@codemirror/state";
-import { EditorView, Decoration, lineNumbers, drawSelection, rectangularSelection, crosshairCursor, keymap } from '@codemirror/view';
+import {
+  EditorView,
+  Decoration,
+  lineNumbers,
+  drawSelection,
+  rectangularSelection,
+  crosshairCursor,
+  keymap
+} from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 
-import { CypherEditorSupport, TreeUtils } from 'cypher-editor-support';
+import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 
-import { cypher } from './cypher';
+import { cypher } from "./cypher";
 
 const addTypeMarker = StateEffect.define();
 const clearTypeMarkers = StateEffect.define();
@@ -27,14 +45,19 @@ const typeMarkerField = StateField.define({
       } else if (e.is(addTypeMarker)) {
         if (e.value.from !== e.value.to) {
           typeMarkers = typeMarkers.update({
-            add: [Decoration.mark({class: "cm-p-" + e.value.type }).range(e.value.from, e.value.to)]
+            add: [
+              Decoration.mark({ class: "cm-p-" + e.value.type }).range(
+                e.value.from,
+                e.value.to
+              )
+            ]
           });
         }
       }
     }
     return typeMarkers;
   },
-  provide: f => EditorView.decorations.from(f)
+  provide: (f) => EditorView.decorations.from(f)
 });
 
 const typeMarkerTheme = EditorView.baseTheme({
@@ -45,9 +68,11 @@ export function typeMarkerFromTo(view, options = {}) {
   let effects = [addTypeMarker.of(options)];
 
   if (!view.state.field(typeMarkerField, false)) {
-    effects.push(StateEffect.appendConfig.of([typeMarkerField, typeMarkerTheme]));
+    effects.push(
+      StateEffect.appendConfig.of([typeMarkerField, typeMarkerTheme])
+    );
   }
-  view.dispatch({effects});
+  view.dispatch({ effects });
   return true;
 }
 
@@ -58,7 +83,10 @@ function fixColors(view, editorSupport) {
   }
 
   editorSupport.applyHighlighthing((element, type) => {
-    const { start: from, stop: to } = TreeUtils.getPosition(element) || { start: 0, stop: 0 };
+    const { start: from, stop: to } = TreeUtils.getPosition(element) || {
+      start: 0,
+      stop: 0
+    };
     typeMarkerFromTo(view, { from, to: to + 1, type });
   });
 }
@@ -72,41 +100,52 @@ const editorSupportField = StateField.define({
   }
 });
 
-
 function editorSupportInit(view) {
   if (!view.state.field(editorSupportField, false)) {
     const effects = [StateEffect.appendConfig.of([editorSupportField])];
-    view.dispatch({effects});
-    return true;  
+    view.dispatch({ effects });
+    return true;
   }
 }
 
-export const cypherLinter = ({ delay = 250, showErrors = true, ...otherOptions } = {}) => [linter(view => {
-  const editorSupport = getEditorSupport(view.state); // view.editorSupport;
-  if (!editorSupport) return [];
-  const version = view.newContentVersion();
-  editorSupport.update(view.state.doc.toString(), version);
-  
-  fixColors(view, editorSupport);
-  
-  return ((showErrors && editorSupport.parseErrors) || [])
-    .map(({ msg, start, stop }) => {
-      return ({
-        severity: 'error',
-        from: start,
-        to: stop + 1,
-        message: msg,
-      })
-    });
-}, { ...otherOptions, delay })];
+export const cypherLinter = ({
+  delay = 250,
+  showErrors = true,
+  ...otherOptions
+} = {}) => [
+  linter(
+    (view) => {
+      const editorSupport = getEditorSupport(view.state); // view.editorSupport;
+      if (!editorSupport) return [];
+      const version = view.newContentVersion();
+      editorSupport.update(view.state.doc.toString(), version);
 
-const getEditorSupport = state => state.field(editorSupportField, false);
+      fixColors(view, editorSupport);
 
-const cypherCompletions = context => {
+      return ((showErrors && editorSupport.parseErrors) || []).map(
+        ({ msg, start, stop }) => {
+          return {
+            severity: "error",
+            from: start,
+            to: stop + 1,
+            message: msg
+          };
+        }
+      );
+    },
+    { ...otherOptions, delay }
+  )
+];
+
+const getEditorSupport = (state) => state.field(editorSupportField, false);
+
+const cypherCompletions = (context) => {
   const editorSupport = getEditorSupport(context.state);
   editorSupport.update(context.state.doc.toString());
 
-  const { line, column } = editorSupport.positionConverter.toRelative(context.pos);
+  const { line, column } = editorSupport.positionConverter.toRelative(
+    context.pos
+  );
   const completion = editorSupport.getCompletion(line, column, true);
   const { items, from, to } = completion;
   const completions = items.map(({ type, view }) => ({ type, label: view }));
@@ -125,40 +164,57 @@ const cypherCompletions = context => {
   return cypherCompletions;
 };
 
-export const cypherCompletion = ({ activateOnTyping = false, closeOnBlur = true } = {}) => [autocompletion({activateOnTyping, closeOnBlur, override: [cypherCompletions]})];
+export const cypherCompletion = ({
+  activateOnTyping = false,
+  closeOnBlur = true
+} = {}) => [
+  autocompletion({
+    activateOnTyping,
+    closeOnBlur,
+    override: [cypherCompletions]
+  })
+];
 
 const lightSyntaxStyles = [
-  { tag: tags.comment, color: '#93a1a1', class: 'cm-comment' },
-  { tag: tags.variableName, color: '#0080ff', class: 'cm-variable' },
-  { tag: [tags.string, tags.special(tags.brace)], color: '#b58900', class: 'cm-string' },
-  { tag: tags.number, color: '#2aa198', class: 'cm-number' },
-  { tag: tags.bool, color: '#5c6166' },
-  { tag: tags.null, color: '#5c6166' },
-  { tag: tags.keyword, color: '#859900', class: 'cm-keyword' },
-  { tag: tags.operator, color: '#5c6166', class: 'cm-operator' },
-  { tag: tags.className, color: '#5c6166' },
-  { tag: tags.definition(tags.typeName), color: '#5c6166' },
-  { tag: tags.typeName, color: '#5c6166' },
-  { tag: tags.angleBracket, color: '#5c6166' },
-  { tag: tags.tagName, color: '#5c6166' },
-  { tag: tags.attributeName, color: '#5c6166' },
+  { tag: tags.comment, color: "#93a1a1", class: "cm-comment" },
+  { tag: tags.variableName, color: "#0080ff", class: "cm-variable" },
+  {
+    tag: [tags.string, tags.special(tags.brace)],
+    color: "#b58900",
+    class: "cm-string"
+  },
+  { tag: tags.number, color: "#2aa198", class: "cm-number" },
+  { tag: tags.bool, color: "#5c6166" },
+  { tag: tags.null, color: "#5c6166" },
+  { tag: tags.keyword, color: "#859900", class: "cm-keyword" },
+  { tag: tags.operator, color: "#5c6166", class: "cm-operator" },
+  { tag: tags.className, color: "#5c6166" },
+  { tag: tags.definition(tags.typeName), color: "#5c6166" },
+  { tag: tags.typeName, color: "#5c6166" },
+  { tag: tags.angleBracket, color: "#5c6166" },
+  { tag: tags.tagName, color: "#5c6166" },
+  { tag: tags.attributeName, color: "#5c6166" }
 ];
 
 const darkSyntaxStyles = [
-  { tag: tags.comment, color: '#586e75', class: 'cm-comment' },
-  { tag: tags.variableName, color: '#0080ff', class: 'cm-variable' },
-  { tag: [tags.string, tags.special(tags.brace)], color: '#b58900', class: 'cm-string' },
-  { tag: tags.number, color: '#2aa198', class: 'cm-number' },
-  { tag: tags.bool, color: '#5c6166' },
-  { tag: tags.null, color: '#5c6166' },
-  { tag: tags.keyword, color: '#859900', class: 'cm-keyword' },
-  { tag: tags.operator, color: '#5c6166', class: 'cm-operator' },
-  { tag: tags.className, color: '#5c6166' },
-  { tag: tags.definition(tags.typeName), color: '#5c6166' },
-  { tag: tags.typeName, color: '#5c6166' },
-  { tag: tags.angleBracket, color: '#5c6166' },
-  { tag: tags.tagName, color: '#5c6166' },
-  { tag: tags.attributeName, color: '#5c6166' },
+  { tag: tags.comment, color: "#586e75", class: "cm-comment" },
+  { tag: tags.variableName, color: "#0080ff", class: "cm-variable" },
+  {
+    tag: [tags.string, tags.special(tags.brace)],
+    color: "#b58900",
+    class: "cm-string"
+  },
+  { tag: tags.number, color: "#2aa198", class: "cm-number" },
+  { tag: tags.bool, color: "#5c6166" },
+  { tag: tags.null, color: "#5c6166" },
+  { tag: tags.keyword, color: "#859900", class: "cm-keyword" },
+  { tag: tags.operator, color: "#5c6166", class: "cm-operator" },
+  { tag: tags.className, color: "#5c6166" },
+  { tag: tags.definition(tags.typeName), color: "#5c6166" },
+  { tag: tags.typeName, color: "#5c6166" },
+  { tag: tags.angleBracket, color: "#5c6166" },
+  { tag: tags.tagName, color: "#5c6166" },
+  { tag: tags.attributeName, color: "#5c6166" }
 ];
 
 const lightSyntaxStyle = HighlightStyle.define(lightSyntaxStyles);
@@ -168,17 +224,17 @@ const darkSyntaxStyle = HighlightStyle.define(darkSyntaxStyles);
 const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
 const formatNumber = (number, state) => {
-  return state.doc.lines > 1 ? number : '$';
-}
+  return state.doc.lines > 1 ? number : "$";
+};
 
 export const cypherLineNumbers = () => [lineNumbers({ formatNumber })];
 
 export const cypherLanguage = () => [StreamLanguage.define(cypher)];
 
-const VALUE_KEY = 'change';
-const FOCUS_KEY = 'focus';
-const BLUR_KEY = 'blur';
-const SCROLL_KEY = 'scroll';
+const VALUE_KEY = "change";
+const FOCUS_KEY = "focus";
+const BLUR_KEY = "blur";
+const SCROLL_KEY = "scroll";
 
 export const getExtensions = () => {
   return [
@@ -203,26 +259,28 @@ export const getExtensions = () => {
   ];
 };
 
-export function createCypherEditor(parentDOMElement, { text = '', extensions } = {}) {
-  
-  let theme = 'light'; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
+export function createCypherEditor(
+  parentDOMElement,
+  { text = "", extensions } = {}
+) {
+  let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
 
   const eventListenerTypeMap = {};
 
   const onValueChanged = (value, changes) => {
     if (eventListenerTypeMap[VALUE_KEY] !== undefined) {
-      eventListenerTypeMap[VALUE_KEY].forEach(listener => {
+      eventListenerTypeMap[VALUE_KEY].forEach((listener) => {
         listener(value, changes);
-      })
+      });
     }
   };
 
   const onFocusChanged = (focused) => {
     const key = focused ? FOCUS_KEY : BLUR_KEY;
     if (eventListenerTypeMap[key] !== undefined) {
-      eventListenerTypeMap[key].forEach(listener => {
+      eventListenerTypeMap[key].forEach((listener) => {
         listener(focused);
-      })
+      });
     }
   };
 
@@ -230,9 +288,9 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
     const scrollRect = editor.scrollDOM.getBoundingClientRect();
     const contentRect = editor.contentDOM.getBoundingClientRect();
     if (eventListenerTypeMap[SCROLL_KEY] !== undefined) {
-      eventListenerTypeMap[SCROLL_KEY].forEach(listener => {
+      eventListenerTypeMap[SCROLL_KEY].forEach((listener) => {
         listener({ scrollRect, contentRect });
-      })
+      });
     }
   };
 
@@ -245,7 +303,9 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
   });
 
   extensions = [
-    ...(extensions ? extensions : [...getExtensions(), theme === 'light' ? lightTheme : darkTheme]),
+    ...(extensions
+      ? extensions
+      : [...getExtensions(), theme === "light" ? lightTheme : darkTheme]),
     updateListener
   ];
 
@@ -261,19 +321,23 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
 
   const setValue = (value) => {
     settingValue = true;
-    const update = editor.state.update({changes: {from: 0, to: editor.state.doc.length, insert: value}});
+    const update = editor.state.update({
+      changes: { from: 0, to: editor.state.doc.length, insert: value }
+    });
     editor.update([update]);
     settingValue = false;
   };
 
   const goToPosition = (position, scrollIntoView = true) => {
-    if (typeof position === 'object' && position) {
+    if (typeof position === "object" && position) {
       const { line, column } = position;
       position = editor.state.doc.line(line).from + column;
     }
-    editor.dispatch(editor.state.update({ scrollIntoView, selection: { anchor: position } }));
+    editor.dispatch(
+      editor.state.update({ scrollIntoView, selection: { anchor: position } })
+    );
   };
-  
+
   editor.version = 1;
   editor.newContentVersion = function newContentVersion() {
     this.version += 1;
@@ -284,15 +348,15 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
 
   editor.contentDOM.focus();
 
-  editor.contentDOM.addEventListener('blur', () => {
+  editor.contentDOM.addEventListener("blur", () => {
     onFocusChanged(false);
   });
 
-  editor.contentDOM.addEventListener('focus', () => {
+  editor.contentDOM.addEventListener("focus", () => {
     onFocusChanged(true);
   });
 
-  editor.scrollDOM.addEventListener('scroll', () => {
+  editor.scrollDOM.addEventListener("scroll", () => {
     onScrollChanged(editor);
   });
 
@@ -306,7 +370,7 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
   const off = (type, listener) => {
     if (eventListenerTypeMap[type] !== undefined) {
       const listeners = eventListenerTypeMap[type];
-      const index = listeners.findIndex(l => l === listener);
+      const index = listeners.findIndex((l) => l === listener);
       if (index >= 0) {
         listeners.splice(index, 1);
       }
@@ -353,6 +417,7 @@ export function createCypherEditor(parentDOMElement, { text = '', extensions } =
   const editorSupport = getEditorSupport(editor.state);
 
   return {
-    editor, editorSupport
+    editor,
+    editorSupport
   };
 }

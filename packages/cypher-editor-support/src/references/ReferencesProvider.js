@@ -23,13 +23,14 @@ export class ReferencesProvider {
   index = {};
 
   constructor(queries, index) {
-    const { names, namesByQuery, referencesByName, referencesByQueryAndName } = index;
+    const { names, namesByQuery, referencesByName, referencesByQueryAndName } =
+      index;
     this.queries = queries;
     this.index = {
       names: Object.keys(names),
-      namesByQuery: namesByQuery.map(q => Object.keys(q)),
+      namesByQuery: namesByQuery.map((q) => Object.keys(q)),
       referencesByName,
-      referencesByQueryAndName,
+      referencesByQueryAndName
     };
   }
 

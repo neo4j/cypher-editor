@@ -18,13 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
-import { TreeUtils } from '../../util/TreeUtils';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
+import { TreeUtils } from "../../util/TreeUtils";
 
 // If we are in console command, and not in console command name, return path
 export default (element) => {
-  let consoleCommand = TreeUtils.findParent(element.parentCtx, CypherTypes.CONSOLE_COMMAND_CONTEXT);
+  let consoleCommand = TreeUtils.findParent(
+    element.parentCtx,
+    CypherTypes.CONSOLE_COMMAND_CONTEXT
+  );
   let isAtTheEndOfConsoleCommand = false;
   if (!consoleCommand) {
     // We are not in console command. But maybe we are on a space at the end of console command?
@@ -32,7 +35,10 @@ export default (element) => {
     // and second child is our current element
     // then we are at the space at the end of console command
     const parent = element.parentCtx;
-    const child1 = TreeUtils.findChild(parent.children[0], CypherTypes.CONSOLE_COMMAND_CONTEXT);
+    const child1 = TreeUtils.findChild(
+      parent.children[0],
+      CypherTypes.CONSOLE_COMMAND_CONTEXT
+    );
     const child2 = parent.children[1];
     if (child1 && child2 && child2 === element) {
       consoleCommand = child1;
@@ -43,8 +49,11 @@ export default (element) => {
   }
 
   // Find current parameter or space
-  const currentElement = TreeUtils
-    .findParent(element, CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT) || element;
+  const currentElement =
+    TreeUtils.findParent(
+      element,
+      CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT
+    ) || element;
 
   const path = [];
   let currentElementInParameter = false;
@@ -55,10 +64,15 @@ export default (element) => {
     if (child.constructor.name === CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
       path.push(child.getText());
     }
-    if (child.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT) {
+    if (
+      child.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT
+    ) {
       for (let j = 0; j < child.children.length; j += 1) {
         const parameterChild = child.children[j];
-        if (parameterChild.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT) {
+        if (
+          parameterChild.constructor.name ===
+          CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT
+        ) {
           path.push(parameterChild.getText());
           currentElementInParameter = true;
         } else {
@@ -84,7 +98,7 @@ export default (element) => {
     {
       type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
       path,
-      filterLastElement,
-    },
+      filterLastElement
+    }
   ];
 };

@@ -1,15 +1,41 @@
-import { CypherKeywords } from 'cypher-editor-support';
+import { CypherKeywords } from "cypher-editor-support";
 
 const operators = [
-  ';', '(', ')', '{', '}', '[', ']', '$', ':',
-  '.', '=', '<', '>', '+', '-', '*', '`', ',',
-  '?', '|', '..', '+=', '<>', '!=', '<=', '>=',
-  '/', '%', '^', '=~',
+  ";",
+  "(",
+  ")",
+  "{",
+  "}",
+  "[",
+  "]",
+  "$",
+  ":",
+  ".",
+  "=",
+  "<",
+  ">",
+  "+",
+  "-",
+  "*",
+  "`",
+  ",",
+  "?",
+  "|",
+  "..",
+  "+=",
+  "<>",
+  "!=",
+  "<=",
+  ">=",
+  "/",
+  "%",
+  "^",
+  "=~"
 ];
 
 let curPunc;
 
-const keywordRegexes = CypherKeywords.map(w => new RegExp(w, 'i'));
+const keywordRegexes = CypherKeywords.map((w) => new RegExp(w, "i"));
 const lineCommentRegex = /\/\/[^\r\n]*/;
 const blockCommentRegex = /\/\*([\S\s]*?)\*\//;
 const stringRegex = /('([^'\\]|\\.)*'|"([^"\\]|\\.)*")/;
@@ -19,32 +45,32 @@ const decimalRegex = /[+-]?(([1-9][0-9]+)|([0-9]))\.[0-9]+/;
 
 const tokenBase = (stream) => {
   if (stream.match(lineCommentRegex) || stream.match(blockCommentRegex)) {
-    return 'comment';
+    return "comment";
   } else if (stream.match(stringRegex)) {
-    return 'string';
+    return "string";
   } else if (stream.match(integerRegex)) {
-    return 'number';
+    return "number";
   } else if (stream.match(decimalRegex)) {
-    return 'number';
-  } else if (operators.find(o => stream.match(o))) {
-    return 'operator';
-  } else if (keywordRegexes.find(k => stream.match(k))) {
-    return 'keyword';
+    return "number";
+  } else if (operators.find((o) => stream.match(o))) {
+    return "operator";
+  } else if (keywordRegexes.find((k) => stream.match(k))) {
+    return "keyword";
   } else if (stream.match(stringStartRegex)) {
-    return 'string';
+    return "string";
   }
 
   // stream.next();
   stream.eatWhile(/[_\w\d]/);
 
-  return 'variable';
+  return "variable";
 };
 const pushContext = (state, type, col) => {
   state.context = {
     prev: state.context,
     indent: state.indent,
     col,
-    type,
+    type
   };
   return state.context;
 };
@@ -60,7 +86,7 @@ export const cypher = {
       tokenize: tokenBase,
       context: null,
       indent: 0,
-      col: 0,
+      col: 0
     };
   },
   token(stream, state) {
@@ -74,28 +100,37 @@ export const cypher = {
       return null;
     }
     const style = state.tokenize(stream, state);
-    if (style !== 'comment' && state.context && state.context.align == null && state.context.type !== 'pattern') {
+    if (
+      style !== "comment" &&
+      state.context &&
+      state.context.align == null &&
+      state.context.type !== "pattern"
+    ) {
       state.context.align = true;
     }
-    if (curPunc === '(') {
-      pushContext(state, ')', stream.column());
-    } else if (curPunc === '[') {
-      pushContext(state, ']', stream.column());
-    } else if (curPunc === '{') {
-      pushContext(state, '}', stream.column());
+    if (curPunc === "(") {
+      pushContext(state, ")", stream.column());
+    } else if (curPunc === "[") {
+      pushContext(state, "]", stream.column());
+    } else if (curPunc === "{") {
+      pushContext(state, "}", stream.column());
     } else if (/[\]})]/.test(curPunc)) {
-      while (state.context && state.context.type === 'pattern') {
+      while (state.context && state.context.type === "pattern") {
         popContext(state);
       }
       if (state.context && curPunc === state.context.type) {
         popContext(state);
       }
-    } else if (curPunc === '.' && state.context && state.context.type === 'pattern') {
+    } else if (
+      curPunc === "." &&
+      state.context &&
+      state.context.type === "pattern"
+    ) {
       popContext(state);
     } else if (/atom|string|variable/.test(style) && state.context) {
       if (/[}\]]/.test(state.context.type)) {
-        pushContext(state, 'pattern', stream.column());
-      } else if (state.context.type === 'pattern' && !state.context.align) {
+        pushContext(state, "pattern", stream.column());
+      } else if (state.context.type === "pattern" && !state.context.align) {
         state.context.align = true;
         state.context.col = stream.column();
       }
@@ -106,14 +141,14 @@ export const cypher = {
     const firstChar = textAfter && textAfter.charAt(0);
     let context = state.context;
     if (/[\]}]/.test(firstChar)) {
-      while (context && context.type === 'pattern') {
+      while (context && context.type === "pattern") {
         context = context.prev;
       }
     }
     const closing = context && firstChar === context.type;
     if (!context) return 0;
-    if (context.type === 'keywords') return null; // return CodeMirror.commands.newlineAndIndent;
+    if (context.type === "keywords") return null; // return CodeMirror.commands.newlineAndIndent;
     if (context.align) return context.col + (closing ? 0 : 1);
     return context.indent + (closing ? 0 : cx.unit);
-  },
+  }
 };

@@ -1,7 +1,8 @@
-const wait = ms => new Promise(r => setTimeout(r, ms));
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export const retryOperation = (operation, delay, times) =>
-  new Promise((resolve, reject) => operation()
+  new Promise((resolve, reject) =>
+    operation()
       .then(resolve)
       .catch((reason) => {
         if (times - 1 > 0) {
@@ -11,4 +12,5 @@ export const retryOperation = (operation, delay, times) =>
             .catch(reject);
         }
         return reject(reason);
-      }));
+      })
+  );

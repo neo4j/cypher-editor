@@ -18,20 +18,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CompletionTypeResolver } from './completion/CompletionTypeResolver';
-import { AutoCompletion } from './completion/AutoCompletion';
-import * as CypherTypes from './lang/CypherTypes';
-import { CypherSyntaxHighlight } from './highlight/CypherSyntaxHighlight';
-import { TreeUtils } from './util/TreeUtils';
-import { PositionConverter } from './util/PositionConverter';
-import { retryOperation } from './util/retryOperation';
-import { parse } from './util/parse';
+import { CompletionTypeResolver } from "./completion/CompletionTypeResolver";
+import { AutoCompletion } from "./completion/AutoCompletion";
+import * as CypherTypes from "./lang/CypherTypes";
+import { CypherSyntaxHighlight } from "./highlight/CypherSyntaxHighlight";
+import { TreeUtils } from "./util/TreeUtils";
+import { PositionConverter } from "./util/PositionConverter";
+import { retryOperation } from "./util/retryOperation";
+import { parse } from "./util/parse";
 
 export class CypherEditorSupport {
   schema = {};
 
   input = null;
-  positionConverter = new PositionConverter('');
+  positionConverter = new PositionConverter("");
 
   parseTree = null;
   parseErrors = [];
@@ -42,7 +42,7 @@ export class CypherEditorSupport {
   listeners = [];
   version = 0;
 
-  constructor(input = '') {
+  constructor(input = "") {
     this.update(input);
   }
 
@@ -56,7 +56,7 @@ export class CypherEditorSupport {
           return reject();
         }),
       delay,
-      times,
+      times
     );
 
   on(eventName, cb) {
@@ -75,18 +75,18 @@ export class CypherEditorSupport {
 
   trigger(eventName, args = []) {
     if (!this.listeners[eventName]) return;
-    this.listeners[eventName].forEach(cb => cb(...args));
+    this.listeners[eventName].forEach((cb) => cb(...args));
   }
 
-  update(input = '', version) {
-    this.trigger('update');
+  update(input = "", version) {
+    this.trigger("update");
     if (input === this.input) {
       this.version = version || this.version;
-      this.trigger('updated', [
+      this.trigger("updated", [
         {
           queriesAndCommands: this.queriesAndCommands,
-          referencesProviders: this.referencesProviders,
-        },
+          referencesProviders: this.referencesProviders
+        }
       ]);
       return;
     }
@@ -94,7 +94,12 @@ export class CypherEditorSupport {
 
     this.input = input;
     // const startTime = new Date();
-    const { parseTree, referencesListener, errorListener, referencesProviders } = parse(input);
+    const {
+      parseTree,
+      referencesListener,
+      errorListener,
+      referencesProviders
+    } = parse(input);
     this.parseTree = parseTree;
     // console.log('updated parse tree: ', input, version, 'time: ' + (new Date() - startTime));
 
@@ -107,11 +112,11 @@ export class CypherEditorSupport {
 
     this.completion.updateReferenceProviders(this.referencesProviders);
     this.version = version || this.version;
-    this.trigger('updated', [
+    this.trigger("updated", [
       {
         queriesAndCommands: this.queriesAndCommands,
-        referencesProviders: this.referencesProviders,
-      },
+        referencesProviders: this.referencesProviders
+      }
     ]);
   }
 
@@ -150,7 +155,10 @@ export class CypherEditorSupport {
   }
 
   getReferences(line, column) {
-    const e = TreeUtils.findAnyParent(this.getElement(line, column), CypherTypes.SYMBOLIC_CONTEXTS);
+    const e = TreeUtils.findAnyParent(
+      this.getElement(line, column),
+      CypherTypes.SYMBOLIC_CONTEXTS
+    );
     if (e == null) {
       return [];
     }
@@ -191,7 +199,7 @@ export class CypherEditorSupport {
 
     const replaceRange = {
       from: { line, column },
-      to: { line, column },
+      to: { line, column }
     };
     let filter = null;
 
@@ -199,10 +207,18 @@ export class CypherEditorSupport {
     if (found && shouldBeReplaced) {
       // There are number of situations where we need to be smarter than default behavior
       const { start, stop } = TreeUtils.getPosition(element);
-      const smartReplaceRange = AutoCompletion.calculateSmartReplaceRange(element, start, stop);
+      const smartReplaceRange = AutoCompletion.calculateSmartReplaceRange(
+        element,
+        start,
+        stop
+      );
       if (smartReplaceRange) {
-        replaceRange.from = this.positionConverter.toRelative(smartReplaceRange.start);
-        replaceRange.to = this.positionConverter.toRelative(smartReplaceRange.stop + 1);
+        replaceRange.from = this.positionConverter.toRelative(
+          smartReplaceRange.start
+        );
+        replaceRange.to = this.positionConverter.toRelative(
+          smartReplaceRange.stop + 1
+        );
 
         if (smartReplaceRange.filterText) {
           filter = smartReplaceRange.filterText;
@@ -214,15 +230,15 @@ export class CypherEditorSupport {
     }
 
     if (filter === null) {
-      filter = doFilter && found && shouldBeReplaced ? element.getText() : '';
+      filter = doFilter && found && shouldBeReplaced ? element.getText() : "";
     }
     return {
       items: this.completion.getItems(types, {
         filter,
         query,
-        elementType: element ? element.constructor.name : 'unknown',
+        elementType: element ? element.constructor.name : "unknown"
       }),
-      ...replaceRange,
+      ...replaceRange
     };
   }
 

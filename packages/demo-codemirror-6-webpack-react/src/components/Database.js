@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import neo4j from 'neo4j-driver';
-import CypherEditor from 'react-codemirror-cypher';
-import { neo4jSchema, defaultQuery, initialPosition } from 'demo-base';
+import React, { useState } from "react";
+import neo4j from "neo4j-driver";
+import CypherEditor from "react-codemirror-cypher";
+import { neo4jSchema, defaultQuery, initialPosition } from "demo-base";
 
-const driver = neo4j.driver("neo4j://localhost:7687",
+const driver = neo4j.driver(
+  "neo4j://localhost:7687",
   neo4j.auth.basic("neo4j", "asdfgh")
 );
 
@@ -12,52 +13,60 @@ const Database = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("light");
 
   const send = () => {
-		const session = driver.session();
+    const session = driver.session();
     setLoading(true);
-		session.run(cypher)
-      .then(results => {
+    session.run(cypher).then(
+      (results) => {
         setResults(results);
         setLoading(false);
         setError(null);
-      }, error => {
+      },
+      (error) => {
         setResults(null);
         setLoading(false);
         setError(error);
-      });
-	};
+      }
+    );
+  };
 
   const onValueChange = (value, change) => {
-		setCypher(value);
+    setCypher(value);
   };
 
   const lightTheme = () => {
-    setTheme('light');
+    setTheme("light");
   };
 
   const darkTheme = () => {
-    setTheme('dark');
+    setTheme("dark");
   };
 
-  let content = '';
+  let content = "";
   if (loading) {
-    content = (<p>...waiting</p>);
+    content = <p>...waiting</p>;
   } else if (error) {
-    content = (<p style="color: red">{error.message}</p>);
+    content = <p style="color: red">{error.message}</p>;
   } else if (results) {
-    content = results.records.map((record, i) => (<pre key={i}>{JSON.stringify(record)}</pre>))
+    content = results.records.map((record, i) => (
+      <pre key={i}>{JSON.stringify(record)}</pre>
+    ));
   }
 
   return (
     <main>
-      <CypherEditor onValueChange={onValueChange} initialPosition={initialPosition} autoCompleteSchema={neo4jSchema} cypher={cypher} theme={theme} />
+      <CypherEditor
+        onValueChange={onValueChange}
+        initialPosition={initialPosition}
+        autoCompleteSchema={neo4jSchema}
+        cypher={cypher}
+        theme={theme}
+      />
       <button onClick={lightTheme}>Light theme</button>
       <button onClick={darkTheme}>Dark theme</button>
-      <button onClick={send}>
-        Run
-      </button>
+      <button onClick={send}>Run</button>
 
       <div>
         <h3>Results</h3>

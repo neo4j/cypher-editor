@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CompletionTypes from './CompletionTypes';
-import * as rules from './rules';
+import * as CompletionTypes from "./CompletionTypes";
+import * as rules from "./rules";
 
 // Rules are sorted starting with specific ones, and finishing with more generic ones.
 const orderedCompletionRules = [
@@ -35,7 +35,7 @@ const orderedCompletionRules = [
   rules.ruleCallClauseBeginning,
   rules.ruleConsoleCommandSubcommands,
   rules.rulePropertyLookup,
-  rules.rulePossibleKeyword,
+  rules.rulePossibleKeyword
 ];
 
 function evaluateRules(element) {
@@ -56,7 +56,7 @@ export class CompletionTypeResolver {
     if (element == null) {
       return {
         found: false,
-        types: CompletionTypes.ALL,
+        types: CompletionTypes.ALL
       };
     }
 
@@ -65,14 +65,14 @@ export class CompletionTypeResolver {
     if (types.length > 0) {
       return {
         found: true,
-        types,
+        types
       };
     }
 
     // If no types found, then no types
     return {
       found: false,
-      types: CompletionTypes.ALL,
+      types: CompletionTypes.ALL
     };
   }
 }

@@ -18,48 +18,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
-import { TreeUtils } from '../../util/TreeUtils';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
+import { TreeUtils } from "../../util/TreeUtils";
 
 const childToParentTypeMapping = {
-  [CypherTypes.VARIABLE_CONTEXT]: [
-    { type: CompletionTypes.VARIABLE },
-  ],
-  [CypherTypes.PARAMETER_NAME_CONTEXT]: [
-    { type: CompletionTypes.PARAMETER },
-  ],
+  [CypherTypes.VARIABLE_CONTEXT]: [{ type: CompletionTypes.VARIABLE }],
+  [CypherTypes.PARAMETER_NAME_CONTEXT]: [{ type: CompletionTypes.PARAMETER }],
   [CypherTypes.PROPERTY_KEY_NAME_CONTEXT]: [
-    { type: CompletionTypes.PROPERTY_KEY },
+    { type: CompletionTypes.PROPERTY_KEY }
   ],
   [CypherTypes.FUNCTION_NAME_CONTEXT]: [
-    { type: CompletionTypes.FUNCTION_NAME },
+    { type: CompletionTypes.FUNCTION_NAME }
   ],
   [CypherTypes.PROCEDURE_NAME_CONTEXT]: [
-    { type: CompletionTypes.PROCEDURE_NAME },
+    { type: CompletionTypes.PROCEDURE_NAME }
   ],
-  [CypherTypes.NODE_LABEL_CONTEXT]: [
-    { type: CompletionTypes.LABEL },
-  ],
+  [CypherTypes.NODE_LABEL_CONTEXT]: [{ type: CompletionTypes.LABEL }],
   [CypherTypes.RELATIONSHIP_TYPE_CONTEXT]: [
-    { type: CompletionTypes.RELATIONSHIP_TYPE },
+    { type: CompletionTypes.RELATIONSHIP_TYPE }
   ],
   [CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT]: [
-    { type: CompletionTypes.RELATIONSHIP_TYPE },
+    { type: CompletionTypes.RELATIONSHIP_TYPE }
   ],
   [CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT]: [
-    { type: CompletionTypes.CONSOLE_COMMAND_NAME },
+    { type: CompletionTypes.CONSOLE_COMMAND_NAME }
   ],
-  [CypherTypes.NODE_LABELS_CONTEXT]: [
-    { type: CompletionTypes.LABEL },
-  ],
+  [CypherTypes.NODE_LABELS_CONTEXT]: [{ type: CompletionTypes.LABEL }],
   [CypherTypes.RELATIONSHIP_TYPES_CONTEXT]: [
-    { type: CompletionTypes.RELATIONSHIP_TYPE },
-  ],
+    { type: CompletionTypes.RELATIONSHIP_TYPE }
+  ]
 };
 
 // Check that element is inside specific parent context
 export default (element) => {
-  const parent = TreeUtils.findAnyParent(element, Object.keys(childToParentTypeMapping));
-  return parent != null ? childToParentTypeMapping[parent.constructor.name] : [];
+  const parent = TreeUtils.findAnyParent(
+    element,
+    Object.keys(childToParentTypeMapping)
+  );
+  return parent != null
+    ? childToParentTypeMapping[parent.constructor.name]
+    : [];
 };

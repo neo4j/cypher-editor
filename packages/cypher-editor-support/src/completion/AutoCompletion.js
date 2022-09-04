@@ -18,25 +18,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Fuse from 'fuse.js';
-import _find from 'lodash.find';
-import * as CypherTypes from '../lang/CypherTypes';
-import * as CompletionTypes from './CompletionTypes';
-import CypherKeywords from '../lang/CypherKeywords';
-import { TreeUtils } from '../util/TreeUtils';
-import { ecsapeCypher } from '../util/ecsapeCypher';
+import Fuse from "fuse.js";
+import _find from "lodash.find";
+import * as CypherTypes from "../lang/CypherTypes";
+import * as CompletionTypes from "./CompletionTypes";
+import CypherKeywords from "../lang/CypherKeywords";
+import { TreeUtils } from "../util/TreeUtils";
+import { ecsapeCypher } from "../util/ecsapeCypher";
 
-export const KEYWORD_ITEMS = CypherKeywords.map(keyword => ({
+export const KEYWORD_ITEMS = CypherKeywords.map((keyword) => ({
   type: CompletionTypes.KEYWORD,
   view: keyword,
   content: keyword,
-  postfix: null,
+  postfix: null
 }));
 
 const fuzzySearch = (list, text, key) => {
   const fuse = new Fuse(list, { keys: [key] });
   return fuse.search(text).map(({ item }) => item);
-}
+};
 
 class AbstractCachingCompletion {
   cache = {};
@@ -68,14 +68,15 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
 
   static providers = {
     [CompletionTypes.PROCEDURE_OUTPUT]: (schema, typeData) => {
-      const findByName = e => e.name === typeData.name && e.returnItems !== [];
+      const findByName = (e) =>
+        e.name === typeData.name && e.returnItems !== [];
       const procedure = _find(schema.procedures, findByName);
       if (procedure) {
         return procedure.returnItems.map(({ name, signature }) => ({
           type: CompletionTypes.PROCEDURE_OUTPUT,
           view: name,
           content: name,
-          postfix: ` :: ${signature}`,
+          postfix: ` :: ${signature}`
         }));
       }
       return [];
@@ -86,7 +87,7 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
       const length = filterLastElement ? path.length - 1 : path.length;
       let currentLevel = schema.consoleCommands;
       for (let i = 0; i < length; i += 1) {
-        const foundCommand = _find(currentLevel, ['name', path[i]]);
+        const foundCommand = _find(currentLevel, ["name", path[i]]);
         if (foundCommand) {
           currentLevel = foundCommand.commands || [];
         } else {
@@ -98,69 +99,77 @@ class SchemaBasedCompletion extends AbstractCachingCompletion {
         type: CompletionTypes.CONSOLE_COMMAND_SUBCOMMAND,
         view: name,
         content: name,
-        postfix: description || null,
+        postfix: description || null
       }));
-    },
+    }
   };
 
   constructor(schema = {}) {
     super({
       [CompletionTypes.KEYWORD]: KEYWORD_ITEMS,
-      [CompletionTypes.LABEL]: (schema.labels || [])
-        .map(label => ({
-          type: CompletionTypes.LABEL,
-          view: label,
-          content: ecsapeCypher(label),
-          postfix: null,
-        })),
-      [CompletionTypes.RELATIONSHIP_TYPE]: (schema.relationshipTypes || [])
-        .map(relType => ({
+      [CompletionTypes.LABEL]: (schema.labels || []).map((label) => ({
+        type: CompletionTypes.LABEL,
+        view: label,
+        content: ecsapeCypher(label),
+        postfix: null
+      })),
+      [CompletionTypes.RELATIONSHIP_TYPE]: (schema.relationshipTypes || []).map(
+        (relType) => ({
           type: CompletionTypes.RELATIONSHIP_TYPE,
           view: relType,
           content: ecsapeCypher(relType),
-          postfix: null,
-        })),
-      [CompletionTypes.PROPERTY_KEY]: (schema.propertyKeys || [])
-        .map(propKey => ({
+          postfix: null
+        })
+      ),
+      [CompletionTypes.PROPERTY_KEY]: (schema.propertyKeys || []).map(
+        (propKey) => ({
           type: CompletionTypes.PROPERTY_KEY,
           view: propKey,
           content: ecsapeCypher(propKey),
-          postfix: null,
-        })),
-      [CompletionTypes.FUNCTION_NAME]: (schema.functions || [])
-        .map(({ name, signature }) => ({
+          postfix: null
+        })
+      ),
+      [CompletionTypes.FUNCTION_NAME]: (schema.functions || []).map(
+        ({ name, signature }) => ({
           type: CompletionTypes.FUNCTION_NAME,
           view: name,
           content: ecsapeCypher(name),
-          postfix: signature,
-        })),
-      [CompletionTypes.PROCEDURE_NAME]: (schema.procedures || [])
-        .map(({ name, signature }) => ({
+          postfix: signature
+        })
+      ),
+      [CompletionTypes.PROCEDURE_NAME]: (schema.procedures || []).map(
+        ({ name, signature }) => ({
           type: CompletionTypes.PROCEDURE_NAME,
           view: name,
           content: name,
-          postfix: signature,
-        })),
-      [CompletionTypes.CONSOLE_COMMAND_NAME]: (schema.consoleCommands || [])
-        .map(consoleCommandName => ({
-          type: CompletionTypes.CONSOLE_COMMAND_NAME,
-          view: consoleCommandName.name,
-          content: consoleCommandName.name,
-          postfix: consoleCommandName.description || null,
-        })),
-      [CompletionTypes.PARAMETER]: (schema.parameters || [])
-        .map(parameter => ({
+          postfix: signature
+        })
+      ),
+      [CompletionTypes.CONSOLE_COMMAND_NAME]: (
+        schema.consoleCommands || []
+      ).map((consoleCommandName) => ({
+        type: CompletionTypes.CONSOLE_COMMAND_NAME,
+        view: consoleCommandName.name,
+        content: consoleCommandName.name,
+        postfix: consoleCommandName.description || null
+      })),
+      [CompletionTypes.PARAMETER]: (schema.parameters || []).map(
+        (parameter) => ({
           type: CompletionTypes.PARAMETER,
           view: parameter,
           content: parameter,
-          postfix: null,
-        })),
+          postfix: null
+        })
+      )
     });
     this.schema = schema;
   }
 
   calculateItems(typeData) {
-    return (SchemaBasedCompletion.providers[typeData.type] || (() => []))(this.schema, typeData);
+    return (SchemaBasedCompletion.providers[typeData.type] || (() => []))(
+      this.schema,
+      typeData
+    );
   }
 }
 
@@ -171,15 +180,15 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
   constructor(referenceProviders = {}) {
     super();
     this.providers = {
-      [CompletionTypes.VARIABLE]:
-        query => (referenceProviders[CypherTypes.VARIABLE_CONTEXT] || this.emptyProvider)
+      [CompletionTypes.VARIABLE]: (query) =>
+        (referenceProviders[CypherTypes.VARIABLE_CONTEXT] || this.emptyProvider)
           .getNames(query)
-          .map(name => ({
+          .map((name) => ({
             type: CompletionTypes.VARIABLE,
             view: name,
             content: name,
-            postfix: null,
-          })),
+            postfix: null
+          }))
     };
   }
 
@@ -196,23 +205,23 @@ export class AutoCompletion {
     this.updateSchema({});
   }
 
-  getItems(types, { query = null, filter = '' }) {
+  getItems(types, { query = null, filter = "" }) {
     const text = filter.toLowerCase();
     const filteredText = AutoCompletion.filterText(text);
 
     const completionItemFilter = () => true;
 
     const list = [this.queryBased, this.schemaBased]
-      .filter(s => s != null)
-      .map(t => t.complete(types, query))
+      .filter((s) => s != null)
+      .map((t) => t.complete(types, query))
       .reduce((acc, items) => [...acc, ...items], [])
       .filter(completionItemFilter);
 
     if (filteredText) {
-      return fuzzySearch(list, filteredText, 'view');
+      return fuzzySearch(list, filteredText, "view");
     }
     if (text) {
-      return fuzzySearch(list, text, 'view');
+      return fuzzySearch(list, text, "view");
     }
     return list;
   }
@@ -241,25 +250,29 @@ export class AutoCompletion {
       return false;
     }
     // If element is opening bracket (e.g. start of relationship pattern)
-    if (text === '[') {
+    if (text === "[") {
       return false;
     }
     // If element is opening brace (e.g. start of node pattern)
-    if (text === '(') {
+    if (text === "(") {
       return false;
     }
 
-    if (text === '.') {
+    if (text === ".") {
       return false;
     }
 
-    if (text === '{') {
+    if (text === "{") {
       return false;
     }
-    if (text === '$') {
+    if (text === "$") {
       return false;
     }
-    if (text === ':' && parent != null && parent.constructor.name === CypherTypes.MAP_LITERAL_ENTRY) {
+    if (
+      text === ":" &&
+      parent != null &&
+      parent.constructor.name === CypherTypes.MAP_LITERAL_ENTRY
+    ) {
       return false;
     }
 
@@ -267,7 +280,7 @@ export class AutoCompletion {
   }
 
   static filterText(text) {
-    if (text.startsWith('$')) {
+    if (text.startsWith("$")) {
       return text.slice(1);
     }
     return text;
@@ -278,10 +291,12 @@ export class AutoCompletion {
     // If we are in relationship type or label and we have error nodes in there.
     // This means that we typed in just ':' and Antlr consumed other tokens in element
     // In this case replace only ':'
-    if (element.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT
-      || element.constructor.name === CypherTypes.NODE_LABEL_CONTEXT) {
+    if (
+      element.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT ||
+      element.constructor.name === CypherTypes.NODE_LABEL_CONTEXT
+    ) {
       if (TreeUtils.hasErrorNode(element)) {
-        return { filterText: ':', start, stop: start };
+        return { filterText: ":", start, stop: start };
       }
     }
 

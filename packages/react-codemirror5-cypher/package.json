@@ -41,6 +41,5 @@
     "codemirror": "^5",
     "react": ">=16"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

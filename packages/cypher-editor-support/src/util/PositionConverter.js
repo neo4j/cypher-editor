@@ -23,7 +23,7 @@ export class PositionConverter {
 
   constructor(input) {
     for (let i = 0; i < input.length; i += 1) {
-      if (input[i] === '\n') {
+      if (input[i] === "\n") {
         this.newLines.push(i);
       }
     }

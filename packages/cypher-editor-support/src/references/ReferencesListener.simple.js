@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CypherListener } from 'cypher-antlr4-simple';
-import * as CypherTypes from '../lang/CypherTypes';
+import { CypherListener } from "cypher-antlr4-simple";
+import * as CypherTypes from "../lang/CypherTypes";
 
 class Index {
   names = {};
@@ -69,9 +69,9 @@ export class ReferencesListener extends CypherListener {
   indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
     (acc, t) => ({
       ...acc,
-      [t]: new Index(t),
+      [t]: new Index(t)
     }),
-    {},
+    {}
   );
 
   inConsoleCommand = false;
@@ -97,7 +97,7 @@ export class ReferencesListener extends CypherListener {
 
   enterCypherConsoleCommand(ctx) {
     this.queriesAndCommands.push(ctx);
-    Object.keys(this.indexes).forEach(k => this.indexes[k].addQuery());
+    Object.keys(this.indexes).forEach((k) => this.indexes[k].addQuery());
     this.inConsoleCommand = true;
   }
 
@@ -108,7 +108,7 @@ export class ReferencesListener extends CypherListener {
   enterCypherQuery(ctx) {
     this.queries.push(ctx);
     this.queriesAndCommands.push(ctx);
-    Object.keys(this.indexes).forEach(k => this.indexes[k].addQuery());
+    Object.keys(this.indexes).forEach((k) => this.indexes[k].addQuery());
   }
 
   exitVariable(ctx) {

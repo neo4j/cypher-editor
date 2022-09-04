@@ -18,11 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CypherEditorSupport } from './CypherEditorSupport';
-import { TreeUtils } from './util/TreeUtils';
-import { parse } from './util/parse';
-import { extractStatements } from './util/extractStatements';
-import * as CypherTypes from './lang/CypherTypes';
-import CypherKeywords from './lang/CypherKeywords';
+import { CypherEditorSupport } from "./CypherEditorSupport";
+import { TreeUtils } from "./util/TreeUtils";
+import { parse } from "./util/parse";
+import { extractStatements } from "./util/extractStatements";
+import * as CypherTypes from "./lang/CypherTypes";
+import CypherKeywords from "./lang/CypherKeywords";
 
-export { CypherEditorSupport, CypherTypes, CypherKeywords, TreeUtils, parse, extractStatements };
+export {
+  CypherEditorSupport,
+  CypherTypes,
+  CypherKeywords,
+  TreeUtils,
+  parse,
+  extractStatements
+};

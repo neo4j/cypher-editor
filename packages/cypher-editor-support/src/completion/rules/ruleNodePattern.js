@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
 
 // If we are in relationship pattern then return variables and types
 export default (element) => {
@@ -27,25 +27,26 @@ export default (element) => {
   const text = element.getText();
   // Special case. We are at the beginning of first node pattern.
   if (parent) {
-    if (parent.constructor.name === CypherTypes.PATTERN_ELEMENT_CONTEXT && text === '(') {
+    if (
+      parent.constructor.name === CypherTypes.PATTERN_ELEMENT_CONTEXT &&
+      text === "("
+    ) {
       return [
         { type: CompletionTypes.VARIABLE },
-        { type: CompletionTypes.LABEL },
+        { type: CompletionTypes.LABEL }
       ];
     }
 
     if (parent.constructor.name === CypherTypes.NODE_PATTERN_CONTEXT) {
       // We are at the begining of node pattern
-      if (text === '(') {
+      if (text === "(") {
         return [
           { type: CompletionTypes.VARIABLE },
-          { type: CompletionTypes.LABEL },
+          { type: CompletionTypes.LABEL }
         ];
       }
-      if (text === ':') {
-        return [
-          { type: CompletionTypes.LABEL },
-        ];
+      if (text === ":") {
+        return [{ type: CompletionTypes.LABEL }];
       }
     }
   }

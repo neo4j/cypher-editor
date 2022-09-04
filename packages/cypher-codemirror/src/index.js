@@ -18,4 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { createCypherEditor, getExtensions, cypherLanguage, cypherLinter, cypherLineNumbers, cypherCompletion } from './cypher-codemirror';
+export {
+  createCypherEditor,
+  getExtensions,
+  cypherLanguage,
+  cypherLinter,
+  cypherLineNumbers,
+  cypherCompletion
+} from "./cypher-codemirror";

@@ -1,9 +1,9 @@
-import antlr4 from 'antlr4';
-import { ReferencesProvider } from '../references/ReferencesProvider';
-import * as CypherTypes from '../lang/CypherTypes';
-import { CypherParser, CypherLexer } from 'cypher-antlr4-simple';
-import { ErrorListener } from '../errors/ErrorListener';
-import { ReferencesListener } from '../references/ReferencesListener.simple';
+import antlr4 from "antlr4";
+import { ReferencesProvider } from "../references/ReferencesProvider";
+import * as CypherTypes from "../lang/CypherTypes";
+import { CypherParser, CypherLexer } from "cypher-antlr4-simple";
+import { ErrorListener } from "../errors/ErrorListener";
+import { ReferencesListener } from "../references/ReferencesListener.simple";
 
 export const extractStatements = (input) => {
   const referencesListener = new ReferencesListener();
@@ -24,9 +24,9 @@ export const extractStatements = (input) => {
   const referencesProviders = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
     (acc, t) => ({
       ...acc,
-      [t]: new ReferencesProvider(queries, indexes[t]),
+      [t]: new ReferencesProvider(queries, indexes[t])
     }),
-    {},
+    {}
   );
   return { parseTree, referencesListener, errorListener, referencesProviders };
 };

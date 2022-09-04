@@ -18,18 +18,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
 
 export default (element) => {
   const lookupContext = element.getParent();
   const text = element.getText();
 
   if (lookupContext) {
-    if (lookupContext.constructor.name === CypherTypes.PROPERTY_LOOKUP_CONTEXT && text === '.') {
-      return [
-        { type: CompletionTypes.PROPERTY_KEY },
-      ];
+    if (
+      lookupContext.constructor.name === CypherTypes.PROPERTY_LOOKUP_CONTEXT &&
+      text === "."
+    ) {
+      return [{ type: CompletionTypes.PROPERTY_KEY }];
     }
   }
   return [];

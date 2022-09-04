@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import antlr4 from 'antlr4';
+import antlr4 from "antlr4";
 
 export class ErrorListener extends antlr4.error.ErrorListener {
   errors = [];
@@ -27,16 +27,18 @@ export class ErrorListener extends antlr4.error.ErrorListener {
   syntaxError(rec, sym, line, col, msg, e) {
     const { start, stop } = sym || {};
     if (msg === "mismatched input '<EOF>' expecting {';', SP}") {
-        // suppress error about missing semicolon at the end of a query
+      // suppress error about missing semicolon at the end of a query
       return;
     }
     if (msg === "missing ';' at '<EOF>'") {
       return;
     }
-    if (msg === "mismatched input '<EOF>' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}") {
+    if (
+      msg ===
+      "mismatched input '<EOF>' expecting {':', CYPHER, EXPLAIN, PROFILE, USING, CREATE, DROP, LOAD, WITH, OPTIONAL, MATCH, UNWIND, MERGE, SET, DETACH, DELETE, REMOVE, FOREACH, RETURN, START, CALL}"
+    ) {
       return;
     }
     this.errors.push({ line, col, msg, start, stop });
   }
 }
-

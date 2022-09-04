@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Database from './components/Database';
-import './app.css';
+import Database from "./components/Database";
+import "./app.css";
 
 const App = () => {
   return (

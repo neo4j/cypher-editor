@@ -18,19 +18,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import codemirror from 'codemirror';
-import { CypherEditorSupport, TreeUtils, parse as importedParse, extractStatements as importedExtractStatements } from 'cypher-editor-support';
-import './codemirror-cypher-mode';
+import codemirror from "codemirror";
+import {
+  CypherEditorSupport,
+  TreeUtils,
+  parse as importedParse,
+  extractStatements as importedExtractStatements
+} from "cypher-editor-support";
+import "./codemirror-cypher-mode";
 
 function translatePosition(from, to) {
   return {
     from: { line: from.line - 1, ch: from.column },
-    to: { line: to.line - 1, ch: to.column },
+    to: { line: to.line - 1, ch: to.column }
   };
 }
 
 function getPosition(element, editorSupport) {
-  const { start, stop } = TreeUtils.getPosition(element) || { start: 0, stop: 0 };
+  const { start, stop } = TreeUtils.getPosition(element) || {
+    start: 0,
+    stop: 0
+  };
   const from = editorSupport.positionConverter.toRelative(start);
   const to = editorSupport.positionConverter.toRelative(stop + 1);
   return translatePosition(from, to);
@@ -39,20 +47,22 @@ function getPosition(element, editorSupport) {
 function fixColors(editor, editorSupport) {
   const markers = editor.cypherMarkers;
 
-  markers.forEach(m => m.clear());
+  markers.forEach((m) => m.clear());
   if (editorSupport.parseTree == null) {
     return;
   }
 
   editorSupport.applyHighlighthing((element, type) => {
     const { from, to } = getPosition(element, editorSupport);
-    markers.push(editor.markText(from, to, {
-      className: `cm-p-${type}`,
-    }));
+    markers.push(
+      editor.markText(from, to, {
+        className: `cm-p-${type}`
+      })
+    );
   });
 }
 
-codemirror.registerHelper('lint', 'cypher', (text, options, editor) => {
+codemirror.registerHelper("lint", "cypher", (text, options, editor) => {
   const editorSupport = editor.editorSupport;
   if (!editorSupport) return [];
   const version = editor.newContentVersion();
@@ -60,16 +70,18 @@ codemirror.registerHelper('lint', 'cypher', (text, options, editor) => {
 
   fixColors(editor, editorSupport);
 
-  return (editorSupport.parseErrors || [])
-    .map(({ line, col, msg }) => ({
-      severity: 'error',
-      from: { line: line - 1, ch: Math.min(editor.getLine(line - 1).length - 1, col) },
-      to: { line, ch: 0 },
-      message: msg,
-    }));
+  return (editorSupport.parseErrors || []).map(({ line, col, msg }) => ({
+    severity: "error",
+    from: {
+      line: line - 1,
+      ch: Math.min(editor.getLine(line - 1).length - 1, col)
+    },
+    to: { line, ch: 0 },
+    message: msg
+  }));
 });
 
-codemirror.registerHelper('hint', 'cypher', (editor) => {
+codemirror.registerHelper("hint", "cypher", (editor) => {
   const editorSupport = editor.editorSupport;
   if (!editorSupport) return {};
   editorSupport.update(editor.getValue());
@@ -80,27 +92,28 @@ codemirror.registerHelper('hint', 'cypher', (editor) => {
   const position = translatePosition(from, to);
   const render = (element, self, data) => {
     // eslint-disable-next-line no-param-reassign
-    element.innerHTML += `<b>${data.displayText}</b>${data.postfix ? data.postfix : ''}`;
+    element.innerHTML += `<b>${data.displayText}</b>${
+      data.postfix ? data.postfix : ""
+    }`;
   };
 
   return {
-    list: items
-      .map(({ type, view, content, postfix }) => ({
-        text: content,
-        displayText: view,
-        className: `cm-hint-${type}`,
-        type,
-        postfix,
-        render,
-      })),
-    ...position,
+    list: items.map(({ type, view, content, postfix }) => ({
+      text: content,
+      displayText: view,
+      className: `cm-hint-${type}`,
+      type,
+      postfix,
+      render
+    })),
+    ...position
   };
 });
 
 export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
-  const editor = codemirror(parentDOMElement, { ...settings, value: '' });
+  const editor = codemirror(parentDOMElement, { ...settings, value: "" });
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
   editor.version = 1;
@@ -109,7 +122,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     return this.version;
   };
   editor.newContentVersion.bind(editor);
-  editor.setValue(settings.value || '');
+  editor.setValue(settings.value || "");
 
   return { editor, editorSupport };
 }

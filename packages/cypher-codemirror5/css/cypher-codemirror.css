@@ -261,8 +261,8 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     position: absolute;
     z-index: 10;
     list-style: none;
-    -webkit-box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
-            box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    -webkit-box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
     border: 1px solid silver;
     background: white;
     font-size: 90%;
@@ -289,7 +289,7 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 }
 
 .CodeMirror-hint-active {
-    background-color: #EFEFF4;
+    background-color: #efeff4;
 }
 
 .cm-hint-keyword {

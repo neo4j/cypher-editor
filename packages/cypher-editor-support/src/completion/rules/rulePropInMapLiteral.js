@@ -18,27 +18,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as CypherTypes from '../../lang/CypherTypes';
-import * as CompletionTypes from '../CompletionTypes';
-import { TreeUtils } from '../../util/TreeUtils';
+import * as CypherTypes from "../../lang/CypherTypes";
+import * as CompletionTypes from "../CompletionTypes";
+import { TreeUtils } from "../../util/TreeUtils";
 
 export default (element) => {
-  const mapLiteralContext = TreeUtils.findParent(element, CypherTypes.MAP_LITERAL_CONTEXT);
-  const propertiesContext = TreeUtils.findParent(element, CypherTypes.PROPERTIES_CONTEXT);
+  const mapLiteralContext = TreeUtils.findParent(
+    element,
+    CypherTypes.MAP_LITERAL_CONTEXT
+  );
+  const propertiesContext = TreeUtils.findParent(
+    element,
+    CypherTypes.PROPERTIES_CONTEXT
+  );
 
   if (mapLiteralContext) {
     const text = element.getText();
-    if (text === '}') {
+    if (text === "}") {
       return [];
     }
-    return [
-      { type: CompletionTypes.PROPERTY_KEY },
-    ];
+    return [{ type: CompletionTypes.PROPERTY_KEY }];
   }
 
   if (propertiesContext) {
     const text = element.getText();
-    if (text === '}') {
+    if (text === "}") {
       return [];
     }
     if (/\s+/.test(text)) {
@@ -46,7 +50,7 @@ export default (element) => {
     }
     return [
       { type: CompletionTypes.PROPERTY_KEY },
-      { type: CompletionTypes.PARAMETER },
+      { type: CompletionTypes.PARAMETER }
     ];
   }
 

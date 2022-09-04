@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { neo4jSchema } from './schema-data';
+export { neo4jSchema } from "./schema-data";
 
 export const codeMirrorSettings = {
   value: `// line comment
@@ -35,31 +35,30 @@ CALL some.procedureName()
 CALL some.procedureName() YIELD param1, param2 as somethingElse
 MATCH (variable {propKey: 1})
 SET variable.propKey = 1;`,
-  mode: 'application/x-cypher-query',
+  mode: "application/x-cypher-query",
   indentWithTabs: true,
   smartIndent: false,
   lineNumbers: true,
   matchBrackets: true,
   autofocus: true,
-  theme: 'cypher cypher-dark',
+  theme: "cypher cypher-dark",
   lint: true,
   styleActiveLine: true,
-  extraKeys: { 'Ctrl-Space': 'autocomplete' },
+  extraKeys: { "Ctrl-Space": "autocomplete" },
   hintOptions: {
     completeSingle: false,
     closeOnUnfocus: false,
     alignWithWord: true,
-    async: true,
+    async: true
   },
-  gutters: ['cypher-hints'],
+  gutters: ["cypher-hints"],
   lineWrapping: true,
   autoCloseBrackets: {
-    explode: '',
-  },
+    explode: ""
+  }
 };
 
-export const metaQuery =
-`	CALL db.labels() YIELD label
+export const metaQuery = `	CALL db.labels() YIELD label
 	RETURN {name:'labels', data:COLLECT(label)[..1000]} AS result
 	UNION ALL
 	CALL db.relationshipTypes() YIELD relationshipType
@@ -79,16 +78,13 @@ export const metaQuery =
 	MATCH ()-[]->() RETURN { name:'relationships', data: count(*)} AS result
 `;
 
-export const shortMetaQuery =
-`  CALL db.labels() YIELD label
+export const shortMetaQuery = `  CALL db.labels() YIELD label
   RETURN {name:'labels', data:COLLECT(label)[..1000]} AS result
 `;
 
-export const simpleQuery =
-`MATCH (n) RETURN n LIMIT 10`;
+export const simpleQuery = `MATCH (n) RETURN n LIMIT 10`;
 
-export const serverInfoQuery =
-`CALL dbms.components() YIELD name, versions, edition`;
+export const serverInfoQuery = `CALL dbms.components() YIELD name, versions, edition`;
 
 export const defaultQuery = metaQuery;
 

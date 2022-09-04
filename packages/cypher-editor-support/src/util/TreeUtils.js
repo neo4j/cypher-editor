@@ -21,7 +21,8 @@
 export class TreeUtils {
   static findParent(pt, type) {
     let el = pt;
-    while (true) { // eslint-disable-line no-constant-condition
+    while (true) {
+      // eslint-disable-line no-constant-condition
       if (el == null) {
         return null;
       }
@@ -34,7 +35,8 @@ export class TreeUtils {
 
   static findAnyParent(pt, types = []) {
     let el = pt;
-    while (true) { // eslint-disable-line no-constant-condition
+    while (true) {
+      // eslint-disable-line no-constant-condition
       if (el == null) {
         return null;
       }
@@ -73,12 +75,12 @@ export class TreeUtils {
       if (symbol != null) {
         return {
           start: symbol.start,
-          stop: symbol.stop,
+          stop: symbol.stop
         };
       } else if (start != null && stop != null) {
         return {
           start: start.start,
-          stop: stop.stop,
+          stop: stop.stop
         };
       }
     }
