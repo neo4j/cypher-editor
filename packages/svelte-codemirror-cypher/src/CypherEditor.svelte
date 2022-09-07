@@ -31,10 +31,6 @@
   let cypherEditor;
   let cypherEditorSupport;
 
-  $: if (autoCompleteSchema && cypherEditorSupport) {
-    cypherEditorSupport.setSchema(autoCompleteSchema);
-  }
-
   $: editorClassNames = (classNames ? classNames : [])
     .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
     .join(" ");

@@ -30,27 +30,13 @@
   const onValueChange = (value: string, change: any) => {
     cypher = value;
   };
-
-  let localSchema = neo4jSchema;
-
-  // Add new command to show the schema updating
-  // after 5 secs
-  setTimeout(() => {
-    const tmpSchema = {
-      ...neo4jSchema,
-      consoleCommands: neo4jSchema.consoleCommands.concat({
-        name: ":new-command",
-      }),
-    };
-    localSchema = tmpSchema;
-  }, 5000);
 </script>
 
 <main>
   <CypherEditor
     {onValueChange}
     {initialPosition}
-    autoCompleteSchema={localSchema}
+    autoCompleteSchema={neo4jSchema}
     bind:cypher
     {theme}
   />
