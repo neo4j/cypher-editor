@@ -95,6 +95,9 @@
     if (initialPosition) {
       cypherEditor.goToPosition(initialPosition);
     }
+    if (autoCompleteSchema) {
+      editorSupport.setSchema(autoCompleteSchema);
+    }
     cypherEditor.on("change", valueChanged);
     cypherEditor.on("focus", focused);
     cypherEditor.on("blur", blurred);
