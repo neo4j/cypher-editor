@@ -22,9 +22,9 @@
 
   export let initialPosition = undefined;
 
-  export let options = undefined;
+  export let initialOptions = undefined;
 
-  export let autoCompleteSchema = undefined;
+  export let initialSchema = undefined;
 
   export let onValueChange = undefined;
 
@@ -36,7 +36,7 @@
 
   export let classNames = undefined;
 
-  export let cypher = "MATCH (n) RETURN n LIMIT 10";
+  export let initialValue = "MATCH (n) RETURN n LIMIT 10";
 
   export let theme = THEME_LIGHT;
 
@@ -78,7 +78,7 @@
     }
   };
 
-  $: cypherEditorOptions = { ...defaultOptions, ...(options || {}) };
+  $: cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
   const triggerAutocompletion = (changed) => {
     if (changed.text.length !== 1) {
@@ -137,10 +137,10 @@
       }
     };
 
-    if (autoCompleteSchema) {
-      editorSupport.setSchema(autoCompleteSchema);
+    if (initialSchema) {
+      editorSupport.setSchema(initialSchema);
     }
-    cypherEditor.setValue(cypher);
+    cypherEditor.setValue(initialValue);
     if (initialPosition) {
       cypherEditor.goToPosition(initialPosition);
     }

@@ -3,13 +3,15 @@ import neo4j from "neo4j-driver";
 // import CypherEditor from "react-codemirror-cypher";
 import { neo4jSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
 
+const initialValue = defaultQuery;
+
 const driver = neo4j.driver(
   host,
   neo4j.auth.basic(user, pass)
 );
 
 const Database = ({ CypherEditor }) => {
-  const [cypher, setCypher] = useState(defaultQuery);
+  const [cypher, setCypher] = useState(initialValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
@@ -75,8 +77,8 @@ const Database = ({ CypherEditor }) => {
         onPositionChange={onPositionChange}
         onFocusChange={onFocusChange}
         initialPosition={initialPosition}
-        autoCompleteSchema={neo4jSchema}
-        cypher={cypher}
+        initialSchema={neo4jSchema}
+        initialValue={initialValue}
         theme={theme}
       />
       <button onClick={lightTheme}>Light theme</button>

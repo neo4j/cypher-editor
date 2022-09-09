@@ -1,15 +1,16 @@
 <script lang="ts">
   import neo4j from "neo4j-driver";
-  import { neo4jSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
+  import { neo4jSchema as initialSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
 
   export let editor = undefined;
+
+  const initialValue = defaultQuery;
+  let cypher = initialValue;
 
   const driver = neo4j.driver(
     host,
     neo4j.auth.basic(user, pass)
   );
-
-  let cypher = defaultQuery;
 
   let theme = "light";
   let position = initialPosition || { line: 1, column: 0 };
@@ -53,8 +54,8 @@
     {onPositionChange}
     {onFocusChange}
     {initialPosition}
-    autoCompleteSchema={neo4jSchema}
-    {cypher}
+    {initialSchema}
+    {initialValue}
     {theme} this={editor}/>
   <button on:click={lightTheme}>Light theme</button>
   <button on:click={darkTheme}>Dark theme</button>
