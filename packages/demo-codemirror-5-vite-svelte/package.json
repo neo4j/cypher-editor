@@ -14,6 +14,7 @@
     "codemirror": "^5.65.7",
     "cypher-codemirror5": "*",
     "demo-base": "*",
+    "demo-base-svelte": "*",
     "neo4j-driver": "^4.4.7",
     "svelte-codemirror5-cypher": "*"
   },

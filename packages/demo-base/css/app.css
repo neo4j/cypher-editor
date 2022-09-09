@@ -48,7 +48,16 @@ h1 {
     text-align: center;
 }
 
+/* this next rule sets the editor size for codemirror 5 */
+
 .CodeMirror.cm-s-cypher {
+    min-width: 100%;
+    height: 300px;
+}
+
+/* this next rule sets the editor size for codemirror 6 */
+
+.cm-editor {
     min-width: 100%;
     height: 300px;
 }

@@ -10,14 +10,21 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/addon/lint/lint.css";
 import "cypher-codemirror5/css/cypher-codemirror.css";
 
-const THEME_LIGHT = "cypher";
-const THEME_DARK = "cypher cypher-dark";
+const THEME_LIGHT = "light";
+const THEME_DARK = "dark";
+const INNER_THEME_LIGHT = 'cypher';
+const INNER_THEME_DARK = 'cypher cypher-dark';
+const THEME_MAP = {
+  [THEME_LIGHT]: INNER_THEME_LIGHT,
+  [THEME_DARK]: INNER_THEME_DARK
+};
 
 class CypherEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false
+      focused: false,
+      innerTheme: THEME_MAP[props.theme]
     };
   }
 
@@ -42,7 +49,7 @@ class CypherEditor extends Component {
       text === "{" ||
       text === "$";
     if (shouldTriggerAutocompletion) {
-      cypherEditor.execCommand("autocomplete");
+      this.cypherEditor.showAutoComplete();
     }
   };
 
@@ -73,14 +80,9 @@ class CypherEditor extends Component {
     onScroll && onScroll(cm.getScrollInfo());
   };
 
-  goToPosition = (position) => {
-    for (let i = 0; i < position.line; i++) {
-      this.cypherEditor.execCommand("goLineDown");
-    }
-
-    for (let i = 0; i <= position.column; i++) {
-      this.cypherEditor.execCommand("goCharRight");
-    }
+  positionChanged = (positionObject) => {
+    const { onPositionChange } = this.props;
+    onPositionChange && onPositionChange(positionObject);
   };
 
   componentDidMount() {
@@ -89,15 +91,18 @@ class CypherEditor extends Component {
       autoCompleteSchema,
       cypher = "MATCH (n) RETURN n LIMIT 10",
       initialPosition,
-      theme = THEME_LIGHT
+      theme = THEME_LIGHT,
+      onEditorCreate
     } = this.props;
 
     let lineNumberFormatter;
 
+    let innerTheme = THEME_MAP[theme];
+
     const defaultOptions = {
       lineNumbers: true,
       mode: "cypher",
-      theme: theme,
+      theme: innerTheme,
       gutters: ["cypher-hints"],
       lineWrapping: true,
       autofocus: true,
@@ -135,16 +140,20 @@ class CypherEditor extends Component {
     };
 
     this.cypherEditor.focus();
+    if (autoCompleteSchema) {
+      editorSupport.setSchema(autoCompleteSchema);
+    }
     this.cypherEditor.setValue(cypher);
     if (initialPosition) {
-      this.goToPosition(initialPosition);
+      this.cypherEditor.goToPosition(initialPosition);
     }
     this.cypherEditor.on("change", this.valueChanged);
     this.cypherEditor.on("focus", this.focused);
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
+    this.cypherEditor.on("position", this.positionChanged);
 
-    editorSupport.setSchema(autoCompleteSchema);
+    onEditorCreate && onEditorCreate(this.cypherEditor);
   }
 
   componentWillUnmount() {
@@ -153,13 +162,16 @@ class CypherEditor extends Component {
       this.cypherEditor.off("focus", this.focused);
       this.cypherEditor.off("blur", this.blurred);
       this.cypherEditor.off("scroll", this.scrollChanged);
+      this.cypherEditor.off("position", this.positionChanged);
       this.cypherEditor.destroy();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.theme !== this.props.theme) {
-      this.cypherEditor.setOption("theme", this.props.theme);
+      const innerTheme = THEME_MAP[this.props.theme];
+      this.setState({ innerTheme });
+      this.cypherEditor.setOption("theme", innerTheme);
     }
   }
 

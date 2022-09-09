@@ -11,8 +11,14 @@
   import "cypher-codemirror5/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror5";
 
-  const THEME_LIGHT = 'cypher';
-  const THEME_DARK = 'cypher cypher-dark';
+  const THEME_LIGHT = "light";
+  const THEME_DARK = "dark";
+  const INNER_THEME_LIGHT = 'cypher';
+  const INNER_THEME_DARK = 'cypher cypher-dark';
+  const THEME_MAP = {
+    [THEME_LIGHT]: INNER_THEME_LIGHT,
+    [THEME_DARK]: INNER_THEME_DARK
+  };
 
   export let initialPosition = undefined;
 
@@ -26,18 +32,32 @@
 
   export let onScroll = undefined;
 
+  export let onPositionChange = undefined;
+
   export let classNames = undefined;
 
   export let cypher = "MATCH (n) RETURN n LIMIT 10";
 
   export let theme = THEME_LIGHT;
 
+  export let onEditorCreate = undefined;
+
+  let innerTheme = THEME_MAP[theme];
+
+  let isFocused = false;
+  
+  let cypherEditorRef;
+  let cypherEditor;
+  let cypherEditorSupport;
+
+  $: editorClassNames = (classNames || []).concat(["ReactCodeMirror"]).concat(isFocused ? ["ReactCodeMirror--focused"] : []).join(" ");
+
   let lineNumberFormatter;
 
   const defaultOptions = {
     lineNumbers: true,
     mode: "cypher",
-    theme: "cypher",
+    theme: innerTheme,
     gutters: ["cypher-hints"],
     lineWrapping: true,
     autofocus: true,
@@ -58,24 +78,7 @@
     }
   };
 
-  let cypherEditorOptions = { ...defaultOptions, ...(options || {}) };
-
-  let isFocused = false;
-
-  let schema = autoCompleteSchema;
-  
-  let cypherEditorRef;
-  let cypherEditor;
-  let cypherEditorSupport;
-  const goToPosition = (position) => {
-    for (let i = 0; i < position.line; i++) {
-      cypherEditor.execCommand("goLineDown");
-    }
-
-    for (let i = 0; i <= position.column; i++) {
-      cypherEditor.execCommand("goCharRight");
-    }
-  };
+  $: cypherEditorOptions = { ...defaultOptions, ...(options || {}) };
 
   const triggerAutocompletion = (changed) => {
     if (changed.text.length !== 1) {
@@ -94,7 +97,7 @@
       text === '{' ||
       text === '$';
     if (shouldTriggerAutocompletion) {
-      cypherEditor.execCommand('autocomplete');
+      cypherEditor.showAutoComplete();
     }
   };
 
@@ -114,6 +117,10 @@
     onScroll && onScroll(cm.getScrollInfo());
   };
 
+  const positionChanged = (positionObject) => {
+    onPositionChange && onPositionChange(positionObject);
+  };
+
   onMount(() => {
     const { editor, editorSupport } = createCypherEditor(
       cypherEditorRef,
@@ -130,18 +137,21 @@
       }
     };
 
+    if (autoCompleteSchema) {
+      editorSupport.setSchema(autoCompleteSchema);
+    }
+    cypherEditor.setValue(cypher);
+    if (initialPosition) {
+      cypherEditor.goToPosition(initialPosition);
+    }
+
     cypherEditor.on("change", valueChanged);
     cypherEditor.on("focus", () => focusChanged(true));
     cypherEditor.on("blur", () => focusChanged(false));
     cypherEditor.on("scroll", scrollChanged);
-    cypherEditor.setValue(cypher);
-    cypherEditor.setOption('theme', theme);
-    
-    cypherEditorSupport.setSchema(schema);
+    cypherEditor.on("position", positionChanged);
 
-    if (initialPosition) {
-      goToPosition(initialPosition);
-    }
+    onEditorCreate && onEditorCreate(cypherEditor);
   });
 
   onDestroy(() => {
@@ -149,12 +159,12 @@
     cypherEditor.off("focus", () => focusChanged(true));
     cypherEditor.off("blur", () => focusChanged(false));
     cypherEditor.off("scroll", scrollChanged);
+    cypherEditor.off("position", positionChanged);
   });
 
-  const editorClassNames = (classNames || []).concat(['ReactCodeMirror']).concat(isFocused ? ['ReactCodeMirror--focused'] : []).join(' ')
-
   const themeChanged = (newTheme) => {
-    cypherEditor && cypherEditor.setOption('theme', newTheme);
+    innerTheme = THEME_MAP[newTheme];
+    cypherEditor && cypherEditor.setOption('theme', innerTheme);
   };
 
   $: {

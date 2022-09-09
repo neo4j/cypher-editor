@@ -1,13 +1,9 @@
 <script lang="ts">
-  import Database from './components/Database.svelte';
-
-  const databases = [];
+  import { App, Database } from "demo-base-svelte";
+  import CypherEditor from "svelte-codemirror5-cypher";
 </script>
 
-<main>
-  <h1>Cypher Codemirror 5</h1>
-
-  <div class="card">
-    <Database />
-  </div>
-</main>
+<App codemirrorVersion="5" framework="svelte" bundler="vite">
+  <Database slot="database" editor={CypherEditor}>
+  </Database>
+</App>

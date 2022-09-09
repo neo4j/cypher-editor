@@ -26,6 +26,7 @@ export default defineConfig({
       "cypher-antlr4": "cypher-antlr4/src/index.js",
       "cypher-antlr4-simple": "cypher-antlr4-simple/src/index.js",
       "cypher-editor-support": "cypher-editor-support/src/index.js",
+      "demo-base/css/app.css": "demo-base/css/app.css",
       "demo-base": "demo-base/src/index.js"
     }
   }

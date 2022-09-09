@@ -1,0 +1,35 @@
+{
+  "name": "demo-base-react",
+  "description": "demo base react components",
+  "keywords": [],
+  "version": "1.0.0",
+  "author": "Neo Technology Inc.",
+  "license": "GPL-3.0",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+  },
+  "scripts": {
+    "build-lib": "babel --config-file ../../babel.react.config.js --extensions \".js\" --out-dir lib ./src",
+    "build-es": "cross-env ES=true babel --config-file ../../babel.react.config.js --extensions \".js\" --out-dir es ./src",
+    "build": "npm run build-lib && npm run build-es",
+    "build-clean": "rimraf lib && rimraf es"
+  },
+  "files": [
+    "es/",
+    "lib/",
+    "README.md"
+  ],
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  }
+}

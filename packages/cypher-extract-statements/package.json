@@ -1,8 +1,10 @@
 {
-  "name": "cypher-editor-support",
-  "description": "Core functionality to support Cypher integration into editors",
+  "name": "cypher-extract-statements",
+  "description": "Utility function to extract statements from a cypher query",
   "keywords": [
-    "cypher"
+    "cypher",
+    "extract",
+    "statements"
   ],
   "version": "1.0.0",
   "author": "Neo Technology Inc.",
@@ -32,11 +34,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "antlr4": "4.10.1",
-    "cypher-antlr4": "*",
-    "fuse.js": "^6.6.2",
-    "lodash.find": "^4.6.0",
-    "lodash.includes": "^4.3.0"
+    "cypher-antlr4-simple": "*",
+    "cypher-editor-support": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",

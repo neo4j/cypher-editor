@@ -1,9 +1,11 @@
 import antlr4 from "antlr4";
-import { ReferencesProvider } from "../references/ReferencesProvider";
-import * as CypherTypes from "../lang/CypherTypes";
+import {
+  ReferencesProvider,
+  CypherTypes,
+  ErrorListener
+} from "cypher-editor-support";
 import { CypherParser, CypherLexer } from "cypher-antlr4-simple";
-import { ErrorListener } from "../errors/ErrorListener";
-import { ReferencesListener } from "../references/ReferencesListener.simple";
+import { ReferencesListener } from "./ReferencesListener.simple";
 
 export const extractStatements = (input) => {
   const referencesListener = new ReferencesListener();

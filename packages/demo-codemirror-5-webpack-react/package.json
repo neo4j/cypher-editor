@@ -12,6 +12,7 @@
     "codemirror": "^5.65.8",
     "cypher-codemirror5": "*",
     "demo-base": "*",
+    "demo-base-react": "*",
     "neo4j-driver": "^4.4.7",
     "react": "^18.2.0",
     "react-codemirror5-cypher": "*",

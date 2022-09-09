@@ -21,6 +21,7 @@
     "@lezer/highlight": "^1.0.0",
     "cypher-codemirror": "*",
     "demo-base": "*",
+    "demo-base-svelte": "*",
     "neo4j-driver": "^4.4.7",
     "svelte-codemirror-cypher": "*"
   },

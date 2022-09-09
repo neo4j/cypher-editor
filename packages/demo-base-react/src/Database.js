@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import neo4j from "neo4j-driver";
-import CypherEditor from "react-codemirror5-cypher";
-import { neo4jSchema, defaultQuery, initialPosition } from "demo-base";
+// import CypherEditor from "react-codemirror-cypher";
+import { neo4jSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
 
 const driver = neo4j.driver(
-  "neo4j://localhost:7687",
-  neo4j.auth.basic("neo4j", "asdfgh")
+  host,
+  neo4j.auth.basic(user, pass)
 );
 
-const Database = () => {
+const Database = ({ CypherEditor }) => {
   const [cypher, setCypher] = useState(defaultQuery);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
-  const [theme, setTheme] = useState("cypher");
+  const [theme, setTheme] = useState("light");
+  const [position, setPosition] = useState(initialPosition);
+  const [focused, setFocused] = useState(true);
 
   const send = () => {
     const session = driver.session();
@@ -36,29 +38,42 @@ const Database = () => {
     setCypher(value);
   };
 
+  const onPositionChange = (positionObject) => {
+    setPosition(positionObject);
+  }
+
+  const onFocusChange = (focused) => {
+    setFocused(focused);
+  }
+
   const lightTheme = () => {
-    setTheme("cypher");
+    setTheme("light");
   };
 
   const darkTheme = () => {
-    setTheme("cypher cypher-dark");
+    setTheme("dark");
   };
 
   let content = "";
   if (loading) {
     content = <p>...waiting</p>;
   } else if (error) {
-    content = <p style="color: red">{error.message}</p>;
+    content = <p style={{ color: "red" }}>{error.message}</p>;
   } else if (results) {
     content = results.records.map((record, i) => (
       <pre key={i}>{JSON.stringify(record)}</pre>
     ));
   }
 
+  const cypherLength = cypher.length;
+  const positionString = position ? JSON.stringify(position) : "";
+
   return (
     <main>
       <CypherEditor
         onValueChange={onValueChange}
+        onPositionChange={onPositionChange}
+        onFocusChange={onFocusChange}
         initialPosition={initialPosition}
         autoCompleteSchema={neo4jSchema}
         cypher={cypher}
@@ -66,6 +81,9 @@ const Database = () => {
       />
       <button onClick={lightTheme}>Light theme</button>
       <button onClick={darkTheme}>Dark theme</button>
+      <div>Length: {cypherLength}</div>
+      <div>Position: {positionString}</div>
+      <div>Focused: {focused + ''}</div>
       <button onClick={send}>Run</button>
 
       <div>

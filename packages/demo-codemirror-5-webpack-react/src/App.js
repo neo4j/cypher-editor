@@ -1,17 +1,13 @@
 import React from "react";
 
-import Database from "./components/Database";
-import "./app.css";
+import { App as AppBase, Database } from "demo-base-react";
+import CypherEditor from "react-codemirror5-cypher";
 
 const App = () => {
   return (
-    <main>
-      <h1>Cypher Codemirror 5</h1>
-
-      <div className="card">
-        <Database />
-      </div>
-    </main>
+    <AppBase codemirrorVersion="5" framework="react" bundler="webpack">
+      <Database CypherEditor={CypherEditor} />
+    </AppBase>
   );
 };
 

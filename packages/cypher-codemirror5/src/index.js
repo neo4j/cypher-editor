@@ -19,7 +19,5 @@
  */
 
 export {
-  createCypherEditor,
-  parse,
-  extractStatements
+  createCypherEditor
 } from "./codemirror-cypher";

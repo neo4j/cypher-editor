@@ -19,6 +19,7 @@
     "@lezer/highlight": "^1.0.0",
     "cypher-codemirror": "*",
     "demo-base": "*",
+    "demo-base-react": "*",
     "neo4j-driver": "^4.4.7",
     "react": "^18.2.0",
     "react-codemirror-cypher": "*",

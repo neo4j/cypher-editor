@@ -109,7 +109,7 @@ function editorSupportInit(view) {
 }
 
 export const cypherLinter = ({
-  delay = 250,
+  delay = 750,
   showErrors = true,
   ...otherOptions
 } = {}) => [
@@ -235,6 +235,7 @@ const VALUE_KEY = "change";
 const FOCUS_KEY = "focus";
 const BLUR_KEY = "blur";
 const SCROLL_KEY = "scroll";
+const POSITION_KEY = "position";
 
 export const getExtensions = () => {
   return [
@@ -261,7 +262,7 @@ export const getExtensions = () => {
 
 export function createCypherEditor(
   parentDOMElement,
-  { text = "", extensions } = {}
+  { text = "", extensions, updateSyntaxHighlighting = true } = {}
 ) {
   let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
 
@@ -271,6 +272,14 @@ export function createCypherEditor(
     if (eventListenerTypeMap[VALUE_KEY] !== undefined) {
       eventListenerTypeMap[VALUE_KEY].forEach((listener) => {
         listener(value, changes);
+      });
+    }
+  };
+
+  const onPositionChanged = (positionObject) => {
+    if (eventListenerTypeMap[POSITION_KEY] !== undefined) {
+      eventListenerTypeMap[POSITION_KEY].forEach((listener) => {
+        listener(positionObject);
       });
     }
   };
@@ -300,6 +309,13 @@ export function createCypherEditor(
     if (v.docChanged && !settingValue) {
       onValueChanged(v.state.doc.toString(), v.changes);
     }
+    if (v.selectionSet) {
+      const { from, to, head, anchor } = v.state.selection.main;
+      const position = head;
+      const { number: line, from: lineStart } = v.state.doc.lineAt(position);
+      const column = position - lineStart;
+      onPositionChanged({ line, column, position });
+    }
   });
 
   extensions = [
@@ -319,13 +335,20 @@ export function createCypherEditor(
     state: initialState
   });
 
-  const setValue = (value) => {
+  const setValue = (value, updateSyntaxHighlighting = true) => {
     settingValue = true;
     const update = editor.state.update({
       changes: { from: 0, to: editor.state.doc.length, insert: value }
     });
     editor.update([update]);
     settingValue = false;
+    if (updateSyntaxHighlighting !== false) {
+      const version = editor.newContentVersion();
+      const editorSupport = getEditorSupport(editor.state);
+      editorSupport.update(value, version);
+
+      fixColors(editor, editorSupport);
+    }
   };
 
   const goToPosition = (position, scrollIntoView = true) => {
@@ -415,6 +438,13 @@ export function createCypherEditor(
   // editor.setLightTheme = setLightTheme;
 
   const editorSupport = getEditorSupport(editor.state);
+
+  if (updateSyntaxHighlighting !== false) {
+    const version = editor.newContentVersion();
+    editorSupport.update(text, version);
+
+    fixColors(editor, editorSupport);
+  }
 
   return {
     editor,

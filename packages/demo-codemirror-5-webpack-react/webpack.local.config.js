@@ -23,7 +23,7 @@ const currentPackage = getCurrentDirectoryName();
 const packages = getDirectories(path.join(__dirname, "../")).filter(
   (package) =>
     package !== currentPackage &&
-    (package === "demo-base" ||
+    (package === "demo-base" || package === "demo-base-react" ||
       (!package.startsWith("demo") && !package.startsWith("svelte")))
 );
 
@@ -111,6 +111,10 @@ const extraAlias = {
   "cypher-codemirror5/css/cypher-codemirror.css": path.resolve(
     basePath,
     "../cypher-codemirror5/css/cypher-codemirror.css"
+  ),
+  "demo-base/css/app.css": path.resolve(
+    basePath,
+    "../demo-base/css/app.css"
   )
 };
 

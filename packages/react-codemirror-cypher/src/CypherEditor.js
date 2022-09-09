@@ -68,12 +68,18 @@ class CypherEditor extends Component {
     onScroll && onScroll(scrollInfo);
   };
 
+  positionChanged = (positionObject) => {
+    const { onPositionChange } = this.props;
+    onPositionChange && onPositionChange(positionObject);
+  };
+
   componentDidMount() {
     const {
       options,
       autoCompleteSchema,
       cypher = "MATCH (n) RETURN n LIMIT 10",
-      initialPosition
+      initialPosition,
+      onEditorCreate
     } = this.props;
     const { editor, editorSupport } = createCypherEditor(
       this.editorRef,
@@ -82,6 +88,9 @@ class CypherEditor extends Component {
     this.cypherEditor = editor;
 
     this.cypherEditor.focus();
+    if (autoCompleteSchema) {
+      editorSupport.setSchema(autoCompleteSchema);
+    }
     this.cypherEditor.setValue(cypher);
     if (initialPosition) {
       this.cypherEditor.goToPosition(initialPosition);
@@ -90,8 +99,9 @@ class CypherEditor extends Component {
     this.cypherEditor.on("focus", this.focused);
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
+    this.cypherEditor.on("position", this.positionChanged);
 
-    editorSupport.setSchema(autoCompleteSchema);
+    onEditorCreate && onEditorCreate(this.cypherEditor);
   }
 
   componentWillUnmount() {
@@ -100,6 +110,7 @@ class CypherEditor extends Component {
       this.cypherEditor.off("focus", this.focused);
       this.cypherEditor.off("blur", this.blurred);
       this.cypherEditor.off("scroll", this.scrollChanged);
+      this.cypherEditor.off("position", this.positionChanged);
       this.cypherEditor.destroy();
     }
   }

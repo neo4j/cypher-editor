@@ -1,0 +1,27 @@
+{
+  "name": "demo-base-svelte",
+  "description": "demo base svelte components",
+  "keywords": [],
+  "version": "1.0.0",
+  "author": "Neo Technology Inc.",
+  "license": "GPL-3.0",
+  "svelte": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14"
+  },
+  "peerDependencies": {
+    "svelte": "^3.49.0"
+  }
+}

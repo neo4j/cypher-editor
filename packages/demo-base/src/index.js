@@ -89,3 +89,9 @@ export const serverInfoQuery = `CALL dbms.components() YIELD name, versions, edi
 export const defaultQuery = metaQuery;
 
 export const initialPosition = { line: 2, column: 3 };
+
+export const host = "neo4j://localhost:7687";
+
+export const user = "neo4j";
+
+export const pass = "asdfgh";

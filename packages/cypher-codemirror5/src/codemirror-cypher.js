@@ -19,12 +19,7 @@
  */
 
 import codemirror from "codemirror";
-import {
-  CypherEditorSupport,
-  TreeUtils,
-  parse as importedParse,
-  extractStatements as importedExtractStatements
-} from "cypher-editor-support";
+import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 import "./codemirror-cypher-mode";
 
 function translatePosition(from, to) {
@@ -114,6 +109,41 @@ export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
   const editor = codemirror(parentDOMElement, { ...settings, value: "" });
+
+  const positionChangeListeners = [];
+
+  const goToPosition = (position) => {
+    const { line, ch } = editor.getCursor();
+    const currentLine = line + 1;
+    const currentColumn = ch;
+    if (position.line < currentLine) {
+      const steps = currentLine - position.line;
+      for (let i = 0; i < steps; i++) {
+        editor.execCommand("goLineUp");
+      }  
+    } else if (position.line > currentLine) {
+      const steps = position.line - currentLine;
+      for (let i = 0; i < steps; i++) {
+        editor.execCommand("goLineDown");
+      }
+    }
+    if (position.column < currentColumn) {
+      const steps = currentColumn - position.column;
+      for (let i = 0; i < steps; i++) {
+        editor.execCommand("goCharLeft");
+      }
+    } else if (position.column > currentColumn) {
+      const steps = position.column - currentColumn;
+      for (let i = 0; i < steps; i++) {
+        editor.execCommand("goCharRight");
+      }
+    }
+  };
+
+  const showAutoComplete = () => {
+    editor.execCommand("autocomplete");
+  };
+
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
   editor.version = 1;
@@ -122,10 +152,69 @@ export function createCypherEditor(parentDOMElement, settings) {
     return this.version;
   };
   editor.newContentVersion.bind(editor);
-  editor.setValue(settings.value || "");
+  editor.goToPosition = goToPosition;
+  editor.showAutoComplete = showAutoComplete;
+
+  const originalOn = editor.on.bind(editor);
+  const originalOff = editor.off.bind(editor);
+
+  const positionChanged = (positionObject) => {
+    positionChangeListeners.forEach((listener) => {
+      listener(positionObject);
+    });
+  };
+
+  const on = (type, listener) => {
+    if (type === "position") {
+      positionChangeListeners.push(listener);
+    } else {
+      originalOn(type, listener);
+    }
+  };
+
+  const off = (type, listener) => {
+    if (type === "position") {
+      const index = positionChangeListeners.findIndex((l) => l === listener);
+      if (index >= 0) {
+        positionChangeListeners.splice(index, 1);
+      }
+    } else {
+      originalOff(type, listener);
+    }
+  };
+
+  editor.on("cursorActivity", (e) => {
+    const cursor = e.doc.getCursor();
+    const line = cursor.line + 1;
+    const column = cursor.ch;
+    const position = editorSupport.positionConverter.toAbsolute(line, column);
+    positionChanged({ line, column, position });
+  });
+
+  const value = settings.value || "";
+  editor.setValue(value);
+
+  const originalSetValue = editor.setValue.bind(editor);
+
+  const setValue = (value, updateSyntaxHighlighting = true) => {
+    originalSetValue(value);
+    if (updateSyntaxHighlighting !== false) {
+      const version = editor.newContentVersion();
+      editorSupport.update(value, version);
+
+      fixColors(editor, editorSupport);
+    }
+  };
+  editor.setValue = setValue;
+  editor.on = on;
+  editor.off = off;
+
+  if (settings.updateSyntaxHighlighting !== false) {
+    const version = editor.newContentVersion();
+    editorSupport.update(value, version);
+
+    fixColors(editor, editorSupport);
+  }
 
   return { editor, editorSupport };
 }
-
-export const parse = importedParse;
-export const extractStatements = importedExtractStatements;

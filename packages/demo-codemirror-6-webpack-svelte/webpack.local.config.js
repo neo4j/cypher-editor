@@ -111,6 +111,10 @@ const extraAlias = {
   "cypher-codemirror/css/cypher-codemirror.css": path.resolve(
     basePath,
     "../cypher-codemirror/css/cypher-codemirror.css"
+  ),
+  "demo-base/css/app.css": path.resolve(
+    basePath,
+    "../demo-base/css/app.css"
   )
 };
 

@@ -18,10 +18,10 @@
     "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
     "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
     "build": "npm run build-lib && npm run build-es",
-    "build-clean": "rimraf lib && rimraf es",
-    "generate": "java -jar antlr-4.10.1-complete.jar -Dlanguage=JavaScript Cypher.g4 -o src"
+    "build-clean": "rimraf lib && rimraf es"
   },
   "files": [
+    "css/",
     "es/",
     "lib/",
     "README.md"

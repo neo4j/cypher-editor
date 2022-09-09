@@ -19,7 +19,7 @@
  */
 
 import { CypherListener } from "cypher-antlr4-simple";
-import * as CypherTypes from "../lang/CypherTypes";
+import { CypherTypes } from "cypher-editor-support";
 
 class Index {
   names = {};
