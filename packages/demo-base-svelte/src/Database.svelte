@@ -16,6 +16,9 @@
   let theme = "light";
   let position = initialPosition || { line: 1, column: 0 };
   let focused = true;
+  let lineNumbers = initialOptions.lineNumbers;
+  let readOnly = initialOptions.readOnly;
+  let cypherEditor;
 
   const lightTheme = () => {
     theme = "light";
@@ -40,8 +43,30 @@
     position = positionObject;
   };
 
+  const onEditorCreate = (editor) => {
+    cypherEditor = editor;
+  };
+
   const onFocusChange = (newFocused) => {
     focused = newFocused;
+  }
+
+  const toggleLineNumbers = () => {
+    lineNumbers = !lineNumbers;
+    cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
+  };
+
+  const toggleReadOnly = () => {
+    let newReadOnly;
+    if (readOnly === false) {
+      newReadOnly = true;
+    } else if (readOnly === true) {
+      newReadOnly = "nocursor";
+    } else if (readOnly === "nocursor") {
+      newReadOnly = false;
+    }
+    readOnly = newReadOnly;
+    cypherEditor && cypherEditor.setReadOnly(newReadOnly);
   }
 
   $: cypherLength = cypher ? cypher.length : 0;
@@ -54,6 +79,7 @@
     {onValueChange}
     {onPositionChange}
     {onFocusChange}
+    {onEditorCreate}
     {initialPosition}
     {initialSchema}
     {initialValue}
@@ -62,6 +88,8 @@
     this={editor}/>
   <button on:click={lightTheme}>Light theme</button>
   <button on:click={darkTheme}>Dark theme</button>
+  <button on:click={toggleLineNumbers}>Line Numbers</button>
+  <button on:click={toggleReadOnly}>Readonly</button>
   <div>Length: {cypherLength}</div>
   <div>Position: {positionString}</div>
   <div>Focused: {focusedString}</div>

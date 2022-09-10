@@ -205,7 +205,22 @@ export function createCypherEditor(parentDOMElement, settings) {
       fixColors(editor, editorSupport);
     }
   };
+  const setReadOnly = (readOnly) => {
+    editor.setOption('readOnly', readOnly);
+  };
+
+  const setLineNumbers = (lineNumbers) => {
+    editor.setOption('lineNumbers', lineNumbers);
+    if (lineNumbers) {
+      editor.setOption('gutters', settings.gutters);
+    } else {
+      editor.setOption('gutters', false)
+    }
+
+  };
   editor.setValue = setValue;
+  editor.setReadOnly = setReadOnly;
+  editor.setLineNumbers = setLineNumbers;
   editor.on = on;
   editor.off = off;
 

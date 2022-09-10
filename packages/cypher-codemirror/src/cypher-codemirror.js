@@ -14,7 +14,7 @@ import {
 } from "@codemirror/language";
 import { lintKeymap, linter } from "@codemirror/lint";
 import { searchKeymap } from "@codemirror/search";
-import { EditorState, StateEffect, StateField } from "@codemirror/state";
+import { EditorState, StateEffect, StateField, Compartment } from "@codemirror/state";
 import {
   EditorView,
   Decoration,
@@ -238,29 +238,36 @@ const BLUR_KEY = "blur";
 const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
 
-export const getExtensions = ({ lineNumbers = true, readOnly = false, placeholder: placeholderText } = {}) => {
+const readableExtensions = [
+  history(),
+  drawSelection(),
+  EditorState.allowMultipleSelections.of(true),
+  indentOnInput(),
+  cypherCompletion(),
+  rectangularSelection(),
+  crosshairCursor(),
+  keymap.of([
+    ...defaultKeymap,
+    ...searchKeymap,
+    ...historyKeymap,
+    ...foldKeymap,
+    ...completionKeymap,
+    ...lintKeymap
+  ])
+];
+
+const showLineNumberExtensions = [cypherLineNumbers()];
+
+const readOnlyExtensions = [EditorState.readOnly.of(true)];
+
+export const getExtensions = ({ lineNumbers = true, readOnly = false, placeholder: placeholderText } = {}, { readableConf = new Compartment(), readOnlyConf = new Compartment(), showLinesConf = new Compartment() } = {}) => {
   return [
     cypherLanguage(),
     cypherLinter(),
-    ...(lineNumbers ? [cypherLineNumbers()] : []),
-    ...(readOnly !== "nocursor" ? [
-      history(),
-      drawSelection(),
-      EditorState.allowMultipleSelections.of(true),
-      indentOnInput(),
-      cypherCompletion(),
-      rectangularSelection(),
-      crosshairCursor(),
-      keymap.of([
-        ...defaultKeymap,
-        ...searchKeymap,
-        ...historyKeymap,
-        ...foldKeymap,
-        ...completionKeymap,
-        ...lintKeymap
-      ])] : []),
+    showLinesConf.of(lineNumbers ? showLineNumberExtensions : []),
+    readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     ...(placeholderText ? [placeholder(placeholderText)] : []),
-    ...(readOnly !== false ? [EditorState.readOnly.of(true)] : [])
+    readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
   ];
 };
 
@@ -323,11 +330,15 @@ export function createCypherEditor(
     }
   });
 
+  const readableConf = new Compartment();
+  const readOnlyConf = new Compartment();
+  const showLinesConf = new Compartment();
+
   extensions = [
     ...(extensions
       ? extensions
       : [
-          ...getExtensions(options),
+          ...getExtensions(options, { readableConf, readOnlyConf, showLinesConf }),
           theme === "light" ? lightTheme : darkTheme
         ]),
     updateListener
@@ -421,6 +432,22 @@ export function createCypherEditor(
     startCompletion(editor);
   };
 
+  const setReadOnly = (readOnly) => {
+    editor.contentDOM.setAttribute("contenteditable", readOnly === "nocursor" ? "false" : "true");
+    editor.dispatch({
+      effects: readableConf.reconfigure(readOnly !== "nocursor" ? readableExtensions : [])
+    });
+    editor.dispatch({
+      effects: readOnlyConf.reconfigure(readOnly !== false ? readOnlyExtensions : [])
+    });
+  };
+
+  const setLineNumbers = (lineNumbers) => {
+    editor.dispatch({
+      effects: showLinesConf.reconfigure(lineNumbers ? showLineNumberExtensions : [])
+    });
+  }
+
   // const setDarkTheme = () => {
   //   if (theme !== 'dark') {
   //     theme = 'dark';
@@ -448,6 +475,8 @@ export function createCypherEditor(
   editor.on = on;
   editor.off = off;
   editor.showAutoComplete = showAutoComplete;
+  editor.setReadOnly = setReadOnly;
+  editor.setLineNumbers = setLineNumbers;
   // editor.setDarkTheme = setDarkTheme;
   // editor.setLightTheme = setLightTheme;
 

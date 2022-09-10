@@ -19,6 +19,9 @@ const Database = ({ CypherEditor }) => {
   const [theme, setTheme] = useState("light");
   const [position, setPosition] = useState(initialPosition);
   const [focused, setFocused] = useState(true);
+  const [editor, setEditor] = useState(null);
+  const [lineNumbers, setLineNumbers] = useState(initialOptions.lineNumbers || true);
+  const [readOnly, setReadOnly] = useState(initialOptions.readOnly || false);
 
   const send = () => {
     const session = driver.session();
@@ -49,6 +52,10 @@ const Database = ({ CypherEditor }) => {
     setFocused(focused);
   }
 
+  const onEditorCreate = (editor) => {
+    setEditor(editor);
+  };
+
   const lightTheme = () => {
     setTheme("light");
   };
@@ -70,6 +77,24 @@ const Database = ({ CypherEditor }) => {
 
   const cypherLength = cypher.length;
   const positionString = position ? JSON.stringify(position) : "";
+  
+  const toggleLineNumbers = () => {
+    setLineNumbers(!lineNumbers);
+    editor && editor.setLineNumbers(!lineNumbers);
+  };
+
+  const toggleReadOnly = () => {
+    let newReadOnly;
+    if (readOnly === false) {
+      newReadOnly = true;
+    } else if (readOnly === true) {
+      newReadOnly = "nocursor";
+    } else if (readOnly === "nocursor") {
+      newReadOnly = false;
+    }
+    setReadOnly(newReadOnly);
+    editor && editor.setReadOnly(newReadOnly);
+  }
 
   return (
     <main>
@@ -77,6 +102,7 @@ const Database = ({ CypherEditor }) => {
         onValueChange={onValueChange}
         onPositionChange={onPositionChange}
         onFocusChange={onFocusChange}
+        onEditorCreate={onEditorCreate}
         initialPosition={initialPosition}
         initialSchema={neo4jSchema}
         initialValue={initialValue}
@@ -85,6 +111,8 @@ const Database = ({ CypherEditor }) => {
       />
       <button onClick={lightTheme}>Light theme</button>
       <button onClick={darkTheme}>Dark theme</button>
+      <button onClick={toggleLineNumbers}>Line Numbers</button>
+      <button onClick={toggleReadOnly}>Readonly</button>
       <div>Length: {cypherLength}</div>
       <div>Position: {positionString}</div>
       <div>Focused: {focused + ''}</div>
