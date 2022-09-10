@@ -95,3 +95,10 @@ export const host = "neo4j://localhost:7687";
 export const user = "neo4j";
 
 export const pass = "asdfgh";
+
+export const defaultOptions = {
+  lineNumbers: true, // whether to show the line numbers next to the editor
+  autofocus: true, // if true the editor will be focused once created
+  placeholder: undefined, // this text shows when the actual text is empty
+  readOnly: false // can be one of: true / false / "nocursor"
+};

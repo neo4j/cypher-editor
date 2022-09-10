@@ -81,13 +81,16 @@ class CypherEditor extends Component {
       initialPosition,
       onEditorCreate
     } = this.props;
+    const { autofocus = true, ...options } = initialOptions || {};
     const { editor, editorSupport } = createCypherEditor(
       this.editorRef,
-      initialOptions
+      options
     );
     this.cypherEditor = editor;
 
-    this.cypherEditor.focus();
+    if (autofocus) {
+      this.cypherEditor.focus();
+    }
     if (initialSchema) {
       editorSupport.setSchema(initialSchema);
     }

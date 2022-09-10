@@ -122,6 +122,9 @@
   };
 
   onMount(() => {
+    if (cypherEditorOptions.lineNumbers === false) {
+      cypherEditorOptions.gutters = false;
+    }
     const { editor, editorSupport } = createCypherEditor(
       cypherEditorRef,
       cypherEditorOptions
@@ -137,6 +140,9 @@
       }
     };
 
+    if (cypherEditorOptions.autofocus) {
+      cypherEditor.focus();
+    }
     if (initialSchema) {
       editorSupport.setSchema(initialSchema);
     }

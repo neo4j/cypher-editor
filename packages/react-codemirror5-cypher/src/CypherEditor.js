@@ -126,6 +126,9 @@ class CypherEditor extends Component {
 
     let cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
+    if (cypherEditorOptions.lineNumbers === false) {
+      cypherEditorOptions.gutters = false;
+    }
     const { editor, editorSupport } = createCypherEditor(
       this.editorRef,
       cypherEditorOptions
@@ -139,7 +142,9 @@ class CypherEditor extends Component {
       }
     };
 
-    this.cypherEditor.focus();
+    if (cypherEditorOptions.autofocus) {
+      this.cypherEditor.focus();
+    }
     if (initialSchema) {
       editorSupport.setSchema(initialSchema);
     }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import neo4j from "neo4j-driver";
 // import CypherEditor from "react-codemirror-cypher";
-import { neo4jSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
+import { neo4jSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
 
 const initialValue = defaultQuery;
+const initialOptions = defaultOptions;
 
 const driver = neo4j.driver(
   host,
@@ -79,6 +80,7 @@ const Database = ({ CypherEditor }) => {
         initialPosition={initialPosition}
         initialSchema={neo4jSchema}
         initialValue={initialValue}
+        initialOptions={initialOptions}
         theme={theme}
       />
       <button onClick={lightTheme}>Light theme</button>

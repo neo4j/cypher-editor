@@ -22,7 +22,8 @@ import {
   drawSelection,
   rectangularSelection,
   crosshairCursor,
-  keymap
+  keymap,
+  placeholder
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 
@@ -237,33 +238,37 @@ const BLUR_KEY = "blur";
 const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
 
-export const getExtensions = () => {
+export const getExtensions = ({ lineNumbers = true, readOnly = false, placeholder: placeholderText } = {}) => {
   return [
     cypherLanguage(),
     cypherLinter(),
-    cypherLineNumbers(),
-    history(),
-    drawSelection(),
-    EditorState.allowMultipleSelections.of(true),
-    indentOnInput(),
-    cypherCompletion(),
-    rectangularSelection(),
-    crosshairCursor(),
-    keymap.of([
-      ...defaultKeymap,
-      ...searchKeymap,
-      ...historyKeymap,
-      ...foldKeymap,
-      ...completionKeymap,
-      ...lintKeymap
-    ])
+    ...(lineNumbers ? [cypherLineNumbers()] : []),
+    ...(readOnly !== "nocursor" ? [
+      history(),
+      drawSelection(),
+      EditorState.allowMultipleSelections.of(true),
+      indentOnInput(),
+      cypherCompletion(),
+      rectangularSelection(),
+      crosshairCursor(),
+      keymap.of([
+        ...defaultKeymap,
+        ...searchKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...completionKeymap,
+        ...lintKeymap
+      ])] : []),
+    ...(placeholderText ? [placeholder(placeholderText)] : []),
+    ...(readOnly !== false ? [EditorState.readOnly.of(true)] : [])
   ];
 };
 
 export function createCypherEditor(
   parentDOMElement,
-  { text = "", extensions, updateSyntaxHighlighting = true } = {}
+  { text = "", extensions, updateSyntaxHighlighting = true, autofocus = true, ...options } = {}
 ) {
+  const { readOnly = false } = options;
   let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
 
   const eventListenerTypeMap = {};
@@ -321,7 +326,10 @@ export function createCypherEditor(
   extensions = [
     ...(extensions
       ? extensions
-      : [...getExtensions(), theme === "light" ? lightTheme : darkTheme]),
+      : [
+          ...getExtensions(options),
+          theme === "light" ? lightTheme : darkTheme
+        ]),
     updateListener
   ];
 
@@ -369,7 +377,13 @@ export function createCypherEditor(
   editor.newContentVersion.bind(editor);
   editorSupportInit(editor);
 
-  editor.contentDOM.focus();
+  if (autofocus) {
+    editor.contentDOM.focus();
+  }
+
+  if (readOnly === "nocursor") {
+    editor.contentDOM.setAttribute("contenteditable", "false");
+  }
 
   editor.contentDOM.addEventListener("blur", () => {
     onFocusChanged(false);

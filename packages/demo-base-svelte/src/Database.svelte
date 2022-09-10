@@ -1,10 +1,11 @@
 <script lang="ts">
   import neo4j from "neo4j-driver";
-  import { neo4jSchema as initialSchema, defaultQuery, initialPosition, host, user, pass } from "demo-base";
+  import { neo4jSchema as initialSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
 
   export let editor = undefined;
 
   const initialValue = defaultQuery;
+  const initialOptions = defaultOptions;
   let cypher = initialValue;
 
   const driver = neo4j.driver(
@@ -56,7 +57,9 @@
     {initialPosition}
     {initialSchema}
     {initialValue}
-    {theme} this={editor}/>
+    {initialOptions}
+    {theme}
+    this={editor}/>
   <button on:click={lightTheme}>Light theme</button>
   <button on:click={darkTheme}>Dark theme</button>
   <div>Length: {cypherLength}</div>
