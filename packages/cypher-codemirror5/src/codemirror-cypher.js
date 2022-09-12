@@ -65,20 +65,24 @@ codemirror.registerHelper("lint", "cypher", (text, options, editor) => {
 
   fixColors(editor, editorSupport);
 
-  return (editorSupport.parseErrors || []).map(({ line, col, msg }) => ({
-    severity: "error",
-    from: {
-      line: line - 1,
-      ch: Math.min(editor.getLine(line - 1).length - 1, col)
-    },
-    to: { line, ch: 0 },
-    message: msg
-  }));
+  return ((editor.lint !== false && editorSupport.parseErrors) || []).map(
+    ({ line, col, msg }) => ({
+      severity: "error",
+      from: {
+        line: line - 1,
+        ch: Math.min(editor.getLine(line - 1).length - 1, col)
+      },
+      to: { line, ch: 0 },
+      message: msg
+    })
+  );
 });
 
 codemirror.registerHelper("hint", "cypher", (editor) => {
   const editorSupport = editor.editorSupport;
-  if (!editorSupport) return {};
+  if (!editorSupport || editor.autocomplete === false) {
+    return { list: [] };
+  }
   editorSupport.update(editor.getValue());
 
   const { line, ch } = editor.getCursor();
@@ -108,7 +112,11 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
 export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
-  const editor = codemirror(parentDOMElement, { ...settings, value: "" });
+  const { autocomplete = true, lint = true, ...otherSettings } = settings;
+
+  const editor = codemirror(parentDOMElement, { ...otherSettings, lint, value: "" });
+  editor.lint = lint;
+  editor.autocomplete = autocomplete;
 
   const positionChangeListeners = [];
 
@@ -120,7 +128,7 @@ export function createCypherEditor(parentDOMElement, settings) {
       const steps = currentLine - position.line;
       for (let i = 0; i < steps; i++) {
         editor.execCommand("goLineUp");
-      }  
+      }
     } else if (position.line > currentLine) {
       const steps = position.line - currentLine;
       for (let i = 0; i < steps; i++) {
@@ -138,6 +146,12 @@ export function createCypherEditor(parentDOMElement, settings) {
         editor.execCommand("goCharRight");
       }
     }
+  };
+
+  const getPosition = () => {
+    const { line: lineIndex, ch } = editor.getCursor();
+    const position = editor.indexFromPos(editor.getCursor());
+    return { line: lineIndex + 1, column: ch, position };
   };
 
   const showAutoComplete = () => {
@@ -206,21 +220,32 @@ export function createCypherEditor(parentDOMElement, settings) {
     }
   };
   const setReadOnly = (readOnly) => {
-    editor.setOption('readOnly', readOnly);
+    editor.setOption("readOnly", readOnly);
   };
 
   const setLineNumbers = (lineNumbers) => {
-    editor.setOption('lineNumbers', lineNumbers);
+    editor.setOption("lineNumbers", lineNumbers);
     if (lineNumbers) {
-      editor.setOption('gutters', settings.gutters);
+      editor.setOption("gutters", settings.gutters);
     } else {
-      editor.setOption('gutters', false)
+      editor.setOption("gutters", false);
     }
-
   };
+
+  const setAutocomplete = (autocomplete) => {
+    editor.autocomplete = autocomplete;
+  };
+
+  const setLint = (lint) => {
+    editor.lint = lint;
+  };
+
   editor.setValue = setValue;
   editor.setReadOnly = setReadOnly;
   editor.setLineNumbers = setLineNumbers;
+  editor.getPosition = getPosition;
+  editor.setAutocomplete = setAutocomplete;
+  editor.setLint = setLint;
   editor.on = on;
   editor.off = off;
 

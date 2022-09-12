@@ -100,5 +100,7 @@ export const defaultOptions = {
   lineNumbers: true, // whether to show the line numbers next to the editor
   autofocus: true, // if true the editor will be focused once created
   placeholder: undefined, // this text shows when the actual text is empty
-  readOnly: false // can be one of: true / false / "nocursor"
+  readOnly: false, // can be one of: true / false / "nocursor"
+  autocomplete: true, // whether to show autocompletion
+  lint: true // whether to show lint errors
 };

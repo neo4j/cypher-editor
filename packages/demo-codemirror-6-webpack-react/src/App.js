@@ -5,8 +5,13 @@ import CypherEditor from "react-codemirror-cypher";
 
 const App = () => {
   return (
-    <AppBase codemirrorVersion="6" framework="react" bundler="webpack">
-      <Database CypherEditor={CypherEditor} />
+    <AppBase>
+      <Database
+        codemirrorVersion="6"
+        framework="react"
+        bundler="webpack"
+        CypherEditor={CypherEditor}
+      />
     </AppBase>
   );
 };

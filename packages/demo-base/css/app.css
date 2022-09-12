@@ -27,25 +27,105 @@ a:hover {
 body {
     margin: 0;
     display: flex;
-    place-items: center;
+    /* place-items: center; */
     min-width: 320px;
     min-height: 100vh;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+#app {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    /* max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center; */
+}
+
+.database {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    margin: 0 8px;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0;
+}
+
+.setting-label {
+    display: flex;
+    font-size: 20px;
+    padding: 4px 0;
+}
+
+.setting-values {
+    display: flex;
+}
+
+.setting-values button {
+    margin: 4px;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.setting-values button.setting-active {
+    border: 1px solid white;
+}
+
+.right {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin-right: 8px;
+}
+
+.card {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 4px;
+}
+
+.editor {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.info {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    flex-direction: row;
+}
+
+.info-item-long {
+    display: flex;
+    width: 50%;
+}
+
+.info-item {
+    display: flex;
+    width: 25%;
 }
 
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
-}
-
-.card {
-    padding: 2em;
-}
-
-#app {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
 }
 
 /* this next rule sets the editor size for codemirror 5 */

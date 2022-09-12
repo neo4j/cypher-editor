@@ -2,7 +2,12 @@
   import neo4j from "neo4j-driver";
   import { neo4jSchema as initialSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
 
+  export let codemirrorVersion = undefined;
+  export let framework = undefined;
+  export let bundler = undefined;
   export let editor = undefined;
+
+  const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
 
   const initialValue = defaultQuery;
   const initialOptions = defaultOptions;
@@ -18,6 +23,8 @@
   let focused = true;
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
+  let autocomplete = initialOptions.autocomplete;
+  let lint = initialOptions.lint;
   let cypherEditor;
 
   const lightTheme = () => {
@@ -45,83 +52,158 @@
 
   const onEditorCreate = (editor) => {
     cypherEditor = editor;
+    position = editor.getPosition();
   };
 
   const onFocusChange = (newFocused) => {
     focused = newFocused;
   }
 
-  const toggleLineNumbers = () => {
-    lineNumbers = !lineNumbers;
+  const showLineNumbers = () => {
+    lineNumbers = true;
     cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
   };
 
-  const toggleReadOnly = () => {
-    let newReadOnly;
-    if (readOnly === false) {
-      newReadOnly = true;
-    } else if (readOnly === true) {
-      newReadOnly = "nocursor";
-    } else if (readOnly === "nocursor") {
-      newReadOnly = false;
-    }
-    readOnly = newReadOnly;
-    cypherEditor && cypherEditor.setReadOnly(newReadOnly);
-  }
+  const hideLineNumbers = () => {
+    lineNumbers = false;
+    cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
+  };
 
   $: cypherLength = cypher ? cypher.length : 0;
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
+
+  const makeReadable = () => {
+    readOnly = false;
+    cypherEditor && cypherEditor.setReadOnly(readOnly);
+  };
+
+  const makeReadOnly = () => {
+    readOnly = true;
+    cypherEditor && cypherEditor.setReadOnly(readOnly);
+  };
+
+  const makeReadOnlyNoCursor = () => {
+    readOnly = "nocursor";
+    cypherEditor && cypherEditor.setReadOnly(readOnly);
+  };
+
+  const enableAutocomplete = () => {
+    autocomplete = true;
+    cypherEditor && cypherEditor.setAutocomplete(true);
+  };
+
+  const disableAutocomplete = () => {
+    autocomplete = false;
+    cypherEditor && cypherEditor.setAutocomplete(false);
+  };
+
+  const enableLint = () => {
+    lint = true;
+    cypherEditor && cypherEditor.setLint(true);
+  };
+
+  const disableLint = () => {
+    lint = false;
+    cypherEditor && cypherEditor.setLint(false);
+  };
+
+  const focusEditor = () => {
+    cypherEditor && cypherEditor.focus();
+  };
 </script>
 
-<main>
-  <svelte:component
-    {onValueChange}
-    {onPositionChange}
-    {onFocusChange}
-    {onEditorCreate}
-    {initialPosition}
-    {initialSchema}
-    {initialValue}
-    {initialOptions}
-    {theme}
-    this={editor}/>
-  <button on:click={lightTheme}>Light theme</button>
-  <button on:click={darkTheme}>Dark theme</button>
-  <button on:click={toggleLineNumbers}>Line Numbers</button>
-  <button on:click={toggleReadOnly}>Readonly</button>
-  <div>Length: {cypherLength}</div>
-  <div>Position: {positionString}</div>
-  <div>Focused: {focusedString}</div>
-  <button on:click={send}> Run </button>
+<div class="database">
+  <div class="left">
+    <div class="setting">
+      <div class="setting-label">Theme</div>
+      <div class="setting-values">
+        <button class={theme === "light" ? "setting-active" : undefined} on:click={lightTheme}>Light</button>
+        <button class={theme === "dark" ? "setting-active" : undefined} on:click={darkTheme}>Dark</button>    
+      </div>
+    </div>
 
-  <div>
-    <h3>Results</h3>
-    {#await promisedResult}
-      <p>...waiting</p>
-    {:then results}
-      {#if results}
-        {#each results.records as record}
-          <pre>{JSON.stringify(record)}</pre>
-        {/each}
-      {/if}
-    {:catch error}
-      <p style="color: red">{error.message}</p>
-    {/await}
+    <div class="setting">
+      <div class="setting-label">Line Numbers</div>
+      <div class="setting-values">
+        <button class={lineNumbers === true ? "setting-active" : undefined} on:click={showLineNumbers}>True</button>
+        <button class={lineNumbers === false ? "setting-active" : undefined} on:click={hideLineNumbers}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Read Only</div>
+      <div class="setting-values">
+        <button class={readOnly === false ? "setting-active" : undefined} on:click={makeReadable}>False</button>
+        <button class={readOnly === true ? "setting-active" : undefined} on:click={makeReadOnly}>True</button>
+        <button class={readOnly === "nocursor" ? "setting-active" : undefined} on:click={makeReadOnlyNoCursor}>No Cursor</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Autocomplete</div>
+      <div class="setting-values">
+        <button class={autocomplete === true ? "setting-active" : undefined} on:click={enableAutocomplete}>True</button>
+        <button class={autocomplete === false ? "setting-active" : undefined} on:click={disableAutocomplete}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Lint</div>
+      <div class="setting-values">
+        <button class={lint === true ? "setting-active" : undefined} on:click={enableLint}>True</button>
+        <button class={lint === false ? "setting-active" : undefined} on:click={disableLint}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Focus</div>
+      <div class="setting-values">
+        <button on:click={focusEditor}>Focus Editor</button>
+      </div>
+    </div>
   </div>
-</main>
-
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
+  <div class="right">
+    <div class="card">
+      <h1>{title}</h1>
+    </div>
+    <div class="card">
+      <svelte:component
+        {onValueChange}
+        {onPositionChange}
+        {onFocusChange}
+        {onEditorCreate}
+        {initialPosition}
+        {initialSchema}
+        {initialValue}
+        {initialOptions}
+        {theme}
+        classNames={["editor"]}
+        this={editor}/>
+    </div>
+    <div class="card">
+      <div class="info">
+        <div class="info-item-long">Position: {positionString}</div>
+        <div class="info-item">Length: {cypherLength}</div>
+        <div class="info-item">Focused: {focusedString}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="results">
+        <button on:click={send}> Run </button>
+        <h3>Results</h3>
+        {#await promisedResult}
+          <p>...waiting</p>
+        {:then results}
+          {#if results}
+            {#each results.records as record}
+              <pre>{JSON.stringify(record)}</pre>
+            {/each}
+          {/if}
+        {:catch error}
+          <p style="color: red">{error.message}</p>
+        {/await}
+      </div>
+    </div>
+  </div>
+</div>

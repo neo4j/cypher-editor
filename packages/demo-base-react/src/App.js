@@ -1,15 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const App = (props) => {
-  const { codemirrorVersion, framework, bundler, children } = props
-  return (
-    <main>
-      <h1>Cypher Codemirror {codemirrorVersion} {framework} {bundler}</h1>
-      <div className="card">
-        {children}
-      </div>
-    </main>
-  );
+  const { children } = props;
+
+  return <Fragment>{children}</Fragment>;
 };
 
 export default App;

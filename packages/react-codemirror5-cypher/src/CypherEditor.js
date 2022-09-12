@@ -12,8 +12,8 @@ import "cypher-codemirror5/css/cypher-codemirror.css";
 
 const THEME_LIGHT = "light";
 const THEME_DARK = "dark";
-const INNER_THEME_LIGHT = 'cypher';
-const INNER_THEME_DARK = 'cypher cypher-dark';
+const INNER_THEME_LIGHT = "cypher";
+const INNER_THEME_DARK = "cypher cypher-dark";
 const THEME_MAP = {
   [THEME_LIGHT]: INNER_THEME_LIGHT,
   [THEME_DARK]: INNER_THEME_DARK

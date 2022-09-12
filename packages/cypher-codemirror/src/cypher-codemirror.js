@@ -14,7 +14,12 @@ import {
 } from "@codemirror/language";
 import { lintKeymap, linter } from "@codemirror/lint";
 import { searchKeymap } from "@codemirror/search";
-import { EditorState, StateEffect, StateField, Compartment } from "@codemirror/state";
+import {
+  EditorState,
+  StateEffect,
+  StateField,
+  Compartment
+} from "@codemirror/state";
 import {
   EditorView,
   Decoration,
@@ -151,7 +156,6 @@ const cypherCompletions = (context) => {
   const { items, from, to } = completion;
   const completions = items.map(({ type, view }) => ({ type, label: view }));
   let word = context.matchBefore(/\w*/);
-  // console.log('context.pos: ' + context.pos + ' word: ' + word);
   let cypherCompletions = null;
   if (!(word.from == word.to && !context.explicit)) {
     cypherCompletions = {
@@ -243,7 +247,6 @@ const readableExtensions = [
   drawSelection(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
-  cypherCompletion(),
   rectangularSelection(),
   crosshairCursor(),
   keymap.of([
@@ -260,10 +263,32 @@ const showLineNumberExtensions = [cypherLineNumbers()];
 
 const readOnlyExtensions = [EditorState.readOnly.of(true)];
 
-export const getExtensions = ({ lineNumbers = true, readOnly = false, placeholder: placeholderText } = {}, { readableConf = new Compartment(), readOnlyConf = new Compartment(), showLinesConf = new Compartment() } = {}) => {
+const useLintExtensions = [cypherLinter()];
+
+const useNoLintExtensions = [cypherLinter({ showErrors: false })];
+
+const useAutocompleteExtensions = [cypherCompletion()];
+
+export const getExtensions = (
+  {
+    autocomplete,
+    lint,
+    lineNumbers = true,
+    readOnly = false,
+    placeholder: placeholderText
+  } = {},
+  {
+    lintConf = new Compartment(),
+    autocompleteConf = new Compartment(),
+    readableConf = new Compartment(),
+    readOnlyConf = new Compartment(),
+    showLinesConf = new Compartment()
+  } = {}
+) => {
   return [
     cypherLanguage(),
-    cypherLinter(),
+    lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
+    autocompleteConf.of(autocomplete ? useAutocompleteExtensions : []),
     showLinesConf.of(lineNumbers ? showLineNumberExtensions : []),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     ...(placeholderText ? [placeholder(placeholderText)] : []),
@@ -273,9 +298,14 @@ export const getExtensions = ({ lineNumbers = true, readOnly = false, placeholde
 
 export function createCypherEditor(
   parentDOMElement,
-  { text = "", extensions, updateSyntaxHighlighting = true, autofocus = true, ...options } = {}
+  {
+    text = "",
+    extensions,
+    updateSyntaxHighlighting = true,
+    autofocus = true,
+    ...options
+  } = {}
 ) {
-  const { readOnly = false } = options;
   let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
 
   const eventListenerTypeMap = {};
@@ -317,19 +347,25 @@ export function createCypherEditor(
 
   let settingValue = false;
 
+  const getPositionFromState = (state) => {
+    const { from, to, head, anchor } = state.selection.main;
+    const position = head;
+    const { number: line, from: lineStart } = state.doc.lineAt(position);
+    const column = position - lineStart;
+    return { line, column, position };
+  };
+
   const updateListener = EditorView.updateListener.of((v) => {
     if (v.docChanged && !settingValue) {
       onValueChanged(v.state.doc.toString(), v.changes);
     }
     if (v.selectionSet) {
-      const { from, to, head, anchor } = v.state.selection.main;
-      const position = head;
-      const { number: line, from: lineStart } = v.state.doc.lineAt(position);
-      const column = position - lineStart;
-      onPositionChanged({ line, column, position });
+      onPositionChanged(getPositionFromState(v.state));
     }
   });
 
+  const lintConf = new Compartment();
+  const autocompleteConf = new Compartment();
   const readableConf = new Compartment();
   const readOnlyConf = new Compartment();
   const showLinesConf = new Compartment();
@@ -338,7 +374,13 @@ export function createCypherEditor(
     ...(extensions
       ? extensions
       : [
-          ...getExtensions(options, { readableConf, readOnlyConf, showLinesConf }),
+          ...getExtensions(options, {
+            lintConf,
+            autocompleteConf,
+            readableConf,
+            readOnlyConf,
+            showLinesConf
+          }),
           theme === "light" ? lightTheme : darkTheme
         ]),
     updateListener
@@ -392,7 +434,7 @@ export function createCypherEditor(
     editor.contentDOM.focus();
   }
 
-  if (readOnly === "nocursor") {
+  if (options.readOnly === "nocursor") {
     editor.contentDOM.setAttribute("contenteditable", "false");
   }
 
@@ -432,21 +474,61 @@ export function createCypherEditor(
     startCompletion(editor);
   };
 
-  const setReadOnly = (readOnly) => {
-    editor.contentDOM.setAttribute("contenteditable", readOnly === "nocursor" ? "false" : "true");
+  const setLineNumbers = (lineNumbers) => {
     editor.dispatch({
-      effects: readableConf.reconfigure(readOnly !== "nocursor" ? readableExtensions : [])
-    });
-    editor.dispatch({
-      effects: readOnlyConf.reconfigure(readOnly !== false ? readOnlyExtensions : [])
+      effects: showLinesConf.reconfigure(
+        lineNumbers ? showLineNumberExtensions : []
+      )
     });
   };
 
-  const setLineNumbers = (lineNumbers) => {
+  let autocomplete = options.autocomplete || true;
+  let lint = options.lint || true;
+  let readOnly = options.readOnly || false;
+
+  const setReadOnly = (newReadOnly) => {
+    readOnly = newReadOnly;
+    editor.contentDOM.setAttribute(
+      "contenteditable",
+      readOnly === "nocursor" ? "false" : "true"
+    );
     editor.dispatch({
-      effects: showLinesConf.reconfigure(lineNumbers ? showLineNumberExtensions : [])
+      effects: [
+        readableConf.reconfigure(
+          readOnly !== "nocursor" ? readableExtensions : []
+        ),
+        readOnlyConf.reconfigure(readOnly !== false ? readOnlyExtensions : []),
+        autocompleteConf.reconfigure(
+          readOnly === false && autocomplete ? useAutocompleteExtensions : []
+        ),
+        lintConf.reconfigure(
+          readOnly === false && lint ? useLintExtensions : useNoLintExtensions
+        )
+      ]
     });
-  }
+  };
+
+  const setAutocomplete = (newAutocomplete) => {
+    autocomplete = newAutocomplete;
+    editor.dispatch({
+      effects: autocompleteConf.reconfigure(
+        readOnly === false && autocomplete ? useAutocompleteExtensions : []
+      )
+    });
+  };
+
+  const setLint = (newLint) => {
+    lint = newLint;
+    editor.dispatch({
+      effects: lintConf.reconfigure(
+        readOnly === false && lint ? useLintExtensions : useNoLintExtensions
+      )
+    });
+  };
+
+  const getPosition = () => {
+    return getPositionFromState(editor.state);
+  };
 
   // const setDarkTheme = () => {
   //   if (theme !== 'dark') {
@@ -477,6 +559,9 @@ export function createCypherEditor(
   editor.showAutoComplete = showAutoComplete;
   editor.setReadOnly = setReadOnly;
   editor.setLineNumbers = setLineNumbers;
+  editor.getPosition = getPosition;
+  editor.setAutocomplete = setAutocomplete;
+  editor.setLint = setLint;
   // editor.setDarkTheme = setDarkTheme;
   // editor.setLightTheme = setLightTheme;
 

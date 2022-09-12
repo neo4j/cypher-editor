@@ -3,8 +3,7 @@
   import CypherEditor from "svelte-codemirror-cypher";
 </script>
 
-<App codemirrorVersion="6" framework="svelte" bundler="webpack">
-  <Database slot="database" editor={CypherEditor}>
-  </Database>
+<App>
+  <Database slot="database" codemirrorVersion="6" framework="svelte" bundler="webpack" editor={CypherEditor} />
 </App>
 
