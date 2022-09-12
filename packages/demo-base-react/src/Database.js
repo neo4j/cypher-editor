@@ -55,6 +55,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings || undefined
   );
+  const [autocompleteSticky, setAutocompleteSticky] = useState(
+    initialOptions.autocompleteSticky
+  );
   const [lint, setLint] = useState(initialOptions.lint || true);
 
   const send = () => {
@@ -193,6 +196,16 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const showNoAutocompleteTriggerStrings = () => {
     setAutocompleteTriggerStrings(false);
     editor && editor.setAutocompleteTriggerStrings(false);
+  };
+
+  const showStickyAutocomplete = () => {
+    setAutocompleteSticky(true);
+    editor && editor.setAutocompleteSticky(true);
+  };
+
+  const showUnstickyAutocomplete = () => {
+    setAutocompleteSticky(false);
+    editor && editor.setAutocompleteSticky(false);
   };
 
   let content = "";
@@ -344,6 +357,32 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
                   : undefined
               }
               onClick={showNoAutocompleteTriggerStrings}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Autocomplete Sticky</div>
+          <div className="setting-values">
+            <button
+              className={
+                autocompleteSticky === true
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showStickyAutocomplete}
+            >
+              True
+            </button>
+            <button
+              className={
+                autocompleteSticky === false || autocompleteSticky === undefined
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showUnstickyAutocomplete}
             >
               False
             </button>

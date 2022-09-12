@@ -45,6 +45,7 @@
   let schema = initialSchema;
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
+  let autocompleteSticky = initialOptions.autocompleteSticky;
 
   const lightTheme = () => {
     theme = "light";
@@ -170,6 +171,16 @@
     autocompleteTriggerStrings = false;
     cypherEditor && cypherEditor.setAutocompleteTriggerStrings(false);
   };
+
+  const showStickyAutocomplete = () => {
+    autocompleteSticky = true;
+    cypherEditor && cypherEditor.setAutocompleteSticky(true);
+  };
+
+  const showUnstickyAutocomplete = () => {
+    autocompleteSticky = false;
+    cypherEditor && cypherEditor.setAutocompleteSticky(false);
+  };
 </script>
 
 <div class="database">
@@ -221,6 +232,14 @@
       <div class="setting-values">
         <button class={autocompleteTriggerStrings === initialOptions.autocompleteTriggerStrings ? "setting-active" : undefined} on:click={showDefaultAutocompleteTriggerStrings}>Default</button>
         <button class={autocompleteTriggerStrings === false ? "setting-active" : undefined} on:click={showNoAutocompleteTriggerStrings}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Autocomplete Sticky</div>
+      <div class="setting-values">
+        <button class={autocompleteSticky === true ? "setting-active" : undefined} on:click={showStickyAutocomplete}>True</button>
+        <button class={autocompleteSticky === false || autocompleteSticky === undefined ? "setting-active" : undefined} on:click={showUnstickyAutocomplete}>False</button>    
       </div>
     </div>
 

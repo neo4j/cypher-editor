@@ -103,5 +103,6 @@ export const defaultOptions = {
   readOnly: false, // can be one of: true / false / "nocursor"
   autocomplete: true, // whether to show autocompletion
   lint: true, // whether to show lint errors,
-  autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"]
+  autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"],
+  autocompleteSticky: false
 };

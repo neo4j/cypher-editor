@@ -129,11 +129,14 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
+const defaultAutocompleteSticky = false;
+
 export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
   const {
     autocomplete = true,
+    autocompleteSticky: initialAutocompleteSticky = false,
     lint = true,
     lineNumberFormatter = defaultLineNumberFormatter,
     autocompleteTriggerStrings:
@@ -143,7 +146,13 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   let lineFormatter;
   let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
+  let autocompleteSticky = initialAutocompleteSticky;
+  const baseHintOptions = otherSettings.hintOptions || {};
   let autocompleteOpen = false;
+
+  if (initialAutocompleteSticky) {
+    otherSettings.hintOptions = { ...baseHintOptions, closeOnUnfocus: false };
+  }
 
   const editor = codemirror(parentDOMElement, {
     ...otherSettings,
@@ -331,6 +340,11 @@ export function createCypherEditor(parentDOMElement, settings) {
     editor.autocomplete = autocomplete;
   };
 
+  const setAutocompleteSticky = (newAutocompleteSticky) => {
+    autocompleteSticky = newAutocompleteSticky;
+    editor.setOption("hintOptions", { ...baseHintOptions, closeOnUnfocus: !autocompleteSticky});
+  };
+
   const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings) => {
     autocompleteTriggerStrings = newAutocompleteTriggerStrings;
   };
@@ -356,6 +370,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
   editor.setAutocomplete = setAutocomplete;
+  editor.setAutocompleteSticky = setAutocompleteSticky;
   editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
   editor.setLint = setLint;
   editor.getLineCount = getLineCount;

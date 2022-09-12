@@ -270,6 +270,8 @@ const useNoLintExtensions = [cypherLinter({ showErrors: false })];
 
 const useAutocompleteExtensions = [cypherCompletion()];
 
+const useStickyAutocompleteExtensions = [cypherCompletion({ closeOnBlur: false })];
+
 const defaultLineNumberFormatter = (line, lineCount) => {
   if (lineCount === 1) {
     return "$";
@@ -290,9 +292,12 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
+const defaultAutocompleteSticky = false;
+
 export const getExtensions = (
   {
     autocomplete,
+    autocompleteSticky,
     lint,
     lineNumbers = true,
     lineNumberFormatter = defaultLineNumberFormatter,
@@ -310,7 +315,7 @@ export const getExtensions = (
   return [
     cypherLanguage(),
     lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
-    autocompleteConf.of(autocomplete ? useAutocompleteExtensions : []),
+    autocompleteConf.of(readOnly === false && autocomplete ? autocompleteSticky ? useStickyAutocompleteExtensions : useAutocompleteExtensions : []),
     showLinesConf.of(
       lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
     ),
@@ -542,6 +547,7 @@ export function createCypherEditor(
   };
 
   let autocomplete = options.autocomplete || true;
+  let autocompleteSticky = options.autocompleteSticky || false;
 
   let lint = options.lint || true;
   let readOnly = options.readOnly || false;
@@ -595,7 +601,16 @@ export function createCypherEditor(
     autocomplete = newAutocomplete;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
-        readOnly === false && autocomplete ? useAutocompleteExtensions : []
+        readOnly === false && autocomplete ? autocompleteSticky ? useStickyAutocompleteExtensions : useAutocompleteExtensions : []
+      )
+    });
+  };
+
+  const setAutocompleteSticky = (newAutocompleteSticky) => {
+    autocompleteSticky = newAutocompleteSticky;
+    editor.dispatch({
+      effects: autocompleteConf.reconfigure(
+        readOnly === false && autocomplete ? autocompleteSticky ? useStickyAutocompleteExtensions : useAutocompleteExtensions : []
       )
     });
   };
@@ -660,6 +675,7 @@ export function createCypherEditor(
   editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
   editor.setAutocomplete = setAutocomplete;
+  editor.setAutocompleteSticky = setAutocompleteSticky;
   editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
   editor.setLint = setLint;
   editor.getLineCount = getLineCount;
