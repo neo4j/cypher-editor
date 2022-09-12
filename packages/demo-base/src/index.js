@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { neo4jSchema } from "./schema-data";
+export { neo4jSchema, simpleSchema } from "./schema-data";
 
 export const codeMirrorSettings = {
   value: `// line comment
@@ -102,5 +102,6 @@ export const defaultOptions = {
   placeholder: undefined, // this text shows when the actual text is empty
   readOnly: false, // can be one of: true / false / "nocursor"
   autocomplete: true, // whether to show autocompletion
-  lint: true // whether to show lint errors
+  lint: true, // whether to show lint errors,
+  autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"]
 };

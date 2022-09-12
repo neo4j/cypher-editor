@@ -1,21 +1,110 @@
-export const neo4jSchema = {
-  consoleCommands: [
-    { name: ":clear" },
-    { name: ":play" },
-    { name: ":help", description: "this is help command" },
+const consoleCommands = [
+  { name: ":clear" },
+  { name: ":play" },
+  { name: ":help", description: "this is help command" },
+  {
+    name: ":server",
+    commands: [
+      {
+        name: "user",
+        commands: [{ name: "list", description: "listdesc" }, { name: "add" }]
+      }
+    ]
+  },
+  { name: ":schema" },
+  { name: ":history" },
+  { name: ":queries" }
+];
+
+export const simpleSchema = {
+  consoleCommands,
+  labels: [":LabelOne", ":LabelTwo", ":Label Three"],
+  relationshipTypes: [":REL_TYPE_ONE", ":REL_TYPE_TWO", ":REL_TYPE THREE"],
+  parameters: ["parameter1", "parameter2", "parameter 3"],
+  propertyKeys: ["propertyKey1", "propertyKey2", "propertyKey 3"],
+  functions: [
     {
-      name: ":server",
-      commands: [
+      name: "function1",
+      signature: "(numbers :: LIST? OF NUMBER?) :: (FLOAT?)"
+    },
+    {
+      name: "function2",
+      signature: "(coll :: LIST? OF ANY?, value :: ANY?) :: (BOOLEAN?)"
+    },
+    {
+      name: "function 3",
+      signature: "(value :: ANY?) :: (STRING?)"
+    },
+    {
+      name: "db.function",
+      signature: "(value :: ANY?) :: (STRING?)"
+    }
+  ],
+  procedures: [
+    {
+      name: "procedure1",
+      signature:
+        "(startNode :: NODE?, endNode :: NODE?, relationshipTypesAndDirections :: STRING?, weightPropertyName :: STRING?, latPropertyName :: STRING?, lonPropertyName :: STRING?) :: (path :: PATH?, weight :: FLOAT?)",
+      returnItems: [
         {
-          name: "user",
-          commands: [{ name: "list", description: "listdesc" }, { name: "add" }]
+          name: "path",
+          signature: "PATH?"
+        },
+        {
+          name: "weight",
+          signature: "FLOAT?"
         }
       ]
     },
-    { name: ":schema" },
-    { name: ":history" },
-    { name: ":queries" }
-  ],
+    {
+      name: "procedure2",
+      signature: "(username :: STRING?) :: VOID",
+      returnItems: []
+    },
+    {
+      name: "procedure 3",
+      signature:
+        "() :: (username :: STRING?, roles :: LIST? OF STRING?, flags :: LIST? OF STRING?)",
+      returnItems: [
+        {
+          name: "username",
+          signature: "STRING?"
+        },
+        {
+          name: "roles",
+          signature: "LIST? OF STRING?"
+        },
+        {
+          name: "flags",
+          signature: "LIST? OF STRING?"
+        }
+      ]
+    },
+    {
+      name: "db.procedure",
+      signature: "(username :: STRING?) :: VOID",
+      returnItems: [
+        {
+          name: "result",
+          signature: "STRING?"
+        }
+      ]
+    },
+    {
+      name: "foo.procedure",
+      signature: "(username :: STRING?) :: VOID",
+      returnItems: [
+        {
+          name: "result",
+          signature: "STRING?"
+        }
+      ]
+    }
+  ]
+};
+
+export const neo4jSchema = {
+  consoleCommands,
   labels: [
     ":Spacey mc spaceface",
     ":Legislator",

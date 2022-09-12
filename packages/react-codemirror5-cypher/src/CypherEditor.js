@@ -32,33 +32,11 @@ class CypherEditor extends Component {
     this.editorRef = ref;
   };
 
-  triggerAutocompletion = (changed) => {
-    if (changed.text.length !== 1) {
-      return;
-    }
-
-    const text = changed.text[0];
-    const shouldTriggerAutocompletion =
-      text === "." ||
-      text === ":" ||
-      text === "[]" ||
-      text === "()" ||
-      text === "{}" ||
-      text === "[" ||
-      text === "(" ||
-      text === "{" ||
-      text === "$";
-    if (shouldTriggerAutocompletion) {
-      this.cypherEditor.showAutoComplete();
-    }
-  };
-
   valueChanged = (doc, change) => {
     const { onValueChange } = this.props;
     if (onValueChange && change.origin !== "setValue") {
       onValueChange(doc.getValue(), change);
     }
-    this.triggerAutocompletion(change);
   };
 
   focusChanged = (focused) => {
@@ -85,6 +63,11 @@ class CypherEditor extends Component {
     onPositionChange && onPositionChange(positionObject);
   };
 
+  autocompleteChanged = (autocompleteOpen) => {
+    const { onAutocompleteOpenChange } = this.props;
+    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  };
+
   componentDidMount() {
     const {
       initialOptions,
@@ -94,8 +77,6 @@ class CypherEditor extends Component {
       theme = THEME_LIGHT,
       onEditorCreate
     } = this.props;
-
-    let lineNumberFormatter;
 
     let innerTheme = THEME_MAP[theme];
 
@@ -107,8 +88,6 @@ class CypherEditor extends Component {
       lineWrapping: true,
       autofocus: true,
       smartIndent: false,
-      lineNumberFormatter: (line) =>
-        lineNumberFormatter ? lineNumberFormatter(line) : line,
       lint: true,
       extraKeys: {
         "Ctrl-Space": "autocomplete"
@@ -134,13 +113,6 @@ class CypherEditor extends Component {
       cypherEditorOptions
     );
     this.cypherEditor = editor;
-    lineNumberFormatter = (line) => {
-      if (!this.cypherEditor || this.cypherEditor.lineCount() === 1) {
-        return "$";
-      } else {
-        return line;
-      }
-    };
 
     if (cypherEditorOptions.autofocus) {
       this.cypherEditor.focus();
@@ -157,6 +129,7 @@ class CypherEditor extends Component {
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
     this.cypherEditor.on("position", this.positionChanged);
+    this.cypherEditor.on("autocomplete", this.autocompleteChanged);
 
     onEditorCreate && onEditorCreate(this.cypherEditor);
   }

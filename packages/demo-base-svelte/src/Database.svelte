@@ -1,13 +1,28 @@
 <script lang="ts">
   import neo4j from "neo4j-driver";
-  import { neo4jSchema as initialSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
+  import { neo4jSchema, simpleSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
 
   export let codemirrorVersion = undefined;
   export let framework = undefined;
   export let bundler = undefined;
   export let editor = undefined;
 
+  const initialSchema = simpleSchema;
   const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
+
+  const defaultLineNumberFormatter = undefined;
+  const noneLineNumberFormatter = line => line;
+  const customLineNumberFormatter = (line, lineCount) => {
+    if (line === 1) {
+      return "one";
+    } else if (line === 2) {
+      return "two";
+    } else if (line === 3) {
+      return "three";
+    } else if (line > 3) {
+      return line + ' / ' + lineCount + " prompt$";
+    }
+  };
 
   const initialValue = defaultQuery;
   const initialOptions = defaultOptions;
@@ -24,8 +39,12 @@
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
   let autocomplete = initialOptions.autocomplete;
+  let autocompleteOpen = false;
   let lint = initialOptions.lint;
+  let lineNumberFormatter = initialOptions.lineNumberFormatter;
+  let schema = initialSchema;
   let cypherEditor;
+  let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
 
   const lightTheme = () => {
     theme = "light";
@@ -50,6 +69,10 @@
     position = positionObject;
   };
 
+  const onAutocompleteOpenChange = (newAutocompleteOpen) => {
+    autocompleteOpen = newAutocompleteOpen;
+  };
+
   const onEditorCreate = (editor) => {
     cypherEditor = editor;
     position = editor.getPosition();
@@ -72,6 +95,7 @@
   $: cypherLength = cypher ? cypher.length : 0;
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
+  $: autocompleteString = autocompleteOpen + "";
 
   const makeReadable = () => {
     readOnly = false;
@@ -111,6 +135,41 @@
   const focusEditor = () => {
     cypherEditor && cypherEditor.focus();
   };
+
+  const showDefaultLineNumberFormatter = () => {
+    lineNumberFormatter = defaultLineNumberFormatter;
+    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
+  };
+
+  const showNoneLineNumberFormatter = () => {
+    lineNumberFormatter = noneLineNumberFormatter;
+    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
+  };
+
+  const showCustomLineNumberFormatter = () => {
+    lineNumberFormatter = customLineNumberFormatter;
+    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
+  };
+
+  const showSimpleSchema = () => {
+    schema = simpleSchema;
+    cypherEditor && cypherEditor.setSchema(schema);
+  };
+
+  const showLongSchema = () => {
+    schema = neo4jSchema;
+    cypherEditor && cypherEditor.setSchema(schema);
+  };
+
+  const showDefaultAutocompleteTriggerStrings = () => {
+    autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
+    cypherEditor && cypherEditor.setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
+  };
+
+  const showNoAutocompleteTriggerStrings = () => {
+    autocompleteTriggerStrings = false;
+    cypherEditor && cypherEditor.setAutocompleteTriggerStrings(false);
+  };
 </script>
 
 <div class="database">
@@ -132,6 +191,15 @@
     </div>
 
     <div class="setting">
+      <div class="setting-label">Line Number Formatter</div>
+      <div class="setting-values">
+        <button class={lineNumberFormatter === defaultLineNumberFormatter ? "setting-active" : undefined} on:click={showDefaultLineNumberFormatter}>Default</button>
+        <button class={lineNumberFormatter === noneLineNumberFormatter ? "setting-active" : undefined} on:click={showNoneLineNumberFormatter}>None</button>
+        <button class={lineNumberFormatter === customLineNumberFormatter ? "setting-active" : undefined} on:click={showCustomLineNumberFormatter}>Custom</button>
+      </div>
+    </div>
+
+    <div class="setting">
       <div class="setting-label">Read Only</div>
       <div class="setting-values">
         <button class={readOnly === false ? "setting-active" : undefined} on:click={makeReadable}>False</button>
@@ -145,6 +213,22 @@
       <div class="setting-values">
         <button class={autocomplete === true ? "setting-active" : undefined} on:click={enableAutocomplete}>True</button>
         <button class={autocomplete === false ? "setting-active" : undefined} on:click={disableAutocomplete}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Autocomplete Triggers</div>
+      <div class="setting-values">
+        <button class={autocompleteTriggerStrings === initialOptions.autocompleteTriggerStrings ? "setting-active" : undefined} on:click={showDefaultAutocompleteTriggerStrings}>Default</button>
+        <button class={autocompleteTriggerStrings === false ? "setting-active" : undefined} on:click={showNoAutocompleteTriggerStrings}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Schema</div>
+      <div class="setting-values">
+        <button class={schema === simpleSchema ? "setting-active" : undefined} on:click={showSimpleSchema}>Simple</button>
+        <button class={schema === neo4jSchema ? "setting-active" : undefined} on:click={showLongSchema}>Long</button>    
       </div>
     </div>
 
@@ -173,6 +257,7 @@
         {onPositionChange}
         {onFocusChange}
         {onEditorCreate}
+        {onAutocompleteOpenChange}
         {initialPosition}
         {initialSchema}
         {initialValue}
@@ -186,6 +271,7 @@
         <div class="info-item-long">Position: {positionString}</div>
         <div class="info-item">Length: {cypherLength}</div>
         <div class="info-item">Focused: {focusedString}</div>
+        <div class="info-item">Autocompleting: {autocompleteString}</div>
       </div>
     </div>
     <div class="card">

@@ -17,35 +17,8 @@ class CypherEditor extends Component {
     this.editorRef = ref;
   };
 
-  triggerAutocompletion = (changes) => {
-    let changedText = [];
-    changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
-      changedText = inserted.text;
-    });
-
-    if (changedText.length !== 1) {
-      return;
-    }
-
-    const text = changedText[0];
-    const shouldTriggerAutocompletion =
-      text === "." ||
-      text === ":" ||
-      text === "[]" ||
-      text === "()" ||
-      text === "{}" ||
-      text === "[" ||
-      text === "(" ||
-      text === "{" ||
-      text === "$";
-    if (shouldTriggerAutocompletion) {
-      this.cypherEditor.showAutoComplete();
-    }
-  };
-
   valueChanged = (value, changes) => {
     const { onValueChange } = this.props;
-    this.triggerAutocompletion(changes);
     onValueChange && onValueChange(value);
   };
 
@@ -71,6 +44,11 @@ class CypherEditor extends Component {
   positionChanged = (positionObject) => {
     const { onPositionChange } = this.props;
     onPositionChange && onPositionChange(positionObject);
+  };
+
+  autocompleteChanged = (autocompleteOpen) => {
+    const { onAutocompleteOpenChange } = this.props;
+    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
   };
 
   componentDidMount() {
@@ -103,6 +81,7 @@ class CypherEditor extends Component {
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
     this.cypherEditor.on("position", this.positionChanged);
+    this.cypherEditor.on("autocomplete", this.autocompleteChanged);
 
     onEditorCreate && onEditorCreate(this.cypherEditor);
   }

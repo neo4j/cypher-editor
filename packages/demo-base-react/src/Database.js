@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import neo4j from "neo4j-driver";
 import {
   neo4jSchema,
+  simpleSchema,
   defaultQuery,
   defaultOptions,
   initialPosition,
@@ -10,6 +11,7 @@ import {
   pass
 } from "demo-base";
 
+const initialSchema = simpleSchema;
 const initialValue = defaultQuery;
 const initialOptions = defaultOptions;
 
@@ -17,24 +19,43 @@ const driver = neo4j.driver(host, neo4j.auth.basic(user, pass));
 
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
+  const defaultLineNumberFormatter = undefined;
+  const noneLineNumberFormatter = (line) => line;
+  const customLineNumberFormatter = (line, lineCount) => {
+    if (line === 1) {
+      return "one";
+    } else if (line === 2) {
+      return "two";
+    } else if (line === 3) {
+      return "three";
+    } else if (line > 3) {
+      return line + " / " + lineCount + " prompt$";
+    }
+  };
   const [cypher, setCypher] = useState(initialValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
   const [theme, setTheme] = useState("light");
   const [position, setPosition] = useState(initialPosition);
+  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const [focused, setFocused] = useState(true);
   const [editor, setEditor] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(
     initialOptions.lineNumbers || true
   );
+  const [lineNumberFormatter, setLineNumberFormatter] = useState(
+    initialOptions.lineNumberFormatter
+  );
+  const [schema, setSchema] = useState(initialSchema);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly || false);
   const [autocomplete, setAutocomplete] = useState(
     initialOptions.autocomplete || true
   );
-  const [lint, setLint] = useState(
-    initialOptions.lint || true
+  const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
+    initialOptions.autocompleteTriggerStrings || undefined
   );
+  const [lint, setLint] = useState(initialOptions.lint || true);
 
   const send = () => {
     const session = driver.session();
@@ -61,6 +82,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setPosition(positionObject);
   };
 
+  const onAutocompleteOpenChange = (autocompleteOpen) => {
+    setAutocompleteOpen(autocompleteOpen);
+  };
+
   const onFocusChange = (focused) => {
     setFocused(focused);
   };
@@ -81,6 +106,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const cypherLength = cypher.length;
   const positionString = position ? JSON.stringify(position) : "";
   const focusedString = focused + "";
+  const autocompleteString = autocompleteOpen + "";
 
   const showLineNumbers = () => {
     setLineNumbers(true);
@@ -129,6 +155,44 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const focusEditor = () => {
     editor && editor.focus();
+  };
+
+  const showDefaultLineNumberFormatter = () => {
+    setLineNumberFormatter(defaultLineNumberFormatter);
+    editor && editor.setLineNumberFormatter(defaultLineNumberFormatter);
+  };
+
+  const showNoneLineNumberFormatter = () => {
+    setLineNumberFormatter(noneLineNumberFormatter);
+    editor && editor.setLineNumberFormatter(noneLineNumberFormatter);
+  };
+
+  const showCustomLineNumberFormatter = () => {
+    setLineNumberFormatter(customLineNumberFormatter);
+    editor && editor.setLineNumberFormatter(customLineNumberFormatter);
+  };
+
+  const showSimpleSchema = () => {
+    setSchema(simpleSchema);
+    editor && editor.setSchema(simpleSchema);
+  };
+
+  const showLongSchema = () => {
+    setSchema(neo4jSchema);
+    editor && editor.setSchema(neo4jSchema);
+  };
+
+  const showDefaultAutocompleteTriggerStrings = () => {
+    setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
+    editor &&
+      editor.setAutocompleteTriggerStrings(
+        initialOptions.autocompleteTriggerStrings
+      );
+  };
+
+  const showNoAutocompleteTriggerStrings = () => {
+    setAutocompleteTriggerStrings(false);
+    editor && editor.setAutocompleteTriggerStrings(false);
   };
 
   let content = "";
@@ -182,6 +246,42 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting">
+          <div className="setting-label">Line Number Formatter</div>
+          <div className="setting-values">
+            <button
+              className={
+                lineNumberFormatter === defaultLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showDefaultLineNumberFormatter}
+            >
+              Default
+            </button>
+            <button
+              className={
+                lineNumberFormatter === noneLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showNoneLineNumberFormatter}
+            >
+              None
+            </button>
+            <button
+              className={
+                lineNumberFormatter === customLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showCustomLineNumberFormatter}
+            >
+              Custom
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
           <div className="setting-label">Read Only</div>
           <div className="setting-values">
             <button
@@ -224,6 +324,51 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting">
+          <div className="setting-label">Autocomplete Triggers</div>
+          <div className="setting-values">
+            <button
+              className={
+                autocompleteTriggerStrings ===
+                initialOptions.autocompleteTriggerStrings
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showDefaultAutocompleteTriggerStrings}
+            >
+              Default
+            </button>
+            <button
+              className={
+                autocompleteTriggerStrings === false
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={showNoAutocompleteTriggerStrings}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Schema</div>
+          <div className="setting-values">
+            <button
+              className={schema === simpleSchema ? "setting-active" : undefined}
+              onClick={showSimpleSchema}
+            >
+              Simple
+            </button>
+            <button
+              className={schema === neo4jSchema ? "setting-active" : undefined}
+              onClick={showLongSchema}
+            >
+              Long
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
           <div className="setting-label">Lint</div>
           <div className="setting-values">
             <button
@@ -244,11 +389,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="setting">
           <div className="setting-label">Focus</div>
           <div className="setting-values">
-            <button
-              onClick={focusEditor}
-            >
-              Focus Editor
-            </button>
+            <button onClick={focusEditor}>Focus Editor</button>
           </div>
         </div>
       </div>
@@ -261,9 +402,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onValueChange={onValueChange}
             onPositionChange={onPositionChange}
             onFocusChange={onFocusChange}
+            onAutocompleteOpenChange={onAutocompleteOpenChange}
             onEditorCreate={onEditorCreate}
             initialPosition={initialPosition}
-            initialSchema={neo4jSchema}
+            initialSchema={initialSchema}
             initialValue={initialValue}
             initialOptions={initialOptions}
             theme={theme}
@@ -275,6 +417,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <div className="info-item-long">Position: {positionString}</div>
             <div className="info-item">Length: {cypherLength}</div>
             <div className="info-item">Focused: {focusedString}</div>
+            <div className="info-item">Autocompleting: {autocompleteString}</div>
           </div>
         </div>
         <div className="card">

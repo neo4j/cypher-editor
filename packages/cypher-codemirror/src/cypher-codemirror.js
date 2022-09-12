@@ -2,7 +2,8 @@
 import {
   autocompletion,
   completionKeymap,
-  startCompletion
+  startCompletion,
+  completionStatus
 } from "@codemirror/autocomplete";
 import { history, defaultKeymap, historyKeymap } from "@codemirror/commands";
 import {
@@ -228,11 +229,12 @@ const lightTheme = [syntaxHighlighting(lightSyntaxStyle)];
 const darkSyntaxStyle = HighlightStyle.define(darkSyntaxStyles);
 const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
-const formatNumber = (number, state) => {
-  return state.doc.lines > 1 ? number : "$";
-};
-
-export const cypherLineNumbers = () => [lineNumbers({ formatNumber })];
+export const cypherLineNumbers = ({ lineNumberFormatter }) => [
+  lineNumbers({
+    formatNumber: (number, state) =>
+      lineNumberFormatter(number, state.doc.lines, state)
+  })
+];
 
 export const cypherLanguage = () => [StreamLanguage.define(cypher)];
 
@@ -241,6 +243,7 @@ const FOCUS_KEY = "focus";
 const BLUR_KEY = "blur";
 const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
+const AUTOCOMPLETE_KEY = "autocomplete";
 
 const readableExtensions = [
   history(),
@@ -259,8 +262,6 @@ const readableExtensions = [
   ])
 ];
 
-const showLineNumberExtensions = [cypherLineNumbers()];
-
 const readOnlyExtensions = [EditorState.readOnly.of(true)];
 
 const useLintExtensions = [cypherLinter()];
@@ -269,11 +270,32 @@ const useNoLintExtensions = [cypherLinter({ showErrors: false })];
 
 const useAutocompleteExtensions = [cypherCompletion()];
 
+const defaultLineNumberFormatter = (line, lineCount) => {
+  if (lineCount === 1) {
+    return "$";
+  } else {
+    return line;
+  }
+};
+
+const defaultAutocompleteTriggerStrings = [
+  ".",
+  ":",
+  "[]",
+  "()",
+  "{}",
+  "[",
+  "(",
+  "{",
+  "$"
+];
+
 export const getExtensions = (
   {
     autocomplete,
     lint,
     lineNumbers = true,
+    lineNumberFormatter = defaultLineNumberFormatter,
     readOnly = false,
     placeholder: placeholderText
   } = {},
@@ -289,7 +311,9 @@ export const getExtensions = (
     cypherLanguage(),
     lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
     autocompleteConf.of(autocomplete ? useAutocompleteExtensions : []),
-    showLinesConf.of(lineNumbers ? showLineNumberExtensions : []),
+    showLinesConf.of(
+      lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
+    ),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     ...(placeholderText ? [placeholder(placeholderText)] : []),
     readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
@@ -302,26 +326,31 @@ export function createCypherEditor(
     text = "",
     extensions,
     updateSyntaxHighlighting = true,
+    autocompleteTriggerStrings:
+      initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
     autofocus = true,
     ...options
   } = {}
 ) {
   let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
+  let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
+  let autocompleteOpen = false;
 
   const eventListenerTypeMap = {};
-
-  const onValueChanged = (value, changes) => {
-    if (eventListenerTypeMap[VALUE_KEY] !== undefined) {
-      eventListenerTypeMap[VALUE_KEY].forEach((listener) => {
-        listener(value, changes);
-      });
-    }
-  };
 
   const onPositionChanged = (positionObject) => {
     if (eventListenerTypeMap[POSITION_KEY] !== undefined) {
       eventListenerTypeMap[POSITION_KEY].forEach((listener) => {
         listener(positionObject);
+      });
+    }
+  };
+
+  const onAutocompleteChanged = (newAutocompleteOpen) => {
+    autocompleteOpen = newAutocompleteOpen;
+    if (eventListenerTypeMap[AUTOCOMPLETE_KEY] !== undefined) {
+      eventListenerTypeMap[AUTOCOMPLETE_KEY].forEach((listener) => {
+        listener(autocompleteOpen);
       });
     }
   };
@@ -364,6 +393,14 @@ export function createCypherEditor(
     }
   });
 
+  const autocompleteListener = EditorState.changeFilter.of((v) => {
+    const start = completionStatus(v.startState) !== null;
+    const end = completionStatus(v.state) !== null;
+    if (start !== end) {
+      onAutocompleteChanged(end);
+    }
+  });
+
   const lintConf = new Compartment();
   const autocompleteConf = new Compartment();
   const readableConf = new Compartment();
@@ -383,7 +420,8 @@ export function createCypherEditor(
           }),
           theme === "light" ? lightTheme : darkTheme
         ]),
-    updateListener
+    updateListener,
+    autocompleteListener
   ];
 
   const initialState = EditorState.create({
@@ -395,6 +433,33 @@ export function createCypherEditor(
     parent: parentDOMElement,
     state: initialState
   });
+
+  const onValueChanged = (value, changes) => {
+    if (autocomplete && Array.isArray(autocompleteTriggerStrings)) {
+      let changedText = [];
+      changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
+        changedText = inserted.text;
+      });
+
+      if (changedText.length > 0 && changedText.length <= 2) {
+        const text = changedText[0];
+        if (autocompleteTriggerStrings.indexOf(text) !== -1) {
+          editor.showAutoComplete();
+        } else if (changedText.length === 2) {
+          const longerText = text + changedText[1];
+          if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
+            editor.showAutoComplete();
+          }
+        }
+      }
+    }
+
+    if (eventListenerTypeMap[VALUE_KEY] !== undefined) {
+      eventListenerTypeMap[VALUE_KEY].forEach((listener) => {
+        listener(value, changes);
+      });
+    }
+  };
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
     settingValue = true;
@@ -429,6 +494,8 @@ export function createCypherEditor(
   };
   editor.newContentVersion.bind(editor);
   editorSupportInit(editor);
+  const editorSupport = getEditorSupport(editor.state);
+  editor.editorSupport = editorSupport;
 
   if (autofocus) {
     editor.contentDOM.focus();
@@ -474,17 +541,33 @@ export function createCypherEditor(
     startCompletion(editor);
   };
 
-  const setLineNumbers = (lineNumbers) => {
+  let autocomplete = options.autocomplete || true;
+
+  let lint = options.lint || true;
+  let readOnly = options.readOnly || false;
+  let lineNumbers = options.lineNumbers || true;
+  let lineNumberFormatter =
+    options.lineNumberFormatter || defaultLineNumberFormatter;
+
+  const setLineNumbers = (newLineNumbers) => {
+    lineNumbers = newLineNumbers;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers ? showLineNumberExtensions : []
+        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
       )
     });
   };
 
-  let autocomplete = options.autocomplete || true;
-  let lint = options.lint || true;
-  let readOnly = options.readOnly || false;
+  const setLineNumberFormatter = (
+    newLineNumberFormatter = defaultLineNumberFormatter
+  ) => {
+    lineNumberFormatter = newLineNumberFormatter;
+    editor.dispatch({
+      effects: showLinesConf.reconfigure(
+        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
+      )
+    });
+  };
 
   const setReadOnly = (newReadOnly) => {
     readOnly = newReadOnly;
@@ -517,6 +600,10 @@ export function createCypherEditor(
     });
   };
 
+  const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings) => {
+    autocompleteTriggerStrings = newAutocompleteTriggerStrings;
+  };
+
   const setLint = (newLint) => {
     lint = newLint;
     editor.dispatch({
@@ -528,6 +615,17 @@ export function createCypherEditor(
 
   const getPosition = () => {
     return getPositionFromState(editor.state);
+  };
+
+  const getLineCount = () => {
+    return editor.state.doc.lines;
+  };
+
+  const setSchema = (schema) => {
+    editorSupport.setSchema(schema);
+    if (autocompleteOpen) {
+      showAutoComplete();
+    }
   };
 
   // const setDarkTheme = () => {
@@ -559,13 +657,15 @@ export function createCypherEditor(
   editor.showAutoComplete = showAutoComplete;
   editor.setReadOnly = setReadOnly;
   editor.setLineNumbers = setLineNumbers;
+  editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
   editor.setAutocomplete = setAutocomplete;
+  editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
   editor.setLint = setLint;
+  editor.getLineCount = getLineCount;
+  editor.setSchema = setSchema;
   // editor.setDarkTheme = setDarkTheme;
   // editor.setLightTheme = setLightTheme;
-
-  const editorSupport = getEditorSupport(editor.state);
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();

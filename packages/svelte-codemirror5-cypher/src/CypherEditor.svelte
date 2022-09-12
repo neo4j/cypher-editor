@@ -42,6 +42,8 @@
 
   export let onEditorCreate = undefined;
 
+  export let onAutocompleteOpenChange = undefined;
+
   let innerTheme = THEME_MAP[theme];
 
   let isFocused = false;
@@ -52,8 +54,6 @@
 
   $: editorClassNames = (classNames || []).concat(["ReactCodeMirror"]).concat(isFocused ? ["ReactCodeMirror--focused"] : []).join(" ");
 
-  let lineNumberFormatter;
-
   const defaultOptions = {
     lineNumbers: true,
     mode: "cypher",
@@ -62,7 +62,6 @@
     lineWrapping: true,
     autofocus: true,
     smartIndent: false,
-    lineNumberFormatter: (line) => lineNumberFormatter ? lineNumberFormatter(line) : line,
     lint: true,
     extraKeys: {
       "Ctrl-Space": "autocomplete"
@@ -80,32 +79,10 @@
 
   $: cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
-  const triggerAutocompletion = (changed) => {
-    if (changed.text.length !== 1) {
-      return;
-    }
-
-    const text = changed.text[0];
-    const shouldTriggerAutocompletion =
-      text === '.' ||
-      text === ':' ||
-      text === '[]' ||
-      text === '()' ||
-      text === '{}' ||
-      text === '[' ||
-      text === '(' ||
-      text === '{' ||
-      text === '$';
-    if (shouldTriggerAutocompletion) {
-      cypherEditor.showAutoComplete();
-    }
-  };
-
   const valueChanged = (doc: { getValue: () => string}, change: any) => {
     if (onValueChange && change.origin !== "setValue") {
       onValueChange(doc.getValue(), change);
     }
-    triggerAutocompletion(change);
   };
 
   const focusChanged = focused => {
@@ -121,6 +98,10 @@
     onPositionChange && onPositionChange(positionObject);
   };
 
+  const autocompleteChanged = (autocompleteOpen) => {
+    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  }
+
   onMount(() => {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
@@ -131,14 +112,6 @@
     );
     cypherEditor = editor;
     cypherEditorSupport = editorSupport;
-
-    lineNumberFormatter = line => {
-      if (!cypherEditor || cypherEditor.lineCount() === 1) {
-        return "$";
-      } else {
-        return line;
-      }
-    };
 
     if (cypherEditorOptions.autofocus) {
       cypherEditor.focus();
@@ -156,6 +129,7 @@
     cypherEditor.on("blur", () => focusChanged(false));
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
+    cypherEditor.on("autocomplete", autocompleteChanged);
 
     onEditorCreate && onEditorCreate(cypherEditor);
   });

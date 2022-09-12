@@ -115,12 +115,12 @@ body {
 
 .info-item-long {
     display: flex;
-    width: 50%;
+    width: 40%;
 }
 
 .info-item {
     display: flex;
-    width: 25%;
+    width: 20%;
 }
 
 h1 {

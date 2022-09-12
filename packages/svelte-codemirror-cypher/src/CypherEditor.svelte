@@ -29,6 +29,8 @@
 
   export let onEditorCreate = undefined;
 
+  export let onAutocompleteOpenChange = undefined;
+
   $: cypherEditorOptions = { ...(initialOptions || {}) };
 
   let cypherEditorRef;
@@ -39,35 +41,8 @@
     .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
     .join(" ");
 
-  const triggerAutocompletion = (changes) => {
-    let changedText = [];
-    changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
-      changedText = inserted.text;
-    });
-
-    if (changedText.length !== 1) {
-      return;
-    }
-
-    const text = changedText[0];
-    const shouldTriggerAutocompletion =
-      text === "." ||
-      text === ":" ||
-      text === "[]" ||
-      text === "()" ||
-      text === "{}" ||
-      text === "[" ||
-      text === "(" ||
-      text === "{" ||
-      text === "$";
-    if (shouldTriggerAutocompletion) {
-      cypherEditor.showAutoComplete();
-    }
-  };
-
   const valueChanged = (value, changes) => {
-    triggerAutocompletion(changes);
-    onValueChange && onValueChange(value);
+    onValueChange && onValueChange(value, changes);
   };
 
   const focusChanged = (focused) => {
@@ -89,6 +64,10 @@
   const positionChanged = (positionObject) => {
     onPositionChange && onPositionChange(positionObject);
   };
+
+  const autocompleteChanged = (autocompleteOpen) => {
+    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  }
 
   onMount(() => {
     const { autofocus = true, ...options } = cypherEditorOptions;
@@ -114,6 +93,7 @@
     cypherEditor.on("blur", blurred);
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
+    cypherEditor.on("autocomplete", autocompleteChanged);
 
     onEditorCreate && onEditorCreate(cypherEditor);
   });

@@ -109,16 +109,78 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
   };
 });
 
+const defaultLineNumberFormatter = (line, lineCount) => {
+  if (lineCount === 1) {
+    return "$";
+  } else {
+    return line;
+  }
+};
+
+const defaultAutocompleteTriggerStrings = [
+  ".",
+  ":",
+  "[]",
+  "()",
+  "{}",
+  "[",
+  "(",
+  "{",
+  "$"
+];
+
 export function createCypherEditor(parentDOMElement, settings) {
   const editorSupport = new CypherEditorSupport();
 
-  const { autocomplete = true, lint = true, ...otherSettings } = settings;
+  const {
+    autocomplete = true,
+    lint = true,
+    lineNumberFormatter = defaultLineNumberFormatter,
+    autocompleteTriggerStrings:
+      initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
+    ...otherSettings
+  } = settings;
 
-  const editor = codemirror(parentDOMElement, { ...otherSettings, lint, value: "" });
+  let lineFormatter;
+  let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
+  let autocompleteOpen = false;
+
+  const editor = codemirror(parentDOMElement, {
+    ...otherSettings,
+    lint,
+    value: "",
+    lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line)
+  });
   editor.lint = lint;
   editor.autocomplete = autocomplete;
 
+  const valueChanged = (doc, changed) => {
+    if (
+      editor.autocomplete &&
+      Array.isArray(autocompleteTriggerStrings) &&
+      changed.origin !== "setValue" &&
+      changed.text.length > 0 &&
+      changed.text.length <= 2
+    ) {
+      const text = changed.text[0];
+      if (autocompleteTriggerStrings.indexOf(text) !== -1) {
+        editor.showAutoComplete();
+      } else if (changed.text.length === 2) {
+        const longerText = text + changed.text[1];
+        if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
+          editor.showAutoComplete();
+        }
+      }
+    }
+  };
+  editor.on("change", valueChanged);
+
+  lineFormatter = (line) => {
+    return lineNumberFormatter(line, editor.getLineCount(), editor);
+  };
+
   const positionChangeListeners = [];
+  const autocompleteChangeListeners = [];
 
   const goToPosition = (position) => {
     const { line, ch } = editor.getCursor();
@@ -178,9 +240,18 @@ export function createCypherEditor(parentDOMElement, settings) {
     });
   };
 
+  const autocompleteChanged = (newAutocompleteOpen) => {
+    autocompleteOpen = newAutocompleteOpen;
+    autocompleteChangeListeners.forEach((listener) => {
+      listener(autocompleteOpen);
+    });
+  };
+
   const on = (type, listener) => {
     if (type === "position") {
       positionChangeListeners.push(listener);
+    } else if (type === "autocomplete") {
+      autocompleteChangeListeners.push(listener);
     } else {
       originalOn(type, listener);
     }
@@ -191,6 +262,11 @@ export function createCypherEditor(parentDOMElement, settings) {
       const index = positionChangeListeners.findIndex((l) => l === listener);
       if (index >= 0) {
         positionChangeListeners.splice(index, 1);
+      }
+    } else if (type === "autocomplete") {
+      const index = autocompleteChangeListeners.findIndex((l) => l === listener);
+      if (index >= 0) {
+        autocompleteChangeListeners.splice(index, 1);
       }
     } else {
       originalOff(type, listener);
@@ -203,6 +279,18 @@ export function createCypherEditor(parentDOMElement, settings) {
     const column = cursor.ch;
     const position = editorSupport.positionConverter.toAbsolute(line, column);
     positionChanged({ line, column, position });
+  });
+
+  editor.on("startCompletion", (editor) => {
+    if (editor.autocomplete) {
+      autocompleteChanged(true);
+    }
+  });
+
+  editor.on("endCompletion", (editor) => {
+    if (editor.autocomplete) {
+      autocompleteChanged(false);
+    }
   });
 
   const value = settings.value || "";
@@ -219,6 +307,7 @@ export function createCypherEditor(parentDOMElement, settings) {
       fixColors(editor, editorSupport);
     }
   };
+
   const setReadOnly = (readOnly) => {
     editor.setOption("readOnly", readOnly);
   };
@@ -232,20 +321,45 @@ export function createCypherEditor(parentDOMElement, settings) {
     }
   };
 
+  const setLineNumberFormatter = (lineFormat = defaultLineNumberFormatter) => {
+    const lineNumberFormatter = (line) =>
+      lineFormat(line, editor.getLineCount(), editor);
+    editor.setOption("lineNumberFormatter", lineNumberFormatter);
+  };
+
   const setAutocomplete = (autocomplete) => {
     editor.autocomplete = autocomplete;
+  };
+
+  const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings) => {
+    autocompleteTriggerStrings = newAutocompleteTriggerStrings;
   };
 
   const setLint = (lint) => {
     editor.lint = lint;
   };
 
+  const getLineCount = () => {
+    return editor.lineCount();
+  };
+
+  const setSchema = (schema) => {
+    editorSupport.setSchema(schema);
+    if (autocompleteOpen) {
+      showAutoComplete();
+    }
+  };
+
   editor.setValue = setValue;
   editor.setReadOnly = setReadOnly;
   editor.setLineNumbers = setLineNumbers;
+  editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
   editor.setAutocomplete = setAutocomplete;
+  editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
   editor.setLint = setLint;
+  editor.getLineCount = getLineCount;
+  editor.setSchema = setSchema;
   editor.on = on;
   editor.off = off;
 
