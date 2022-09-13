@@ -192,6 +192,15 @@ export function createCypherEditor(parentDOMElement, settings) {
   const autocompleteChangeListeners = [];
 
   const goToPosition = (position) => {
+    // TODO TEMP
+    // const value = 202;
+    // const value = { line: 1, column: 500 };
+    // const value = { line: 99, column: 0 };
+    // const values = [0, 202, {}, { line: -1, column: -1 }, { line: 2, column: 3 }, { line: 1, column: 500 }, { line: 99, column: 0 }, 890, 891, 892];
+    // for (let value of values) {
+    //   const tempPosition = getPositionForValue(value);
+    //   console.log('getPositionForValue temp result: ', value, tempPosition);
+    // }
     const { line, ch } = editor.getCursor();
     const currentLine = line + 1;
     const currentColumn = ch;
@@ -223,6 +232,56 @@ export function createCypherEditor(parentDOMElement, settings) {
     const { line: lineIndex, ch } = editor.getCursor();
     const position = editor.indexFromPos(editor.getCursor());
     return { line: lineIndex + 1, column: ch, position };
+  };
+
+  const isNumber = (v) =>
+    v !== undefined &&
+    (typeof v === "number" || v instanceof Number) &&
+    isFinite(v);
+  const isInteger = (v) => isNumber(v) && v % 1 === 0;
+
+  const getPositionForValue = (positionValue) => {
+    let position = null;
+    if (isInteger(positionValue) && positionValue >= 0) {
+      position = positionValue;
+    } else if (typeof positionValue === "object" && positionValue) {
+      const { line, column, position: maybePosition } = positionValue;
+      if (isInteger(maybePosition) && maybePosition >= 0) {
+        position = maybePosition;
+      } else if (isInteger(line) && line >= 1 && isInteger(column) && column >= 0) {
+        const lineIndex = editor.indexFromPos({ line: line - 1, ch: column });
+        if (lineIndex >= 0) {
+          const positionFromLineIndex = editor.posFromIndex(lineIndex);
+          const { line: newLineIndex, ch } = positionFromLineIndex;
+          if (newLineIndex === line -1 && ch === column) {
+            position = lineIndex;
+          }
+        }
+      }
+    }
+    if (position !== null) {
+      const { line: lineIndex, ch } = editor.posFromIndex(position);
+      const lineObject = editor.doc.lineInfo(lineIndex);
+      if (lineObject) {
+        const { text = '' } = lineObject;
+        const lineStart = editor.indexFromPos({ line: lineIndex, ch: 0 });
+        const lineEnd = lineStart + text.length;
+        const line = lineIndex + 1;
+        const column = position - lineStart;
+        if (lineStart + column <= lineEnd) {
+          position = {
+            line,
+            column,
+            position
+          };
+        } else {
+          position = null;
+        }
+      } else {
+        position = null;
+      }
+    }
+    return position;
   };
 
   const showAutoComplete = () => {
@@ -273,7 +332,9 @@ export function createCypherEditor(parentDOMElement, settings) {
         positionChangeListeners.splice(index, 1);
       }
     } else if (type === "autocomplete") {
-      const index = autocompleteChangeListeners.findIndex((l) => l === listener);
+      const index = autocompleteChangeListeners.findIndex(
+        (l) => l === listener
+      );
       if (index >= 0) {
         autocompleteChangeListeners.splice(index, 1);
       }
@@ -342,7 +403,10 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const setAutocompleteSticky = (newAutocompleteSticky) => {
     autocompleteSticky = newAutocompleteSticky;
-    editor.setOption("hintOptions", { ...baseHintOptions, closeOnUnfocus: !autocompleteSticky});
+    editor.setOption("hintOptions", {
+      ...baseHintOptions,
+      closeOnUnfocus: !autocompleteSticky
+    });
   };
 
   const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings) => {
@@ -369,6 +433,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   editor.setLineNumbers = setLineNumbers;
   editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
+  editor.getPositionForValue = getPositionForValue;
   editor.setAutocomplete = setAutocomplete;
   editor.setAutocompleteSticky = setAutocompleteSticky;
   editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;

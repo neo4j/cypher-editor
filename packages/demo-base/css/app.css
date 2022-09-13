@@ -60,18 +60,33 @@ body {
 
 .setting {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 4px 0;
+}
+
+.setting.setting-long {
+    flex-direction: column;
+    margin: 0;
 }
 
 .setting-label {
     display: flex;
-    font-size: 20px;
+    font-size: 1.2em;
     padding: 4px 0;
+    align-items: center;
+}
+
+.setting-short .setting-label {
+    min-width: 4em;
 }
 
 .setting-values {
     display: flex;
+    margin: 0 4px;
+}
+
+.setting-long .setting-values {
+    margin: 0;
 }
 
 .setting-values button {
@@ -145,8 +160,8 @@ h1 {
 button {
     border-radius: 8px;
     border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
+    padding: 0.5em 1em;
+    font-size: 0.8em;
     font-weight: 500;
     font-family: inherit;
     background-color: #1a1a1a;
@@ -159,6 +174,10 @@ button:hover {
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+}
+.right button {
+    font-size: 1em;
+    padding: 0.6em 1.2em;
 }
 
 @media (prefers-color-scheme: light) {

@@ -185,11 +185,27 @@
 
 <div class="database">
   <div class="left">
-    <div class="setting">
+    <div class="setting setting-short">
       <div class="setting-label">Theme</div>
       <div class="setting-values">
         <button class={theme === "light" ? "setting-active" : undefined} on:click={lightTheme}>Light</button>
         <button class={theme === "dark" ? "setting-active" : undefined} on:click={darkTheme}>Dark</button>    
+      </div>
+    </div>
+
+    <div class="setting setting-short">
+      <div class="setting-label">Schema</div>
+      <div class="setting-values">
+        <button class={schema === simpleSchema ? "setting-active" : undefined} on:click={showSimpleSchema}>Simple</button>
+        <button class={schema === neo4jSchema ? "setting-active" : undefined} on:click={showLongSchema}>Long</button>    
+      </div>
+    </div>
+
+    <div class="setting setting-short">
+      <div class="setting-label">Lint</div>
+      <div class="setting-values">
+        <button class={lint === true ? "setting-active" : undefined} on:click={enableLint}>True</button>
+        <button class={lint === false ? "setting-active" : undefined} on:click={disableLint}>False</button>    
       </div>
     </div>
 
@@ -201,7 +217,7 @@
       </div>
     </div>
 
-    <div class="setting">
+    <div class="setting setting-long">
       <div class="setting-label">Line Number Formatter</div>
       <div class="setting-values">
         <button class={lineNumberFormatter === defaultLineNumberFormatter ? "setting-active" : undefined} on:click={showDefaultLineNumberFormatter}>Default</button>
@@ -210,7 +226,7 @@
       </div>
     </div>
 
-    <div class="setting">
+    <div class="setting setting-long">
       <div class="setting-label">Read Only</div>
       <div class="setting-values">
         <button class={readOnly === false ? "setting-active" : undefined} on:click={makeReadable}>False</button>
@@ -227,7 +243,7 @@
       </div>
     </div>
 
-    <div class="setting">
+    <div class="setting setting-long">
       <div class="setting-label">Autocomplete Triggers</div>
       <div class="setting-values">
         <button class={autocompleteTriggerStrings === initialOptions.autocompleteTriggerStrings ? "setting-active" : undefined} on:click={showDefaultAutocompleteTriggerStrings}>Default</button>
@@ -235,27 +251,11 @@
       </div>
     </div>
 
-    <div class="setting">
+    <div class="setting setting-long">
       <div class="setting-label">Autocomplete Sticky</div>
       <div class="setting-values">
         <button class={autocompleteSticky === true ? "setting-active" : undefined} on:click={showStickyAutocomplete}>True</button>
         <button class={autocompleteSticky === false || autocompleteSticky === undefined ? "setting-active" : undefined} on:click={showUnstickyAutocomplete}>False</button>    
-      </div>
-    </div>
-
-    <div class="setting">
-      <div class="setting-label">Schema</div>
-      <div class="setting-values">
-        <button class={schema === simpleSchema ? "setting-active" : undefined} on:click={showSimpleSchema}>Simple</button>
-        <button class={schema === neo4jSchema ? "setting-active" : undefined} on:click={showLongSchema}>Long</button>    
-      </div>
-    </div>
-
-    <div class="setting">
-      <div class="setting-label">Lint</div>
-      <div class="setting-values">
-        <button class={lint === true ? "setting-active" : undefined} on:click={enableLint}>True</button>
-        <button class={lint === false ? "setting-active" : undefined} on:click={disableLint}>False</button>    
       </div>
     </div>
 
@@ -295,7 +295,7 @@
     </div>
     <div class="card">
       <div class="results">
-        <button on:click={send}> Run </button>
+        <button on:click={send}> Run Current Query </button>
         <h3>Results</h3>
         {#await promisedResult}
           <p>...waiting</p>

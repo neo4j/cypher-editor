@@ -222,7 +222,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   return (
     <div className="database">
       <div className="left">
-        <div className="setting">
+        <div className="setting setting-short">
           <div className="setting-label">Theme</div>
           <div className="setting-values">
             <button
@@ -236,6 +236,42 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               onClick={darkTheme}
             >
               Dark
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Schema</div>
+          <div className="setting-values">
+            <button
+              className={schema === simpleSchema ? "setting-active" : undefined}
+              onClick={showSimpleSchema}
+            >
+              Simple
+            </button>
+            <button
+              className={schema === neo4jSchema ? "setting-active" : undefined}
+              onClick={showLongSchema}
+            >
+              Long
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Lint</div>
+          <div className="setting-values">
+            <button
+              className={lint === true ? "setting-active" : undefined}
+              onClick={enableLint}
+            >
+              True
+            </button>
+            <button
+              className={lint === false ? "setting-active" : undefined}
+              onClick={disableLint}
+            >
+              False
             </button>
           </div>
         </div>
@@ -258,7 +294,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting">
+        <div className="setting setting-long">
           <div className="setting-label">Line Number Formatter</div>
           <div className="setting-values">
             <button
@@ -294,7 +330,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting">
+        <div className="setting setting-long">
           <div className="setting-label">Read Only</div>
           <div className="setting-values">
             <button
@@ -336,7 +372,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting">
+        <div className="setting setting-long">
           <div className="setting-label">Autocomplete Triggers</div>
           <div className="setting-values">
             <button
@@ -363,14 +399,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting">
+        <div className="setting setting-long">
           <div className="setting-label">Autocomplete Sticky</div>
           <div className="setting-values">
             <button
               className={
-                autocompleteSticky === true
-                  ? "setting-active"
-                  : undefined
+                autocompleteSticky === true ? "setting-active" : undefined
               }
               onClick={showStickyAutocomplete}
             >
@@ -383,42 +417,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
                   : undefined
               }
               onClick={showUnstickyAutocomplete}
-            >
-              False
-            </button>
-          </div>
-        </div>
-
-        <div className="setting">
-          <div className="setting-label">Schema</div>
-          <div className="setting-values">
-            <button
-              className={schema === simpleSchema ? "setting-active" : undefined}
-              onClick={showSimpleSchema}
-            >
-              Simple
-            </button>
-            <button
-              className={schema === neo4jSchema ? "setting-active" : undefined}
-              onClick={showLongSchema}
-            >
-              Long
-            </button>
-          </div>
-        </div>
-
-        <div className="setting">
-          <div className="setting-label">Lint</div>
-          <div className="setting-values">
-            <button
-              className={lint === true ? "setting-active" : undefined}
-              onClick={enableLint}
-            >
-              True
-            </button>
-            <button
-              className={lint === false ? "setting-active" : undefined}
-              onClick={disableLint}
             >
               False
             </button>
@@ -456,12 +454,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <div className="info-item-long">Position: {positionString}</div>
             <div className="info-item">Length: {cypherLength}</div>
             <div className="info-item">Focused: {focusedString}</div>
-            <div className="info-item">Autocompleting: {autocompleteString}</div>
+            <div className="info-item">
+              Autocompleting: {autocompleteString}
+            </div>
           </div>
         </div>
         <div className="card">
           <div className="results">
-            <button onClick={send}> Run </button>
+            <button onClick={send}> Run Current Query </button>
             <h3>Results</h3>
             {content}
           </div>
