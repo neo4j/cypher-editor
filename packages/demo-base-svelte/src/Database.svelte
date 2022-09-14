@@ -90,6 +90,10 @@
     autocompleteOpen = newAutocompleteOpen;
   };
 
+  const onLineClick = (line, event) => {
+    alert("line clicked: " + line);
+  };
+
   const onEditorCreate = (editor) => {
     cypherEditor = editor;
     position = editor.getPosition();
@@ -408,6 +412,7 @@
         {onFocusChange}
         {onEditorCreate}
         {onAutocompleteOpenChange}
+        {onLineClick}
         {initialPosition}
         {initialSchema}
         {initialValue}

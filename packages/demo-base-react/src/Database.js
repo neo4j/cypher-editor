@@ -122,6 +122,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setAutocompleteOpen(autocompleteOpen);
   };
 
+  const onLineClick = (line, event) => {
+    alert("line clicked: " + line);
+  };
+
   const onFocusChange = (focused) => {
     setFocused(focused);
   };
@@ -631,6 +635,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onPositionChange={onPositionChange}
             onFocusChange={onFocusChange}
             onAutocompleteOpenChange={onAutocompleteOpenChange}
+            onLineClick={onLineClick}
             onEditorCreate={onEditorCreate}
             initialPosition={initialPosition}
             initialSchema={initialSchema}

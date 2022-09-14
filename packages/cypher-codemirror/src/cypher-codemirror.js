@@ -229,10 +229,17 @@ const lightTheme = [syntaxHighlighting(lightSyntaxStyle)];
 const darkSyntaxStyle = HighlightStyle.define(darkSyntaxStyles);
 const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
-export const cypherLineNumbers = ({ lineNumberFormatter }) => [
+export const cypherLineNumbers = ({ lineNumberFormatter, onLineClick = () => {} }) => [
   lineNumbers({
     formatNumber: (number, state) =>
-      lineNumberFormatter(number, state.doc.lines, state)
+      lineNumberFormatter(number, state.doc.lines, state),
+    domEventHandlers: {
+      click(view, lineObject, event) {
+        const { line } = view.getPositionForValue(lineObject.from) || {};
+        onLineClick(line, event);
+        return true;
+      }
+    }
   })
 ];
 
@@ -244,6 +251,7 @@ const BLUR_KEY = "blur";
 const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
 const AUTOCOMPLETE_KEY = "autocomplete";
+const LINE_CLICK_KEY = "lineclick";
 
 const historyExtensions = [history()];
 
@@ -313,7 +321,8 @@ export const getExtensions = (
     readableConf = new Compartment(),
     readOnlyConf = new Compartment(),
     showLinesConf = new Compartment(),
-    historyConf = new Compartment()
+    historyConf = new Compartment(),
+    onLineClick = () => {}
   } = {}
 ) => {
   return [
@@ -327,7 +336,7 @@ export const getExtensions = (
         : []
     ),
     showLinesConf.of(
-      lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
+      lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
     ),
     historyConf.of(historyExtensions),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
@@ -353,6 +362,15 @@ export function createCypherEditor(
   let autocompleteOpen = false;
 
   const eventListenerTypeMap = {};
+
+  const onLineClick = (line, event) => {
+    // console.log("onLineClick: ", line, event);
+    if (eventListenerTypeMap[LINE_CLICK_KEY] !== undefined) {
+      eventListenerTypeMap[LINE_CLICK_KEY].forEach((listener) => {
+        listener(line, event);
+      });
+    }
+  };
 
   const onPositionChanged = (positionObject) => {
     if (eventListenerTypeMap[POSITION_KEY] !== undefined) {
@@ -434,7 +452,8 @@ export function createCypherEditor(
             readableConf,
             readOnlyConf,
             showLinesConf,
-            historyConf
+            historyConf,
+            onLineClick
           }),
           theme === "light" ? lightTheme : darkTheme
         ]),
@@ -590,7 +609,7 @@ export function createCypherEditor(
     lineNumbers = newLineNumbers;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
+        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
       )
     });
   };
@@ -601,7 +620,7 @@ export function createCypherEditor(
     lineNumberFormatter = newLineNumberFormatter;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
+        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
       )
     });
   };

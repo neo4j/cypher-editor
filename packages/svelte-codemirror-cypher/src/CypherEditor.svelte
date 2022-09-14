@@ -31,6 +31,8 @@
 
   export let onAutocompleteOpenChange = undefined;
 
+  export let onLineClick = undefined;
+
   $: cypherEditorOptions = { ...(initialOptions || {}) };
 
   let cypherEditorRef;
@@ -69,6 +71,10 @@
     onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
   }
 
+  const lineClicked = (line, event) => {
+    onLineClick && onLineClick(line, event);
+  }
+
   onMount(() => {
     const { autofocus = true, ...options } = cypherEditorOptions;
     const { editor, editorSupport } = createCypherEditor(
@@ -94,6 +100,7 @@
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
     cypherEditor.on("autocomplete", autocompleteChanged);
+    cypherEditor.on("lineclick", lineClicked);
 
     onEditorCreate && onEditorCreate(cypherEditor);
   });
@@ -104,6 +111,10 @@
       cypherEditor.off("focus", focused);
       cypherEditor.off("blur", blurred);
       cypherEditor.off("scroll", scrollChanged);
+      cypherEditor.off("position", positionChanged);
+      cypherEditor.off("autocomplete", autocompleteChanged);
+      cypherEditor.off("lineclick", lineClicked);
+
       cypherEditor.destroy();
     }
   });

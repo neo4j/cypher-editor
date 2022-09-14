@@ -44,6 +44,8 @@
 
   export let onAutocompleteOpenChange = undefined;
 
+  export let onLineClick = undefined;
+
   let innerTheme = THEME_MAP[theme];
 
   let isFocused = false;
@@ -102,6 +104,10 @@
     onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
   }
 
+  const lineClicked = (line, event) => {
+    onLineClick && onLineClick(line, event);
+  }
+
   onMount(() => {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
@@ -130,6 +136,7 @@
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
     cypherEditor.on("autocomplete", autocompleteChanged);
+    cypherEditor.on("lineclick", lineClicked);
 
     onEditorCreate && onEditorCreate(cypherEditor);
   });
@@ -140,6 +147,8 @@
     cypherEditor.off("blur", () => focusChanged(false));
     cypherEditor.off("scroll", scrollChanged);
     cypherEditor.off("position", positionChanged);
+    cypherEditor.off("autocomplete", autocompleteChanged);
+    cypherEditor.off("lineclick", lineClicked);
   });
 
   const themeChanged = (newTheme) => {

@@ -154,12 +154,27 @@ export function createCypherEditor(parentDOMElement, settings) {
     otherSettings.hintOptions = { ...baseHintOptions, closeOnUnfocus: false };
   }
 
+  const onLineClick = (cm, lineIndex, _, event) => {
+    lineClickListeners.forEach((listener) => {
+      listener(lineIndex + 1, event);
+    });
+  };
+
+  // const onLineClick = (...args) => {
+  //   // line, event
+  //   console.log("onLineClick: ", args);
+  //   lineClickListeners.forEach((listener) => {
+  //     listener(...args);
+  //   });
+  // };
+
   const editor = codemirror(parentDOMElement, {
     ...otherSettings,
     lint,
     value: "",
     lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line)
   });
+  editor.on("gutterClick", onLineClick);
   editor.lint = lint;
   editor.autocomplete = autocomplete;
 
@@ -190,6 +205,7 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const positionChangeListeners = [];
   const autocompleteChangeListeners = [];
+  const lineClickListeners = [];
 
   const goToPosition = (position) => {
     // TODO TEMP
@@ -329,6 +345,8 @@ export function createCypherEditor(parentDOMElement, settings) {
       positionChangeListeners.push(listener);
     } else if (type === "autocomplete") {
       autocompleteChangeListeners.push(listener);
+    } else if (type === "lineclick") {
+      lineClickListeners.push(listener);
     } else {
       originalOn(type, listener);
     }
@@ -346,6 +364,13 @@ export function createCypherEditor(parentDOMElement, settings) {
       );
       if (index >= 0) {
         autocompleteChangeListeners.splice(index, 1);
+      }
+    } else if (type === "lineclick") {
+      const index = lineClickListeners.findIndex(
+        (l) => l === listener
+      );
+      if (index >= 0) {
+        lineClickListeners.splice(index, 1);
       }
     } else {
       originalOff(type, listener);
