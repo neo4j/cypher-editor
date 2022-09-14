@@ -74,13 +74,13 @@
   };
 
   const lightTheme = () => {
+    logs = logs.concat(commandLog("setTheme", "light"));
     theme = "light";
-    logs = logs.concat(commandLog("setTheme", theme));
   };
 
   const darkTheme = () => {
+    logs = logs.concat(commandLog("setTheme", "dark"));
     theme = "dark";
-    logs = logs.concat(commandLog("setTheme", theme));
   };
 
   let promisedResult;
@@ -107,18 +107,18 @@
   };
 
   const onValueChange = (value: string, change?: any) => {
-    updateValue(value);
     logs = logs.concat(eventLog("onValueChange", value ? value.length : 0));
+    updateValue(value);
   };
 
   const onPositionChange = (positionObject) => {
+    logs = logs.concat(eventLog("onPositionChange", positionObject));
     position = positionObject;
-    logs = logs.concat(eventLog("onPositionChange", position));
   };
 
   const onAutocompleteOpenChange = (newAutocompleteOpen) => {
+    logs = logs.concat(eventLog("onAutocompleteOpenChange", newAutocompleteOpen));
     autocompleteOpen = newAutocompleteOpen;
-    logs = logs.concat(eventLog("onAutocompleteOpenChange", autocompleteOpen));
   };
 
   const onLineClick = (line, event) => {
@@ -126,28 +126,28 @@
   };
 
   const onEditorCreate = (editor) => {
+    logs = logs.concat(eventLog("onEditorCreate", ""));
     cypherEditor = editor;
     position = editor.getPosition();
     lineCount = cypherEditor.getLineCount();
     updateGoButtons();
-    logs = logs.concat(eventLog("onEditorCreate", ""));
   };
 
   const onFocusChange = (newFocused) => {
+    logs = logs.concat(eventLog("onFocusChange", newFocused));
     focused = newFocused;
-    logs = logs.concat(eventLog("onFocusChange", focused));
   }
 
   const showLineNumbers = () => {
+    logs = logs.concat(commandLog("setLineNumbers", true));
     lineNumbers = true;
     cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
-    logs = logs.concat(commandLog("setLineNumbers", lineNumbers));
   };
 
   const hideLineNumbers = () => {
+    logs = logs.concat(commandLog("setLineNumbers", false));
     lineNumbers = false;
     cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
-    logs = logs.concat(commandLog("setLineNumbers", lineNumbers));
   };
 
   const printArgument = argument => {
@@ -164,128 +164,136 @@
   $: autocompleteString = autocompleteOpen + "";
   $: logText = logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
 
+  let textareaRef;
+
+  $: if (textareaRef && logText) {
+    textareaRef.value = logText;
+    textareaRef.scrollTop = textareaRef.scrollHeight;
+  };
+
   const setNoPlaceholder = () => {
+    logs = logs.concat(commandLog("setPlaceholder", undefined));
     placeholder = undefined;
     cypherEditor && cypherEditor.setPlaceholder(placeholder);
-    logs = logs.concat(commandLog("setPlaceholder", placeholder));
   };
 
   const setSamplePlaceholder = () => {
+    logs = logs.concat(commandLog("setPlaceholder", samplePlaceholder));
     placeholder = samplePlaceholder;
     cypherEditor && cypherEditor.setPlaceholder(placeholder);
-    logs = logs.concat(commandLog("setPlaceholder", placeholder));
   };
 
   const makeReadable = () => {
+    logs = logs.concat(commandLog("setReadOnly", false));
     readOnly = false;
     cypherEditor && cypherEditor.setReadOnly(readOnly);
-    logs = logs.concat(commandLog("setReadOnly", readOnly));
   };
 
   const makeReadOnly = () => {
+    logs = logs.concat(commandLog("setReadOnly", true));
     readOnly = true;
     cypherEditor && cypherEditor.setReadOnly(readOnly);
-    logs = logs.concat(commandLog("setReadOnly", readOnly));
   };
 
   const makeReadOnlyNoCursor = () => {
+    logs = logs.concat(commandLog("setReadOnly", "nocursor"));
     readOnly = "nocursor";
     cypherEditor && cypherEditor.setReadOnly(readOnly);
-    logs = logs.concat(commandLog("setReadOnly", readOnly));
   };
 
   const enableAutocomplete = () => {
+    logs = logs.concat(commandLog("setAutocomplete", true));
     autocomplete = true;
     cypherEditor && cypherEditor.setAutocomplete(true);
-    logs = logs.concat(commandLog("setAutocomplete", autocomplete));
   };
 
   const disableAutocomplete = () => {
+    logs = logs.concat(commandLog("setAutocomplete", false));
     autocomplete = false;
     cypherEditor && cypherEditor.setAutocomplete(false);
-    logs = logs.concat(commandLog("setAutocomplete", autocomplete));
   };
 
   const enableLint = () => {
+    logs = logs.concat(commandLog("setLint", true));
     lint = true;
     cypherEditor && cypherEditor.setLint(lint);
-    logs = logs.concat(commandLog("setLint", lint));
   };
 
   const disableLint = () => {
+    logs = logs.concat(commandLog("setLint", false));
     lint = false;
     cypherEditor && cypherEditor.setLint(lint);
-    logs = logs.concat(commandLog("setLint", lint));
   };
 
   const clearHistory = () => {
-    cypherEditor && cypherEditor.clearHistory();
     logs = logs.concat(commandLog("clearHistory", ""));
+    cypherEditor && cypherEditor.clearHistory();
   };
 
   const focusEditor = () => {
-    cypherEditor && cypherEditor.focus();
     logs = logs.concat(commandLog("focus", ""));
+    cypherEditor && cypherEditor.focus();
   };
 
   const showDefaultLineNumberFormatter = () => {
+    logs = logs.concat(commandLog("setLineNumberFormatter", "default " + typeof defaultLineNumberFormatter));
     lineNumberFormatter = defaultLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-    logs = logs.concat(commandLog("setLineNumberFormatter", "default " + typeof lineNumberFormatter));
+    
   };
 
   const showNoneLineNumberFormatter = () => {
+    logs = logs.concat(commandLog("setLineNumberFormatter", "none " + typeof noneLineNumberFormatter));
     lineNumberFormatter = noneLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-    logs = logs.concat(commandLog("setLineNumberFormatter", "none " + typeof lineNumberFormatter));
   };
 
   const showCustomLineNumberFormatter = () => {
+    logs = logs.concat(commandLog("setLineNumberFormatter", "custom " + typeof customLineNumberFormatter));
     lineNumberFormatter = customLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-    logs = logs.concat(commandLog("setLineNumberFormatter", "custom " + typeof lineNumberFormatter));
   };
 
   const showSimpleSchema = () => {
+    logs = logs.concat(commandLog("setSchema", "simple"));
     schema = simpleSchema;
     cypherEditor && cypherEditor.setSchema(schema);
-    logs = logs.concat(commandLog("setSchema", "simple"));
   };
 
   const showLongSchema = () => {
+    logs = logs.concat(commandLog("setSchema", "long"));
     schema = neo4jSchema;
     cypherEditor && cypherEditor.setSchema(schema);
-    logs = logs.concat(commandLog("setSchema", "long"));
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
+    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", initialOptions.autocompleteTriggerStrings));
     autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
     cypherEditor && cypherEditor.setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
-    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings));
   };
 
   const showNoAutocompleteTriggerStrings = () => {
+    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", false));
     autocompleteTriggerStrings = false;
     cypherEditor && cypherEditor.setAutocompleteTriggerStrings(false);
-    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings));
   };
 
   const showStickyAutocomplete = () => {
+    logs = logs.concat(commandLog("setAutocompleteSticky", true));
     autocompleteSticky = true;
     cypherEditor && cypherEditor.setAutocompleteSticky(true);
-    logs = logs.concat(commandLog("setAutocompleteSticky", autocompleteSticky));
   };
 
   const showUnstickyAutocomplete = () => {
+    logs = logs.concat(commandLog("setAutocompleteSticky", false));
     autocompleteSticky = false;
     cypherEditor && cypherEditor.setAutocompleteSticky(false);
-    logs = logs.concat(commandLog("setAutocompleteSticky", autocompleteSticky));
   };
 
   const goToPosition = (position) => {
+    logs = logs.concat(commandLog("goToPosition", position));
     cypherEditor && cypherEditor.goToPosition(position);
     cypherEditor && cypherEditor.focus();
-    logs = logs.concat(commandLog("goToPosition", position));
   };
 
   const goToPositionStart = () => {
@@ -345,17 +353,17 @@
 
   const showLongValue = () => {
     if (cypherEditor) {
+      logs = logs.concat(commandLog("setValue", longQuery.length + " (long)"));
       cypherEditor.setValue(longQuery);
       updateValue(longQuery);
-      logs = logs.concat(commandLog("setValue", longQuery.length + " (long"));
     }
   };
 
   const showSimpleValue = () => {
     if (cypherEditor) {
+      logs = logs.concat(commandLog("setValue", simpleQuery.length + " (simple)"));
       cypherEditor.setValue(simpleQuery);
       updateValue(simpleQuery);
-      logs = logs.concat(commandLog("setValue", simpleQuery.length + " (simple"));
     }
   };
 </script>
@@ -516,8 +524,10 @@
       </div>
     </div>
     <div class="card">
-      <h3>Logs</h3>
-      <textarea value={logText}/>
+      <div class="logs">
+        <h3>Logs</h3>
+        <textarea bind:this={textareaRef} value={logText}/>
+      </div>
     </div>
     <div class="card">
       <div class="results">

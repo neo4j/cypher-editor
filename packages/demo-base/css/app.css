@@ -169,6 +169,17 @@ body {
     width: 20%;
 }
 
+.logs {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.logs textarea {
+    width: 100%;
+    min-height: 5em;
+}
+
 h1 {
     font-size: 3.2em;
     line-height: 1.1;

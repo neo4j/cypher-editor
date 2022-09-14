@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import neo4j from "neo4j-driver";
 import {
   neo4jSchema,
@@ -73,6 +73,40 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [goPositionLineColumnEnabled, setGoPositionLineColumnEnabled] =
     useState(false);
   const [lineCount, setLineCount] = useState(0);
+  const [logs, setLogs] = useState([]);
+  const [logText, setLogText] = useState("");
+  const textareaRef = useRef(null);
+
+  const commandLog = (command, argument) => {
+    return {
+      type: "command",
+      label: command,
+      command,
+      argument
+    };
+  };
+
+  const eventLog = (event, argument) => {
+    return {
+      type: "event",
+      label: event,
+      event,
+      argument
+    };
+  };
+
+  const getLogText = logs => logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
+
+  const changeLogs = logs => {
+    setLogs(logs);
+    const logText = getLogText(logs);
+    setLogText(logText);
+    if (textareaRef.current) {
+      textareaRef.current.value = logText;
+      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+
+    }
+  };
 
   const send = () => {
     const session = driver.session();
@@ -111,40 +145,51 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     );
   };
 
-  const onValueChange = (value, change) => {
+  const updateValue = (value) => {
     setCypher(value);
     updateGoButtons();
     editor && setLineCount(editor.getLineCount());
   };
 
+  const onValueChange = (value, change) => {
+    changeLogs(logs.concat(eventLog("onValueChange", value ? value.length : 0)));
+    updateValue(value);
+  };
+
   const onPositionChange = (positionObject) => {
+    changeLogs(logs.concat(eventLog("onPositionChange", positionObject)));
     setPosition(positionObject);
   };
 
   const onAutocompleteOpenChange = (autocompleteOpen) => {
+    changeLogs(logs.concat(eventLog("onAutocompleteOpenChange", autocompleteOpen)));
     setAutocompleteOpen(autocompleteOpen);
   };
 
   const onLineClick = (line, event) => {
-    alert("line clicked: " + line);
-  };
-
-  const onFocusChange = (focused) => {
-    setFocused(focused);
+    changeLogs(logs.concat(eventLog("onLineClick", line)));
   };
 
   const onEditorCreate = (editor) => {
+    changeLogs(logs.concat(eventLog("onEditorCreate", "")));
     setEditor(editor);
     setPosition(editor.getPosition());
     setLineCount(editor.getLineCount());
     updateGoButtons({ cypherEditor: editor });
   };
 
+  const onFocusChange = (focused) => {
+    changeLogs(logs.concat(eventLog("onFocusChange", focused)));
+    setFocused(focused);
+  };
+
   const lightTheme = () => {
+    changeLogs(logs.concat(commandLog("setTheme", "light")));
     setTheme("light");
   };
 
   const darkTheme = () => {
+    changeLogs(logs.concat(commandLog("setTheme", "dark")));
     setTheme("dark");
   };
 
@@ -153,70 +198,92 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const focusedString = focused + "";
   const autocompleteString = autocompleteOpen + "";
 
+  const printArgument = argument => {
+    try {
+      return JSON.stringify(argument);
+    } catch (e) {
+      return "error " + e.message + " " + argument;
+    }
+  };
+
   const showLineNumbers = () => {
+    changeLogs(logs.concat(commandLog("setLineNumbers", true)));
     setLineNumbers(true);
     editor && editor.setLineNumbers(true);
   };
 
   const hideLineNumbers = () => {
+    changeLogs(logs.concat(commandLog("setLineNumbers", false)));
     setLineNumbers(false);
     editor && editor.setLineNumbers(false);
   };
 
   const setNoPlaceholder = () => {
+    changeLogs(logs.concat(commandLog("setPlaceholder", undefined)));
     setPlaceholder(undefined);
     editor && editor.setPlaceholder(undefined);
   };
 
   const setSamplePlaceholder = () => {
+    changeLogs(logs.concat(commandLog("setPlaceholder", samplePlaceholder)));
     setPlaceholder(samplePlaceholder);
     editor && editor.setPlaceholder(samplePlaceholder);
   };
 
   const makeReadable = () => {
+    changeLogs(logs.concat(commandLog("setReadOnly", false)));
     setReadOnly(false);
     editor && editor.setReadOnly(false);
   };
 
   const makeReadOnly = () => {
+    changeLogs(logs.concat(commandLog("setReadOnly", true)));
     setReadOnly(true);
     editor && editor.setReadOnly(true);
   };
 
   const makeReadOnlyNoCursor = () => {
+    changeLogs(logs.concat(commandLog("setReadOnly", "nocursor")));
     setReadOnly("nocursor");
     editor && editor.setReadOnly("nocursor");
   };
 
   const enableAutocomplete = () => {
+    changeLogs(logs.concat(commandLog("setAutocomplete", true)));
     setAutocomplete(true);
     editor && editor.setAutocomplete(true);
   };
 
   const disableAutocomplete = () => {
+    changeLogs(logs.concat(commandLog("setAutocomplete", false)));
     setAutocomplete(false);
     editor && editor.setAutocomplete(false);
   };
 
   const enableLint = () => {
+    changeLogs(logs.concat(commandLog("setLint", true)));
     setLint(true);
     editor && editor.setLint(true);
   };
 
   const disableLint = () => {
+    changeLogs(logs.concat(commandLog("setLint", false)));
     setLint(false);
     editor && editor.setLint(false);
   };
 
   const clearHistory = () => {
+    changeLogs(logs.concat(commandLog("clearHistory", "")));
     editor && editor.clearHistory();
   };
 
   const focusEditor = () => {
+    changeLogs(logs.concat(commandLog("focus", "")));
     editor && editor.focus();
   };
 
   const showDefaultLineNumberFormatter = () => {
+    changeLogs(logs.concat(commandLog("setLineNumberFormatter", "default")));
     setLineNumberFormatterObject({
       lineNumberFormatter: defaultLineNumberFormatter
     });
@@ -224,6 +291,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showNoneLineNumberFormatter = () => {
+    changeLogs(logs.concat(commandLog("setLineNumberFormatter", "none")));
     setLineNumberFormatterObject({
       lineNumberFormatter: noneLineNumberFormatter
     });
@@ -231,6 +299,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showCustomLineNumberFormatter = () => {
+    changeLogs(logs.concat(commandLog("setLineNumberFormatter", "custom")));
     setLineNumberFormatterObject({
       lineNumberFormatter: customLineNumberFormatter
     });
@@ -238,16 +307,19 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showSimpleSchema = () => {
+    changeLogs(logs.concat(commandLog("setSchema", "simple")));
     setSchema(simpleSchema);
     editor && editor.setSchema(simpleSchema);
   };
 
   const showLongSchema = () => {
+    changeLogs(logs.concat(commandLog("setSchema", "long")));
     setSchema(neo4jSchema);
     editor && editor.setSchema(neo4jSchema);
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
+    changeLogs(logs.concat(commandLog("setAutocompleteTriggerStrings", initialOptions.autocompleteTriggerStrings)));
     setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
     editor &&
       editor.setAutocompleteTriggerStrings(
@@ -256,21 +328,25 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showNoAutocompleteTriggerStrings = () => {
+    changeLogs(logs.concat(commandLog("setAutocompleteTriggerStrings", false)));
     setAutocompleteTriggerStrings(false);
     editor && editor.setAutocompleteTriggerStrings(false);
   };
 
   const showStickyAutocomplete = () => {
+    changeLogs(logs.concat(commandLog("setAutocompleteSticky", true)));
     setAutocompleteSticky(true);
     editor && editor.setAutocompleteSticky(true);
   };
 
   const showUnstickyAutocomplete = () => {
+    changeLogs(logs.concat(commandLog("setAutocompleteSticky", false)));
     setAutocompleteSticky(false);
     editor && editor.setAutocompleteSticky(false);
   };
 
   const goToPosition = (position) => {
+    changeLogs(logs.concat(commandLog("goToPosition", position)));
     editor && editor.goToPosition(position);
     editor && editor.focus();
   };
@@ -338,15 +414,17 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const showLongValue = () => {
     if (editor) {
+      changeLogs(logs.concat(commandLog("setValue", longQuery.length + " (long)")));
       editor && editor.setValue(longQuery);
-      onValueChange(longQuery);
+      updateValue(longQuery);
     }
   };
 
   const showSimpleValue = () => {
     if (editor) {
+      changeLogs(logs.concat(commandLog("setValue", simpleQuery.length + " (simple)")));
       editor && editor.setValue(simpleQuery);
-      onValueChange(simpleQuery);
+      updateValue(simpleQuery);
     }
   };
 
@@ -685,6 +763,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <div className="info-item">
               Autocompleting: {autocompleteString}
             </div>
+          </div>
+        </div>
+        <div className="card">
+          <div className="logs">
+            <h3>Logs</h3>
+            <textarea value={logText} ref={textareaRef}/>
           </div>
         </div>
         <div className="card">
