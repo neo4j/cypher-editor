@@ -32,6 +32,8 @@ const customLineNumberFormatter = (line, lineCount) => {
   }
 };
 
+const samplePlaceholder = "Sample Placeholder";
+
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
   const [cypher, setCypher] = useState(initialValue);
@@ -61,6 +63,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [autocompleteSticky, setAutocompleteSticky] = useState(
     initialOptions.autocompleteSticky
   );
+  const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
   const [lint, setLint] = useState(initialOptions.lint || true);
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
@@ -158,6 +161,16 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const hideLineNumbers = () => {
     setLineNumbers(false);
     editor && editor.setLineNumbers(false);
+  };
+
+  const setNoPlaceholder = () => {
+    setPlaceholder(undefined);
+    editor && editor.setPlaceholder(undefined);
+  };
+
+  const setSamplePlaceholder = () => {
+    setPlaceholder(samplePlaceholder);
+    editor && editor.setPlaceholder(samplePlaceholder);
   };
 
   const makeReadable = () => {
@@ -365,6 +378,24 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               onClick={darkTheme}
             >
               Dark
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Placeholder</div>
+          <div className="setting-values">
+            <button
+              className={placeholder === undefined ? "setting-active" : undefined}
+              onClick={setNoPlaceholder}
+            >
+              None
+            </button>
+            <button
+              className={placeholder === samplePlaceholder ? "setting-active" : undefined}
+              onClick={setSamplePlaceholder}
+            >
+              Sample
             </button>
           </div>
         </div>

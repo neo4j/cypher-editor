@@ -29,7 +29,7 @@ import {
   rectangularSelection,
   crosshairCursor,
   keymap,
-  placeholder
+  placeholder as placeholderExtension
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 
@@ -322,6 +322,7 @@ export const getExtensions = (
     readOnlyConf = new Compartment(),
     showLinesConf = new Compartment(),
     historyConf = new Compartment(),
+    placeholderConf = new Compartment(),
     onLineClick = () => {}
   } = {}
 ) => {
@@ -340,7 +341,7 @@ export const getExtensions = (
     ),
     historyConf.of(historyExtensions),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
-    ...(placeholderText ? [placeholder(placeholderText)] : []),
+    placeholderConf.of(placeholderText !== undefined ? [placeholderExtension(placeholderText)] : []),
     readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
   ];
 };
@@ -441,6 +442,7 @@ export function createCypherEditor(
   const readOnlyConf = new Compartment();
   const showLinesConf = new Compartment();
   const historyConf = new Compartment();
+  const placeholderConf = new Compartment();
 
   extensions = [
     ...(extensions
@@ -453,6 +455,7 @@ export function createCypherEditor(
             readOnlyConf,
             showLinesConf,
             historyConf,
+            placeholderConf,
             onLineClick
           }),
           theme === "light" ? lightTheme : darkTheme
@@ -589,7 +592,7 @@ export function createCypherEditor(
 
   let autocomplete = options.autocomplete || true;
   let autocompleteSticky = options.autocompleteSticky || false;
-
+  let placeholder = options.placeholder;
   let lint = options.lint || true;
   let readOnly = options.readOnly || false;
   let lineNumbers = options.lineNumbers || true;
@@ -643,6 +646,15 @@ export function createCypherEditor(
         lintConf.reconfigure(
           readOnly === false && lint ? useLintExtensions : useNoLintExtensions
         )
+      ]
+    });
+  };
+
+  const setPlaceholder = (newPlaceholder) => {
+    placeholder = newPlaceholder;
+    editor.dispatch({
+      effects: [
+        placeholderConf.reconfigure(placeholder !== undefined ? [placeholderExtension(placeholder)] : []),
       ]
     });
   };
@@ -786,6 +798,7 @@ export function createCypherEditor(
   editor.off = off;
   editor.showAutoComplete = showAutoComplete;
   editor.setReadOnly = setReadOnly;
+  editor.setPlaceholder = setPlaceholder;
   editor.setLineNumbers = setLineNumbers;
   editor.clearHistory = clearHistory;
   editor.setLineNumberFormatter = setLineNumberFormatter;

@@ -10,6 +10,8 @@
   const initialSchema = simpleSchema;
   const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
 
+  const samplePlaceholder = "Sample Placeholder";
+
   const defaultLineNumberFormatter = undefined;
   const noneLineNumberFormatter = line => line;
   const customLineNumberFormatter = (line, lineCount) => {
@@ -39,6 +41,7 @@
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
   let autocomplete = initialOptions.autocomplete;
+  let placeholder = initialOptions.placeholder;
   let autocompleteOpen = false;
   let lint = initialOptions.lint;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
@@ -119,6 +122,16 @@
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
   $: autocompleteString = autocompleteOpen + "";
+
+  const setNoPlaceholder = () => {
+    placeholder = undefined;
+    cypherEditor && cypherEditor.setPlaceholder(placeholder);
+  };
+
+  const setSamplePlaceholder = () => {
+    placeholder = samplePlaceholder;
+    cypherEditor && cypherEditor.setPlaceholder(placeholder);
+  };
 
   const makeReadable = () => {
     readOnly = false;
@@ -290,6 +303,14 @@
       <div class="setting-values">
         <button class={theme === "light" ? "setting-active" : undefined} on:click={lightTheme}>Light</button>
         <button class={theme === "dark" ? "setting-active" : undefined} on:click={darkTheme}>Dark</button>    
+      </div>
+    </div>
+
+    <div class="setting setting-short">
+      <div class="setting-label">Placeholder</div>
+      <div class="setting-values">
+        <button class={placeholder === undefined ? "setting-active" : undefined} on:click={setNoPlaceholder}>None</button>
+        <button class={placeholder === samplePlaceholder ? "setting-active" : undefined} on:click={setSamplePlaceholder}>Sample</button>    
       </div>
     </div>
 

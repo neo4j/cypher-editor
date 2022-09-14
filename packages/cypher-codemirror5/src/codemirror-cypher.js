@@ -416,6 +416,10 @@ export function createCypherEditor(parentDOMElement, settings) {
     editor.setOption("readOnly", readOnly);
   };
 
+  const setPlaceholder = (placeholder) => {
+    editor.setOption("placeholder", placeholder);
+  };
+
   const setLineNumbers = (lineNumbers) => {
     editor.setOption("lineNumbers", lineNumbers);
     if (lineNumbers) {
@@ -464,6 +468,7 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   editor.setValue = setValue;
   editor.setReadOnly = setReadOnly;
+  editor.setPlaceholder = setPlaceholder;
   editor.setLineNumbers = setLineNumbers;
   editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
