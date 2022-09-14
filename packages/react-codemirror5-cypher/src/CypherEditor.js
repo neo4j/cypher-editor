@@ -53,9 +53,9 @@ class CypherEditor extends Component {
     this.focusChanged(false);
   };
 
-  scrollChanged = (cm) => {
+  scrollChanged = (scrollInfo) => {
     const { onScroll } = this.props;
-    onScroll && onScroll(cm.getScrollInfo());
+    onScroll && onScroll(scrollInfo);
   };
 
   positionChanged = (positionObject) => {

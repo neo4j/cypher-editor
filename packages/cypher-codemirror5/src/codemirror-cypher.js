@@ -206,6 +206,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   const positionChangeListeners = [];
   const autocompleteChangeListeners = [];
   const lineClickListeners = [];
+  const scrollListeners = [];
 
   const goToPosition = (position) => {
     // TODO TEMP
@@ -340,6 +341,17 @@ export function createCypherEditor(parentDOMElement, settings) {
     });
   };
 
+  let scrollListener;
+
+  const onScrollChanged = (cm) => {
+    const scrollInfo = cm.getScrollInfo();
+    const { top: scrollTop, clientHeight: scrollHeight, height: scrollExtent } = scrollInfo;
+    const newScrollInfo = { ...scrollInfo, scrollTop, scrollHeight, scrollExtent };
+    scrollListeners.forEach((listener) => {
+      listener(newScrollInfo);
+    });
+  };
+
   const on = (type, listener) => {
     if (type === "position") {
       positionChangeListeners.push(listener);
@@ -347,6 +359,12 @@ export function createCypherEditor(parentDOMElement, settings) {
       autocompleteChangeListeners.push(listener);
     } else if (type === "lineclick") {
       lineClickListeners.push(listener);
+    } else if (type === "scroll") {
+      if (!scrollListener) {
+        scrollListener = onScrollChanged;
+        originalOn(type, scrollListener);
+      }
+      scrollListeners.push(listener);
     } else {
       originalOn(type, listener);
     }
@@ -371,6 +389,17 @@ export function createCypherEditor(parentDOMElement, settings) {
       );
       if (index >= 0) {
         lineClickListeners.splice(index, 1);
+      }
+    } else if (type === "scroll") {
+      const index = scrollListeners.findIndex(
+        (l) => l === listener
+      );
+      if (index >= 0) {
+        scrollListeners.splice(index, 1);
+      }
+      if (scrollListeners.length === 0 && scrollListener) {
+        originalOff(type, scrollListener);
+        scrollListener = undefined;
       }
     } else {
       originalOff(type, listener);

@@ -95,6 +95,20 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     };
   };
 
+  const printArgument = argument => {
+    try {
+      if (typeof argument === "object" && argument !== null) {
+        const { scrollTop, scrollHeight, scrollExtent } = argument;
+        if (scrollTop !== undefined && scrollHeight !== undefined && scrollExtent !== undefined) {
+          return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
+        }
+      }
+      return JSON.stringify(argument);
+    } catch (e) {
+      return "error " + e.message + " " + argument;
+    }
+  };
+
   const getLogText = logs => logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
 
   const changeLogs = logs => {
@@ -198,12 +212,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const focusedString = focused + "";
   const autocompleteString = autocompleteOpen + "";
 
-  const printArgument = argument => {
-    try {
-      return JSON.stringify(argument);
-    } catch (e) {
-      return "error " + e.message + " " + argument;
-    }
+  const onScroll = (scrollInfo) => {
+    changeLogs(logs.concat(eventLog("onScroll", scrollInfo)));
   };
 
   const showLineNumbers = () => {
@@ -745,6 +755,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onFocusChange={onFocusChange}
             onAutocompleteOpenChange={onAutocompleteOpenChange}
             onLineClick={onLineClick}
+            onScroll={onScroll}
             onEditorCreate={onEditorCreate}
             initialPosition={initialPosition}
             initialSchema={initialSchema}

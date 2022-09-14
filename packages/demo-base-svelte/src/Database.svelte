@@ -73,6 +73,22 @@
     };
   };
 
+  const printArgument = argument => {
+    try {
+      if (typeof argument === "object" && argument !== null) {
+        const { scrollTop, scrollHeight, scrollExtent } = argument;
+        if (scrollTop !== undefined && scrollHeight !== undefined && scrollExtent !== undefined) {
+          return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
+        }
+      }
+      return JSON.stringify(argument);
+    } catch (e) {
+      return "error " + e.message + " " + argument;
+    }
+  };
+
+  const getLogText = logs => logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
+
   const lightTheme = () => {
     logs = logs.concat(commandLog("setTheme", "light"));
     theme = "light";
@@ -136,7 +152,11 @@
   const onFocusChange = (newFocused) => {
     logs = logs.concat(eventLog("onFocusChange", newFocused));
     focused = newFocused;
-  }
+  };
+
+  const onScroll = (scrollInfo) => {
+    logs = logs.concat(eventLog("onScroll", scrollInfo));
+  };
 
   const showLineNumbers = () => {
     logs = logs.concat(commandLog("setLineNumbers", true));
@@ -150,19 +170,11 @@
     cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
   };
 
-  const printArgument = argument => {
-    try {
-      return JSON.stringify(argument);
-    } catch (e) {
-      return "error " + e.message + " " + argument;
-    }
-  };
-
   $: cypherLength = cypher ? cypher.length : 0;
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
   $: autocompleteString = autocompleteOpen + "";
-  $: logText = logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
+  $: logText = getLogText(logs);
 
   let textareaRef;
 
@@ -503,6 +515,7 @@
         {onValueChange}
         {onPositionChange}
         {onFocusChange}
+        {onScroll}
         {onEditorCreate}
         {onAutocompleteOpenChange}
         {onLineClick}

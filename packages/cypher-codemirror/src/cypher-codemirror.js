@@ -400,11 +400,14 @@ export function createCypherEditor(
   };
 
   const onScrollChanged = (editor) => {
-    const scrollRect = editor.scrollDOM.getBoundingClientRect();
-    const contentRect = editor.contentDOM.getBoundingClientRect();
     if (eventListenerTypeMap[SCROLL_KEY] !== undefined) {
+      const scrollRect = editor.scrollDOM.getBoundingClientRect();
+      const contentRect = editor.contentDOM.getBoundingClientRect();
+      const scrollTop = scrollRect.y - contentRect.y;
+      const scrollHeight = scrollRect.height;
+      const scrollExtent = contentRect.height;
       eventListenerTypeMap[SCROLL_KEY].forEach((listener) => {
-        listener({ scrollRect, contentRect });
+        listener({ scrollRect, contentRect, scrollTop, scrollHeight, scrollExtent });
       });
     }
   };

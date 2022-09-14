@@ -92,8 +92,8 @@
     onFocusChange && onFocusChange(focused);
   };
 
-  const scrollChanged = cm => {
-    onScroll && onScroll(cm.getScrollInfo());
+  const scrollChanged = scrollInfo => {
+    onScroll && onScroll(scrollInfo);
   };
 
   const positionChanged = (positionObject) => {
