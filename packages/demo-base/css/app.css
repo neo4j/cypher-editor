@@ -56,6 +56,8 @@ body {
     flex-direction: column;
     min-width: 200px;
     margin: 0 8px;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .setting {
@@ -76,6 +78,14 @@ body {
     align-items: center;
 }
 
+.setting-label button {
+    margin: 4px;
+}
+
+.setting-label button:first-child {
+    margin-left: 8px;
+}
+
 .setting-short .setting-label {
     min-width: 4em;
 }
@@ -83,19 +93,40 @@ body {
 .setting-values {
     display: flex;
     margin: 0 4px;
+    max-width: calc(100% - 8px);
 }
 
 .setting-long .setting-values {
     margin: 0;
+    max-width: 100%;
 }
 
 .setting-values button {
+    display: flex;
+    flex: none;
     margin: 4px;
     border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .setting-values button.setting-active {
     border: 1px solid white;
+}
+
+.setting-values label {
+    align-self: center;
+}
+
+.setting-values input {
+    /* font-size: 0.8em; */
+    display: flex;
+    flex: 1 1 auto;
+    margin: 5px;
+    padding: 1px 5px;
+    max-width: 4em;
+}
+
+.setting-values input.short-input {
+    max-width: 3em;
 }
 
 .right {
@@ -179,6 +210,12 @@ button:focus-visible {
     font-size: 1em;
     padding: 0.6em 1.2em;
 }
+/* 
+.left input {
+    font-size: 0.8em;
+    margin: 5px;
+    padding: 1px 5px;
+} */
 
 @media (prefers-color-scheme: light) {
     :root {

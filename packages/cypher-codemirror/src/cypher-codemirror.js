@@ -245,8 +245,9 @@ const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
 const AUTOCOMPLETE_KEY = "autocomplete";
 
+const historyExtensions = [history()];
+
 const readableExtensions = [
-  history(),
   drawSelection(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
@@ -311,7 +312,8 @@ export const getExtensions = (
     autocompleteConf = new Compartment(),
     readableConf = new Compartment(),
     readOnlyConf = new Compartment(),
-    showLinesConf = new Compartment()
+    showLinesConf = new Compartment(),
+    historyConf = new Compartment()
   } = {}
 ) => {
   return [
@@ -327,6 +329,7 @@ export const getExtensions = (
     showLinesConf.of(
       lineNumbers ? [cypherLineNumbers({ lineNumberFormatter })] : []
     ),
+    historyConf.of(historyExtensions),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     ...(placeholderText ? [placeholder(placeholderText)] : []),
     readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
@@ -419,6 +422,7 @@ export function createCypherEditor(
   const readableConf = new Compartment();
   const readOnlyConf = new Compartment();
   const showLinesConf = new Compartment();
+  const historyConf = new Compartment();
 
   extensions = [
     ...(extensions
@@ -429,7 +433,8 @@ export function createCypherEditor(
             autocompleteConf,
             readableConf,
             readOnlyConf,
-            showLinesConf
+            showLinesConf,
+            historyConf
           }),
           theme === "light" ? lightTheme : darkTheme
         ]),
@@ -490,7 +495,7 @@ export function createCypherEditor(
     }
   };
 
-  const goToPosition = (position, scrollIntoView = true) => {
+  const goToPosition = (positionParam, scrollIntoView = true) => {
     // TODO TEMP
     // const value = 202;
     // const value = { line: 1, column: 500 };
@@ -500,14 +505,13 @@ export function createCypherEditor(
     //   const tempPosition = getPositionForValue(value);
     //   console.log('getPositionForValue temp result: ', value, tempPosition);
     // }
-    
-    if (typeof position === "object" && position) {
-      const { line, column } = position;
-      position = editor.state.doc.line(line).from + column;
+    const positionObject = getPositionForValue(positionParam);
+    if (positionObject) {
+      const { position } = positionObject;
+      editor.dispatch(
+        editor.state.update({ scrollIntoView, selection: { anchor: position } })
+      );
     }
-    editor.dispatch(
-      editor.state.update({ scrollIntoView, selection: { anchor: position } })
-    );
   };
 
   editor.version = 1;
@@ -572,6 +576,15 @@ export function createCypherEditor(
   let lineNumbers = options.lineNumbers || true;
   let lineNumberFormatter =
     options.lineNumberFormatter || defaultLineNumberFormatter;
+
+  const clearHistory = () => {
+    editor.dispatch({
+      effects: historyConf.reconfigure([])
+    });
+    editor.dispatch({
+      effects: historyConf.reconfigure(historyExtensions)
+    });
+  };
 
   const setLineNumbers = (newLineNumbers) => {
     lineNumbers = newLineNumbers;
@@ -672,7 +685,12 @@ export function createCypherEditor(
       const { line, column, position: maybePosition } = positionValue;
       if (isInteger(maybePosition) && maybePosition >= 0) {
         position = maybePosition;
-      } else if (isInteger(line) && line >= 1 && isInteger(column) && column >= 0) {
+      } else if (
+        isInteger(line) &&
+        line >= 1 &&
+        isInteger(column) &&
+        column >= 0
+      ) {
         const lineCount = editor.state.doc.lines;
         if (line <= lineCount) {
           const lineObject = editor.state.doc.line(line);
@@ -750,6 +768,7 @@ export function createCypherEditor(
   editor.showAutoComplete = showAutoComplete;
   editor.setReadOnly = setReadOnly;
   editor.setLineNumbers = setLineNumbers;
+  editor.clearHistory = clearHistory;
   editor.setLineNumberFormatter = setLineNumberFormatter;
   editor.getPosition = getPosition;
   editor.getPositionForValue = getPositionForValue;

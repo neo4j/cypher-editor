@@ -201,29 +201,33 @@ export function createCypherEditor(parentDOMElement, settings) {
     //   const tempPosition = getPositionForValue(value);
     //   console.log('getPositionForValue temp result: ', value, tempPosition);
     // }
-    const { line, ch } = editor.getCursor();
-    const currentLine = line + 1;
-    const currentColumn = ch;
-    if (position.line < currentLine) {
-      const steps = currentLine - position.line;
-      for (let i = 0; i < steps; i++) {
-        editor.execCommand("goLineUp");
+    const positionObject = getPositionForValue(position);
+    if (positionObject) {
+      const { line, column } = positionObject;
+      const { line: currentLineIndex, ch } = editor.getCursor();
+      const currentLine = currentLineIndex + 1;
+      const currentColumn = ch;
+      if (line < currentLine) {
+        const steps = currentLine - line;
+        for (let i = 0; i < steps; i++) {
+          editor.execCommand("goLineUp");
+        }
+      } else if (line > currentLine) {
+        const steps = line - currentLine;
+        for (let i = 0; i < steps; i++) {
+          editor.execCommand("goLineDown");
+        }
       }
-    } else if (position.line > currentLine) {
-      const steps = position.line - currentLine;
-      for (let i = 0; i < steps; i++) {
-        editor.execCommand("goLineDown");
-      }
-    }
-    if (position.column < currentColumn) {
-      const steps = currentColumn - position.column;
-      for (let i = 0; i < steps; i++) {
-        editor.execCommand("goCharLeft");
-      }
-    } else if (position.column > currentColumn) {
-      const steps = position.column - currentColumn;
-      for (let i = 0; i < steps; i++) {
-        editor.execCommand("goCharRight");
+      if (column < currentColumn) {
+        const steps = currentColumn - column;
+        for (let i = 0; i < steps; i++) {
+          editor.execCommand("goCharLeft");
+        }
+      } else if (column > currentColumn) {
+        const steps = column - currentColumn;
+        for (let i = 0; i < steps; i++) {
+          editor.execCommand("goCharRight");
+        }
       }
     }
   };
@@ -248,12 +252,17 @@ export function createCypherEditor(parentDOMElement, settings) {
       const { line, column, position: maybePosition } = positionValue;
       if (isInteger(maybePosition) && maybePosition >= 0) {
         position = maybePosition;
-      } else if (isInteger(line) && line >= 1 && isInteger(column) && column >= 0) {
+      } else if (
+        isInteger(line) &&
+        line >= 1 &&
+        isInteger(column) &&
+        column >= 0
+      ) {
         const lineIndex = editor.indexFromPos({ line: line - 1, ch: column });
         if (lineIndex >= 0) {
           const positionFromLineIndex = editor.posFromIndex(lineIndex);
           const { line: newLineIndex, ch } = positionFromLineIndex;
-          if (newLineIndex === line -1 && ch === column) {
+          if (newLineIndex === line - 1 && ch === column) {
             position = lineIndex;
           }
         }
@@ -263,7 +272,7 @@ export function createCypherEditor(parentDOMElement, settings) {
       const { line: lineIndex, ch } = editor.posFromIndex(position);
       const lineObject = editor.doc.lineInfo(lineIndex);
       if (lineObject) {
-        const { text = '' } = lineObject;
+        const { text = "" } = lineObject;
         const lineStart = editor.indexFromPos({ line: lineIndex, ch: 0 });
         const lineEnd = lineStart + text.length;
         const line = lineIndex + 1;

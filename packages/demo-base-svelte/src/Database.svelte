@@ -1,6 +1,6 @@
 <script lang="ts">
   import neo4j from "neo4j-driver";
-  import { neo4jSchema, simpleSchema, defaultQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
+  import { neo4jSchema, simpleSchema, longQuery, simpleQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
 
   export let codemirrorVersion = undefined;
   export let framework = undefined;
@@ -24,7 +24,7 @@
     }
   };
 
-  const initialValue = defaultQuery;
+  const initialValue = longQuery;
   const initialOptions = defaultOptions;
   let cypher = initialValue;
 
@@ -46,6 +46,10 @@
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autocompleteSticky = initialOptions.autocompleteSticky;
+  let positionPosition = "0";
+  let positionLine = "1";
+  let positionColumn = "0";
+  let lineCount = 0;
 
   const lightTheme = () => {
     theme = "light";
@@ -62,8 +66,20 @@
     promisedResult = session.run(cypher);
   };
 
-  const onValueChange = (value: string, change: any) => {
+  let goPositionPositionEnabled;
+  let goPositionLineColumnEnabled;
+
+  const updateGoButtons = () => {
+    goPositionPositionEnabled = isNumberString(positionPosition) && cypherEditor.getPositionForValue(+positionPosition) !== null;
+    goPositionLineColumnEnabled = isNumberString(positionLine) && isNumberString(positionColumn) && cypherEditor.getPositionForValue({ line: +positionLine, column: +positionColumn }) !== null;
+  };
+
+  const onValueChange = (value: string, change?: any) => {
     cypher = value;
+    updateGoButtons();
+    if (cypherEditor) {
+      lineCount = cypherEditor.getLineCount();
+    }
   };
 
   const onPositionChange = (positionObject) => {
@@ -77,6 +93,8 @@
   const onEditorCreate = (editor) => {
     cypherEditor = editor;
     position = editor.getPosition();
+    lineCount = cypherEditor.getLineCount();
+    updateGoButtons();
   };
 
   const onFocusChange = (newFocused) => {
@@ -133,6 +151,10 @@
     cypherEditor && cypherEditor.setLint(false);
   };
 
+  const clearHistory = () => {
+    cypherEditor && cypherEditor.clearHistory();
+  };
+
   const focusEditor = () => {
     cypherEditor && cypherEditor.focus();
   };
@@ -180,6 +202,80 @@
   const showUnstickyAutocomplete = () => {
     autocompleteSticky = false;
     cypherEditor && cypherEditor.setAutocompleteSticky(false);
+  };
+
+  const goToPosition = (position) => {
+    cypherEditor && cypherEditor.goToPosition(position);
+    cypherEditor && cypherEditor.focus();
+  };
+
+  const goToPositionStart = () => {
+    goToPosition(0);
+  };
+
+  const goToPositionEnd = () => {
+    goToPosition(cypherLength);
+  };
+
+  const goToPositionPosition = () => {
+    if (isNumberString(positionPosition)) {
+      goToPosition(+positionPosition);
+    }
+  };
+
+  const goToPositionLineColumn = () => {
+    if (isNumberString(positionLine) && isNumberString(positionColumn)) {
+      goToPosition({ line: +positionLine, column: +positionColumn });
+    }
+  };
+
+  const isNumberString = v => v === "0" || /^([1-9])([0-9])*$/.test(v);
+
+  const positionPositionChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    if (value === "" || isNumberString(value)) {
+      positionPosition = value;
+    } else {
+      e.target.value = positionPosition;
+    }
+    updateGoButtons();
+  };
+
+  const positionLineChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    if (value === "" || isNumberString(value)) {
+      positionLine = value;
+    } else {
+      e.target.value = positionLine;
+    }
+    updateGoButtons();
+  };
+
+  const positionColumnChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    if (value === "" || isNumberString(value)) {
+      positionColumn = value;
+    } else {
+      e.target.value = positionColumn;
+    }
+    updateGoButtons();
+  };
+
+  const showLongValue = () => {
+    if (cypherEditor) {
+      cypherEditor.setValue(longQuery);
+      onValueChange(longQuery);
+    }
+  };
+
+  const showSimpleValue = () => {
+    if (cypherEditor) {
+      cypherEditor.setValue(simpleQuery);
+      onValueChange(simpleQuery);
+    }
   };
 </script>
 
@@ -260,9 +356,44 @@
     </div>
 
     <div class="setting">
+      <div class="setting-label">History</div>
+      <div class="setting-values">
+        <button on:click={clearHistory}>Clear</button>
+      </div>
+    </div>
+
+    <div class="setting">
       <div class="setting-label">Focus</div>
       <div class="setting-values">
         <button on:click={focusEditor}>Focus Editor</button>
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">
+        Position
+        <button title="start" on:click={goToPositionStart}>start</button>
+        <button title="end" on:click={goToPositionEnd}>end</button>
+      </div>
+      <div class="setting-values">
+        <label for="position">position</label>
+        <input name="position" type="text" value={positionPosition} on:input={positionPositionChanged}/>
+        <button disabled={!goPositionPositionEnabled} on:click={goToPositionPosition}>Go</button>    
+      </div>
+      <div class="setting-values">
+        <label for="line">line</label>
+        <input class="short-input" name="line" type="text" value={positionLine} on:input={positionLineChanged}/>
+        <label for="column">column</label>
+        <input class="short-input" name="column" type="text" value={positionColumn} on:input={positionColumnChanged}/>
+        <button disabled={!goPositionLineColumnEnabled} on:click={goToPositionLineColumn}>Go</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Value</div>
+      <div class="setting-values">
+        <button on:click={showLongValue}>Long</button>
+        <button on:click={showSimpleValue}>Simple</button>    
       </div>
     </div>
   </div>
@@ -289,6 +420,7 @@
       <div class="info">
         <div class="info-item-long">Position: {positionString}</div>
         <div class="info-item">Length: {cypherLength}</div>
+        <div class="info-item">Line Count: {lineCount}</div>
         <div class="info-item">Focused: {focusedString}</div>
         <div class="info-item">Autocompleting: {autocompleteString}</div>
       </div>

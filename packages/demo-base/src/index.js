@@ -86,7 +86,7 @@ export const simpleQuery = `MATCH (n) RETURN n LIMIT 10`;
 
 export const serverInfoQuery = `CALL dbms.components() YIELD name, versions, edition`;
 
-export const defaultQuery = metaQuery;
+export const longQuery = metaQuery;
 
 export const initialPosition = { line: 2, column: 3 };
 

@@ -3,7 +3,8 @@ import neo4j from "neo4j-driver";
 import {
   neo4jSchema,
   simpleSchema,
-  defaultQuery,
+  longQuery,
+  simpleQuery,
   defaultOptions,
   initialPosition,
   host,
@@ -12,26 +13,27 @@ import {
 } from "demo-base";
 
 const initialSchema = simpleSchema;
-const initialValue = defaultQuery;
+const initialValue = longQuery;
 const initialOptions = defaultOptions;
 
 const driver = neo4j.driver(host, neo4j.auth.basic(user, pass));
 
+const defaultLineNumberFormatter = undefined;
+const noneLineNumberFormatter = (line) => line;
+const customLineNumberFormatter = (line, lineCount) => {
+  if (line === 1) {
+    return "one";
+  } else if (line === 2) {
+    return "two";
+  } else if (line === 3) {
+    return "three";
+  } else if (line > 3) {
+    return line + " / " + lineCount + " prompt$";
+  }
+};
+
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
-  const defaultLineNumberFormatter = undefined;
-  const noneLineNumberFormatter = (line) => line;
-  const customLineNumberFormatter = (line, lineCount) => {
-    if (line === 1) {
-      return "one";
-    } else if (line === 2) {
-      return "two";
-    } else if (line === 3) {
-      return "three";
-    } else if (line > 3) {
-      return line + " / " + lineCount + " prompt$";
-    }
-  };
   const [cypher, setCypher] = useState(initialValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,9 +46,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [lineNumbers, setLineNumbers] = useState(
     initialOptions.lineNumbers || true
   );
-  const [lineNumberFormatter, setLineNumberFormatter] = useState(
-    initialOptions.lineNumberFormatter
-  );
+  const [lineNumberFormatterObject, setLineNumberFormatterObject] = useState({
+    lineNumberFormatter: initialOptions.lineNumberFormatter
+  });
+  const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialSchema);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly || false);
   const [autocomplete, setAutocomplete] = useState(
@@ -59,6 +62,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     initialOptions.autocompleteSticky
   );
   const [lint, setLint] = useState(initialOptions.lint || true);
+  const [positionPosition, setPositionPosition] = useState("0");
+  const [positionLine, setPositionLine] = useState("1");
+  const [positionColumn, setPositionColumn] = useState("0");
+  const [goPositionPositionEnabled, setGoPositionPositionEnabled] =
+    useState(false);
+  const [goPositionLineColumnEnabled, setGoPositionLineColumnEnabled] =
+    useState(false);
+  const [lineCount, setLineCount] = useState(0);
 
   const send = () => {
     const session = driver.session();
@@ -77,8 +88,30 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     );
   };
 
+  const updateGoButtons = ({
+    cypherEditor = editor,
+    positionPosition: goPositionPosition = positionPosition,
+    positionLine: goPositionLine = positionLine,
+    positionColumn: goPositionColumn = positionColumn
+  } = {}) => {
+    setGoPositionPositionEnabled(
+      isNumberString(goPositionPosition) &&
+        cypherEditor.getPositionForValue(+goPositionPosition) !== null
+    );
+    setGoPositionLineColumnEnabled(
+      isNumberString(goPositionLine) &&
+        isNumberString(goPositionColumn) &&
+        cypherEditor.getPositionForValue({
+          line: +goPositionLine,
+          column: +goPositionColumn
+        }) !== null
+    );
+  };
+
   const onValueChange = (value, change) => {
     setCypher(value);
+    updateGoButtons();
+    editor && setLineCount(editor.getLineCount());
   };
 
   const onPositionChange = (positionObject) => {
@@ -96,6 +129,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const onEditorCreate = (editor) => {
     setEditor(editor);
     setPosition(editor.getPosition());
+    setLineCount(editor.getLineCount());
+    updateGoButtons({ cypherEditor: editor });
   };
 
   const lightTheme = () => {
@@ -156,22 +191,32 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     editor && editor.setLint(false);
   };
 
+  const clearHistory = () => {
+    editor && editor.clearHistory();
+  };
+
   const focusEditor = () => {
     editor && editor.focus();
   };
 
   const showDefaultLineNumberFormatter = () => {
-    setLineNumberFormatter(defaultLineNumberFormatter);
+    setLineNumberFormatterObject({
+      lineNumberFormatter: defaultLineNumberFormatter
+    });
     editor && editor.setLineNumberFormatter(defaultLineNumberFormatter);
   };
 
   const showNoneLineNumberFormatter = () => {
-    setLineNumberFormatter(noneLineNumberFormatter);
+    setLineNumberFormatterObject({
+      lineNumberFormatter: noneLineNumberFormatter
+    });
     editor && editor.setLineNumberFormatter(noneLineNumberFormatter);
   };
 
   const showCustomLineNumberFormatter = () => {
-    setLineNumberFormatter(customLineNumberFormatter);
+    setLineNumberFormatterObject({
+      lineNumberFormatter: customLineNumberFormatter
+    });
     editor && editor.setLineNumberFormatter(customLineNumberFormatter);
   };
 
@@ -206,6 +251,86 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const showUnstickyAutocomplete = () => {
     setAutocompleteSticky(false);
     editor && editor.setAutocompleteSticky(false);
+  };
+
+  const goToPosition = (position) => {
+    editor && editor.goToPosition(position);
+    editor && editor.focus();
+  };
+
+  const goToPositionStart = () => {
+    goToPosition(0);
+  };
+
+  const goToPositionEnd = () => {
+    goToPosition(cypherLength);
+  };
+
+  const goToPositionPosition = () => {
+    if (isNumberString(positionPosition)) {
+      goToPosition(+positionPosition);
+    }
+  };
+
+  const goToPositionLineColumn = () => {
+    if (isNumberString(positionLine) && isNumberString(positionColumn)) {
+      goToPosition({ line: +positionLine, column: +positionColumn });
+    }
+  };
+
+  const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
+
+  const positionPositionChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    let updateParams;
+    if (value === "" || isNumberString(value)) {
+      setPositionPosition(value);
+      updateParams = { positionPosition: value };
+    } else {
+      e.target.value = positionPosition;
+    }
+    updateGoButtons(updateParams);
+  };
+
+  const positionLineChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    let updateParams;
+    if (value === "" || isNumberString(value)) {
+      setPositionLine(value);
+      updateParams = { positionLine: value };
+    } else {
+      e.target.value = positionLine;
+    }
+    updateGoButtons(updateParams);
+  };
+
+  const positionColumnChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    let updateParams;
+    if (value === "" || isNumberString(value)) {
+      setPositionColumn(value);
+      updateParams = { positionColumn: value };
+    } else {
+      e.target.value = positionColumn;
+    }
+    updateGoButtons(updateParams);
+  };
+
+  const showLongValue = () => {
+    if (editor) {
+      editor && editor.setValue(longQuery);
+      onValueChange(longQuery);
+    }
+  };
+
+  const showSimpleValue = () => {
+    if (editor) {
+      editor && editor.setValue(simpleQuery);
+      onValueChange(simpleQuery);
+    }
   };
 
   let content = "";
@@ -424,9 +549,75 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting">
+          <div className="setting-label">History</div>
+          <div className="setting-values">
+            <button onClick={clearHistory}>Clear</button>
+          </div>
+        </div>
+
+        <div className="setting">
           <div className="setting-label">Focus</div>
           <div className="setting-values">
             <button onClick={focusEditor}>Focus Editor</button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">
+            Position
+            <button title="start" onClick={goToPositionStart}>
+              start
+            </button>
+            <button title="end" onClick={goToPositionEnd}>
+              end
+            </button>
+          </div>
+          <div className="setting-values">
+            <label htmlFor="position">position</label>
+            <input
+              name="position"
+              type="text"
+              value={positionPosition}
+              onInput={positionPositionChanged}
+            />
+            <button
+              disabled={!goPositionPositionEnabled}
+              onClick={goToPositionPosition}
+            >
+              Go
+            </button>
+          </div>
+          <div className="setting-values">
+            <label htmlFor="line">line</label>
+            <input
+              className="short-input"
+              name="line"
+              type="text"
+              value={positionLine}
+              onInput={positionLineChanged}
+            />
+            <label htmlFor="column">column</label>
+            <input
+              className="short-input"
+              name="column"
+              type="text"
+              value={positionColumn}
+              onInput={positionColumnChanged}
+            />
+            <button
+              disabled={!goPositionLineColumnEnabled}
+              onClick={goToPositionLineColumn}
+            >
+              Go
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Value</div>
+          <div className="setting-values">
+            <button onClick={showLongValue}>Long</button>
+            <button onClick={showSimpleValue}>Simple</button>    
           </div>
         </div>
       </div>
@@ -453,6 +644,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           <div className="info">
             <div className="info-item-long">Position: {positionString}</div>
             <div className="info-item">Length: {cypherLength}</div>
+            <div className="info-item">Line Count: {lineCount}</div>
             <div className="info-item">Focused: {focusedString}</div>
             <div className="info-item">
               Autocompleting: {autocompleteString}
