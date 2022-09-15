@@ -27,22 +27,18 @@ a:hover {
 body {
     margin: 0;
     display: flex;
-    /* place-items: center; */
     min-width: 320px;
     min-height: 100vh;
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
 }
 
 #app {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    /* max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center; */
 }
 
 .database {
@@ -54,8 +50,10 @@ body {
 .left {
     display: flex;
     flex-direction: column;
-    min-width: 200px;
-    margin: 0 8px;
+    min-width: 260px;
+    max-width: 260px;
+    width: 260px;
+    padding: 0 8px;
     max-height: 100vh;
     overflow-y: auto;
 }
@@ -117,7 +115,6 @@ body {
 }
 
 .setting-values input {
-    /* font-size: 0.8em; */
     display: flex;
     flex: 1 1 auto;
     margin: 5px;
@@ -133,7 +130,8 @@ body {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    margin-right: 8px;
+    padding-right: 8px;
+    max-width: calc(100% - 276px);
 }
 
 .card {
@@ -144,11 +142,15 @@ body {
     padding: 4px;
 }
 
+.card h1 {
+    padding-right: 16px;
+}
+
 .editor {
     display: flex;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
+    width: calc(100% - 16px);
+    min-width: calc(100% - 16px);
+    max-width: calc(100% - 16px);
 }
 
 .info {
@@ -157,6 +159,12 @@ body {
     min-width: 100%;
     max-width: 100%;
     flex-direction: row;
+}
+
+.card .info {
+    width: calc(100% - 16px);
+    min-width: calc(100% - 16px);
+    max-width: calc(100% - 16px);
 }
 
 .info-item-long {
@@ -171,12 +179,11 @@ body {
 
 .logs {
     display: flex;
-    width: 100%;
+    width: calc(100% - 16px);
     flex-direction: column;
 }
 
 .logs textarea {
-    width: 100%;
     min-height: 5em;
 }
 
@@ -221,12 +228,6 @@ button:focus-visible {
     font-size: 1em;
     padding: 0.6em 1.2em;
 }
-/* 
-.left input {
-    font-size: 0.8em;
-    margin: 5px;
-    padding: 1px 5px;
-} */
 
 @media (prefers-color-scheme: light) {
     :root {
