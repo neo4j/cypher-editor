@@ -78,6 +78,11 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     line-height: 1.4375;
 }
 
+.cm-editor .cm-scroller .cm-content,
+.cm-editor .cm-content {
+    padding: 0;
+}
+
 .cm-dark .cm-editor .cm-gutters {
     background-color: #073642;
     border-right: 3px solid #002b36;
