@@ -115,10 +115,11 @@
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor, editorSupport } = createCypherEditor(
+    const { editor } = createCypherEditor(
       cypherEditorRef,
       cypherEditorOptions
     );
+    const { editorSupport } = editor;
     cypherEditor = editor;
     cypherEditorSupport = editorSupport;
 

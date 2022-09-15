@@ -188,11 +188,11 @@ export function createCypherEditor(parentDOMElement, settings) {
     ) {
       const text = changed.text[0];
       if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-        editor.showAutoComplete();
+        showAutoComplete();
       } else if (changed.text.length === 2) {
         const longerText = text + changed.text[1];
         if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-          editor.showAutoComplete();
+          showAutoComplete();
         }
       }
     }
@@ -200,7 +200,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   editor.on("change", valueChanged);
 
   lineFormatter = (line) => {
-    return lineNumberFormatter(line, editor.getLineCount(), editor);
+    return lineNumberFormatter(line, getLineCount(), editor);
   };
 
   const positionChangeListeners = [];
@@ -322,11 +322,6 @@ export function createCypherEditor(parentDOMElement, settings) {
     return this.version;
   };
   editor.newContentVersion.bind(editor);
-  editor.goToPosition = goToPosition;
-  editor.showAutoComplete = showAutoComplete;
-
-  const originalOn = editor.on.bind(editor);
-  const originalOff = editor.off.bind(editor);
 
   const positionChanged = (positionObject) => {
     positionChangeListeners.forEach((listener) => {
@@ -376,11 +371,11 @@ export function createCypherEditor(parentDOMElement, settings) {
     } else if (type === "scroll") {
       if (!scrollListener) {
         scrollListener = onScrollChanged;
-        originalOn(type, scrollListener);
+        editor.on(type, scrollListener);
       }
       scrollListeners.push(listener);
     } else {
-      originalOn(type, listener);
+      editor.on(type, listener);
     }
   };
 
@@ -408,11 +403,11 @@ export function createCypherEditor(parentDOMElement, settings) {
         scrollListeners.splice(index, 1);
       }
       if (scrollListeners.length === 0 && scrollListener) {
-        originalOff(type, scrollListener);
+        editor.off(type, scrollListener);
         scrollListener = undefined;
       }
     } else {
-      originalOff(type, listener);
+      editor.off(type, listener);
     }
   };
 
@@ -439,10 +434,8 @@ export function createCypherEditor(parentDOMElement, settings) {
   const value = settings.value || "";
   editor.setValue(value);
 
-  const originalSetValue = editor.setValue.bind(editor);
-
   const setValue = (value, updateSyntaxHighlighting = true) => {
-    originalSetValue(value);
+    editor.setValue(value);
     if (updateSyntaxHighlighting !== false) {
       const version = editor.newContentVersion();
       editorSupport.update(value, version);
@@ -474,7 +467,7 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const setLineNumberFormatter = (lineFormat = defaultLineNumberFormatter) => {
     const lineNumberFormatter = (line) =>
-      lineFormat(line, editor.getLineCount(), editor);
+      lineFormat(line, getLineCount(), editor);
     editor.setOption("lineNumberFormatter", lineNumberFormatter);
   };
 
@@ -499,7 +492,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   };
 
   const getLineCount = () => {
-    return editor.lineCount();
+    return editor ? editor.lineCount() : 0;
   };
 
   const setSchema = (schema) => {
@@ -509,22 +502,33 @@ export function createCypherEditor(parentDOMElement, settings) {
     }
   };
 
-  editor.setValue = setValue;
-  editor.setReadOnly = setReadOnly;
-  editor.setPlaceholder = setPlaceholder;
-  editor.setLineWrapping = setLineWrapping;
-  editor.setLineNumbers = setLineNumbers;
-  editor.setLineNumberFormatter = setLineNumberFormatter;
-  editor.getPosition = getPosition;
-  editor.getPositionForValue = getPositionForValue;
-  editor.setAutocomplete = setAutocomplete;
-  editor.setAutocompleteSticky = setAutocompleteSticky;
-  editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
-  editor.setLint = setLint;
-  editor.getLineCount = getLineCount;
-  editor.setSchema = setSchema;
-  editor.on = on;
-  editor.off = off;
+  const focus = () => {
+    editor && editor.focus();
+  };
+
+  const editorAPI = {
+    focus,
+    goToPosition,
+    showAutoComplete,
+    setValue,
+    setReadOnly,
+    setPlaceholder,
+    setLineWrapping,
+    setLineNumbers,
+    setLineNumberFormatter,
+    getPosition,
+    getPositionForValue,
+    setAutocomplete,
+    setAutocompleteSticky,
+    setAutocompleteTriggerStrings,
+    setLint,
+    getLineCount,
+    setSchema,
+    on,
+    off,
+    codemirror: editor,
+    editorSupport
+  };
 
   if (settings.updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
@@ -533,5 +537,5 @@ export function createCypherEditor(parentDOMElement, settings) {
     fixColors(editor, editorSupport);
   }
 
-  return { editor, editorSupport };
+  return { editor: editorAPI };
 }

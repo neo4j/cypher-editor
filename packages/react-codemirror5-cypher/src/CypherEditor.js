@@ -113,11 +113,12 @@ class CypherEditor extends Component {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor, editorSupport } = createCypherEditor(
+    const { editor } = createCypherEditor(
       this.editorRef,
       cypherEditorOptions
     );
     this.cypherEditor = editor;
+    const { editorSupport } = editor;
 
     if (cypherEditorOptions.autofocus) {
       this.cypherEditor.focus();

@@ -806,7 +806,7 @@ export function createCypherEditor(
   };
 
   const getLineCount = () => {
-    return editor.state.doc.lines;
+    return editor ? editor.state.doc.lines : 0;
   };
 
   const setSchema = (schema) => {
@@ -838,27 +838,33 @@ export function createCypherEditor(
   //   }
   // };
 
-  editor.goToPosition = goToPosition;
-  editor.setValue = setValue;
-  editor.on = on;
-  editor.off = off;
-  editor.showAutoComplete = showAutoComplete;
-  editor.setReadOnly = setReadOnly;
-  editor.setPlaceholder = setPlaceholder;
-  editor.setLineWrapping = setLineWrapping;
-  editor.setLineNumbers = setLineNumbers;
-  editor.clearHistory = clearHistory;
-  editor.setLineNumberFormatter = setLineNumberFormatter;
-  editor.getPosition = getPosition;
-  editor.getPositionForValue = getPositionForValue;
-  editor.setAutocomplete = setAutocomplete;
-  editor.setAutocompleteSticky = setAutocompleteSticky;
-  editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
-  editor.setLint = setLint;
-  editor.getLineCount = getLineCount;
-  editor.setSchema = setSchema;
-  // editor.setDarkTheme = setDarkTheme;
-  // editor.setLightTheme = setLightTheme;
+  const focus = () => {
+    editor && editor.focus();
+  };
+
+  const editorAPI = {
+    focus,
+    goToPosition,
+    showAutoComplete,
+    setValue,
+    setReadOnly,
+    setPlaceholder,
+    setLineWrapping,
+    setLineNumbers,
+    setLineNumberFormatter,
+    getPosition,
+    getPositionForValue,
+    setAutocomplete,
+    setAutocompleteSticky,
+    setAutocompleteTriggerStrings,
+    setLint,
+    getLineCount,
+    setSchema,
+    on,
+    off,
+    codemirror: editor,
+    editorSupport
+  };
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
@@ -868,7 +874,6 @@ export function createCypherEditor(
   }
 
   return {
-    editor,
-    editorSupport
+    editor: editorAPI
   };
 }
