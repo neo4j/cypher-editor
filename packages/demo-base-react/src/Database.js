@@ -17,7 +17,8 @@ import {
   getTitle,
   getLogText,
   commandLog,
-  eventLog
+  eventLog,
+  getChangedScrollInfo
 } from "demo-base";
 
 const driver = createDriver();
@@ -64,6 +65,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [lineCount, setLineCount] = useState(0);
   const [logs, setLogs] = useState([]);
   const [logText, setLogText] = useState("");
+  const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
   const textareaRef = useRef(null);
 
   const changeLogs = (logs) => {
@@ -171,7 +173,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const autocompleteString = autocompleteOpen + "";
 
   const onScroll = (scrollInfo) => {
-    changeLogs(logs.concat(eventLog("onScroll", scrollInfo)));
+    changeLogs(
+      logs.concat(
+        eventLog("onScroll", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+      )
+    );
+    setLastScrollInfo(scrollInfo);
   };
 
   const showLineNumbers = () => {

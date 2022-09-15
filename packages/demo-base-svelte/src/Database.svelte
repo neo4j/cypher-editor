@@ -17,7 +17,8 @@
     getTitle,
     getLogText,
     commandLog,
-    eventLog
+    eventLog,
+    getChangedScrollInfo
   } from "demo-base";
 
   export let codemirrorVersion = undefined;
@@ -51,6 +52,7 @@
   let positionColumn = "0";
   let lineCount = 0;
   let logs = [];
+  let lastScrollInfo;
 
   const lightTheme = () => {
     logs = logs.concat(commandLog("setTheme", "light"));
@@ -128,7 +130,10 @@
   };
 
   const onScroll = (scrollInfo) => {
-    logs = logs.concat(eventLog("onScroll", scrollInfo));
+    logs = logs.concat(
+      eventLog("onScroll", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+    );
+    lastScrollInfo = scrollInfo;
   };
 
   const showLineNumbers = () => {
