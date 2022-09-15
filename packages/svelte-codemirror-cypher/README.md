@@ -10,10 +10,10 @@ You can use this package like the following:
 import CypherEditor from 'svelte-codemirror-cypher';
 
 const editorProps = {
-  onValueChange: value => {}, // optional
-  onFocusChange: focused => {}, // optional
-  onScroll: scrollInfo => {}, // optional
-  onPositionChange: ({ line, column, position }) => {}, // optional
+  onValueChanged: value => {}, // optional
+  onFocusChanged: focused => {}, // optional
+  onScrollChanged: scrollInfo => {}, // optional
+  onPositionChanged: ({ line, column, position }) => {}, // optional
   initialOptions: {
     theme: 'light', // optional, defaults to light
     extensions: [ /* override extensions  */ ] // optional, defaults to a sensible list of extensions.

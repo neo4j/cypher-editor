@@ -37,6 +37,71 @@ import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 
 import { cypher } from "./cypher";
 
+const isNumber = (v) =>
+    v !== undefined &&
+    (typeof v === "number" || v instanceof Number) &&
+    isFinite(v);
+const isInteger = (v) => isNumber(v) && v % 1 === 0;
+
+const getGlobalPositionForValue = (view, positionValue) => {
+  let position = null;
+  if (isInteger(positionValue) && positionValue >= 0) {
+    position = positionValue;
+  } else if (typeof positionValue === "object" && positionValue) {
+    const { line, column, position: maybePosition } = positionValue;
+    if (isInteger(maybePosition) && maybePosition >= 0) {
+      position = maybePosition;
+    } else if (
+      isInteger(line) &&
+      line >= 1 &&
+      isInteger(column) &&
+      column >= 0
+    ) {
+      const lineCount = view.state.doc.lines;
+      if (line <= lineCount) {
+        const lineObject = view.state.doc.line(line);
+        if (lineObject) {
+          const { from, to } = lineObject;
+          if (isInteger(from) && isInteger(to) && column <= to - from) {
+            position = from + column;
+          }
+        }
+      }
+    }
+  }
+  if (position !== null) {
+    if (position <= view.state.doc.length) {
+      const lineObject = view.state.doc.lineAt(position);
+      if (lineObject) {
+        const { number: line, from: lineStart, to: lineEnd } = lineObject;
+        const column = position - lineStart;
+        if (lineStart + column <= lineEnd) {
+          position = {
+            line,
+            column,
+            position
+          };
+        } else {
+          position = null;
+        }
+      } else {
+        position = null;
+      }
+    } else {
+      position = null;
+    }
+  }
+  return position;
+};
+
+const getPositionFromState = (state) => {
+  const { from, to, head, anchor } = state.selection.main;
+  const position = head;
+  const { number: line, from: lineStart } = state.doc.lineAt(position);
+  const column = position - lineStart;
+  return { line, column, position };
+};
+
 const addTypeMarker = StateEffect.define();
 const clearTypeMarkers = StateEffect.define();
 
@@ -231,15 +296,15 @@ const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
 export const cypherLineNumbers = ({
   lineNumberFormatter,
-  onLineClick = () => {}
+  onLineNumberClicked = () => {}
 }) => [
   lineNumbers({
     formatNumber: (number, state) =>
       lineNumberFormatter(number, state.doc.lines, state),
     domEventHandlers: {
       click(view, lineObject, event) {
-        const { line } = view.getPositionForValue(lineObject.from) || {};
-        onLineClick(line, event);
+        const { line } = getGlobalPositionForValue(view, lineObject.from) || {};
+        onLineNumberClicked(line, event);
         return true;
       }
     }
@@ -330,7 +395,7 @@ export const getExtensions = (
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
-    onLineClick = () => {}
+    onLineNumberClicked = () => {}
   } = {}
 ) => {
   return [
@@ -345,7 +410,7 @@ export const getExtensions = (
     ),
     showLinesConf.of(
       lineNumbers
-        ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+        ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
         : []
     ),
     lineWrappingConf.of(lineWrapping ? lineWrappingExtensions : []),
@@ -378,8 +443,7 @@ export function createCypherEditor(
 
   const eventListenerTypeMap = {};
 
-  const onLineClick = (line, event) => {
-    // console.log("onLineClick: ", line, event);
+  const onLineNumberClicked = (line, event) => {
     if (eventListenerTypeMap[LINE_CLICK_KEY] !== undefined) {
       eventListenerTypeMap[LINE_CLICK_KEY].forEach((listener) => {
         listener(line, event);
@@ -439,14 +503,6 @@ export function createCypherEditor(
 
   let settingValue = false;
 
-  const getPositionFromState = (state) => {
-    const { from, to, head, anchor } = state.selection.main;
-    const position = head;
-    const { number: line, from: lineStart } = state.doc.lineAt(position);
-    const column = position - lineStart;
-    return { line, column, position };
-  };
-
   const updateListener = EditorView.updateListener.of((v) => {
     if (v.docChanged && !settingValue) {
       onValueChanged(v.state.doc.toString(), v.changes);
@@ -486,7 +542,7 @@ export function createCypherEditor(
             lineWrappingConf,
             historyConf,
             placeholderConf,
-            onLineClick
+            onLineNumberClicked
           }),
           theme === "light" ? lightTheme : darkTheme
         ]),
@@ -548,15 +604,6 @@ export function createCypherEditor(
   };
 
   const goToPosition = (positionParam, scrollIntoView = true) => {
-    // TODO TEMP
-    // const value = 202;
-    // const value = { line: 1, column: 500 };
-    // const value = { line: 99, column: 0 };
-    // const values = [0, 202, {}, { line: -1, column: -1 }, { line: 2, column: 3 }, { line: 1, column: 500 }, { line: 99, column: 0 }, 890, 891, 892];
-    // for (let value of values) {
-    //   const tempPosition = getPositionForValue(value);
-    //   console.log('getPositionForValue temp result: ', value, tempPosition);
-    // }
     const positionObject = getPositionForValue(positionParam);
     if (positionObject) {
       const { position } = positionObject;
@@ -644,7 +691,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: showLinesConf.reconfigure(
         lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
           : []
       )
     });
@@ -657,7 +704,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: showLinesConf.reconfigure(
         lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
           : []
       )
     });
@@ -748,62 +795,7 @@ export function createCypherEditor(
     return getPositionFromState(editor.state);
   };
 
-  const isNumber = (v) =>
-    v !== undefined &&
-    (typeof v === "number" || v instanceof Number) &&
-    isFinite(v);
-  const isInteger = (v) => isNumber(v) && v % 1 === 0;
-
-  const getPositionForValue = (positionValue) => {
-    let position = null;
-    if (isInteger(positionValue) && positionValue >= 0) {
-      position = positionValue;
-    } else if (typeof positionValue === "object" && positionValue) {
-      const { line, column, position: maybePosition } = positionValue;
-      if (isInteger(maybePosition) && maybePosition >= 0) {
-        position = maybePosition;
-      } else if (
-        isInteger(line) &&
-        line >= 1 &&
-        isInteger(column) &&
-        column >= 0
-      ) {
-        const lineCount = editor.state.doc.lines;
-        if (line <= lineCount) {
-          const lineObject = editor.state.doc.line(line);
-          if (lineObject) {
-            const { from, to } = lineObject;
-            if (isInteger(from) && isInteger(to) && column <= to - from) {
-              position = from + column;
-            }
-          }
-        }
-      }
-    }
-    if (position !== null) {
-      if (position <= editor.state.doc.length) {
-        const lineObject = editor.state.doc.lineAt(position);
-        if (lineObject) {
-          const { number: line, from: lineStart, to: lineEnd } = lineObject;
-          const column = position - lineStart;
-          if (lineStart + column <= lineEnd) {
-            position = {
-              line,
-              column,
-              position
-            };
-          } else {
-            position = null;
-          }
-        } else {
-          position = null;
-        }
-      } else {
-        position = null;
-      }
-    }
-    return position;
-  };
+  const getPositionForValue = (positionValue) => getGlobalPositionForValue(editor, positionValue);
 
   const getLineCount = () => {
     return editor ? editor.state.doc.lines : 0;

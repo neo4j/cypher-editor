@@ -13,13 +13,13 @@
 
   export let initialSchema = undefined;
 
-  export let onValueChange = undefined;
+  export let onValueChanged = undefined;
 
-  export let onFocusChange = undefined;
+  export let onFocusChanged = undefined;
 
-  export let onScroll = undefined;
+  export let onScrollChanged = undefined;
 
-  export let onPositionChange = undefined;
+  export let onPositionChanged = undefined;
 
   export let classNames = undefined;
 
@@ -27,11 +27,11 @@
 
   export let theme = THEME_LIGHT;
 
-  export let onEditorCreate = undefined;
+  export let onEditorCreated = undefined;
 
-  export let onAutocompleteOpenChange = undefined;
+  export let onAutocompleteOpenChanged = undefined;
 
-  export let onLineClick = undefined;
+  export let onLineNumberClicked = undefined;
 
   $: cypherEditorOptions = { ...(initialOptions || {}) };
 
@@ -44,11 +44,11 @@
     .join(" ");
 
   const valueChanged = (value, changes) => {
-    onValueChange && onValueChange(value, changes);
+    onValueChanged && onValueChanged(value, changes);
   };
 
   const focusChanged = (focused) => {
-    onFocusChange && onFocusChange(focused);
+    onFocusChanged && onFocusChanged(focused);
   };
 
   const focused = () => {
@@ -60,19 +60,19 @@
   };
 
   const scrollChanged = (scrollInfo) => {
-    onScroll && onScroll(scrollInfo);
+    onScrollChanged && onScrollChanged(scrollInfo);
   };
 
   const positionChanged = (positionObject) => {
-    onPositionChange && onPositionChange(positionObject);
+    onPositionChanged && onPositionChanged(positionObject);
   };
 
   const autocompleteOpenChanged = (autocompleteOpen) => {
-    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+    onAutocompleteOpenChanged && onAutocompleteOpenChanged(autocompleteOpen);
   };
 
-  const lineClicked = (line, event) => {
-    onLineClick && onLineClick(line, event);
+  const lineNumberClicked = (line, event) => {
+    onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
   onMount(() => {
@@ -101,9 +101,9 @@
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
     cypherEditor.on("autocomplete", autocompleteOpenChanged);
-    cypherEditor.on("lineclick", lineClicked);
+    cypherEditor.on("lineclick", lineNumberClicked);
 
-    onEditorCreate && onEditorCreate(cypherEditor);
+    onEditorCreated && onEditorCreated(cypherEditor);
   });
 
   onDestroy(() => {
@@ -114,7 +114,7 @@
       cypherEditor.off("scroll", scrollChanged);
       cypherEditor.off("position", positionChanged);
       cypherEditor.off("autocomplete", autocompleteOpenChanged);
-      cypherEditor.off("lineclick", lineClicked);
+      cypherEditor.off("lineclick", lineNumberClicked);
 
       cypherEditor.destroy();
     }

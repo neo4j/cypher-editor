@@ -95,43 +95,43 @@
     }
   };
 
-  const onValueChange = (value: string, change?: any) => {
-    logs = logs.concat(eventLog("onValueChange", value ? value.length : 0));
+  const onValueChanged = (value: string, change?: any) => {
+    logs = logs.concat(eventLog("valueChanged", value ? value.length : 0));
     updateValue(value);
   };
 
-  const onPositionChange = (positionObject) => {
-    logs = logs.concat(eventLog("onPositionChange", positionObject));
+  const onPositionChanged = (positionObject) => {
+    logs = logs.concat(eventLog("positionChanged", positionObject));
     position = positionObject;
   };
 
-  const onAutocompleteOpenChange = (newAutocompleteOpen) => {
+  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
     logs = logs.concat(
-      eventLog("onAutocompleteOpenChange", newAutocompleteOpen)
+      eventLog("autocompleteOpenChanged", newAutocompleteOpen)
     );
     autocompleteOpen = newAutocompleteOpen;
   };
 
-  const onLineClick = (line, event) => {
-    logs = logs.concat(eventLog("onLineClick", line));
+  const onLineNumberClicked = (line, event) => {
+    logs = logs.concat(eventLog("lineNumberClicked", line));
   };
 
-  const onEditorCreate = (editor) => {
-    logs = logs.concat(eventLog("onEditorCreate", ""));
+  const onEditorCreated = (editor) => {
+    logs = logs.concat(eventLog("editorCreated", ""));
     cypherEditor = editor;
     position = editor.getPosition();
     lineCount = cypherEditor.getLineCount();
     updateGoButtons();
   };
 
-  const onFocusChange = (newFocused) => {
-    logs = logs.concat(eventLog("onFocusChange", newFocused));
+  const onFocusChanged = (newFocused) => {
+    logs = logs.concat(eventLog("focusChanged", newFocused));
     focused = newFocused;
   };
 
-  const onScroll = (scrollInfo) => {
+  const onScrollChanged = (scrollInfo) => {
     logs = logs.concat(
-      eventLog("onScroll", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+      eventLog("scrollChanged", getChangedScrollInfo(lastScrollInfo, scrollInfo))
     );
     lastScrollInfo = scrollInfo;
   };
@@ -646,13 +646,13 @@
     <div class="card">
       <svelte:component
         this={editor}
-        {onValueChange}
-        {onPositionChange}
-        {onFocusChange}
-        {onScroll}
-        {onEditorCreate}
-        {onAutocompleteOpenChange}
-        {onLineClick}
+        {onValueChanged}
+        {onPositionChanged}
+        {onFocusChanged}
+        {onScrollChanged}
+        {onEditorCreated}
+        {onAutocompleteOpenChanged}
+        {onLineNumberClicked}
         {initialPosition}
         {initialSchema}
         {initialValue}

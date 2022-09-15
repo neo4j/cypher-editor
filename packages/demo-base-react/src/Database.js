@@ -121,40 +121,49 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     editor && setLineCount(editor.getLineCount());
   };
 
-  const onValueChange = (value, change) => {
+  const onValueChanged = (value, change) => {
     changeLogs(
-      logs.concat(eventLog("onValueChange", value ? value.length : 0))
+      logs.concat(eventLog("valueChanged", value ? value.length : 0))
     );
     updateValue(value);
   };
 
-  const onPositionChange = (positionObject) => {
-    changeLogs(logs.concat(eventLog("onPositionChange", positionObject)));
+  const onPositionChanged = (positionObject) => {
+    changeLogs(logs.concat(eventLog("positionChanged", positionObject)));
     setPosition(positionObject);
   };
 
-  const onAutocompleteOpenChange = (autocompleteOpen) => {
+  const onAutocompleteOpenChanged = (autocompleteOpen) => {
     changeLogs(
-      logs.concat(eventLog("onAutocompleteOpenChange", autocompleteOpen))
+      logs.concat(eventLog("autocompleteOpenChanged", autocompleteOpen))
     );
     setAutocompleteOpen(autocompleteOpen);
   };
 
-  const onLineClick = (line, event) => {
-    changeLogs(logs.concat(eventLog("onLineClick", line)));
+  const onLineNumberClicked = (line, event) => {
+    changeLogs(logs.concat(eventLog("lineNumberClicked", line)));
   };
 
-  const onEditorCreate = (editor) => {
-    changeLogs(logs.concat(eventLog("onEditorCreate", "")));
+  const onEditorCreated = (editor) => {
+    changeLogs(logs.concat(eventLog("editorCreated", "")));
     setEditor(editor);
     setPosition(editor.getPosition());
     setLineCount(editor.getLineCount());
     updateGoButtons({ cypherEditor: editor });
   };
 
-  const onFocusChange = (focused) => {
-    changeLogs(logs.concat(eventLog("onFocusChange", focused)));
+  const onFocusChanged = (focused) => {
+    changeLogs(logs.concat(eventLog("onFocusChanged", focused)));
     setFocused(focused);
+  };
+
+  const onScrollChanged = (scrollInfo) => {
+    changeLogs(
+      logs.concat(
+        eventLog("onScrollChanged", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+      )
+    );
+    setLastScrollInfo(scrollInfo);
   };
 
   const lightTheme = () => {
@@ -172,14 +181,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const focusedString = focused + "";
   const autocompleteString = autocompleteOpen + "";
 
-  const onScroll = (scrollInfo) => {
-    changeLogs(
-      logs.concat(
-        eventLog("onScroll", getChangedScrollInfo(lastScrollInfo, scrollInfo))
-      )
-    );
-    setLastScrollInfo(scrollInfo);
-  };
+ 
 
   const showLineNumbers = () => {
     changeLogs(logs.concat(commandLog("setLineNumbers", true)));
@@ -760,13 +762,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
         <div className="card">
           <CypherEditor
-            onValueChange={onValueChange}
-            onPositionChange={onPositionChange}
-            onFocusChange={onFocusChange}
-            onAutocompleteOpenChange={onAutocompleteOpenChange}
-            onLineClick={onLineClick}
-            onScroll={onScroll}
-            onEditorCreate={onEditorCreate}
+            onValueChanged={onValueChanged}
+            onPositionChanged={onPositionChanged}
+            onFocusChanged={onFocusChanged}
+            onAutocompleteOpenChanged={onAutocompleteOpenChanged}
+            onLineNumberClicked={onLineNumberClicked}
+            onScrollChanged={onScrollChanged}
+            onEditorCreated={onEditorCreated}
             initialPosition={initialPosition}
             initialSchema={initialSchema}
             initialValue={initialValue}

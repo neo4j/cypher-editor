@@ -154,19 +154,11 @@ export function createCypherEditor(parentDOMElement, settings) {
     otherSettings.hintOptions = { ...baseHintOptions, closeOnUnfocus: false };
   }
 
-  const onLineClick = (cm, lineIndex, _, event) => {
-    lineClickListeners.forEach((listener) => {
+  const onLineNumberClicked = (cm, lineIndex, _, event) => {
+    lineNumberClickedListeners.forEach((listener) => {
       listener(lineIndex + 1, event);
     });
   };
-
-  // const onLineClick = (...args) => {
-  //   // line, event
-  //   console.log("onLineClick: ", args);
-  //   lineClickListeners.forEach((listener) => {
-  //     listener(...args);
-  //   });
-  // };
 
   const editor = codemirror(parentDOMElement, {
     ...otherSettings,
@@ -174,7 +166,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     value: "",
     lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line)
   });
-  editor.on("gutterClick", onLineClick);
+  editor.on("gutterClick", onLineNumberClicked);
   editor.lint = lint;
   editor.autocomplete = autocomplete;
 
@@ -203,21 +195,12 @@ export function createCypherEditor(parentDOMElement, settings) {
     return lineNumberFormatter(line, getLineCount(), editor);
   };
 
-  const positionChangeListeners = [];
-  const autocompleteChangeListeners = [];
-  const lineClickListeners = [];
-  const scrollListeners = [];
+  const positionChangedListeners = [];
+  const autocompleteOpenChangedListeners = [];
+  const lineNumberClickedListeners = [];
+  const scrollChangedListeners = [];
 
   const goToPosition = (position) => {
-    // TODO TEMP
-    // const value = 202;
-    // const value = { line: 1, column: 500 };
-    // const value = { line: 99, column: 0 };
-    // const values = [0, 202, {}, { line: -1, column: -1 }, { line: 2, column: 3 }, { line: 1, column: 500 }, { line: 99, column: 0 }, 890, 891, 892];
-    // for (let value of values) {
-    //   const tempPosition = getPositionForValue(value);
-    //   console.log('getPositionForValue temp result: ', value, tempPosition);
-    // }
     const positionObject = getPositionForValue(position);
     if (positionObject) {
       const { line, column } = positionObject;
@@ -324,14 +307,14 @@ export function createCypherEditor(parentDOMElement, settings) {
   editor.newContentVersion.bind(editor);
 
   const positionChanged = (positionObject) => {
-    positionChangeListeners.forEach((listener) => {
+    positionChangedListeners.forEach((listener) => {
       listener(positionObject);
     });
   };
 
   const autocompleteOpenChanged = (newAutocompleteOpen) => {
     autocompleteOpen = newAutocompleteOpen;
-    autocompleteChangeListeners.forEach((listener) => {
+    autocompleteOpenChangedListeners.forEach((listener) => {
       listener(autocompleteOpen);
     });
   };
@@ -356,53 +339,51 @@ export function createCypherEditor(parentDOMElement, settings) {
       clientWidth,
       scrollWidth: width
     };
-    scrollListeners.forEach((listener) => {
+    scrollChangedListeners.forEach((listener) => {
       listener(newScrollInfo);
     });
   };
 
   const on = (type, listener) => {
     if (type === "position") {
-      positionChangeListeners.push(listener);
+      positionChangedListeners.push(listener);
     } else if (type === "autocomplete") {
-      autocompleteChangeListeners.push(listener);
+      autocompleteOpenChangedListeners.push(listener);
     } else if (type === "lineclick") {
-      lineClickListeners.push(listener);
+      lineNumberClickedListeners.push(listener);
     } else if (type === "scroll") {
       if (!scrollListener) {
         scrollListener = onScrollChanged;
         editor.on(type, scrollListener);
       }
-      scrollListeners.push(listener);
-    } else {
-      editor.on(type, listener);
+      scrollChangedListeners.push(listener);
     }
   };
 
   const off = (type, listener) => {
     if (type === "position") {
-      const index = positionChangeListeners.findIndex((l) => l === listener);
+      const index = positionChangedListeners.findIndex((l) => l === listener);
       if (index >= 0) {
-        positionChangeListeners.splice(index, 1);
+        positionChangedListeners.splice(index, 1);
       }
     } else if (type === "autocomplete") {
-      const index = autocompleteChangeListeners.findIndex(
+      const index = autocompleteOpenChangedListeners.findIndex(
         (l) => l === listener
       );
       if (index >= 0) {
-        autocompleteChangeListeners.splice(index, 1);
+        autocompleteOpenChangedListeners.splice(index, 1);
       }
     } else if (type === "lineclick") {
-      const index = lineClickListeners.findIndex((l) => l === listener);
+      const index = lineNumberClickedListeners.findIndex((l) => l === listener);
       if (index >= 0) {
-        lineClickListeners.splice(index, 1);
+        lineNumberClickedListeners.splice(index, 1);
       }
     } else if (type === "scroll") {
-      const index = scrollListeners.findIndex((l) => l === listener);
+      const index = scrollChangedListeners.findIndex((l) => l === listener);
       if (index >= 0) {
-        scrollListeners.splice(index, 1);
+        scrollChangedListeners.splice(index, 1);
       }
-      if (scrollListeners.length === 0 && scrollListener) {
+      if (scrollChangedListeners.length === 0 && scrollListener) {
         editor.off(type, scrollListener);
         scrollListener = undefined;
       }

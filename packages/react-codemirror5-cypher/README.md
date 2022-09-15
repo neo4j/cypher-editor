@@ -9,10 +9,10 @@ import React from 'react';
 import CypherEditor from 'react-codemirror5-cypher';
 
 const editorProps = {
-  onValueChange: (value, change) => {}, // optional
-  onFocusChange: focused => {}, // optional
-  onScroll: scrollInfo => {}, // optional
-  onPositionChange: ({ line, column, position }) => {}, // optional
+  onValueChanged: (value, change) => {}, // optional
+  onFocusChanged: focused => {}, // optional
+  onScrollChanged: scrollInfo => {}, // optional
+  onPositionChanged: ({ line, column, position }) => {}, // optional
   initialOptions: {}, // optional, codemirror 5 options
   initialSchema: { /* ... */ }, // optional, see example in demos
   initialValue: 'this is the text to show in the editor',
