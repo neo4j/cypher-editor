@@ -329,7 +329,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     });
   };
 
-  const autocompleteChanged = (newAutocompleteOpen) => {
+  const autocompleteOpenChanged = (newAutocompleteOpen) => {
     autocompleteOpen = newAutocompleteOpen;
     autocompleteChangeListeners.forEach((listener) => {
       listener(autocompleteOpen);
@@ -421,13 +421,13 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   editor.on("startCompletion", (editor) => {
     if (editor.autocomplete) {
-      autocompleteChanged(true);
+      autocompleteOpenChanged(true);
     }
   });
 
   editor.on("endCompletion", (editor) => {
     if (editor.autocomplete) {
-      autocompleteChanged(false);
+      autocompleteOpenChanged(false);
     }
   });
 

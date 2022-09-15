@@ -67,7 +67,7 @@
     onPositionChange && onPositionChange(positionObject);
   };
 
-  const autocompleteChanged = (autocompleteOpen) => {
+  const autocompleteOpenChanged = (autocompleteOpen) => {
     onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
   };
 
@@ -100,7 +100,7 @@
     cypherEditor.on("blur", blurred);
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
-    cypherEditor.on("autocomplete", autocompleteChanged);
+    cypherEditor.on("autocomplete", autocompleteOpenChanged);
     cypherEditor.on("lineclick", lineClicked);
 
     onEditorCreate && onEditorCreate(cypherEditor);
@@ -113,7 +113,7 @@
       cypherEditor.off("blur", blurred);
       cypherEditor.off("scroll", scrollChanged);
       cypherEditor.off("position", positionChanged);
-      cypherEditor.off("autocomplete", autocompleteChanged);
+      cypherEditor.off("autocomplete", autocompleteOpenChanged);
       cypherEditor.off("lineclick", lineClicked);
 
       cypherEditor.destroy();

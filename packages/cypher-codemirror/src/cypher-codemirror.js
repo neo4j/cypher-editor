@@ -395,7 +395,7 @@ export function createCypherEditor(
     }
   };
 
-  const onAutocompleteChanged = (newAutocompleteOpen) => {
+  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
     autocompleteOpen = newAutocompleteOpen;
     if (eventListenerTypeMap[AUTOCOMPLETE_KEY] !== undefined) {
       eventListenerTypeMap[AUTOCOMPLETE_KEY].forEach((listener) => {
@@ -460,7 +460,7 @@ export function createCypherEditor(
     const start = completionStatus(v.startState) !== null;
     const end = completionStatus(v.state) !== null;
     if (start !== end) {
-      onAutocompleteChanged(end);
+      onAutocompleteOpenChanged(end);
     }
   });
 
