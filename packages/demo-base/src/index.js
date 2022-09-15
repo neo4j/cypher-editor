@@ -52,7 +52,7 @@ SET variable.propKey = 1;`,
     async: true
   },
   gutters: ["cypher-hints"],
-  lineWrapping: true,
+  lineWrapping: false,
   autoCloseBrackets: {
     explode: ""
   }

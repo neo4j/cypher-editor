@@ -61,7 +61,7 @@
     mode: "cypher",
     theme: innerTheme,
     gutters: ["cypher-hints"],
-    lineWrapping: true,
+    lineWrapping: false,
     autofocus: true,
     smartIndent: false,
     lint: true,
