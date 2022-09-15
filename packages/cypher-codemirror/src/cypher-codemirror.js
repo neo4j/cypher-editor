@@ -570,11 +570,11 @@ export function createCypherEditor(
       if (changedText.length > 0 && changedText.length <= 2) {
         const text = changedText[0];
         if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          editor.showAutoComplete();
+          showAutoComplete();
         } else if (changedText.length === 2) {
           const longerText = text + changedText[1];
           if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            editor.showAutoComplete();
+            showAutoComplete();
           }
         }
       }
