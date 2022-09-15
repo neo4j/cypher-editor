@@ -198,6 +198,8 @@ export function createCypherEditor(parentDOMElement, settings) {
   const positionChangedListeners = [];
   const autocompleteOpenChangedListeners = [];
   const lineNumberClickedListeners = [];
+  const focusListeners = [];
+  const blurListeners = [];
   const scrollChangedListeners = [];
 
   const goToPosition = (position) => {
@@ -320,6 +322,8 @@ export function createCypherEditor(parentDOMElement, settings) {
   };
 
   let scrollListener;
+  let focusListener;
+  let blurListener;
 
   const onScrollChanged = (cm) => {
     const scrollInfo = cm.getScrollInfo();
@@ -344,6 +348,18 @@ export function createCypherEditor(parentDOMElement, settings) {
     });
   };
 
+  const onFocus = () => {
+    focusListeners.forEach((listener) => {
+      listener();
+    });
+  };
+
+  const onBlur = () => {
+    blurListeners.forEach((listener) => {
+      listener();
+    });
+  };
+
   const on = (type, listener) => {
     if (type === "position") {
       positionChangedListeners.push(listener);
@@ -357,6 +373,18 @@ export function createCypherEditor(parentDOMElement, settings) {
         editor.on(type, scrollListener);
       }
       scrollChangedListeners.push(listener);
+    } else if (type === "focus") {
+      if (!focusListener) {
+        focusListener = onFocus;
+        editor.on(type, focusListener);
+      }
+      focusListeners.push(listener);
+    } else if (type === "blur") {
+      if (!blurListener) {
+        blurListener = onBlur;
+        editor.on("blur", blurListener);
+      }
+      blurListeners.push(listener);
     }
   };
 
@@ -386,6 +414,24 @@ export function createCypherEditor(parentDOMElement, settings) {
       if (scrollChangedListeners.length === 0 && scrollListener) {
         editor.off(type, scrollListener);
         scrollListener = undefined;
+      }
+    } else if (type === "focus") {
+      const index = focusListeners.findIndex((l) => l === listener);
+      if (index >= 0) {
+        focusListeners.splice(index, 1);
+      }
+      if (focusListeners.length === 0 && focusListener) {
+        editor.off(type, focusListener);
+        focusListener = undefined;
+      }
+    }  else if (type === "blur") {
+      const index = blurListeners.findIndex((l) => l === listener);
+      if (index >= 0) {
+        blurListeners.splice(index, 1);
+      }
+      if (blurListeners.length === 0 && focusListener) {
+        editor.off(type, blurListener);
+        blurListener = undefined;
       }
     } else {
       editor.off(type, listener);
