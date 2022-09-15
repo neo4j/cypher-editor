@@ -64,6 +64,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     initialOptions.autocompleteSticky
   );
   const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
+  const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
   const [lint, setLint] = useState(initialOptions.lint || true);
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
@@ -251,6 +252,18 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     changeLogs(logs.concat(commandLog("setPlaceholder", samplePlaceholder)));
     setPlaceholder(samplePlaceholder);
     editor && editor.setPlaceholder(samplePlaceholder);
+  };
+
+  const showLineWrapping = () => {
+    changeLogs(logs.concat(commandLog("setLineWrapping", true)));
+    setLineWrapping(true);
+    editor && editor.setLineWrapping(true);
+  };
+
+  const showNoLineWrapping = () => {
+    changeLogs(logs.concat(commandLog("setLineWrapping", false)));
+    setLineWrapping(false);
+    editor && editor.setLineWrapping(false);
   };
 
   const makeReadable = () => {
@@ -566,6 +579,24 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               onClick={hideLineNumbers}
             >
               False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Line Wrapping</div>
+          <div className="setting-values">
+            <button
+              className={lineWrapping === false ? "setting-active" : undefined}
+              onClick={showNoLineWrapping}
+            >
+              False
+            </button>
+            <button
+              className={lineWrapping === true ? "setting-active" : undefined}
+              onClick={showLineWrapping}
+            >
+              True
             </button>
           </div>
         </div>

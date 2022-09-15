@@ -276,6 +276,8 @@ const readableExtensions = [
 
 const readOnlyExtensions = [EditorState.readOnly.of(true)];
 
+const lineWrappingExtensions = [EditorView.lineWrapping];
+
 const useLintExtensions = [cypherLinter()];
 
 const useNoLintExtensions = [cypherLinter({ showErrors: false })];
@@ -314,6 +316,7 @@ export const getExtensions = (
     autocompleteSticky,
     lint,
     lineNumbers = true,
+    lineWrapping = false,
     lineNumberFormatter = defaultLineNumberFormatter,
     readOnly = false,
     placeholder: placeholderText
@@ -324,6 +327,7 @@ export const getExtensions = (
     readableConf = new Compartment(),
     readOnlyConf = new Compartment(),
     showLinesConf = new Compartment(),
+    lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
     onLineClick = () => {}
@@ -344,6 +348,7 @@ export const getExtensions = (
         ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
         : []
     ),
+    lineWrappingConf.of(lineWrapping ? lineWrappingExtensions : []),
     historyConf.of(historyExtensions),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     placeholderConf.of(
@@ -459,6 +464,7 @@ export function createCypherEditor(
   const readableConf = new Compartment();
   const readOnlyConf = new Compartment();
   const showLinesConf = new Compartment();
+  const lineWrappingConf = new Compartment();
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
 
@@ -472,6 +478,7 @@ export function createCypherEditor(
             readableConf,
             readOnlyConf,
             showLinesConf,
+            lineWrappingConf,
             historyConf,
             placeholderConf,
             onLineClick
@@ -611,6 +618,7 @@ export function createCypherEditor(
   let autocomplete = options.autocomplete || true;
   let autocompleteSticky = options.autocompleteSticky || false;
   let placeholder = options.placeholder;
+  let lineWrapping = options.lineWrapping;
   let lint = options.lint || true;
   let readOnly = options.readOnly || false;
   let lineNumbers = options.lineNumbers || true;
@@ -679,6 +687,15 @@ export function createCypherEditor(
         placeholderConf.reconfigure(
           placeholder !== undefined ? [placeholderExtension(placeholder)] : []
         )
+      ]
+    });
+  };
+
+  const setLineWrapping = (newLineWrapping) => {
+    lineWrapping = newLineWrapping;
+    editor.dispatch({
+      effects: [
+        lineWrappingConf.reconfigure(lineWrapping ? lineWrappingExtensions : [])
       ]
     });
   };
@@ -823,6 +840,7 @@ export function createCypherEditor(
   editor.showAutoComplete = showAutoComplete;
   editor.setReadOnly = setReadOnly;
   editor.setPlaceholder = setPlaceholder;
+  editor.setLineWrapping = setLineWrapping;
   editor.setLineNumbers = setLineNumbers;
   editor.clearHistory = clearHistory;
   editor.setLineNumberFormatter = setLineNumberFormatter;

@@ -42,6 +42,7 @@
   let readOnly = initialOptions.readOnly;
   let autocomplete = initialOptions.autocomplete;
   let placeholder = initialOptions.placeholder;
+  let lineWrapping = initialOptions.lineWrapping;
   let autocompleteOpen = false;
   let lint = initialOptions.lint;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
@@ -193,6 +194,18 @@
     logs = logs.concat(commandLog("setPlaceholder", samplePlaceholder));
     placeholder = samplePlaceholder;
     cypherEditor && cypherEditor.setPlaceholder(placeholder);
+  };
+
+  const showLineWrapping = () => {
+    logs = logs.concat(commandLog("setLineWrapping", true));
+    lineWrapping = true;
+    cypherEditor && cypherEditor.setLineWrapping(lineWrapping);
+  };
+
+  const showNoLineWrapping = () => {
+    logs = logs.concat(commandLog("setLineWrapping", false));
+    lineWrapping = false;
+    cypherEditor && cypherEditor.setLineWrapping(lineWrapping);
   };
 
   const makeReadable = () => {
@@ -419,6 +432,14 @@
       <div class="setting-values">
         <button class={lineNumbers === true ? "setting-active" : undefined} on:click={showLineNumbers}>True</button>
         <button class={lineNumbers === false ? "setting-active" : undefined} on:click={hideLineNumbers}>False</button>    
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Line Wrapping</div>
+      <div class="setting-values">
+        <button class={lineWrapping === false ? "setting-active" : undefined} on:click={showNoLineWrapping}>False</button>    
+        <button class={lineWrapping === true ? "setting-active" : undefined} on:click={showLineWrapping}>True</button>
       </div>
     </div>
 
