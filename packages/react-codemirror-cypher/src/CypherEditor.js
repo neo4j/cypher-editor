@@ -54,7 +54,7 @@ class CypherEditor extends Component {
   lineClicked = (line, event) => {
     const { onLineClick } = this.props;
     onLineClick && onLineClick(line, event);
-  }
+  };
 
   componentDidMount() {
     const {

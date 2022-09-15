@@ -229,7 +229,10 @@ const lightTheme = [syntaxHighlighting(lightSyntaxStyle)];
 const darkSyntaxStyle = HighlightStyle.define(darkSyntaxStyles);
 const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
-export const cypherLineNumbers = ({ lineNumberFormatter, onLineClick = () => {} }) => [
+export const cypherLineNumbers = ({
+  lineNumberFormatter,
+  onLineClick = () => {}
+}) => [
   lineNumbers({
     formatNumber: (number, state) =>
       lineNumberFormatter(number, state.doc.lines, state),
@@ -337,11 +340,17 @@ export const getExtensions = (
         : []
     ),
     showLinesConf.of(
-      lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
+      lineNumbers
+        ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+        : []
     ),
     historyConf.of(historyExtensions),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
-    placeholderConf.of(placeholderText !== undefined ? [placeholderExtension(placeholderText)] : []),
+    placeholderConf.of(
+      placeholderText !== undefined
+        ? [placeholderExtension(placeholderText)]
+        : []
+    ),
     readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
   ];
 };
@@ -407,7 +416,13 @@ export function createCypherEditor(
       const scrollHeight = scrollRect.height;
       const scrollExtent = contentRect.height;
       eventListenerTypeMap[SCROLL_KEY].forEach((listener) => {
-        listener({ scrollRect, contentRect, scrollTop, scrollHeight, scrollExtent });
+        listener({
+          scrollRect,
+          contentRect,
+          scrollTop,
+          scrollHeight,
+          scrollExtent
+        });
       });
     }
   };
@@ -615,7 +630,9 @@ export function createCypherEditor(
     lineNumbers = newLineNumbers;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
+        lineNumbers
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          : []
       )
     });
   };
@@ -626,7 +643,9 @@ export function createCypherEditor(
     lineNumberFormatter = newLineNumberFormatter;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })] : []
+        lineNumbers
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          : []
       )
     });
   };
@@ -657,7 +676,9 @@ export function createCypherEditor(
     placeholder = newPlaceholder;
     editor.dispatch({
       effects: [
-        placeholderConf.reconfigure(placeholder !== undefined ? [placeholderExtension(placeholder)] : []),
+        placeholderConf.reconfigure(
+          placeholder !== undefined ? [placeholderExtension(placeholder)] : []
+        )
       ]
     });
   };

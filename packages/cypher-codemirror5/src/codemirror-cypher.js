@@ -345,8 +345,17 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const onScrollChanged = (cm) => {
     const scrollInfo = cm.getScrollInfo();
-    const { top: scrollTop, clientHeight: scrollHeight, height: scrollExtent } = scrollInfo;
-    const newScrollInfo = { ...scrollInfo, scrollTop, scrollHeight, scrollExtent };
+    const {
+      top: scrollTop,
+      clientHeight: scrollHeight,
+      height: scrollExtent
+    } = scrollInfo;
+    const newScrollInfo = {
+      ...scrollInfo,
+      scrollTop,
+      scrollHeight,
+      scrollExtent
+    };
     scrollListeners.forEach((listener) => {
       listener(newScrollInfo);
     });
@@ -384,16 +393,12 @@ export function createCypherEditor(parentDOMElement, settings) {
         autocompleteChangeListeners.splice(index, 1);
       }
     } else if (type === "lineclick") {
-      const index = lineClickListeners.findIndex(
-        (l) => l === listener
-      );
+      const index = lineClickListeners.findIndex((l) => l === listener);
       if (index >= 0) {
         lineClickListeners.splice(index, 1);
       }
     } else if (type === "scroll") {
-      const index = scrollListeners.findIndex(
-        (l) => l === listener
-      );
+      const index = scrollListeners.findIndex((l) => l === listener);
       if (index >= 0) {
         scrollListeners.splice(index, 1);
       }

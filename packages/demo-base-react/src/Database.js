@@ -95,11 +95,15 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     };
   };
 
-  const printArgument = argument => {
+  const printArgument = (argument) => {
     try {
       if (typeof argument === "object" && argument !== null) {
         const { scrollTop, scrollHeight, scrollExtent } = argument;
-        if (scrollTop !== undefined && scrollHeight !== undefined && scrollExtent !== undefined) {
+        if (
+          scrollTop !== undefined &&
+          scrollHeight !== undefined &&
+          scrollExtent !== undefined
+        ) {
           return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
         }
       }
@@ -109,16 +113,21 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     }
   };
 
-  const getLogText = logs => logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
+  const getLogText = (logs) =>
+    logs
+      .map(
+        ({ type, label, argument }) =>
+          type + " " + label + " " + printArgument(argument)
+      )
+      .join("\n");
 
-  const changeLogs = logs => {
+  const changeLogs = (logs) => {
     setLogs(logs);
     const logText = getLogText(logs);
     setLogText(logText);
     if (textareaRef.current) {
       textareaRef.current.value = logText;
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-
     }
   };
 
@@ -166,7 +175,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const onValueChange = (value, change) => {
-    changeLogs(logs.concat(eventLog("onValueChange", value ? value.length : 0)));
+    changeLogs(
+      logs.concat(eventLog("onValueChange", value ? value.length : 0))
+    );
     updateValue(value);
   };
 
@@ -176,7 +187,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const onAutocompleteOpenChange = (autocompleteOpen) => {
-    changeLogs(logs.concat(eventLog("onAutocompleteOpenChange", autocompleteOpen)));
+    changeLogs(
+      logs.concat(eventLog("onAutocompleteOpenChange", autocompleteOpen))
+    );
     setAutocompleteOpen(autocompleteOpen);
   };
 
@@ -329,7 +342,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
-    changeLogs(logs.concat(commandLog("setAutocompleteTriggerStrings", initialOptions.autocompleteTriggerStrings)));
+    changeLogs(
+      logs.concat(
+        commandLog(
+          "setAutocompleteTriggerStrings",
+          initialOptions.autocompleteTriggerStrings
+        )
+      )
+    );
     setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
     editor &&
       editor.setAutocompleteTriggerStrings(
@@ -424,7 +444,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const showLongValue = () => {
     if (editor) {
-      changeLogs(logs.concat(commandLog("setValue", longQuery.length + " (long)")));
+      changeLogs(
+        logs.concat(commandLog("setValue", longQuery.length + " (long)"))
+      );
       editor && editor.setValue(longQuery);
       updateValue(longQuery);
     }
@@ -432,7 +454,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const showSimpleValue = () => {
     if (editor) {
-      changeLogs(logs.concat(commandLog("setValue", simpleQuery.length + " (simple)")));
+      changeLogs(
+        logs.concat(commandLog("setValue", simpleQuery.length + " (simple)"))
+      );
       editor && editor.setValue(simpleQuery);
       updateValue(simpleQuery);
     }
@@ -474,13 +498,17 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           <div className="setting-label">Placeholder</div>
           <div className="setting-values">
             <button
-              className={placeholder === undefined ? "setting-active" : undefined}
+              className={
+                placeholder === undefined ? "setting-active" : undefined
+              }
               onClick={setNoPlaceholder}
             >
               None
             </button>
             <button
-              className={placeholder === samplePlaceholder ? "setting-active" : undefined}
+              className={
+                placeholder === samplePlaceholder ? "setting-active" : undefined
+              }
               onClick={setSamplePlaceholder}
             >
               Sample
@@ -740,7 +768,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           <div className="setting-label">Value</div>
           <div className="setting-values">
             <button onClick={showLongValue}>Long</button>
-            <button onClick={showSimpleValue}>Simple</button>    
+            <button onClick={showSimpleValue}>Simple</button>
           </div>
         </div>
       </div>
@@ -779,7 +807,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="card">
           <div className="logs">
             <h3>Logs</h3>
-            <textarea value={logText} ref={textareaRef}/>
+            <textarea value={logText} ref={textareaRef} />
           </div>
         </div>
         <div className="card">
