@@ -345,8 +345,24 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const onScrollChanged = (cm) => {
     const scrollInfo = cm.getScrollInfo();
+    const {
+      top,
+      clientHeight,
+      height,
+      left,
+      clientWidth,
+      width
+    } = scrollInfo;
+    const newScrollInfo = {
+      scrollTop: top,
+      clientHeight,
+      scrollHeight: height,
+      scrollLeft: left,
+      clientWidth,
+      scrollWidth: width
+    };
     scrollListeners.forEach((listener) => {
-      listener(scrollInfo);
+      listener(newScrollInfo);
     });
   };
 
