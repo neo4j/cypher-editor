@@ -3,6 +3,12 @@
   import CypherEditor from "svelte-codemirror-cypher";
 </script>
 
-<App >
-  <Database slot="database" codemirrorVersion="6" framework="svelte" bundler="vite" editor={CypherEditor} />
+<App>
+  <Database
+    slot="database"
+    codemirrorVersion="6"
+    framework="svelte"
+    bundler="vite"
+    editor={CypherEditor}
+  />
 </App>

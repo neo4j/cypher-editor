@@ -1,42 +1,38 @@
 <script lang="ts">
-  import neo4j from "neo4j-driver";
-  import { neo4jSchema, simpleSchema, longQuery, simpleQuery, defaultOptions, initialPosition, host, user, pass } from "demo-base";
+  import {
+    neo4jSchema,
+    simpleSchema,
+    longQuery,
+    simpleQuery,
+    initialPosition,
+    createDriver,
+    defaultLineNumberFormatter,
+    noneLineNumberFormatter,
+    customLineNumberFormatter,
+    samplePlaceholder,
+    defaultTheme,
+    initialSchema,
+    initialValue,
+    initialOptions,
+    getTitle,
+    getLogText,
+    commandLog,
+    eventLog
+  } from "demo-base";
 
   export let codemirrorVersion = undefined;
   export let framework = undefined;
   export let bundler = undefined;
   export let editor = undefined;
 
-  const initialSchema = simpleSchema;
-  const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
+  const title = getTitle({ codemirrorVersion, framework, bundler });
 
-  const samplePlaceholder = "Sample Placeholder";
-
-  const defaultLineNumberFormatter = undefined;
-  const noneLineNumberFormatter = line => line;
-  const customLineNumberFormatter = (line, lineCount) => {
-    if (line === 1) {
-      return "one";
-    } else if (line === 2) {
-      return "two";
-    } else if (line === 3) {
-      return "three";
-    } else if (line > 3) {
-      return line + ' / ' + lineCount + " prompt$";
-    }
-  };
-
-  const initialValue = longQuery;
-  const initialOptions = defaultOptions;
   let cypher = initialValue;
 
-  const driver = neo4j.driver(
-    host,
-    neo4j.auth.basic(user, pass)
-  );
+  const driver = createDriver();
 
-  let theme = "light";
-  let position = initialPosition || { line: 1, column: 0 };
+  let theme = defaultTheme;
+  let position = initialPosition;
   let focused = true;
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
@@ -55,40 +51,6 @@
   let positionColumn = "0";
   let lineCount = 0;
   let logs = [];
-
-  const commandLog = (command, argument) => {
-    return {
-      type: "command",
-      label: command,
-      command,
-      argument
-    };
-  };
-
-  const eventLog = (event, argument) => {
-    return {
-      type: "event",
-      label: event,
-      event,
-      argument
-    };
-  };
-
-  const printArgument = argument => {
-    try {
-      if (typeof argument === "object" && argument !== null) {
-        const { scrollTop, scrollHeight, scrollExtent } = argument;
-        if (scrollTop !== undefined && scrollHeight !== undefined && scrollExtent !== undefined) {
-          return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
-        }
-      }
-      return JSON.stringify(argument);
-    } catch (e) {
-      return "error " + e.message + " " + argument;
-    }
-  };
-
-  const getLogText = logs => logs.map(({ type, label, argument }) => type + " " + label + " " + printArgument(argument)).join("\n");
 
   const lightTheme = () => {
     logs = logs.concat(commandLog("setTheme", "light"));
@@ -111,8 +73,16 @@
   let goPositionLineColumnEnabled;
 
   const updateGoButtons = () => {
-    goPositionPositionEnabled = isNumberString(positionPosition) && cypherEditor.getPositionForValue(+positionPosition) !== null;
-    goPositionLineColumnEnabled = isNumberString(positionLine) && isNumberString(positionColumn) && cypherEditor.getPositionForValue({ line: +positionLine, column: +positionColumn }) !== null;
+    goPositionPositionEnabled =
+      isNumberString(positionPosition) &&
+      cypherEditor.getPositionForValue(+positionPosition) !== null;
+    goPositionLineColumnEnabled =
+      isNumberString(positionLine) &&
+      isNumberString(positionColumn) &&
+      cypherEditor.getPositionForValue({
+        line: +positionLine,
+        column: +positionColumn
+      }) !== null;
   };
 
   const updateValue = (value) => {
@@ -134,7 +104,9 @@
   };
 
   const onAutocompleteOpenChange = (newAutocompleteOpen) => {
-    logs = logs.concat(eventLog("onAutocompleteOpenChange", newAutocompleteOpen));
+    logs = logs.concat(
+      eventLog("onAutocompleteOpenChange", newAutocompleteOpen)
+    );
     autocompleteOpen = newAutocompleteOpen;
   };
 
@@ -182,7 +154,7 @@
   $: if (textareaRef && logText) {
     textareaRef.value = logText;
     textareaRef.scrollTop = textareaRef.scrollHeight;
-  };
+  }
 
   const setNoPlaceholder = () => {
     logs = logs.concat(commandLog("setPlaceholder", undefined));
@@ -261,20 +233,34 @@
   };
 
   const showDefaultLineNumberFormatter = () => {
-    logs = logs.concat(commandLog("setLineNumberFormatter", "default " + typeof defaultLineNumberFormatter));
+    logs = logs.concat(
+      commandLog(
+        "setLineNumberFormatter",
+        "default " + typeof defaultLineNumberFormatter
+      )
+    );
     lineNumberFormatter = defaultLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-    
   };
 
   const showNoneLineNumberFormatter = () => {
-    logs = logs.concat(commandLog("setLineNumberFormatter", "none " + typeof noneLineNumberFormatter));
+    logs = logs.concat(
+      commandLog(
+        "setLineNumberFormatter",
+        "none " + typeof noneLineNumberFormatter
+      )
+    );
     lineNumberFormatter = noneLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
   };
 
   const showCustomLineNumberFormatter = () => {
-    logs = logs.concat(commandLog("setLineNumberFormatter", "custom " + typeof customLineNumberFormatter));
+    logs = logs.concat(
+      commandLog(
+        "setLineNumberFormatter",
+        "custom " + typeof customLineNumberFormatter
+      )
+    );
     lineNumberFormatter = customLineNumberFormatter;
     cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
   };
@@ -292,9 +278,17 @@
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
-    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", initialOptions.autocompleteTriggerStrings));
+    logs = logs.concat(
+      commandLog(
+        "setAutocompleteTriggerStrings",
+        initialOptions.autocompleteTriggerStrings
+      )
+    );
     autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
-    cypherEditor && cypherEditor.setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
+    cypherEditor &&
+      cypherEditor.setAutocompleteTriggerStrings(
+        initialOptions.autocompleteTriggerStrings
+      );
   };
 
   const showNoAutocompleteTriggerStrings = () => {
@@ -341,7 +335,7 @@
     }
   };
 
-  const isNumberString = v => v === "0" || /^([1-9])([0-9])*$/.test(v);
+  const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
 
   const positionPositionChanged = (e) => {
     const { target } = e;
@@ -386,7 +380,9 @@
 
   const showSimpleValue = () => {
     if (cypherEditor) {
-      logs = logs.concat(commandLog("setValue", simpleQuery.length + " (simple)"));
+      logs = logs.concat(
+        commandLog("setValue", simpleQuery.length + " (simple)")
+      );
       cypherEditor.setValue(simpleQuery);
       updateValue(simpleQuery);
     }
@@ -398,90 +394,178 @@
     <div class="setting setting-short">
       <div class="setting-label">Theme</div>
       <div class="setting-values">
-        <button class={theme === "light" ? "setting-active" : undefined} on:click={lightTheme}>Light</button>
-        <button class={theme === "dark" ? "setting-active" : undefined} on:click={darkTheme}>Dark</button>    
+        <button
+          class={theme === "light" ? "setting-active" : undefined}
+          on:click={lightTheme}>Light</button
+        >
+        <button
+          class={theme === "dark" ? "setting-active" : undefined}
+          on:click={darkTheme}>Dark</button
+        >
       </div>
     </div>
 
     <div class="setting setting-short">
       <div class="setting-label">Placeholder</div>
       <div class="setting-values">
-        <button class={placeholder === undefined ? "setting-active" : undefined} on:click={setNoPlaceholder}>None</button>
-        <button class={placeholder === samplePlaceholder ? "setting-active" : undefined} on:click={setSamplePlaceholder}>Sample</button>    
+        <button
+          class={placeholder === undefined ? "setting-active" : undefined}
+          on:click={setNoPlaceholder}>None</button
+        >
+        <button
+          class={placeholder === samplePlaceholder
+            ? "setting-active"
+            : undefined}
+          on:click={setSamplePlaceholder}>Sample</button
+        >
       </div>
     </div>
 
     <div class="setting setting-short">
       <div class="setting-label">Schema</div>
       <div class="setting-values">
-        <button class={schema === simpleSchema ? "setting-active" : undefined} on:click={showSimpleSchema}>Simple</button>
-        <button class={schema === neo4jSchema ? "setting-active" : undefined} on:click={showLongSchema}>Long</button>    
+        <button
+          class={schema === simpleSchema ? "setting-active" : undefined}
+          on:click={showSimpleSchema}>Simple</button
+        >
+        <button
+          class={schema === neo4jSchema ? "setting-active" : undefined}
+          on:click={showLongSchema}>Long</button
+        >
       </div>
     </div>
 
     <div class="setting setting-short">
       <div class="setting-label">Lint</div>
       <div class="setting-values">
-        <button class={lint === true ? "setting-active" : undefined} on:click={enableLint}>True</button>
-        <button class={lint === false ? "setting-active" : undefined} on:click={disableLint}>False</button>    
+        <button
+          class={lint === true ? "setting-active" : undefined}
+          on:click={enableLint}>True</button
+        >
+        <button
+          class={lint === false ? "setting-active" : undefined}
+          on:click={disableLint}>False</button
+        >
       </div>
     </div>
 
     <div class="setting">
       <div class="setting-label">Line Numbers</div>
       <div class="setting-values">
-        <button class={lineNumbers === true ? "setting-active" : undefined} on:click={showLineNumbers}>True</button>
-        <button class={lineNumbers === false ? "setting-active" : undefined} on:click={hideLineNumbers}>False</button>    
+        <button
+          class={lineNumbers === true ? "setting-active" : undefined}
+          on:click={showLineNumbers}>True</button
+        >
+        <button
+          class={lineNumbers === false ? "setting-active" : undefined}
+          on:click={hideLineNumbers}>False</button
+        >
       </div>
     </div>
 
     <div class="setting">
       <div class="setting-label">Line Wrapping</div>
       <div class="setting-values">
-        <button class={lineWrapping === false ? "setting-active" : undefined} on:click={showNoLineWrapping}>False</button>    
-        <button class={lineWrapping === true ? "setting-active" : undefined} on:click={showLineWrapping}>True</button>
+        <button
+          class={lineWrapping === false ? "setting-active" : undefined}
+          on:click={showNoLineWrapping}>False</button
+        >
+        <button
+          class={lineWrapping === true ? "setting-active" : undefined}
+          on:click={showLineWrapping}>True</button
+        >
       </div>
     </div>
 
     <div class="setting setting-long">
       <div class="setting-label">Line Number Formatter</div>
       <div class="setting-values">
-        <button class={lineNumberFormatter === defaultLineNumberFormatter ? "setting-active" : undefined} on:click={showDefaultLineNumberFormatter}>Default</button>
-        <button class={lineNumberFormatter === noneLineNumberFormatter ? "setting-active" : undefined} on:click={showNoneLineNumberFormatter}>None</button>
-        <button class={lineNumberFormatter === customLineNumberFormatter ? "setting-active" : undefined} on:click={showCustomLineNumberFormatter}>Custom</button>
+        <button
+          class={lineNumberFormatter === defaultLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={showDefaultLineNumberFormatter}>Default</button
+        >
+        <button
+          class={lineNumberFormatter === noneLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={showNoneLineNumberFormatter}>None</button
+        >
+        <button
+          class={lineNumberFormatter === customLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={showCustomLineNumberFormatter}>Custom</button
+        >
       </div>
     </div>
 
     <div class="setting setting-long">
       <div class="setting-label">Read Only</div>
       <div class="setting-values">
-        <button class={readOnly === false ? "setting-active" : undefined} on:click={makeReadable}>False</button>
-        <button class={readOnly === true ? "setting-active" : undefined} on:click={makeReadOnly}>True</button>
-        <button class={readOnly === "nocursor" ? "setting-active" : undefined} on:click={makeReadOnlyNoCursor}>No Cursor</button>
+        <button
+          class={readOnly === false ? "setting-active" : undefined}
+          on:click={makeReadable}>False</button
+        >
+        <button
+          class={readOnly === true ? "setting-active" : undefined}
+          on:click={makeReadOnly}>True</button
+        >
+        <button
+          class={readOnly === "nocursor" ? "setting-active" : undefined}
+          on:click={makeReadOnlyNoCursor}>No Cursor</button
+        >
       </div>
     </div>
 
     <div class="setting">
       <div class="setting-label">Autocomplete</div>
       <div class="setting-values">
-        <button class={autocomplete === true ? "setting-active" : undefined} on:click={enableAutocomplete}>True</button>
-        <button class={autocomplete === false ? "setting-active" : undefined} on:click={disableAutocomplete}>False</button>    
+        <button
+          class={autocomplete === true ? "setting-active" : undefined}
+          on:click={enableAutocomplete}>True</button
+        >
+        <button
+          class={autocomplete === false ? "setting-active" : undefined}
+          on:click={disableAutocomplete}>False</button
+        >
       </div>
     </div>
 
     <div class="setting setting-long">
       <div class="setting-label">Autocomplete Triggers</div>
       <div class="setting-values">
-        <button class={autocompleteTriggerStrings === initialOptions.autocompleteTriggerStrings ? "setting-active" : undefined} on:click={showDefaultAutocompleteTriggerStrings}>Default</button>
-        <button class={autocompleteTriggerStrings === false ? "setting-active" : undefined} on:click={showNoAutocompleteTriggerStrings}>False</button>    
+        <button
+          class={autocompleteTriggerStrings ===
+          initialOptions.autocompleteTriggerStrings
+            ? "setting-active"
+            : undefined}
+          on:click={showDefaultAutocompleteTriggerStrings}>Default</button
+        >
+        <button
+          class={autocompleteTriggerStrings === false
+            ? "setting-active"
+            : undefined}
+          on:click={showNoAutocompleteTriggerStrings}>False</button
+        >
       </div>
     </div>
 
     <div class="setting setting-long">
       <div class="setting-label">Autocomplete Sticky</div>
       <div class="setting-values">
-        <button class={autocompleteSticky === true ? "setting-active" : undefined} on:click={showStickyAutocomplete}>True</button>
-        <button class={autocompleteSticky === false || autocompleteSticky === undefined ? "setting-active" : undefined} on:click={showUnstickyAutocomplete}>False</button>    
+        <button
+          class={autocompleteSticky === true ? "setting-active" : undefined}
+          on:click={showStickyAutocomplete}>True</button
+        >
+        <button
+          class={autocompleteSticky === false ||
+          autocompleteSticky === undefined
+            ? "setting-active"
+            : undefined}
+          on:click={showUnstickyAutocomplete}>False</button
+        >
       </div>
     </div>
 
@@ -507,15 +591,38 @@
       </div>
       <div class="setting-values">
         <label for="position">position</label>
-        <input name="position" type="text" value={positionPosition} on:input={positionPositionChanged}/>
-        <button disabled={!goPositionPositionEnabled} on:click={goToPositionPosition}>Go</button>    
+        <input
+          name="position"
+          type="text"
+          value={positionPosition}
+          on:input={positionPositionChanged}
+        />
+        <button
+          disabled={!goPositionPositionEnabled}
+          on:click={goToPositionPosition}>Go</button
+        >
       </div>
       <div class="setting-values">
         <label for="line">line</label>
-        <input class="short-input" name="line" type="text" value={positionLine} on:input={positionLineChanged}/>
+        <input
+          class="short-input"
+          name="line"
+          type="text"
+          value={positionLine}
+          on:input={positionLineChanged}
+        />
         <label for="column">column</label>
-        <input class="short-input" name="column" type="text" value={positionColumn} on:input={positionColumnChanged}/>
-        <button disabled={!goPositionLineColumnEnabled} on:click={goToPositionLineColumn}>Go</button>    
+        <input
+          class="short-input"
+          name="column"
+          type="text"
+          value={positionColumn}
+          on:input={positionColumnChanged}
+        />
+        <button
+          disabled={!goPositionLineColumnEnabled}
+          on:click={goToPositionLineColumn}>Go</button
+        >
       </div>
     </div>
 
@@ -523,7 +630,7 @@
       <div class="setting-label">Value</div>
       <div class="setting-values">
         <button on:click={showLongValue}>Long</button>
-        <button on:click={showSimpleValue}>Simple</button>    
+        <button on:click={showSimpleValue}>Simple</button>
       </div>
     </div>
   </div>
@@ -533,6 +640,7 @@
     </div>
     <div class="card">
       <svelte:component
+        this={editor}
         {onValueChange}
         {onPositionChange}
         {onFocusChange}
@@ -546,7 +654,7 @@
         {initialOptions}
         {theme}
         classNames={["editor"]}
-        this={editor}/>
+      />
     </div>
     <div class="card">
       <div class="info">
@@ -560,7 +668,7 @@
     <div class="card">
       <div class="logs">
         <h3>Logs</h3>
-        <textarea bind:this={textareaRef} value={logText}/>
+        <textarea readonly bind:this={textareaRef} value={logText} />
       </div>
     </div>
     <div class="card">

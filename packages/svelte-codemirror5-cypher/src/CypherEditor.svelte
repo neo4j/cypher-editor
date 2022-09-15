@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from "svelte";
 
   import "codemirror/addon/lint/lint";
   import "codemirror/addon/hint/show-hint";
@@ -13,8 +13,8 @@
 
   const THEME_LIGHT = "light";
   const THEME_DARK = "dark";
-  const INNER_THEME_LIGHT = 'cypher';
-  const INNER_THEME_DARK = 'cypher cypher-dark';
+  const INNER_THEME_LIGHT = "cypher";
+  const INNER_THEME_DARK = "cypher cypher-dark";
   const THEME_MAP = {
     [THEME_LIGHT]: INNER_THEME_LIGHT,
     [THEME_DARK]: INNER_THEME_DARK
@@ -49,12 +49,15 @@
   let innerTheme = THEME_MAP[theme];
 
   let isFocused = false;
-  
+
   let cypherEditorRef;
   let cypherEditor;
   let cypherEditorSupport;
 
-  $: editorClassNames = (classNames || []).concat(["ReactCodeMirror"]).concat(isFocused ? ["ReactCodeMirror--focused"] : []).join(" ");
+  $: editorClassNames = (classNames || [])
+    .concat(["ReactCodeMirror"])
+    .concat(isFocused ? ["ReactCodeMirror--focused"] : [])
+    .join(" ");
 
   const defaultOptions = {
     lineNumbers: true,
@@ -81,18 +84,18 @@
 
   $: cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
-  const valueChanged = (doc: { getValue: () => string}, change: any) => {
+  const valueChanged = (doc: { getValue: () => string }, change: any) => {
     if (onValueChange && change.origin !== "setValue") {
       onValueChange(doc.getValue(), change);
     }
   };
 
-  const focusChanged = focused => {
+  const focusChanged = (focused) => {
     isFocused = focused;
     onFocusChange && onFocusChange(focused);
   };
 
-  const scrollChanged = scrollInfo => {
+  const scrollChanged = (scrollInfo) => {
     onScroll && onScroll(scrollInfo);
   };
 
@@ -102,11 +105,11 @@
 
   const autocompleteChanged = (autocompleteOpen) => {
     onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
-  }
+  };
 
   const lineClicked = (line, event) => {
     onLineClick && onLineClick(line, event);
-  }
+  };
 
   onMount(() => {
     if (cypherEditorOptions.lineNumbers === false) {
@@ -153,14 +156,12 @@
 
   const themeChanged = (newTheme) => {
     innerTheme = THEME_MAP[newTheme];
-    cypherEditor && cypherEditor.setOption('theme', innerTheme);
+    cypherEditor && cypherEditor.setOption("theme", innerTheme);
   };
 
   $: {
     themeChanged(theme);
   }
-
 </script>
 
-<div class={editorClassNames} bind:this={cypherEditorRef}>
-</div>
+<div class={editorClassNames} bind:this={cypherEditorRef} />

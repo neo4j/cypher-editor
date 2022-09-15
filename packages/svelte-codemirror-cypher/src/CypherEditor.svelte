@@ -69,11 +69,11 @@
 
   const autocompleteChanged = (autocompleteOpen) => {
     onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
-  }
+  };
 
   const lineClicked = (line, event) => {
     onLineClick && onLineClick(line, event);
-  }
+  };
 
   onMount(() => {
     const { autofocus = true, ...options } = cypherEditorOptions;

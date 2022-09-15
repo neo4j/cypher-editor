@@ -4,5 +4,11 @@
 </script>
 
 <App>
-  <Database slot="database" codemirrorVersion="5" framework="svelte" bundler="vite" editor={CypherEditor} />
+  <Database
+    slot="database"
+    codemirrorVersion="5"
+    framework="svelte"
+    bundler="vite"
+    editor={CypherEditor}
+  />
 </App>

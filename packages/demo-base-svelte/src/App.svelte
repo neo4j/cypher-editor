@@ -1,5 +1,4 @@
 <script lang="ts">
-  
 </script>
 
-<slot name="database"/>
+<slot name="database" />

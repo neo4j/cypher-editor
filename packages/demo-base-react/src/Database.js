@@ -1,46 +1,34 @@
 import React, { useState, useRef } from "react";
-import neo4j from "neo4j-driver";
 import {
   neo4jSchema,
   simpleSchema,
   longQuery,
   simpleQuery,
-  defaultOptions,
   initialPosition,
-  host,
-  user,
-  pass
+  createDriver,
+  defaultLineNumberFormatter,
+  noneLineNumberFormatter,
+  customLineNumberFormatter,
+  samplePlaceholder,
+  defaultTheme,
+  initialSchema,
+  initialValue,
+  initialOptions,
+  getTitle,
+  getLogText,
+  commandLog,
+  eventLog
 } from "demo-base";
 
-const initialSchema = simpleSchema;
-const initialValue = longQuery;
-const initialOptions = defaultOptions;
-
-const driver = neo4j.driver(host, neo4j.auth.basic(user, pass));
-
-const defaultLineNumberFormatter = undefined;
-const noneLineNumberFormatter = (line) => line;
-const customLineNumberFormatter = (line, lineCount) => {
-  if (line === 1) {
-    return "one";
-  } else if (line === 2) {
-    return "two";
-  } else if (line === 3) {
-    return "three";
-  } else if (line > 3) {
-    return line + " / " + lineCount + " prompt$";
-  }
-};
-
-const samplePlaceholder = "Sample Placeholder";
+const driver = createDriver();
 
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
-  const title = `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
+  const title = getTitle({ codemirrorVersion, framework, bundler });
   const [cypher, setCypher] = useState(initialValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(defaultTheme);
   const [position, setPosition] = useState(initialPosition);
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const [focused, setFocused] = useState(true);
@@ -77,50 +65,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [logs, setLogs] = useState([]);
   const [logText, setLogText] = useState("");
   const textareaRef = useRef(null);
-
-  const commandLog = (command, argument) => {
-    return {
-      type: "command",
-      label: command,
-      command,
-      argument
-    };
-  };
-
-  const eventLog = (event, argument) => {
-    return {
-      type: "event",
-      label: event,
-      event,
-      argument
-    };
-  };
-
-  const printArgument = (argument) => {
-    try {
-      if (typeof argument === "object" && argument !== null) {
-        const { scrollTop, scrollHeight, scrollExtent } = argument;
-        if (
-          scrollTop !== undefined &&
-          scrollHeight !== undefined &&
-          scrollExtent !== undefined
-        ) {
-          return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
-        }
-      }
-      return JSON.stringify(argument);
-    } catch (e) {
-      return "error " + e.message + " " + argument;
-    }
-  };
-
-  const getLogText = (logs) =>
-    logs
-      .map(
-        ({ type, label, argument }) =>
-          type + " " + label + " " + printArgument(argument)
-      )
-      .join("\n");
 
   const changeLogs = (logs) => {
     setLogs(logs);
@@ -838,7 +782,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="card">
           <div className="logs">
             <h3>Logs</h3>
-            <textarea value={logText} ref={textareaRef} />
+            <textarea readOnly value={logText} ref={textareaRef} />
           </div>
         </div>
         <div className="card">

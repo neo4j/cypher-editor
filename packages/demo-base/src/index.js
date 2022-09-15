@@ -18,7 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import neo4j from "neo4j-driver";
+
 export { neo4jSchema, simpleSchema } from "./schema-data";
+import { simpleSchema } from "./schema-data";
 
 export const codeMirrorSettings = {
   value: `// line comment
@@ -104,5 +107,78 @@ export const defaultOptions = {
   autocomplete: true, // whether to show autocompletion
   lint: true, // whether to show lint errors,
   autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"],
-  autocompleteSticky: false
+  autocompleteSticky: false,
+  lineWrapping: false
 };
+
+export const defaultLineNumberFormatter = undefined;
+export const noneLineNumberFormatter = (line) => line;
+export const customLineNumberFormatter = (line, lineCount) => {
+  if (line === 1) {
+    return "one";
+  } else if (line === 2) {
+    return "two";
+  } else if (line === 3) {
+    return "three";
+  } else if (line > 3) {
+    return line + " / " + lineCount + " prompt$";
+  }
+};
+
+export const samplePlaceholder = "Sample Placeholder";
+
+export const initialSchema = simpleSchema;
+export const initialValue = longQuery;
+export const initialOptions = defaultOptions;
+
+export const defaultTheme = "light";
+
+export const getTitle = ({ codemirrorVersion, framework, bundler }) =>
+  `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
+
+const printArgument = (argument) => {
+  try {
+    if (typeof argument === "object" && argument !== null) {
+      const { scrollTop, scrollHeight, scrollExtent } = argument;
+      if (
+        scrollTop !== undefined &&
+        scrollHeight !== undefined &&
+        scrollExtent !== undefined
+      ) {
+        return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
+      }
+    }
+    return JSON.stringify(argument);
+  } catch (e) {
+    return "error " + e.message + " " + argument;
+  }
+};
+
+export const getLogText = (logs) =>
+  logs
+    .map(
+      ({ type, label, argument }) =>
+        type + " " + label + " " + printArgument(argument)
+    )
+    .join("\n");
+
+export const commandLog = (command, argument) => {
+  return {
+    type: "command",
+    label: command,
+    command,
+    argument
+  };
+};
+
+export const eventLog = (event, argument) => {
+  return {
+    type: "event",
+    label: event,
+    event,
+    argument
+  };
+};
+
+export const createDriver = () =>
+  neo4j.driver(host, neo4j.auth.basic(user, pass));
