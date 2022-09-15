@@ -22,6 +22,15 @@ import codemirror from "codemirror";
 import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 import "./codemirror-cypher-mode";
 
+const THEME_LIGHT = "light";
+const THEME_DARK = "dark";
+const INNER_THEME_LIGHT = "cypher";
+const INNER_THEME_DARK = "cypher cypher-dark";
+const THEME_MAP = {
+  [THEME_LIGHT]: INNER_THEME_LIGHT,
+  [THEME_DARK]: INNER_THEME_DARK
+};
+
 function translatePosition(from, to) {
   return {
     from: { line: from.line - 1, ch: from.column },
@@ -141,6 +150,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     lineNumberFormatter = defaultLineNumberFormatter,
     autocompleteTriggerStrings:
       initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
+      theme,
     ...otherSettings
   } = settings;
 
@@ -152,6 +162,9 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   if (initialAutocompleteSticky) {
     otherSettings.hintOptions = { ...baseHintOptions, closeOnUnfocus: false };
+  }
+  if (theme) {
+    otherSettings.theme = THEME_MAP[theme];
   }
 
   const onLineNumberClicked = (cm, lineIndex, _, event) => {
@@ -533,6 +546,14 @@ export function createCypherEditor(parentDOMElement, settings) {
     editor && editor.focus();
   };
 
+  const setTheme = (theme) => {
+    if (editor) {
+      const innerTheme = THEME_MAP[theme];
+      console.log('setTheme: ', theme, innerTheme);
+      editor.setOption("theme", innerTheme);
+    }
+  }
+
   const editorAPI = {
     focus,
     goToPosition,
@@ -551,6 +572,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     setLint,
     getLineCount,
     setSchema,
+    setTheme,
     on,
     off,
     codemirror: editor,

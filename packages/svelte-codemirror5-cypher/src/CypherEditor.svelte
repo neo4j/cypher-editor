@@ -46,8 +46,6 @@
 
   export let onLineNumberClicked = undefined;
 
-  let innerTheme = THEME_MAP[theme];
-
   let isFocused = false;
 
   let cypherEditorRef;
@@ -62,7 +60,7 @@
   const defaultOptions = {
     lineNumbers: true,
     mode: "cypher",
-    theme: innerTheme,
+    theme: theme,
     gutters: ["cypher-hints"],
     lineWrapping: false,
     autofocus: true,
@@ -156,8 +154,7 @@
   });
 
   const themeChanged = (newTheme) => {
-    innerTheme = THEME_MAP[newTheme];
-    cypherEditor && cypherEditor.setOption("theme", innerTheme);
+    cypherEditor && cypherEditor.setTheme(newTheme);
   };
 
   $: {

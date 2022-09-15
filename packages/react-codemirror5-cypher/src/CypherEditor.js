@@ -12,19 +12,12 @@ import "cypher-codemirror5/css/cypher-codemirror.css";
 
 const THEME_LIGHT = "light";
 const THEME_DARK = "dark";
-const INNER_THEME_LIGHT = "cypher";
-const INNER_THEME_DARK = "cypher cypher-dark";
-const THEME_MAP = {
-  [THEME_LIGHT]: INNER_THEME_LIGHT,
-  [THEME_DARK]: INNER_THEME_DARK
-};
 
 class CypherEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false,
-      innerTheme: THEME_MAP[props.theme]
+      focused: false
     };
   }
 
@@ -83,12 +76,10 @@ class CypherEditor extends Component {
       onEditorCreated
     } = this.props;
 
-    let innerTheme = THEME_MAP[theme];
-
     const defaultOptions = {
       lineNumbers: true,
       mode: "cypher",
-      theme: innerTheme,
+      theme: theme,
       gutters: ["cypher-hints"],
       lineWrapping: false,
       autofocus: true,
@@ -157,9 +148,7 @@ class CypherEditor extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.theme !== this.props.theme) {
-      const innerTheme = THEME_MAP[this.props.theme];
-      this.setState({ innerTheme });
-      this.cypherEditor.setOption("theme", innerTheme);
+      this.cypherEditor.setTheme(this.props.theme);
     }
   }
 
