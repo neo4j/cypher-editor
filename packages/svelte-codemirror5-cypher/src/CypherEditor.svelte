@@ -13,12 +13,6 @@
 
   const THEME_LIGHT = "light";
   const THEME_DARK = "dark";
-  const INNER_THEME_LIGHT = "cypher";
-  const INNER_THEME_DARK = "cypher cypher-dark";
-  const THEME_MAP = {
-    [THEME_LIGHT]: INNER_THEME_LIGHT,
-    [THEME_DARK]: INNER_THEME_DARK
-  };
 
   export let initialPosition = undefined;
 
@@ -50,7 +44,6 @@
 
   let cypherEditorRef;
   let cypherEditor;
-  let cypherEditorSupport;
 
   $: editorClassNames = (classNames || [])
     .concat(["ReactCodeMirror"])
@@ -117,15 +110,13 @@
       cypherEditorRef,
       cypherEditorOptions
     );
-    const { editorSupport } = editor;
     cypherEditor = editor;
-    cypherEditorSupport = editorSupport;
 
     if (cypherEditorOptions.autofocus) {
       cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      cypherEditor.setSchema(initialSchema);
     }
     cypherEditor.setValue(initialValue);
     if (initialPosition) {

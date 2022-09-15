@@ -109,13 +109,12 @@ class CypherEditor extends Component {
       cypherEditorOptions
     );
     this.cypherEditor = editor;
-    const { editorSupport } = editor;
 
     if (cypherEditorOptions.autofocus) {
       this.cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      editor.setSchema(initialSchema);
     }
     this.cypherEditor.setValue(initialValue);
     if (initialPosition) {

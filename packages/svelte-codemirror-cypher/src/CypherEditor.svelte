@@ -37,7 +37,6 @@
 
   let cypherEditorRef;
   let cypherEditor;
-  let cypherEditorSupport;
 
   $: editorClassNames = (classNames ? classNames : [])
     .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
@@ -81,15 +80,13 @@
       cypherEditorRef,
       options
     );
-    const { editorSupport } = editor;
     cypherEditor = editor;
-    cypherEditorSupport = editorSupport;
 
     if (autofocus) {
       cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      editor.setSchema(initialSchema);
     }
     cypherEditor.setValue(initialValue);
     if (initialPosition) {
