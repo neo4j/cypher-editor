@@ -180,5 +180,53 @@ export const eventLog = (event, argument) => {
   };
 };
 
+const hasSameKeyValues = (a, b, keys) => {
+  if (!a && !b) {
+    return true;
+  } else if (!a || !b) {
+    return false;
+  } else {
+    for (let key of keys) {
+      if (a[key] !== b[key]) {
+        return false;
+      }
+    }
+    return true;
+  }
+};
+
+export const getChangedScrollInfo = (oldScrollInfo, newScrollInfo) => {
+  if (!oldScrollInfo) {
+    return newScrollInfo;
+  }
+  const yChanged = !hasSameKeyValues(oldScrollInfo, newScrollInfo, [
+    "scrollTop",
+    "clientHeight",
+    "scrollHeight"
+  ]);
+  const xChanged = !hasSameKeyValues(oldScrollInfo, newScrollInfo, [
+    "scrollLeft",
+    "clientWidth",
+    "scrollWidth"
+  ]);
+  if (xChanged === yChanged) {
+    return newScrollInfo;
+  } else {
+    const {
+      scrollTop,
+      clientHeight,
+      scrollHeight,
+      scrollLeft,
+      clientWidth,
+      scrollWidth
+    } = newScrollInfo;
+    if (yChanged) {
+      return { scrollTop, clientHeight, scrollHeight };
+    } else {
+      return { scrollLeft, clientWidth, scrollWidth };
+    }
+  }
+};
+
 export const createDriver = () =>
   neo4j.driver(host, neo4j.auth.basic(user, pass));
