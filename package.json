@@ -23,10 +23,10 @@
   "scripts": {
     "clean": "rimraf packages/*/node_modules rimraf node_modules",
     "lerna": "lerna",
-    "deploy:demos": "lerna run build && lerna run deploy --stream",
-    "serve:demos": "lerna run serve --stream",
+    "e2e:ci": "lerna run build --stream && lerna run deploy --stream && yarn serve && yarn e2e",
     "e2e": "lerna run e2e --stream",
-    "e2e:ci": "yarn deploy:demos && yarn serve:demos & sleep 5 && yarn e2e",
+    "serve": "lerna run serve --stream & sleep 5",
+    "kill-serve": "npx -y kill-port 5173",
     "build-clean": "lerna run build-clean",
     "prepublishOnly": "lerna run build",
     "start": "lerna run start --scope demo --stream",
