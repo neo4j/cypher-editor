@@ -373,12 +373,10 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
-const defaultAutocompleteSticky = false;
-
 export const getExtensions = (
   {
     autocomplete,
-    autocompleteSticky,
+    autocompleteCloseOnBlur,
     lint,
     lineNumbers = true,
     lineWrapping = false,
@@ -403,7 +401,7 @@ export const getExtensions = (
     lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
     autocompleteConf.of(
       readOnly === false && autocomplete
-        ? autocompleteSticky
+        ? !autocompleteCloseOnBlur
           ? useStickyAutocompleteExtensions
           : useAutocompleteExtensions
         : []
@@ -425,20 +423,30 @@ export const getExtensions = (
   ];
 };
 
+const defaultOptions = {
+  updateSyntaxHighlighting: true,
+  text: "",
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocomplete: true,
+  autocompleteCloseOnBlur: true,
+  placeholder: undefined,
+  autofocus: true,
+  theme: "light",
+  lineNumbers: true,
+  lineWrapping: false,
+  lineNumberFormatter: defaultLineNumberFormatter,
+  lint: true,
+  readOnly: false
+};
+
 export function createCypherEditor(
   parentDOMElement,
-  {
-    text = "",
-    extensions,
-    updateSyntaxHighlighting = true,
-    autocompleteTriggerStrings:
-      initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
-    autofocus = true,
-    ...options
-  } = {}
+  options = {}
 ) {
-  let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
-  let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
+  const combinedOptions = { ...defaultOptions, options };
+  // TODO investigate passing theme to getExtensions, and make it a compartment toggle thing in cm 6.
+  const { updateSyntaxHighlighting, autofocus, text, extensions } = combinedOptions;
+  let { theme, autocompleteTriggerStrings, autocomplete, autocompleteCloseOnBlur, placeholder, lineNumbers, lineWrapping, lineNumberFormatter, lint, readOnly } = combinedOptions;
   let autocompleteOpen = false;
 
   const eventListenerTypeMap = {};
@@ -529,7 +537,7 @@ export function createCypherEditor(
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
 
-  extensions = [
+  const stateExtensions = [
     ...(extensions
       ? extensions
       : [
@@ -552,7 +560,7 @@ export function createCypherEditor(
 
   const initialState = EditorState.create({
     doc: text,
-    extensions: extensions
+    extensions: stateExtensions
   });
 
   let editor = new EditorView({
@@ -627,7 +635,7 @@ export function createCypherEditor(
     editor.contentDOM.focus();
   }
 
-  if (options.readOnly === "nocursor") {
+  if (readOnly === "nocursor") {
     editor.contentDOM.setAttribute("contenteditable", "false");
   }
 
@@ -666,16 +674,6 @@ export function createCypherEditor(
   const showAutoComplete = () => {
     startCompletion(editor);
   };
-
-  let autocomplete = options.autocomplete || true;
-  let autocompleteSticky = options.autocompleteSticky || false;
-  let placeholder = options.placeholder;
-  let lineWrapping = options.lineWrapping;
-  let lint = options.lint || true;
-  let readOnly = options.readOnly || false;
-  let lineNumbers = options.lineNumbers || true;
-  let lineNumberFormatter =
-    options.lineNumberFormatter || defaultLineNumberFormatter;
 
   const clearHistory = () => {
     editor.dispatch({
@@ -757,7 +755,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         readOnly === false && autocomplete
-          ? autocompleteSticky
+          ? !autocompleteCloseOnBlur
             ? useStickyAutocompleteExtensions
             : useAutocompleteExtensions
           : []
@@ -765,12 +763,12 @@ export function createCypherEditor(
     });
   };
 
-  const setAutocompleteSticky = (newAutocompleteSticky) => {
-    autocompleteSticky = newAutocompleteSticky;
+  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur) => {
+    autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         readOnly === false && autocomplete
-          ? autocompleteSticky
+          ? autocompleteCloseOnBlur
             ? useStickyAutocompleteExtensions
             : useAutocompleteExtensions
           : []
@@ -836,6 +834,7 @@ export function createCypherEditor(
 
   const editorAPI = {
     focus,
+    clearHistory,
     goToPosition,
     showAutoComplete,
     setValue,
@@ -847,7 +846,7 @@ export function createCypherEditor(
     getPosition,
     getPositionForValue,
     setAutocomplete,
-    setAutocompleteSticky,
+    setAutocompleteCloseOnBlur,
     setAutocompleteTriggerStrings,
     setLint,
     getLineCount,

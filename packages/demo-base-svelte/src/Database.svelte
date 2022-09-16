@@ -46,7 +46,7 @@
   let schema = initialSchema;
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
-  let autocompleteSticky = initialOptions.autocompleteSticky;
+  let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let positionPosition = "0";
   let positionLine = "1";
   let positionColumn = "0";
@@ -303,15 +303,15 @@
   };
 
   const showStickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteSticky", true));
-    autocompleteSticky = true;
-    cypherEditor && cypherEditor.setAutocompleteSticky(true);
+    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", false));
+    autocompleteCloseOnBlur = false;
+    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(false);
   };
 
   const showUnstickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteSticky", false));
-    autocompleteSticky = false;
-    cypherEditor && cypherEditor.setAutocompleteSticky(false);
+    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", true));
+    autocompleteCloseOnBlur = true;
+    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(true);
   };
 
   const goToPosition = (position) => {
@@ -558,18 +558,18 @@
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Autocomplete Sticky</div>
+      <div class="setting-label">Autocomplete Close On Blur</div>
       <div class="setting-values">
         <button
-          class={autocompleteSticky === true ? "setting-active" : undefined}
-          on:click={showStickyAutocomplete}>True</button
+          class={autocompleteCloseOnBlur === false ? "setting-active" : undefined}
+          on:click={showStickyAutocomplete}>False</button
         >
         <button
-          class={autocompleteSticky === false ||
-          autocompleteSticky === undefined
+          class={autocompleteCloseOnBlur === true ||
+          autocompleteCloseOnBlur === undefined
             ? "setting-active"
             : undefined}
-          on:click={showUnstickyAutocomplete}>False</button
+          on:click={showUnstickyAutocomplete}>True</button
         >
       </div>
     </div>

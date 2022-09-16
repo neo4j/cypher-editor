@@ -49,8 +49,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings || undefined
   );
-  const [autocompleteSticky, setAutocompleteSticky] = useState(
-    initialOptions.autocompleteSticky
+  const [autocompleteCloseOnBlur, setAutocompleteCloseOnBlur] = useState(
+    initialOptions.autocompleteCloseOnBlur
   );
   const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
   const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
@@ -330,15 +330,15 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showStickyAutocomplete = () => {
-    changeLogs(logs.concat(commandLog("setAutocompleteSticky", true)));
-    setAutocompleteSticky(true);
-    editor && editor.setAutocompleteSticky(true);
+    changeLogs(logs.concat(commandLog("setAutocompleteCloseOnBlur", false)));
+    setAutocompleteCloseOnBlur(false);
+    editor && editor.setAutocompleteCloseOnBlur(false);
   };
 
   const showUnstickyAutocomplete = () => {
-    changeLogs(logs.concat(commandLog("setAutocompleteSticky", false)));
-    setAutocompleteSticky(false);
-    editor && editor.setAutocompleteSticky(false);
+    changeLogs(logs.concat(commandLog("setAutocompleteCloseOnBlur", true)));
+    setAutocompleteCloseOnBlur(true);
+    editor && editor.setAutocompleteCloseOnBlur(true);
   };
 
   const goToPosition = (position) => {
@@ -660,25 +660,25 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting setting-long">
-          <div className="setting-label">Autocomplete Sticky</div>
+          <div className="setting-label">Autocomplete Close On Blur</div>
           <div className="setting-values">
             <button
               className={
-                autocompleteSticky === true ? "setting-active" : undefined
+                autocompleteCloseOnBlur === false ? "setting-active" : undefined
               }
               onClick={showStickyAutocomplete}
             >
-              True
+              False
             </button>
             <button
               className={
-                autocompleteSticky === false || autocompleteSticky === undefined
+                autocompleteCloseOnBlur === true || autocompleteCloseOnBlur === undefined
                   ? "setting-active"
                   : undefined
               }
               onClick={showUnstickyAutocomplete}
             >
-              False
+              True
             </button>
           </div>
         </div>

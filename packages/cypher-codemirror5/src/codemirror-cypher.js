@@ -138,34 +138,78 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
-const defaultAutocompleteSticky = false;
+const defaultCodemirrorOptions = {
+  // lineNumbers: true,
+  mode: "cypher",
+  // theme: theme,
+  gutters: ["cypher-hints"],
+  // lineWrapping: false,
+  // autofocus: true,
+  smartIndent: false,
+  // lint: true,
+  extraKeys: {
+    "Ctrl-Space": "autocomplete"
+  },
+  hintOptions: {
+    completeSingle: false, //
+    closeOnUnfocus: false, //
+    alignWithWord: true, //
+    async: true //
+  },
+  autoCloseBrackets: {
+    explode: ""
+  }
+};
 
-export function createCypherEditor(parentDOMElement, settings) {
+const defaultOptions = {
+  updateSyntaxHighlighting: true,
+  text: "",
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocomplete: true,
+  autocompleteCloseOnBlur: true,
+  placeholder: undefined,
+  autofocus: true,
+  theme: "light",
+  lineNumbers: true,
+  lineWrapping: false,
+  lineNumberFormatter: defaultLineNumberFormatter,
+  lint: true,
+  readOnly: false,
+  codemirrorOptions: {
+    ...defaultCodemirrorOptions
+  }
+};
+
+export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = new CypherEditorSupport();
 
+  const combinedOptions = { ...defaultOptions, options };
+
   const {
-    autocomplete = true,
-    autocompleteSticky: initialAutocompleteSticky = false,
-    lint = true,
-    lineNumberFormatter = defaultLineNumberFormatter,
-    autocompleteTriggerStrings:
-      initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
-      theme,
-    ...otherSettings
-  } = settings;
+    updateSyntaxHighlighting,
+    text,
+    autocomplete,
+    lint,
+    lineNumberFormatter,
+    theme,
+    codemirrorOptions
+  } = combinedOptions;
 
   let lineFormatter;
-  let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
-  let autocompleteSticky = initialAutocompleteSticky;
-  const baseHintOptions = otherSettings.hintOptions || {};
+  const { updateSyntaxHighlighting, autofocus, text, theme, autocompleteTriggerStrings, autocomplete, autocompleteCloseOnBlur, placeholder, lineNumbers, lineWrapping, lineNumberFormatter, lint, readOnly } = combinedOptions;
+  let { autocompleteCloseOnBlur, autocompleteTriggerStrings, lineNumbers } = combinedOptions;
+  const baseHintOptions = codemirrorOptions.hintOptions || {};
   let autocompleteOpen = false;
 
-  if (initialAutocompleteSticky) {
-    otherSettings.hintOptions = { ...baseHintOptions, closeOnUnfocus: false };
-  }
-  if (theme) {
-    otherSettings.theme = THEME_MAP[theme];
-  }
+  const combinedCodemirrorOptions = {
+    ...codemirrorOptions,
+    hintOptions: { ...baseHintOptions, closeOnUnfocus: autocompleteCloseOnBlur },
+    theme: THEME_MAP[theme],
+    lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line),
+    lint,
+    lineNumbers,
+    value: text // TODO check this works same as cm6
+  };
 
   const onLineNumberClicked = (cm, lineIndex, _, event) => {
     lineNumberClickedListeners.forEach((listener) => {
@@ -173,12 +217,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     });
   };
 
-  const editor = codemirror(parentDOMElement, {
-    ...otherSettings,
-    lint,
-    value: "",
-    lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line)
-  });
+  const editor = codemirror(parentDOMElement, combinedCodemirrorOptions);
   editor.on("gutterClick", onLineNumberClicked);
   editor.lint = lint;
   editor.autocomplete = autocomplete;
@@ -310,6 +349,10 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const showAutoComplete = () => {
     editor.execCommand("autocomplete");
+  };
+
+  const clearHistory = () => {
+    editor.clearHistory();
   };
 
   editor.cypherMarkers = [];
@@ -471,7 +514,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     }
   });
 
-  const value = settings.value || "";
+  const value = text;
   editor.setValue(value);
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
@@ -499,7 +542,7 @@ export function createCypherEditor(parentDOMElement, settings) {
   const setLineNumbers = (lineNumbers) => {
     editor.setOption("lineNumbers", lineNumbers);
     if (lineNumbers) {
-      editor.setOption("gutters", settings.gutters);
+      editor.setOption("gutters", combinedCodemirrorOptions.gutters);
     } else {
       editor.setOption("gutters", false);
     }
@@ -515,11 +558,11 @@ export function createCypherEditor(parentDOMElement, settings) {
     editor.autocomplete = autocomplete;
   };
 
-  const setAutocompleteSticky = (newAutocompleteSticky) => {
-    autocompleteSticky = newAutocompleteSticky;
+  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur) => {
+    autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.setOption("hintOptions", {
       ...baseHintOptions,
-      closeOnUnfocus: !autocompleteSticky
+      closeOnUnfocus: autocompleteCloseOnBlur
     });
   };
 
@@ -556,6 +599,7 @@ export function createCypherEditor(parentDOMElement, settings) {
 
   const editorAPI = {
     focus,
+    clearHistory,
     goToPosition,
     showAutoComplete,
     setValue,
@@ -567,7 +611,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     getPosition,
     getPositionForValue,
     setAutocomplete,
-    setAutocompleteSticky,
+    setAutocompleteCloseOnBlur,
     setAutocompleteTriggerStrings,
     setLint,
     getLineCount,
@@ -579,7 +623,7 @@ export function createCypherEditor(parentDOMElement, settings) {
     editorSupport
   };
 
-  if (settings.updateSyntaxHighlighting !== false) {
+  if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
     editorSupport.update(value, version);
 
