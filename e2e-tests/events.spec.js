@@ -32,12 +32,12 @@ test.describe("Commands and Editor events", () => {
     // Blur
     const title = page.locator("text=/Cypher Codemirror/i");
     await title.click();
-    expect(await getLogEntry(page, -1)).toEqual("event onFocusChange false");
+    expect(await getLogEntry(page, -1)).toEqual("event focusChanged false");
 
     // Focus
     // This triggers two event, one for the focus and one for the cursor position
     await getEditor(page).click();
-    expect(await getLogEntry(page, -2)).toEqual("event onFocusChange true");
-    expect(await getLogEntry(page, -1)).toContain("event onPositionChange");
+    expect(await getLogEntry(page, -2)).toEqual("event focusChanged true");
+    expect(await getLogEntry(page, -1)).toContain("event positionChanged");
   });
 });
