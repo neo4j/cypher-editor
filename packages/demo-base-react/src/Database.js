@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   neo4jSchema,
   simpleSchema,
@@ -44,9 +44,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   });
   const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialSchema);
-  const [readOnly, setReadOnly] = useState(initialOptions.readOnly !== undefined ? initialOptions.readOnly : false);
+  const [readOnly, setReadOnly] = useState(
+    initialOptions.readOnly !== undefined ? initialOptions.readOnly : false
+  );
   const [autocomplete, setAutocomplete] = useState(
-    initialOptions.autocomplete !== undefined ? initialOptions.autocomplete : true
+    initialOptions.autocomplete !== undefined
+      ? initialOptions.autocomplete
+      : true
   );
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings
@@ -72,26 +76,25 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     useState(false);
   const [lineCount, setLineCount] = useState(0);
   const [logs, setLogs] = useState([]);
-  const [logText, setLogText] = useState("");
   const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
   const textareaRef = useRef(null);
 
-  const changeLogs = (logs) => {
-    setLogs(logs);
-    const logText = getLogText(logs);
-    setLogText(logText);
+  useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.value = logText;
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
     }
+  }, [logs]);
+
+  const changeLogs = (newLog) => {
+    setLogs((l) => l.concat(newLog));
   };
 
   const addCommandLog = (command, argument) => {
-    changeLogs(logs.concat(commandLog(command, argument)));
+    changeLogs(commandLog(command, argument));
   };
 
   const addEventLog = (event, argument) => {
-    changeLogs(logs.concat(eventLog(event, argument)));
+    changeLogs(eventLog(event, argument));
   };
 
   const send = () => {
@@ -793,7 +796,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="card">
           <div className="logs">
             <h3>Logs</h3>
-            <textarea id="log" readOnly value={logText} ref={textareaRef} />
+            <textarea
+              id="log"
+              readOnly
+              value={getLogText(logs)}
+              ref={textareaRef}
+            />
           </div>
         </div>
         <div className="card">
