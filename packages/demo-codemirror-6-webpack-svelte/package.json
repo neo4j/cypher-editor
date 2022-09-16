@@ -5,9 +5,12 @@
   "scripts": {
     "startNoLocal": "cross-env NODE_ENV=\"development\" webpack serve",
     "start": "cross-env NODE_ENV=\"development\" webpack serve --config ./webpack.local.config.js",
+    "e2e": "export PORT=5177; playwright test --config=../../playwright.config.js",
+    "e2e:selector": "playwright codegen http://localhost:5177",
     "deploy": "npm run deploy-clean && cross-env NODE_ENV=\"production\" webpack",
     "deploy-clean": "rimraf dist",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "serve": "npx -y http-server dist --port 5177"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.1.0",

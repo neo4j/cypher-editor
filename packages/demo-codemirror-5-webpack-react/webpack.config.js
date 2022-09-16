@@ -122,7 +122,7 @@ module.exports = {
   devtool: isDev ? "eval-source-map" : "source-map",
   devServer: {
     host: "0.0.0.0",
-    port: 3004,
+    port: 5174,
     historyApiFallback: USE_STATIC ? { index: "/static/../index.html" } : true
   }
 };

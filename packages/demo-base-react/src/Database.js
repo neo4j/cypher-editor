@@ -44,9 +44,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   });
   const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialSchema);
-  const [readOnly, setReadOnly] = useState(initialOptions.readOnly !== undefined ? initialOptions.readOnly : false);
+  const [readOnly, setReadOnly] = useState(
+    initialOptions.readOnly !== undefined ? initialOptions.readOnly : false
+  );
   const [autocomplete, setAutocomplete] = useState(
-    initialOptions.autocomplete !== undefined ? initialOptions.autocomplete : true
+    initialOptions.autocomplete !== undefined
+      ? initialOptions.autocomplete
+      : true
   );
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings
@@ -72,15 +76,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     useState(false);
   const [lineCount, setLineCount] = useState(0);
   const [logs, setLogs] = useState([]);
-  const [logText, setLogText] = useState("");
   const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    const logText = getLogText(logs);
-    setLogText(logText);
     if (textareaRef.current) {
-      textareaRef.current.value = logText;
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
     }
   }, [logs]);
@@ -88,7 +88,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const clearLogs = () => {
     setLogText("");
     setLogs([]);
-  };
+  }
 
   const addCommandLog = (command, argument) => {
     setLogs(logs => logs.concat(commandLog(command, argument)));
@@ -800,7 +800,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               <h3>Logs</h3>
               <button onClick={clearLogs}> Clear </button>
             </div>
-            <textarea id="log" readOnly value={logText} ref={textareaRef} />
+            <textarea
+              id="log"
+              readOnly
+              value={getLogText(logs)}
+              ref={textareaRef}
+            />
           </div>
         </div>
         <div className="card">
