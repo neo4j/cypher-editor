@@ -678,7 +678,7 @@
     <div class="card">
       <div class="logs">
         <h3>Logs</h3>
-        <textarea readonly bind:this={textareaRef} value={logText} />
+        <textarea id="log" readonly bind:this={textareaRef} value={logText} />
       </div>
     </div>
     <div class="card">
