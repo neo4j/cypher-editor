@@ -99,6 +99,8 @@ export const user = "neo4j";
 
 export const pass = "asdfgh";
 
+// Note: an automated test for the initial autofocus (defaultOptions.autofocus) would be good.
+
 export const defaultOptions = {
   lineNumbers: true, // whether to show the line numbers next to the editor
   autofocus: true, // if true the editor will be focused once created
