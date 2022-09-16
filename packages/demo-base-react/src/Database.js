@@ -85,20 +85,17 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     }
   }, [logs]);
 
-  const changeLogs = (newLog) => {
-    setLogs((l) => l.concat(newLog));
-  };
-
   const clearLogs = () => {
+    setLogText("");
     setLogs([]);
   }
 
   const addCommandLog = (command, argument) => {
-    changeLogs(commandLog(command, argument));
+    setLogs(logs => logs.concat(commandLog(command, argument)));
   };
 
   const addEventLog = (event, argument) => {
-    changeLogs(eventLog(event, argument));
+    setLogs(logs => logs.concat(eventLog(event, argument)));
   };
 
   const send = () => {
