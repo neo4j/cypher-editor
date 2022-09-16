@@ -32,29 +32,37 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [theme, setTheme] = useState(defaultTheme);
   const [position, setPosition] = useState(initialPosition);
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [focused, setFocused] = useState(true);
+  const [focused, setFocused] = useState(
+    initialOptions.autofocus !== undefined ? initialOptions.autofocus : true
+  );
   const [editor, setEditor] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(
-    initialOptions.lineNumbers || true
+    initialOptions.lineNumbers !== undefined ? initialOptions.lineNumbers : true
   );
   const [lineNumberFormatterObject, setLineNumberFormatterObject] = useState({
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialSchema);
-  const [readOnly, setReadOnly] = useState(initialOptions.readOnly || false);
+  const [readOnly, setReadOnly] = useState(initialOptions.readOnly !== undefined ? initialOptions.readOnly : false);
   const [autocomplete, setAutocomplete] = useState(
-    initialOptions.autocomplete || true
+    initialOptions.autocomplete !== undefined ? initialOptions.autocomplete : true
   );
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
-    initialOptions.autocompleteTriggerStrings || undefined
+    initialOptions.autocompleteTriggerStrings
   );
   const [autocompleteCloseOnBlur, setAutocompleteCloseOnBlur] = useState(
     initialOptions.autocompleteCloseOnBlur
   );
   const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
-  const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
-  const [lint, setLint] = useState(initialOptions.lint || true);
+  const [lineWrapping, setLineWrapping] = useState(
+    initialOptions.lineWrapping !== undefined
+      ? initialOptions.lineWrapping
+      : false
+  );
+  const [lint, setLint] = useState(
+    initialOptions.lint !== undefined ? initialOptions.lint : true
+  );
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
   const [positionColumn, setPositionColumn] = useState("0");
@@ -157,13 +165,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const onFocusChanged = (focused) => {
-    addEventLog("onFocusChanged", focused);
+    addEventLog("focusChanged", focused);
     setFocused(focused);
   };
 
   const onScrollChanged = (scrollInfo) => {
     addEventLog(
-      "onScrollChanged",
+      "scrollChanged",
       getChangedScrollInfo(lastScrollInfo, scrollInfo)
     );
     setLastScrollInfo(scrollInfo);

@@ -440,7 +440,7 @@ const defaultOptions = {
 };
 
 export function createCypherEditor(parentDOMElement, options = {}) {
-  const combinedOptions = { ...defaultOptions, options };
+  const combinedOptions = { ...defaultOptions, ...options };
   // TODO investigate passing theme to getExtensions, and make it a compartment toggle thing in cm 6.
   const { updateSyntaxHighlighting, autofocus, text, extensions } =
     combinedOptions;
@@ -640,10 +640,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = getEditorSupport(editor.state);
   editor.editorSupport = editorSupport;
 
-  if (autofocus) {
-    editor.contentDOM.focus();
-  }
-
   if (readOnly === "nocursor") {
     editor.contentDOM.setAttribute("contenteditable", "false");
   }
@@ -655,6 +651,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   editor.contentDOM.addEventListener("focus", () => {
     onFocusChanged(true);
   });
+
+  if (autofocus) {
+    editor.contentDOM.focus();
+  }
 
   editor.scrollDOM.addEventListener("scroll", () => {
     onScrollChanged(editor);
@@ -842,8 +842,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor && editor.focus();
   };
 
+  const destroy = () => {
+    editor && editor.destroy();
+  };
+
   const editorAPI = {
     focus,
+    destroy,
     clearHistory,
     goToPosition,
     showAutoComplete,

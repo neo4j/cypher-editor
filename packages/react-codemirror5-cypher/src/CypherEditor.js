@@ -72,44 +72,15 @@ class CypherEditor extends Component {
       initialSchema,
       initialValue = "MATCH (n) RETURN n LIMIT 10",
       initialPosition,
-      theme = THEME_LIGHT,
+      theme,
       onEditorCreated
     } = this.props;
-
-    const defaultOptions = {
-      lineNumbers: true,
-      mode: "cypher",
-      theme: theme,
-      gutters: ["cypher-hints"],
-      lineWrapping: false,
-      autofocus: true,
-      smartIndent: false,
-      lint: true,
-      extraKeys: {
-        "Ctrl-Space": "autocomplete"
-      },
-      hintOptions: {
-        completeSingle: false, //
-        closeOnUnfocus: false, //
-        alignWithWord: true, //
-        async: true //
-      },
-      autoCloseBrackets: {
-        explode: ""
-      }
-    };
-
-    let cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
-
-    if (cypherEditorOptions.lineNumbers === false) {
-      cypherEditorOptions.gutters = false;
-    }
-    const { editor } = createCypherEditor(this.editorRef, cypherEditorOptions);
+    const { editor } = createCypherEditor(this.editorRef, {
+      ...initialOptions,
+      theme
+    });
     this.cypherEditor = editor;
 
-    if (cypherEditorOptions.autofocus) {
-      this.cypherEditor.focus();
-    }
     if (initialSchema) {
       editor.setSchema(initialSchema);
     }
