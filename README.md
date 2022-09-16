@@ -22,3 +22,38 @@ Once you have install the dependencies, you can run any of the demos that are in
 cd packages/demo-codemirror-6-vite-svelte
 yarn start
 ```
+
+### Tests
+
+Some e2e tests are setup. You can run them indivudually in each package:
+
+```bash
+cd packages/<demo-package-name>
+
+# for dev
+yarn start
+
+# for prod
+yarn build
+yarn serve
+
+yarn e2e
+```
+
+Or all packages together:
+
+```bash
+# in project root
+
+# for prod
+yarn e2e:prepare
+yarn serve
+
+yarn e2e
+```
+
+On CI systems with only one shell
+
+```
+yarn e2e:ci
+```

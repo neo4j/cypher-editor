@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "start": "vite",
     "deploy": "vite build",
-    "preview": "vite preview",
+    "start": "vite --port 5173",
+    "e2e": "export PORT=5173; playwright test --config=../../playwright.config.js",
+    "e2e:selector": "playwright codegen http://localhost:5173",
+    "serve": "npx -y http-server dist --port 5173",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
