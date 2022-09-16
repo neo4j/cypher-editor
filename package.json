@@ -29,6 +29,7 @@
     "serve:bg": "lerna run serve --stream & sleep 5",
     "serve": "lerna run serve --stream",
     "kill-serve": "npx -y kill-port 5173",
+    "build-lib": "lerna run build",
     "build-clean": "lerna run build-clean",
     "prepublishOnly": "lerna run build",
     "start": "lerna run start --scope demo --stream",
