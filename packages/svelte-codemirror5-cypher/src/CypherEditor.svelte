@@ -13,12 +13,6 @@
 
   const THEME_LIGHT = "light";
   const THEME_DARK = "dark";
-  const INNER_THEME_LIGHT = "cypher";
-  const INNER_THEME_DARK = "cypher cypher-dark";
-  const THEME_MAP = {
-    [THEME_LIGHT]: INNER_THEME_LIGHT,
-    [THEME_DARK]: INNER_THEME_DARK
-  };
 
   export let initialPosition = undefined;
 
@@ -26,13 +20,13 @@
 
   export let initialSchema = undefined;
 
-  export let onValueChange = undefined;
+  export let onValueChanged = undefined;
 
-  export let onFocusChange = undefined;
+  export let onFocusChanged = undefined;
 
-  export let onScroll = undefined;
+  export let onScrollChanged = undefined;
 
-  export let onPositionChange = undefined;
+  export let onPositionChanged = undefined;
 
   export let classNames = undefined;
 
@@ -40,19 +34,16 @@
 
   export let theme = THEME_LIGHT;
 
-  export let onEditorCreate = undefined;
+  export let onEditorCreated = undefined;
 
-  export let onAutocompleteOpenChange = undefined;
+  export let onAutocompleteOpenChanged = undefined;
 
-  export let onLineClick = undefined;
-
-  let innerTheme = THEME_MAP[theme];
+  export let onLineNumberClicked = undefined;
 
   let isFocused = false;
 
   let cypherEditorRef;
   let cypherEditor;
-  let cypherEditorSupport;
 
   $: editorClassNames = (classNames || [])
     .concat(["ReactCodeMirror"])
@@ -62,7 +53,7 @@
   const defaultOptions = {
     lineNumbers: true,
     mode: "cypher",
-    theme: innerTheme,
+    theme: theme,
     gutters: ["cypher-hints"],
     lineWrapping: false,
     autofocus: true,
@@ -85,48 +76,44 @@
   $: cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
   const valueChanged = (doc: { getValue: () => string }, change: any) => {
-    if (onValueChange && change.origin !== "setValue") {
-      onValueChange(doc.getValue(), change);
+    if (onValueChanged && change.origin !== "setValue") {
+      onValueChanged(doc.getValue(), change);
     }
   };
 
   const focusChanged = (focused) => {
     isFocused = focused;
-    onFocusChange && onFocusChange(focused);
+    onFocusChanged && onFocusChanged(focused);
   };
 
   const scrollChanged = (scrollInfo) => {
-    onScroll && onScroll(scrollInfo);
+    onScrollChanged && onScrollChanged(scrollInfo);
   };
 
   const positionChanged = (positionObject) => {
-    onPositionChange && onPositionChange(positionObject);
+    onPositionChanged && onPositionChanged(positionObject);
   };
 
-  const autocompleteChanged = (autocompleteOpen) => {
-    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  const autocompleteOpenChanged = (autocompleteOpen) => {
+    onAutocompleteOpenChanged && onAutocompleteOpenChanged(autocompleteOpen);
   };
 
-  const lineClicked = (line, event) => {
-    onLineClick && onLineClick(line, event);
+  const lineNumberClicked = (line, event) => {
+    onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
   onMount(() => {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor, editorSupport } = createCypherEditor(
-      cypherEditorRef,
-      cypherEditorOptions
-    );
+    const { editor } = createCypherEditor(cypherEditorRef, cypherEditorOptions);
     cypherEditor = editor;
-    cypherEditorSupport = editorSupport;
 
     if (cypherEditorOptions.autofocus) {
       cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      cypherEditor.setSchema(initialSchema);
     }
     cypherEditor.setValue(initialValue);
     if (initialPosition) {
@@ -138,10 +125,10 @@
     cypherEditor.on("blur", () => focusChanged(false));
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
-    cypherEditor.on("autocomplete", autocompleteChanged);
-    cypherEditor.on("lineclick", lineClicked);
+    cypherEditor.on("autocomplete", autocompleteOpenChanged);
+    cypherEditor.on("lineclick", lineNumberClicked);
 
-    onEditorCreate && onEditorCreate(cypherEditor);
+    onEditorCreated && onEditorCreated(cypherEditor);
   });
 
   onDestroy(() => {
@@ -150,13 +137,12 @@
     cypherEditor.off("blur", () => focusChanged(false));
     cypherEditor.off("scroll", scrollChanged);
     cypherEditor.off("position", positionChanged);
-    cypherEditor.off("autocomplete", autocompleteChanged);
-    cypherEditor.off("lineclick", lineClicked);
+    cypherEditor.off("autocomplete", autocompleteOpenChanged);
+    cypherEditor.off("lineclick", lineNumberClicked);
   });
 
   const themeChanged = (newTheme) => {
-    innerTheme = THEME_MAP[newTheme];
-    cypherEditor && cypherEditor.setOption("theme", innerTheme);
+    cypherEditor && cypherEditor.setTheme(newTheme);
   };
 
   $: {

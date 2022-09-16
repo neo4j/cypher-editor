@@ -12,19 +12,12 @@ import "cypher-codemirror5/css/cypher-codemirror.css";
 
 const THEME_LIGHT = "light";
 const THEME_DARK = "dark";
-const INNER_THEME_LIGHT = "cypher";
-const INNER_THEME_DARK = "cypher cypher-dark";
-const THEME_MAP = {
-  [THEME_LIGHT]: INNER_THEME_LIGHT,
-  [THEME_DARK]: INNER_THEME_DARK
-};
 
 class CypherEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false,
-      innerTheme: THEME_MAP[props.theme]
+      focused: false
     };
   }
 
@@ -33,16 +26,16 @@ class CypherEditor extends Component {
   };
 
   valueChanged = (doc, change) => {
-    const { onValueChange } = this.props;
-    if (onValueChange && change.origin !== "setValue") {
-      onValueChange(doc.getValue(), change);
+    const { onValueChanged } = this.props;
+    if (onValueChanged && change.origin !== "setValue") {
+      onValueChanged(doc.getValue(), change);
     }
   };
 
   focusChanged = (focused) => {
-    const { onFocusChange } = this.props;
+    const { onFocusChanged } = this.props;
     this.setState({ focused });
-    onFocusChange && onFocusChange(focused);
+    onFocusChanged && onFocusChanged(focused);
   };
 
   focused = () => {
@@ -54,23 +47,23 @@ class CypherEditor extends Component {
   };
 
   scrollChanged = (scrollInfo) => {
-    const { onScroll } = this.props;
-    onScroll && onScroll(scrollInfo);
+    const { onScrollChanged } = this.props;
+    onScrollChanged && onScrollChanged(scrollInfo);
   };
 
   positionChanged = (positionObject) => {
-    const { onPositionChange } = this.props;
-    onPositionChange && onPositionChange(positionObject);
+    const { onPositionChanged } = this.props;
+    onPositionChanged && onPositionChanged(positionObject);
   };
 
-  autocompleteChanged = (autocompleteOpen) => {
-    const { onAutocompleteOpenChange } = this.props;
-    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  autocompleteOpenChanged = (autocompleteOpen) => {
+    const { onAutocompleteOpenChanged } = this.props;
+    onAutocompleteOpenChanged && onAutocompleteOpenChanged(autocompleteOpen);
   };
 
-  lineClicked = (line, event) => {
-    const { onLineClick } = this.props;
-    onLineClick && onLineClick(line, event);
+  lineNumberClicked = (line, event) => {
+    const { onLineNumberClicked } = this.props;
+    onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
   componentDidMount() {
@@ -80,15 +73,13 @@ class CypherEditor extends Component {
       initialValue = "MATCH (n) RETURN n LIMIT 10",
       initialPosition,
       theme = THEME_LIGHT,
-      onEditorCreate
+      onEditorCreated
     } = this.props;
-
-    let innerTheme = THEME_MAP[theme];
 
     const defaultOptions = {
       lineNumbers: true,
       mode: "cypher",
-      theme: innerTheme,
+      theme: theme,
       gutters: ["cypher-hints"],
       lineWrapping: false,
       autofocus: true,
@@ -113,17 +104,14 @@ class CypherEditor extends Component {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor, editorSupport } = createCypherEditor(
-      this.editorRef,
-      cypherEditorOptions
-    );
+    const { editor } = createCypherEditor(this.editorRef, cypherEditorOptions);
     this.cypherEditor = editor;
 
     if (cypherEditorOptions.autofocus) {
       this.cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      editor.setSchema(initialSchema);
     }
     this.cypherEditor.setValue(initialValue);
     if (initialPosition) {
@@ -134,10 +122,10 @@ class CypherEditor extends Component {
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
     this.cypherEditor.on("position", this.positionChanged);
-    this.cypherEditor.on("autocomplete", this.autocompleteChanged);
-    this.cypherEditor.on("lineclick", this.lineClicked);
+    this.cypherEditor.on("autocomplete", this.autocompleteOpenChanged);
+    this.cypherEditor.on("lineclick", this.lineNumberClicked);
 
-    onEditorCreate && onEditorCreate(this.cypherEditor);
+    onEditorCreated && onEditorCreated(this.cypherEditor);
   }
 
   componentWillUnmount() {
@@ -147,8 +135,8 @@ class CypherEditor extends Component {
       this.cypherEditor.off("blur", this.blurred);
       this.cypherEditor.off("scroll", this.scrollChanged);
       this.cypherEditor.off("position", this.positionChanged);
-      this.cypherEditor.off("autocomplete", this.autocompleteChanged);
-      this.cypherEditor.off("lineclick", this.lineClicked);
+      this.cypherEditor.off("autocomplete", this.autocompleteOpenChanged);
+      this.cypherEditor.off("lineclick", this.lineNumberClicked);
 
       this.cypherEditor.destroy();
     }
@@ -156,9 +144,7 @@ class CypherEditor extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.theme !== this.props.theme) {
-      const innerTheme = THEME_MAP[this.props.theme];
-      this.setState({ innerTheme });
-      this.cypherEditor.setOption("theme", innerTheme);
+      this.cypherEditor.setTheme(this.props.theme);
     }
   }
 

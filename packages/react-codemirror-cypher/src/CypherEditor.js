@@ -18,14 +18,14 @@ class CypherEditor extends Component {
   };
 
   valueChanged = (value, changes) => {
-    const { onValueChange } = this.props;
-    onValueChange && onValueChange(value);
+    const { onValueChanged } = this.props;
+    onValueChanged && onValueChanged(value);
   };
 
   focusChanged = (focused) => {
-    const { onFocusChange } = this.props;
+    const { onFocusChanged } = this.props;
     this.setState({ focused });
-    onFocusChange && onFocusChange(focused);
+    onFocusChanged && onFocusChanged(focused);
   };
 
   focused = () => {
@@ -37,23 +37,23 @@ class CypherEditor extends Component {
   };
 
   scrollChanged = (scrollInfo) => {
-    const { onScroll } = this.props;
-    onScroll && onScroll(scrollInfo);
+    const { onScrollChanged } = this.props;
+    onScrollChanged && onScrollChanged(scrollInfo);
   };
 
   positionChanged = (positionObject) => {
-    const { onPositionChange } = this.props;
-    onPositionChange && onPositionChange(positionObject);
+    const { onPositionChanged } = this.props;
+    onPositionChanged && onPositionChanged(positionObject);
   };
 
-  autocompleteChanged = (autocompleteOpen) => {
-    const { onAutocompleteOpenChange } = this.props;
-    onAutocompleteOpenChange && onAutocompleteOpenChange(autocompleteOpen);
+  autocompleteOpenChanged = (autocompleteOpen) => {
+    const { onAutocompleteOpenChanged } = this.props;
+    onAutocompleteOpenChanged && onAutocompleteOpenChanged(autocompleteOpen);
   };
 
-  lineClicked = (line, event) => {
-    const { onLineClick } = this.props;
-    onLineClick && onLineClick(line, event);
+  lineNumberClicked = (line, event) => {
+    const { onLineNumberClicked } = this.props;
+    onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
   componentDidMount() {
@@ -62,20 +62,17 @@ class CypherEditor extends Component {
       initialSchema,
       initialValue = "MATCH (n) RETURN n LIMIT 10",
       initialPosition,
-      onEditorCreate
+      onEditorCreated
     } = this.props;
     const { autofocus = true, ...options } = initialOptions || {};
-    const { editor, editorSupport } = createCypherEditor(
-      this.editorRef,
-      options
-    );
+    const { editor } = createCypherEditor(this.editorRef, options);
     this.cypherEditor = editor;
 
     if (autofocus) {
       this.cypherEditor.focus();
     }
     if (initialSchema) {
-      editorSupport.setSchema(initialSchema);
+      editor.setSchema(initialSchema);
     }
     this.cypherEditor.setValue(initialValue);
     if (initialPosition) {
@@ -86,10 +83,10 @@ class CypherEditor extends Component {
     this.cypherEditor.on("blur", this.blurred);
     this.cypherEditor.on("scroll", this.scrollChanged);
     this.cypherEditor.on("position", this.positionChanged);
-    this.cypherEditor.on("autocomplete", this.autocompleteChanged);
-    this.cypherEditor.on("lineclick", this.lineClicked);
+    this.cypherEditor.on("autocomplete", this.autocompleteOpenChanged);
+    this.cypherEditor.on("lineclick", this.lineNumberClicked);
 
-    onEditorCreate && onEditorCreate(this.cypherEditor);
+    onEditorCreated && onEditorCreated(this.cypherEditor);
   }
 
   componentWillUnmount() {
@@ -99,8 +96,8 @@ class CypherEditor extends Component {
       this.cypherEditor.off("blur", this.blurred);
       this.cypherEditor.off("scroll", this.scrollChanged);
       this.cypherEditor.off("position", this.positionChanged);
-      this.cypherEditor.off("autocomplete", this.autocompleteChanged);
-      this.cypherEditor.off("lineclick", this.lineClicked);
+      this.cypherEditor.off("autocomplete", this.autocompleteOpenChanged);
+      this.cypherEditor.off("lineclick", this.lineNumberClicked);
 
       this.cypherEditor.destroy();
     }

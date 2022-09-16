@@ -107,7 +107,7 @@ export const defaultOptions = {
   autocomplete: true, // whether to show autocompletion
   lint: true, // whether to show lint errors,
   autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"],
-  autocompleteSticky: false,
+  autocompleteCloseOnBlur: true,
   lineWrapping: false
 };
 

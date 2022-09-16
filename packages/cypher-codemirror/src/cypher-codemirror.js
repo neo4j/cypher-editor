@@ -37,6 +37,71 @@ import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 
 import { cypher } from "./cypher";
 
+const isNumber = (v) =>
+  v !== undefined &&
+  (typeof v === "number" || v instanceof Number) &&
+  isFinite(v);
+const isInteger = (v) => isNumber(v) && v % 1 === 0;
+
+const getGlobalPositionForValue = (view, positionValue) => {
+  let position = null;
+  if (isInteger(positionValue) && positionValue >= 0) {
+    position = positionValue;
+  } else if (typeof positionValue === "object" && positionValue) {
+    const { line, column, position: maybePosition } = positionValue;
+    if (isInteger(maybePosition) && maybePosition >= 0) {
+      position = maybePosition;
+    } else if (
+      isInteger(line) &&
+      line >= 1 &&
+      isInteger(column) &&
+      column >= 0
+    ) {
+      const lineCount = view.state.doc.lines;
+      if (line <= lineCount) {
+        const lineObject = view.state.doc.line(line);
+        if (lineObject) {
+          const { from, to } = lineObject;
+          if (isInteger(from) && isInteger(to) && column <= to - from) {
+            position = from + column;
+          }
+        }
+      }
+    }
+  }
+  if (position !== null) {
+    if (position <= view.state.doc.length) {
+      const lineObject = view.state.doc.lineAt(position);
+      if (lineObject) {
+        const { number: line, from: lineStart, to: lineEnd } = lineObject;
+        const column = position - lineStart;
+        if (lineStart + column <= lineEnd) {
+          position = {
+            line,
+            column,
+            position
+          };
+        } else {
+          position = null;
+        }
+      } else {
+        position = null;
+      }
+    } else {
+      position = null;
+    }
+  }
+  return position;
+};
+
+const getPositionFromState = (state) => {
+  const { from, to, head, anchor } = state.selection.main;
+  const position = head;
+  const { number: line, from: lineStart } = state.doc.lineAt(position);
+  const column = position - lineStart;
+  return { line, column, position };
+};
+
 const addTypeMarker = StateEffect.define();
 const clearTypeMarkers = StateEffect.define();
 
@@ -231,15 +296,15 @@ const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
 
 export const cypherLineNumbers = ({
   lineNumberFormatter,
-  onLineClick = () => {}
+  onLineNumberClicked = () => {}
 }) => [
   lineNumbers({
     formatNumber: (number, state) =>
       lineNumberFormatter(number, state.doc.lines, state),
     domEventHandlers: {
       click(view, lineObject, event) {
-        const { line } = view.getPositionForValue(lineObject.from) || {};
-        onLineClick(line, event);
+        const { line } = getGlobalPositionForValue(view, lineObject.from) || {};
+        onLineNumberClicked(line, event);
         return true;
       }
     }
@@ -308,12 +373,10 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
-const defaultAutocompleteSticky = false;
-
 export const getExtensions = (
   {
     autocomplete,
-    autocompleteSticky,
+    autocompleteCloseOnBlur,
     lint,
     lineNumbers = true,
     lineWrapping = false,
@@ -330,7 +393,7 @@ export const getExtensions = (
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
-    onLineClick = () => {}
+    onLineNumberClicked = () => {}
   } = {}
 ) => {
   return [
@@ -338,14 +401,14 @@ export const getExtensions = (
     lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
     autocompleteConf.of(
       readOnly === false && autocomplete
-        ? autocompleteSticky
+        ? !autocompleteCloseOnBlur
           ? useStickyAutocompleteExtensions
           : useAutocompleteExtensions
         : []
     ),
     showLinesConf.of(
       lineNumbers
-        ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+        ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
         : []
     ),
     lineWrappingConf.of(lineWrapping ? lineWrappingExtensions : []),
@@ -360,26 +423,44 @@ export const getExtensions = (
   ];
 };
 
-export function createCypherEditor(
-  parentDOMElement,
-  {
-    text = "",
-    extensions,
-    updateSyntaxHighlighting = true,
-    autocompleteTriggerStrings:
-      initialAutocompleteTriggerStrings = defaultAutocompleteTriggerStrings,
-    autofocus = true,
-    ...options
-  } = {}
-) {
-  let theme = "light"; // TODO pass this in via options, and make it a compartment toggle thing in cm 6.
-  let autocompleteTriggerStrings = initialAutocompleteTriggerStrings;
+const defaultOptions = {
+  updateSyntaxHighlighting: true,
+  text: "",
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocomplete: true,
+  autocompleteCloseOnBlur: true,
+  placeholder: undefined,
+  autofocus: true,
+  theme: "light",
+  lineNumbers: true,
+  lineWrapping: false,
+  lineNumberFormatter: defaultLineNumberFormatter,
+  lint: true,
+  readOnly: false
+};
+
+export function createCypherEditor(parentDOMElement, options = {}) {
+  const combinedOptions = { ...defaultOptions, options };
+  // TODO investigate passing theme to getExtensions, and make it a compartment toggle thing in cm 6.
+  const { updateSyntaxHighlighting, autofocus, text, extensions } =
+    combinedOptions;
+  let {
+    theme,
+    autocompleteTriggerStrings,
+    autocomplete,
+    autocompleteCloseOnBlur,
+    placeholder,
+    lineNumbers,
+    lineWrapping,
+    lineNumberFormatter,
+    lint,
+    readOnly
+  } = combinedOptions;
   let autocompleteOpen = false;
 
   const eventListenerTypeMap = {};
 
-  const onLineClick = (line, event) => {
-    // console.log("onLineClick: ", line, event);
+  const onLineNumberClicked = (line, event) => {
     if (eventListenerTypeMap[LINE_CLICK_KEY] !== undefined) {
       eventListenerTypeMap[LINE_CLICK_KEY].forEach((listener) => {
         listener(line, event);
@@ -395,7 +476,7 @@ export function createCypherEditor(
     }
   };
 
-  const onAutocompleteChanged = (newAutocompleteOpen) => {
+  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
     autocompleteOpen = newAutocompleteOpen;
     if (eventListenerTypeMap[AUTOCOMPLETE_KEY] !== undefined) {
       eventListenerTypeMap[AUTOCOMPLETE_KEY].forEach((listener) => {
@@ -439,14 +520,6 @@ export function createCypherEditor(
 
   let settingValue = false;
 
-  const getPositionFromState = (state) => {
-    const { from, to, head, anchor } = state.selection.main;
-    const position = head;
-    const { number: line, from: lineStart } = state.doc.lineAt(position);
-    const column = position - lineStart;
-    return { line, column, position };
-  };
-
   const updateListener = EditorView.updateListener.of((v) => {
     if (v.docChanged && !settingValue) {
       onValueChanged(v.state.doc.toString(), v.changes);
@@ -460,7 +533,7 @@ export function createCypherEditor(
     const start = completionStatus(v.startState) !== null;
     const end = completionStatus(v.state) !== null;
     if (start !== end) {
-      onAutocompleteChanged(end);
+      onAutocompleteOpenChanged(end);
     }
   });
 
@@ -473,7 +546,7 @@ export function createCypherEditor(
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
 
-  extensions = [
+  const stateExtensions = [
     ...(extensions
       ? extensions
       : [
@@ -486,7 +559,7 @@ export function createCypherEditor(
             lineWrappingConf,
             historyConf,
             placeholderConf,
-            onLineClick
+            onLineNumberClicked
           }),
           theme === "light" ? lightTheme : darkTheme
         ]),
@@ -496,7 +569,7 @@ export function createCypherEditor(
 
   const initialState = EditorState.create({
     doc: text,
-    extensions: extensions
+    extensions: stateExtensions
   });
 
   let editor = new EditorView({
@@ -514,11 +587,11 @@ export function createCypherEditor(
       if (changedText.length > 0 && changedText.length <= 2) {
         const text = changedText[0];
         if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          editor.showAutoComplete();
+          showAutoComplete();
         } else if (changedText.length === 2) {
           const longerText = text + changedText[1];
           if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            editor.showAutoComplete();
+            showAutoComplete();
           }
         }
       }
@@ -548,15 +621,6 @@ export function createCypherEditor(
   };
 
   const goToPosition = (positionParam, scrollIntoView = true) => {
-    // TODO TEMP
-    // const value = 202;
-    // const value = { line: 1, column: 500 };
-    // const value = { line: 99, column: 0 };
-    // const values = [0, 202, {}, { line: -1, column: -1 }, { line: 2, column: 3 }, { line: 1, column: 500 }, { line: 99, column: 0 }, 890, 891, 892];
-    // for (let value of values) {
-    //   const tempPosition = getPositionForValue(value);
-    //   console.log('getPositionForValue temp result: ', value, tempPosition);
-    // }
     const positionObject = getPositionForValue(positionParam);
     if (positionObject) {
       const { position } = positionObject;
@@ -580,7 +644,7 @@ export function createCypherEditor(
     editor.contentDOM.focus();
   }
 
-  if (options.readOnly === "nocursor") {
+  if (readOnly === "nocursor") {
     editor.contentDOM.setAttribute("contenteditable", "false");
   }
 
@@ -620,16 +684,6 @@ export function createCypherEditor(
     startCompletion(editor);
   };
 
-  let autocomplete = options.autocomplete || true;
-  let autocompleteSticky = options.autocompleteSticky || false;
-  let placeholder = options.placeholder;
-  let lineWrapping = options.lineWrapping;
-  let lint = options.lint || true;
-  let readOnly = options.readOnly || false;
-  let lineNumbers = options.lineNumbers || true;
-  let lineNumberFormatter =
-    options.lineNumberFormatter || defaultLineNumberFormatter;
-
   const clearHistory = () => {
     editor.dispatch({
       effects: historyConf.reconfigure([])
@@ -644,7 +698,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: showLinesConf.reconfigure(
         lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
           : []
       )
     });
@@ -657,7 +711,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: showLinesConf.reconfigure(
         lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineClick })]
+          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
           : []
       )
     });
@@ -710,7 +764,7 @@ export function createCypherEditor(
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         readOnly === false && autocomplete
-          ? autocompleteSticky
+          ? !autocompleteCloseOnBlur
             ? useStickyAutocompleteExtensions
             : useAutocompleteExtensions
           : []
@@ -718,12 +772,12 @@ export function createCypherEditor(
     });
   };
 
-  const setAutocompleteSticky = (newAutocompleteSticky) => {
-    autocompleteSticky = newAutocompleteSticky;
+  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur) => {
+    autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         readOnly === false && autocomplete
-          ? autocompleteSticky
+          ? autocompleteCloseOnBlur
             ? useStickyAutocompleteExtensions
             : useAutocompleteExtensions
           : []
@@ -748,65 +802,11 @@ export function createCypherEditor(
     return getPositionFromState(editor.state);
   };
 
-  const isNumber = (v) =>
-    v !== undefined &&
-    (typeof v === "number" || v instanceof Number) &&
-    isFinite(v);
-  const isInteger = (v) => isNumber(v) && v % 1 === 0;
-
-  const getPositionForValue = (positionValue) => {
-    let position = null;
-    if (isInteger(positionValue) && positionValue >= 0) {
-      position = positionValue;
-    } else if (typeof positionValue === "object" && positionValue) {
-      const { line, column, position: maybePosition } = positionValue;
-      if (isInteger(maybePosition) && maybePosition >= 0) {
-        position = maybePosition;
-      } else if (
-        isInteger(line) &&
-        line >= 1 &&
-        isInteger(column) &&
-        column >= 0
-      ) {
-        const lineCount = editor.state.doc.lines;
-        if (line <= lineCount) {
-          const lineObject = editor.state.doc.line(line);
-          if (lineObject) {
-            const { from, to } = lineObject;
-            if (isInteger(from) && isInteger(to) && column <= to - from) {
-              position = from + column;
-            }
-          }
-        }
-      }
-    }
-    if (position !== null) {
-      if (position <= editor.state.doc.length) {
-        const lineObject = editor.state.doc.lineAt(position);
-        if (lineObject) {
-          const { number: line, from: lineStart, to: lineEnd } = lineObject;
-          const column = position - lineStart;
-          if (lineStart + column <= lineEnd) {
-            position = {
-              line,
-              column,
-              position
-            };
-          } else {
-            position = null;
-          }
-        } else {
-          position = null;
-        }
-      } else {
-        position = null;
-      }
-    }
-    return position;
-  };
+  const getPositionForValue = (positionValue) =>
+    getGlobalPositionForValue(editor, positionValue);
 
   const getLineCount = () => {
-    return editor.state.doc.lines;
+    return editor ? editor.state.doc.lines : 0;
   };
 
   const setSchema = (schema) => {
@@ -838,27 +838,34 @@ export function createCypherEditor(
   //   }
   // };
 
-  editor.goToPosition = goToPosition;
-  editor.setValue = setValue;
-  editor.on = on;
-  editor.off = off;
-  editor.showAutoComplete = showAutoComplete;
-  editor.setReadOnly = setReadOnly;
-  editor.setPlaceholder = setPlaceholder;
-  editor.setLineWrapping = setLineWrapping;
-  editor.setLineNumbers = setLineNumbers;
-  editor.clearHistory = clearHistory;
-  editor.setLineNumberFormatter = setLineNumberFormatter;
-  editor.getPosition = getPosition;
-  editor.getPositionForValue = getPositionForValue;
-  editor.setAutocomplete = setAutocomplete;
-  editor.setAutocompleteSticky = setAutocompleteSticky;
-  editor.setAutocompleteTriggerStrings = setAutocompleteTriggerStrings;
-  editor.setLint = setLint;
-  editor.getLineCount = getLineCount;
-  editor.setSchema = setSchema;
-  // editor.setDarkTheme = setDarkTheme;
-  // editor.setLightTheme = setLightTheme;
+  const focus = () => {
+    editor && editor.focus();
+  };
+
+  const editorAPI = {
+    focus,
+    clearHistory,
+    goToPosition,
+    showAutoComplete,
+    setValue,
+    setReadOnly,
+    setPlaceholder,
+    setLineWrapping,
+    setLineNumbers,
+    setLineNumberFormatter,
+    getPosition,
+    getPositionForValue,
+    setAutocomplete,
+    setAutocompleteCloseOnBlur,
+    setAutocompleteTriggerStrings,
+    setLint,
+    getLineCount,
+    setSchema,
+    on,
+    off,
+    codemirror: editor,
+    editorSupport
+  };
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
@@ -868,7 +875,6 @@ export function createCypherEditor(
   }
 
   return {
-    editor,
-    editorSupport
+    editor: editorAPI
   };
 }

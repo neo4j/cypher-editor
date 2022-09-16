@@ -46,7 +46,7 @@
   let schema = initialSchema;
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
-  let autocompleteSticky = initialOptions.autocompleteSticky;
+  let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let positionPosition = "0";
   let positionLine = "1";
   let positionColumn = "0";
@@ -95,43 +95,46 @@
     }
   };
 
-  const onValueChange = (value: string, change?: any) => {
-    logs = logs.concat(eventLog("onValueChange", value ? value.length : 0));
+  const onValueChanged = (value: string, change?: any) => {
+    logs = logs.concat(eventLog("valueChanged", value ? value.length : 0));
     updateValue(value);
   };
 
-  const onPositionChange = (positionObject) => {
-    logs = logs.concat(eventLog("onPositionChange", positionObject));
+  const onPositionChanged = (positionObject) => {
+    logs = logs.concat(eventLog("positionChanged", positionObject));
     position = positionObject;
   };
 
-  const onAutocompleteOpenChange = (newAutocompleteOpen) => {
+  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
     logs = logs.concat(
-      eventLog("onAutocompleteOpenChange", newAutocompleteOpen)
+      eventLog("autocompleteOpenChanged", newAutocompleteOpen)
     );
     autocompleteOpen = newAutocompleteOpen;
   };
 
-  const onLineClick = (line, event) => {
-    logs = logs.concat(eventLog("onLineClick", line));
+  const onLineNumberClicked = (line, event) => {
+    logs = logs.concat(eventLog("lineNumberClicked", line));
   };
 
-  const onEditorCreate = (editor) => {
-    logs = logs.concat(eventLog("onEditorCreate", ""));
+  const onEditorCreated = (editor) => {
+    logs = logs.concat(eventLog("editorCreated", ""));
     cypherEditor = editor;
     position = editor.getPosition();
     lineCount = cypherEditor.getLineCount();
     updateGoButtons();
   };
 
-  const onFocusChange = (newFocused) => {
-    logs = logs.concat(eventLog("onFocusChange", newFocused));
+  const onFocusChanged = (newFocused) => {
+    logs = logs.concat(eventLog("focusChanged", newFocused));
     focused = newFocused;
   };
 
-  const onScroll = (scrollInfo) => {
+  const onScrollChanged = (scrollInfo) => {
     logs = logs.concat(
-      eventLog("onScroll", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+      eventLog(
+        "scrollChanged",
+        getChangedScrollInfo(lastScrollInfo, scrollInfo)
+      )
     );
     lastScrollInfo = scrollInfo;
   };
@@ -303,15 +306,15 @@
   };
 
   const showStickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteSticky", true));
-    autocompleteSticky = true;
-    cypherEditor && cypherEditor.setAutocompleteSticky(true);
+    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", false));
+    autocompleteCloseOnBlur = false;
+    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(false);
   };
 
   const showUnstickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteSticky", false));
-    autocompleteSticky = false;
-    cypherEditor && cypherEditor.setAutocompleteSticky(false);
+    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", true));
+    autocompleteCloseOnBlur = true;
+    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(true);
   };
 
   const goToPosition = (position) => {
@@ -558,18 +561,20 @@
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Autocomplete Sticky</div>
+      <div class="setting-label">Autocomplete Close On Blur</div>
       <div class="setting-values">
         <button
-          class={autocompleteSticky === true ? "setting-active" : undefined}
-          on:click={showStickyAutocomplete}>True</button
-        >
-        <button
-          class={autocompleteSticky === false ||
-          autocompleteSticky === undefined
+          class={autocompleteCloseOnBlur === false
             ? "setting-active"
             : undefined}
-          on:click={showUnstickyAutocomplete}>False</button
+          on:click={showStickyAutocomplete}>False</button
+        >
+        <button
+          class={autocompleteCloseOnBlur === true ||
+          autocompleteCloseOnBlur === undefined
+            ? "setting-active"
+            : undefined}
+          on:click={showUnstickyAutocomplete}>True</button
         >
       </div>
     </div>
@@ -646,13 +651,13 @@
     <div class="card">
       <svelte:component
         this={editor}
-        {onValueChange}
-        {onPositionChange}
-        {onFocusChange}
-        {onScroll}
-        {onEditorCreate}
-        {onAutocompleteOpenChange}
-        {onLineClick}
+        {onValueChanged}
+        {onPositionChanged}
+        {onFocusChanged}
+        {onScrollChanged}
+        {onEditorCreated}
+        {onAutocompleteOpenChanged}
+        {onLineNumberClicked}
         {initialPosition}
         {initialSchema}
         {initialValue}
