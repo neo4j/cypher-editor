@@ -46,8 +46,14 @@ Or all packages together:
 # in project root
 
 # for prod
-yarn deploy:demos
-yarn serve:demos
+yarn e2e:prepare
+yarn serve
 
 yarn e2e
+```
+
+On CI systems with only one shell
+
+```
+yarn e2e:ci
 ```
