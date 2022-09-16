@@ -35,16 +35,19 @@ yarn start
 
 # for prod
 yarn build
-yarn preview
-
+yarn serve
 
 yarn e2e
 ```
 
-Or all together:
+Or all packages together:
 
 ```bash
 # in project root
-yarn start
+
+# for prod
+yarn build:demos
+yarn serve:demos
+
 yarn e2e
 ```

@@ -23,12 +23,13 @@
   "scripts": {
     "clean": "rimraf packages/*/node_modules rimraf node_modules",
     "lerna": "lerna",
-    "build": "lerna run build",
+    "build:demos": "lerna run build --scope={demo-codemirror-5-vite-svelte,demo-codemirror-5-webpack-react,demo-codemirror-6-vite-svelte,demo-codemirror-6-webpack-react,demo-codemirror-6-webpack-svelte} --stream",
+    "serve:demos": "lerna run serve --scope={demo-codemirror-5-vite-svelte,demo-codemirror-5-webpack-react,demo-codemirror-6-vite-svelte,demo-codemirror-6-webpack-react,demo-codemirror-6-webpack-svelte} --stream",
     "e2e": "lerna run e2e --stream",
-    "e2e:ci": "yarn start & sleep 5 && yarn e2e",
+    "e2e:ci": "yarn build:demos && yarn serve:demos & sleep 5 && yarn e2e",
     "build-clean": "lerna run build-clean",
     "prepublishOnly": "lerna run build",
-    "start": "lerna run start --scope={demo-codemirror-5-vite-svelte,demo-codemirror-5-webpack-react,demo-codemirror-6-vite-svelte,demo-codemirror-6-webpack-react,demo-codemirror-6-webpack-svelte} --stream",
+    "start": "lerna run start --scope demo --stream",
     "deploy": "lerna run build && lerna run deploy --scope demo --stream",
     "deploy-clean": "lerna run deploy-clean",
     "prettier": "prettier --write ."
