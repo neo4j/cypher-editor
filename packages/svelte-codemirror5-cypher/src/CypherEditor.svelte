@@ -32,7 +32,7 @@
 
   export let initialValue = "MATCH (n) RETURN n LIMIT 10";
 
-  export let theme = THEME_LIGHT;
+  export let theme = undefined;
 
   export let onEditorCreated = undefined;
 
@@ -49,31 +49,6 @@
     .concat(["ReactCodeMirror"])
     .concat(isFocused ? ["ReactCodeMirror--focused"] : [])
     .join(" ");
-
-  const defaultOptions = {
-    lineNumbers: true,
-    mode: "cypher",
-    theme: theme,
-    gutters: ["cypher-hints"],
-    lineWrapping: false,
-    autofocus: true,
-    smartIndent: false,
-    lint: true,
-    extraKeys: {
-      "Ctrl-Space": "autocomplete"
-    },
-    hintOptions: {
-      completeSingle: false, //
-      closeOnUnfocus: false, //
-      alignWithWord: true, //
-      async: true //
-    },
-    autoCloseBrackets: {
-      explode: ""
-    }
-  };
-
-  $: cypherEditorOptions = { ...defaultOptions, ...(initialOptions || {}) };
 
   const valueChanged = (doc: { getValue: () => string }, change: any) => {
     if (onValueChanged && change.origin !== "setValue") {
@@ -103,15 +78,9 @@
   };
 
   onMount(() => {
-    if (cypherEditorOptions.lineNumbers === false) {
-      cypherEditorOptions.gutters = false;
-    }
-    const { editor } = createCypherEditor(cypherEditorRef, cypherEditorOptions);
+    const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
     cypherEditor = editor;
 
-    if (cypherEditorOptions.autofocus) {
-      cypherEditor.focus();
-    }
     if (initialSchema) {
       cypherEditor.setSchema(initialSchema);
     }
@@ -139,6 +108,8 @@
     cypherEditor.off("position", positionChanged);
     cypherEditor.off("autocomplete", autocompleteOpenChanged);
     cypherEditor.off("lineclick", lineNumberClicked);
+
+    cypherEditor.destroy();
   });
 
   const themeChanged = (newTheme) => {

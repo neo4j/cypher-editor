@@ -185,7 +185,7 @@ const defaultOptions = {
 export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = new CypherEditorSupport();
 
-  const combinedOptions = { ...defaultOptions, options };
+  const combinedOptions = { ...defaultOptions, ...options };
 
   const {
     updateSyntaxHighlighting,
@@ -223,6 +223,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineWrapping,
     value: text // TODO check this works same as cm6
   };
+
+  if (!lineNumbers) {
+    combinedCodemirrorOptions.gutters = false;
+  }
 
   const onLineNumberClicked = (cm, lineIndex, _, event) => {
     lineNumberClickedListeners.forEach((listener) => {
@@ -594,6 +598,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor && editor.focus();
   };
 
+  const destroy = () => {
+    // TODO - check if cm 5 has any thing that should be called here
+    // should the mode be unregistered or something?
+  };
+
   const setTheme = (theme) => {
     if (editor) {
       const innerTheme = THEME_MAP[theme];
@@ -602,6 +611,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const editorAPI = {
+    destroy,
     focus,
     clearHistory,
     goToPosition,
