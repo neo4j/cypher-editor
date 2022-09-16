@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "deploy": "vite build",
     "start": "vite --port 5173",
     "e2e": "export PORT=5173; playwright test --config=../../playwright.config.js",
     "e2e:selector": "playwright codegen http://localhost:5173",

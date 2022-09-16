@@ -23,10 +23,10 @@
   "scripts": {
     "clean": "rimraf packages/*/node_modules rimraf node_modules",
     "lerna": "lerna",
-    "build:demos": "lerna run build --scope={demo-codemirror-5-vite-svelte,demo-codemirror-5-webpack-react,demo-codemirror-6-vite-svelte,demo-codemirror-6-webpack-react,demo-codemirror-6-webpack-svelte} --stream",
-    "serve:demos": "lerna run serve --scope={demo-codemirror-5-vite-svelte,demo-codemirror-5-webpack-react,demo-codemirror-6-vite-svelte,demo-codemirror-6-webpack-react,demo-codemirror-6-webpack-svelte} --stream",
+    "deploy:demos": "lerna run build && lerna run deploy --stream",
+    "serve:demos": "lerna run serve --stream",
     "e2e": "lerna run e2e --stream",
-    "e2e:ci": "yarn build:demos && yarn serve:demos & sleep 5 && yarn e2e",
+    "e2e:ci": "yarn deploy:demos && yarn serve:demos & sleep 5 && yarn e2e",
     "build-clean": "lerna run build-clean",
     "prepublishOnly": "lerna run build",
     "start": "lerna run start --scope demo --stream",

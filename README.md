@@ -46,7 +46,7 @@ Or all packages together:
 # in project root
 
 # for prod
-yarn build:demos
+yarn deploy:demos
 yarn serve:demos
 
 yarn e2e
