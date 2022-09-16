@@ -142,6 +142,8 @@ const defaultCodemirrorOptions = {
   // lineNumbers: true,
   mode: "cypher",
   // theme: theme,
+  // placeholder: undefined
+
   gutters: ["cypher-hints"],
   // lineWrapping: false,
   // autofocus: true,
@@ -187,27 +189,38 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const {
     updateSyntaxHighlighting,
+    autofocus,
     text,
     autocomplete,
+    placeholder,
     lint,
     lineNumberFormatter,
     theme,
+    readOnly,
+    lineWrapping,
     codemirrorOptions
   } = combinedOptions;
 
   let lineFormatter;
-  const { updateSyntaxHighlighting, autofocus, text, theme, autocompleteTriggerStrings, autocomplete, autocompleteCloseOnBlur, placeholder, lineNumbers, lineWrapping, lineNumberFormatter, lint, readOnly } = combinedOptions;
-  let { autocompleteCloseOnBlur, autocompleteTriggerStrings, lineNumbers } = combinedOptions;
+  let { autocompleteCloseOnBlur, autocompleteTriggerStrings, lineNumbers } =
+    combinedOptions;
   const baseHintOptions = codemirrorOptions.hintOptions || {};
   let autocompleteOpen = false;
 
   const combinedCodemirrorOptions = {
     ...codemirrorOptions,
-    hintOptions: { ...baseHintOptions, closeOnUnfocus: autocompleteCloseOnBlur },
+    autofocus,
+    hintOptions: {
+      ...baseHintOptions,
+      closeOnUnfocus: autocompleteCloseOnBlur
+    },
     theme: THEME_MAP[theme],
     lineNumberFormatter: (line) => (lineFormatter ? lineFormatter(line) : line),
+    placeholder,
+    readOnly,
     lint,
     lineNumbers,
+    lineWrapping,
     value: text // TODO check this works same as cm6
   };
 
@@ -383,14 +396,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const onScrollChanged = (cm) => {
     const scrollInfo = cm.getScrollInfo();
-    const {
-      top,
-      clientHeight,
-      height,
-      left,
-      clientWidth,
-      width
-    } = scrollInfo;
+    const { top, clientHeight, height, left, clientWidth, width } = scrollInfo;
     const newScrollInfo = {
       scrollTop: top,
       clientHeight,
@@ -480,7 +486,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         editor.off(type, focusListener);
         focusListener = undefined;
       }
-    }  else if (type === "blur") {
+    } else if (type === "blur") {
       const index = blurListeners.findIndex((l) => l === listener);
       if (index >= 0) {
         blurListeners.splice(index, 1);
@@ -514,8 +520,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   });
 
-  const value = text;
-  editor.setValue(value);
+  editor.setValue(text);
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
     editor.setValue(value);
@@ -592,10 +597,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setTheme = (theme) => {
     if (editor) {
       const innerTheme = THEME_MAP[theme];
-      console.log('setTheme: ', theme, innerTheme);
       editor.setOption("theme", innerTheme);
     }
-  }
+  };
 
   const editorAPI = {
     focus,
@@ -625,7 +629,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
-    editorSupport.update(value, version);
+    editorSupport.update(text, version);
 
     fixColors(editor, editorSupport);
   }
