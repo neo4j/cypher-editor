@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   neo4jSchema,
   simpleSchema,
@@ -76,28 +76,26 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
   const textareaRef = useRef(null);
 
-  const changeLogs = (logs) => {
-    setLogs(logs);
+  useEffect(() => {
     const logText = getLogText(logs);
     setLogText(logText);
     if (textareaRef.current) {
       textareaRef.current.value = logText;
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
     }
-  };
+  }, [logs]);
 
   const clearLogs = () => {
+    setLogText("");
     setLogs([]);
-    const logText = "";
-    setLogText(logText);
   };
 
   const addCommandLog = (command, argument) => {
-    changeLogs(logs.concat(commandLog(command, argument)));
+    setLogs(logs => logs.concat(commandLog(command, argument)));
   };
 
   const addEventLog = (event, argument) => {
-    changeLogs(logs.concat(eventLog(event, argument)));
+    setLogs(logs => logs.concat(eventLog(event, argument)));
   };
 
   const send = () => {
