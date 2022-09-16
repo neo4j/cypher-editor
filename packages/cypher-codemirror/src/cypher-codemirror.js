@@ -38,9 +38,9 @@ import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 import { cypher } from "./cypher";
 
 const isNumber = (v) =>
-    v !== undefined &&
-    (typeof v === "number" || v instanceof Number) &&
-    isFinite(v);
+  v !== undefined &&
+  (typeof v === "number" || v instanceof Number) &&
+  isFinite(v);
 const isInteger = (v) => isNumber(v) && v % 1 === 0;
 
 const getGlobalPositionForValue = (view, positionValue) => {
@@ -439,14 +439,23 @@ const defaultOptions = {
   readOnly: false
 };
 
-export function createCypherEditor(
-  parentDOMElement,
-  options = {}
-) {
+export function createCypherEditor(parentDOMElement, options = {}) {
   const combinedOptions = { ...defaultOptions, options };
   // TODO investigate passing theme to getExtensions, and make it a compartment toggle thing in cm 6.
-  const { updateSyntaxHighlighting, autofocus, text, extensions } = combinedOptions;
-  let { theme, autocompleteTriggerStrings, autocomplete, autocompleteCloseOnBlur, placeholder, lineNumbers, lineWrapping, lineNumberFormatter, lint, readOnly } = combinedOptions;
+  const { updateSyntaxHighlighting, autofocus, text, extensions } =
+    combinedOptions;
+  let {
+    theme,
+    autocompleteTriggerStrings,
+    autocomplete,
+    autocompleteCloseOnBlur,
+    placeholder,
+    lineNumbers,
+    lineWrapping,
+    lineNumberFormatter,
+    lint,
+    readOnly
+  } = combinedOptions;
   let autocompleteOpen = false;
 
   const eventListenerTypeMap = {};
@@ -793,7 +802,8 @@ export function createCypherEditor(
     return getPositionFromState(editor.state);
   };
 
-  const getPositionForValue = (positionValue) => getGlobalPositionForValue(editor, positionValue);
+  const getPositionForValue = (positionValue) =>
+    getGlobalPositionForValue(editor, positionValue);
 
   const getLineCount = () => {
     return editor ? editor.state.doc.lines : 0;
