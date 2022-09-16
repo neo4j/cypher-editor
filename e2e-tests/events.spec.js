@@ -37,7 +37,10 @@ test.describe("Commands and Editor events", () => {
     // Focus
     // This triggers two event, one for the focus and one for the cursor position
     await getEditor(page).click();
-    expect(await getLogEntry(page, -2)).toEqual("event focusChanged true");
-    expect(await getLogEntry(page, -1)).toContain("event positionChanged");
+    const lastEntries = [
+      await getLogEntry(page, -1),
+      await getLogEntry(page, -2)
+    ];
+    expect(lastEntries).toContain("event focusChanged true");
   });
 });
