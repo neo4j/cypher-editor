@@ -131,7 +131,10 @@
 
   const onScrollChanged = (scrollInfo) => {
     logs = logs.concat(
-      eventLog("scrollChanged", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+      eventLog(
+        "scrollChanged",
+        getChangedScrollInfo(lastScrollInfo, scrollInfo)
+      )
     );
     lastScrollInfo = scrollInfo;
   };
@@ -561,7 +564,9 @@
       <div class="setting-label">Autocomplete Close On Blur</div>
       <div class="setting-values">
         <button
-          class={autocompleteCloseOnBlur === false ? "setting-active" : undefined}
+          class={autocompleteCloseOnBlur === false
+            ? "setting-active"
+            : undefined}
           on:click={showStickyAutocomplete}>False</button
         >
         <button

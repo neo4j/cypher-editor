@@ -106,10 +106,7 @@
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor } = createCypherEditor(
-      cypherEditorRef,
-      cypherEditorOptions
-    );
+    const { editor } = createCypherEditor(cypherEditorRef, cypherEditorOptions);
     cypherEditor = editor;
 
     if (cypherEditorOptions.autofocus) {

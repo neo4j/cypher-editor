@@ -76,10 +76,7 @@
 
   onMount(() => {
     const { autofocus = true, ...options } = cypherEditorOptions;
-    const { editor } = createCypherEditor(
-      cypherEditorRef,
-      options
-    );
+    const { editor } = createCypherEditor(cypherEditorRef, options);
     cypherEditor = editor;
 
     if (autofocus) {

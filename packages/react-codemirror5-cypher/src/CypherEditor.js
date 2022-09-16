@@ -104,10 +104,7 @@ class CypherEditor extends Component {
     if (cypherEditorOptions.lineNumbers === false) {
       cypherEditorOptions.gutters = false;
     }
-    const { editor } = createCypherEditor(
-      this.editorRef,
-      cypherEditorOptions
-    );
+    const { editor } = createCypherEditor(this.editorRef, cypherEditorOptions);
     this.cypherEditor = editor;
 
     if (cypherEditorOptions.autofocus) {

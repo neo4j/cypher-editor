@@ -122,9 +122,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const onValueChanged = (value, change) => {
-    changeLogs(
-      logs.concat(eventLog("valueChanged", value ? value.length : 0))
-    );
+    changeLogs(logs.concat(eventLog("valueChanged", value ? value.length : 0)));
     updateValue(value);
   };
 
@@ -160,7 +158,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const onScrollChanged = (scrollInfo) => {
     changeLogs(
       logs.concat(
-        eventLog("onScrollChanged", getChangedScrollInfo(lastScrollInfo, scrollInfo))
+        eventLog(
+          "onScrollChanged",
+          getChangedScrollInfo(lastScrollInfo, scrollInfo)
+        )
       )
     );
     setLastScrollInfo(scrollInfo);
@@ -180,8 +181,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const positionString = position ? JSON.stringify(position) : "";
   const focusedString = focused + "";
   const autocompleteString = autocompleteOpen + "";
-
- 
 
   const showLineNumbers = () => {
     changeLogs(logs.concat(commandLog("setLineNumbers", true)));
@@ -672,7 +671,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             </button>
             <button
               className={
-                autocompleteCloseOnBlur === true || autocompleteCloseOnBlur === undefined
+                autocompleteCloseOnBlur === true ||
+                autocompleteCloseOnBlur === undefined
                   ? "setting-active"
                   : undefined
               }
