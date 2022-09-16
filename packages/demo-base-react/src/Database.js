@@ -89,6 +89,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setLogs((l) => l.concat(newLog));
   };
 
+  const clearLogs = () => {
+    setLogs([]);
+  }
+
   const addCommandLog = (command, argument) => {
     changeLogs(commandLog(command, argument));
   };
@@ -795,7 +799,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
         <div className="card">
           <div className="logs">
-            <h3>Logs</h3>
+            <div className="logs-header">
+              <h3>Logs</h3>
+              <button onClick={clearLogs}> Clear </button>
+            </div>
             <textarea
               id="log"
               readOnly

@@ -183,6 +183,18 @@ body {
     flex-direction: column;
 }
 
+.logs-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.right .logs-header button {
+    margin: 16px;
+    padding: 0.3em 0.6em;
+    font-size: 0.8em;
+    line-height: 1;
+}
+
 .logs textarea {
     min-height: 5em;
 }

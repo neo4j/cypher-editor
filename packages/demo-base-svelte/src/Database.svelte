@@ -164,6 +164,10 @@
     textareaRef.scrollTop = textareaRef.scrollHeight;
   }
 
+  const clearLogs = () => {
+    logs = [];
+  };
+
   const setNoPlaceholder = () => {
     logs = logs.concat(commandLog("setPlaceholder", undefined));
     placeholder = undefined;
@@ -677,7 +681,10 @@
     </div>
     <div class="card">
       <div class="logs">
-        <h3>Logs</h3>
+        <div class="logs-header">
+          <h3>Logs</h3>
+          <button on:click={clearLogs}> Clear </button>
+        </div>
         <textarea id="log" readonly bind:this={textareaRef} value={logText} />
       </div>
     </div>
