@@ -76,26 +76,32 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     useState(false);
   const [lineCount, setLineCount] = useState(0);
   const [logs, setLogs] = useState([]);
+  const [logText, setLogText] = useState("");
   const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-    }
+    setLogText(getLogText(logs));
   }, [logs]);
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.scrollTop = logText
+        ? textareaRef.current.scrollHeight
+        : 0;
+    }
+  }, [logText]);
+
   const clearLogs = () => {
-    setLogText("");
     setLogs([]);
-  }
+  };
 
   const addCommandLog = (command, argument) => {
-    setLogs(logs => logs.concat(commandLog(command, argument)));
+    setLogs((logs) => logs.concat(commandLog(command, argument)));
   };
 
   const addEventLog = (event, argument) => {
-    setLogs(logs => logs.concat(eventLog(event, argument)));
+    setLogs((logs) => logs.concat(eventLog(event, argument)));
   };
 
   const send = () => {
@@ -184,11 +190,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const lightTheme = () => {
     addCommandLog("setTheme", "light");
     setTheme("light");
+    editor && editor.setTheme("light");
   };
 
   const darkTheme = () => {
     addCommandLog("setTheme", "dark");
     setTheme("dark");
+    editor && editor.setTheme("dark");
   };
 
   const cypherLength = cypher.length;
@@ -800,12 +808,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               <h3>Logs</h3>
               <button onClick={clearLogs}> Clear </button>
             </div>
-            <textarea
-              id="log"
-              readOnly
-              value={getLogText(logs)}
-              ref={textareaRef}
-            />
+            <textarea id="log" readOnly value={logText} ref={textareaRef} />
           </div>
         </div>
         <div className="card">

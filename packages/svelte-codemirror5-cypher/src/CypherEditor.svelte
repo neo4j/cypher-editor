@@ -11,9 +11,6 @@
   import "cypher-codemirror5/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror5";
 
-  const THEME_LIGHT = "light";
-  const THEME_DARK = "dark";
-
   export let initialPosition = undefined;
 
   export let initialOptions = undefined;
@@ -78,7 +75,10 @@
   };
 
   onMount(() => {
-    const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
+    const { editor } = createCypherEditor(cypherEditorRef, {
+      ...initialOptions,
+      theme
+    });
     cypherEditor = editor;
 
     if (initialSchema) {
@@ -111,14 +111,6 @@
 
     cypherEditor.destroy();
   });
-
-  const themeChanged = (newTheme) => {
-    cypherEditor && cypherEditor.setTheme(newTheme);
-  };
-
-  $: {
-    themeChanged(theme);
-  }
 </script>
 
 <div class={editorClassNames} bind:this={cypherEditorRef} />

@@ -37,6 +37,9 @@ import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 
 import { cypher } from "./cypher";
 
+const THEME_LIGHT = "light";
+const THEME_DARK = "dark";
+
 const isNumber = (v) =>
   v !== undefined &&
   (typeof v === "number" || v instanceof Number) &&
@@ -246,53 +249,25 @@ export const cypherCompletion = ({
   })
 ];
 
-const lightSyntaxStyles = [
-  { tag: tags.comment, color: "#93a1a1", class: "cm-comment" },
-  { tag: tags.variableName, color: "#0080ff", class: "cm-variable" },
-  {
-    tag: [tags.string, tags.special(tags.brace)],
-    color: "#b58900",
-    class: "cm-string"
-  },
-  { tag: tags.number, color: "#2aa198", class: "cm-number" },
-  { tag: tags.bool, color: "#5c6166" },
-  { tag: tags.null, color: "#5c6166" },
-  { tag: tags.keyword, color: "#859900", class: "cm-keyword" },
-  { tag: tags.operator, color: "#5c6166", class: "cm-operator" },
-  { tag: tags.className, color: "#5c6166" },
-  { tag: tags.definition(tags.typeName), color: "#5c6166" },
-  { tag: tags.typeName, color: "#5c6166" },
-  { tag: tags.angleBracket, color: "#5c6166" },
-  { tag: tags.tagName, color: "#5c6166" },
-  { tag: tags.attributeName, color: "#5c6166" }
+const darkExtensions = [
+  EditorView.theme({}, { dark: true }),
+  EditorView.editorAttributes.of({ class: "cm-dark" })
 ];
 
-const darkSyntaxStyles = [
-  { tag: tags.comment, color: "#586e75", class: "cm-comment" },
-  { tag: tags.variableName, color: "#0080ff", class: "cm-variable" },
+const syntaxStyles = [
+  { tag: tags.comment, class: "cm-comment" },
+  { tag: tags.variableName, class: "cm-variable" },
   {
     tag: [tags.string, tags.special(tags.brace)],
-    color: "#b58900",
     class: "cm-string"
   },
-  { tag: tags.number, color: "#2aa198", class: "cm-number" },
-  { tag: tags.bool, color: "#5c6166" },
-  { tag: tags.null, color: "#5c6166" },
-  { tag: tags.keyword, color: "#859900", class: "cm-keyword" },
-  { tag: tags.operator, color: "#5c6166", class: "cm-operator" },
-  { tag: tags.className, color: "#5c6166" },
-  { tag: tags.definition(tags.typeName), color: "#5c6166" },
-  { tag: tags.typeName, color: "#5c6166" },
-  { tag: tags.angleBracket, color: "#5c6166" },
-  { tag: tags.tagName, color: "#5c6166" },
-  { tag: tags.attributeName, color: "#5c6166" }
+  { tag: tags.number, class: "cm-number" },
+  { tag: tags.keyword, class: "cm-keyword" },
+  { tag: tags.operator, class: "cm-operator" }
 ];
 
-const lightSyntaxStyle = HighlightStyle.define(lightSyntaxStyles);
-const lightTheme = [syntaxHighlighting(lightSyntaxStyle)];
-
-const darkSyntaxStyle = HighlightStyle.define(darkSyntaxStyles);
-const darkTheme = [syntaxHighlighting(darkSyntaxStyle)];
+const syntaxStyle = HighlightStyle.define(syntaxStyles);
+export const syntaxCSS = [syntaxHighlighting(syntaxStyle)];
 
 export const cypherLineNumbers = ({
   lineNumberFormatter,
@@ -341,6 +316,11 @@ const readableExtensions = [
 
 const readOnlyExtensions = [EditorState.readOnly.of(true)];
 
+const readOnlyNoCursorExtensions = [
+  EditorState.readOnly.of(true),
+  EditorView.editable.of(false)
+];
+
 const lineWrappingExtensions = [EditorView.lineWrapping];
 
 const useLintExtensions = [cypherLinter()];
@@ -374,16 +354,7 @@ const defaultAutocompleteTriggerStrings = [
 ];
 
 export const getExtensions = (
-  {
-    autocomplete,
-    autocompleteCloseOnBlur,
-    lint,
-    lineNumbers = true,
-    lineWrapping = false,
-    lineNumberFormatter = defaultLineNumberFormatter,
-    readOnly = false,
-    placeholder: placeholderText
-  } = {},
+  options = {},
   {
     lintConf = new Compartment(),
     autocompleteConf = new Compartment(),
@@ -393,9 +364,23 @@ export const getExtensions = (
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
+    themeConf = new Compartment(),
     onLineNumberClicked = () => {}
   } = {}
 ) => {
+  const combinedOptions = { ...defaultOptions, options };
+  const {
+    autocomplete,
+    autocompleteCloseOnBlur,
+    lint,
+    lineNumbers,
+    lineWrapping,
+    readOnly,
+    placeholder: placeholderText,
+    theme
+  } = combinedOptions;
+  let { lineNumberFormatter } = combinedOptions;
+
   return [
     cypherLanguage(),
     lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
@@ -419,7 +404,15 @@ export const getExtensions = (
         ? [placeholderExtension(placeholderText)]
         : []
     ),
-    readOnlyConf.of(readOnly !== false ? readOnlyExtensions : [])
+    syntaxCSS,
+    themeConf.of(theme === THEME_DARK ? darkExtensions : []),
+    readOnlyConf.of(
+      readOnly == true
+        ? readOnlyExtensions
+        : readOnly === "nocursor"
+        ? readOnlyNoCursorExtensions
+        : []
+    )
   ];
 };
 
@@ -431,7 +424,7 @@ const defaultOptions = {
   autocompleteCloseOnBlur: true,
   placeholder: undefined,
   autofocus: true,
-  theme: "light",
+  theme: THEME_LIGHT,
   lineNumbers: true,
   lineWrapping: false,
   lineNumberFormatter: defaultLineNumberFormatter,
@@ -445,7 +438,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const { updateSyntaxHighlighting, autofocus, text, extensions } =
     combinedOptions;
   let {
-    theme,
     autocompleteTriggerStrings,
     autocomplete,
     autocompleteCloseOnBlur,
@@ -545,12 +537,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const lineWrappingConf = new Compartment();
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
+  const themeConf = new Compartment();
 
   const stateExtensions = [
     ...(extensions
       ? extensions
       : [
-          ...getExtensions(options, {
+          ...getExtensions(combinedOptions, {
             lintConf,
             autocompleteConf,
             readableConf,
@@ -559,9 +552,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
             lineWrappingConf,
             historyConf,
             placeholderConf,
+            themeConf,
             onLineNumberClicked
-          }),
-          theme === "light" ? lightTheme : darkTheme
+          })
         ]),
     updateListener,
     autocompleteListener
@@ -640,10 +633,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = getEditorSupport(editor.state);
   editor.editorSupport = editorSupport;
 
-  if (readOnly === "nocursor") {
-    editor.contentDOM.setAttribute("contenteditable", "false");
-  }
-
   editor.contentDOM.addEventListener("blur", () => {
     onFocusChanged(false);
   });
@@ -719,16 +708,18 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const setReadOnly = (newReadOnly) => {
     readOnly = newReadOnly;
-    editor.contentDOM.setAttribute(
-      "contenteditable",
-      readOnly === "nocursor" ? "false" : "true"
-    );
     editor.dispatch({
       effects: [
         readableConf.reconfigure(
           readOnly !== "nocursor" ? readableExtensions : []
         ),
-        readOnlyConf.reconfigure(readOnly !== false ? readOnlyExtensions : []),
+        readOnlyConf.reconfigure(
+          readOnly == true
+            ? readOnlyExtensions
+            : readOnly === "nocursor"
+            ? readOnlyNoCursorExtensions
+            : []
+        ),
         autocompleteConf.reconfigure(
           readOnly === false && autocomplete ? useAutocompleteExtensions : []
         ),
@@ -816,27 +807,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  // const setDarkTheme = () => {
-  //   if (theme !== 'dark') {
-  //     theme = 'dark';
-  //     editor.dispatch({
-  //       reconfigure: {
-  //         full: getExtensions(theme)
-  //       }
-  //     });
-  //   }
-  // };
-
-  // const setLightTheme = () => {
-  //   if (theme !== 'light') {
-  //     theme = 'light';
-  //     editor.dispatch({
-  //       reconfigure: {
-  //         full: getExtensions(theme)
-  //       }
-  //     });
-  //   }
-  // };
+  const setTheme = (theme) => {
+    editor.dispatch({
+      effects: themeConf.reconfigure(theme === THEME_DARK ? darkExtensions : [])
+    });
+  };
 
   const focus = () => {
     editor && editor.focus();
@@ -866,6 +841,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setLint,
     getLineCount,
     setSchema,
+    setTheme,
     on,
     off,
     codemirror: editor,

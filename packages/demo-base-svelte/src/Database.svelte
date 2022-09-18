@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { afterUpdate } from "svelte";
   import {
     neo4jSchema,
     simpleSchema,
@@ -57,11 +58,13 @@
   const lightTheme = () => {
     logs = logs.concat(commandLog("setTheme", "light"));
     theme = "light";
+    cypherEditor && cypherEditor.setTheme(theme);
   };
 
   const darkTheme = () => {
     logs = logs.concat(commandLog("setTheme", "dark"));
     theme = "dark";
+    cypherEditor && cypherEditor.setTheme(theme);
   };
 
   let promisedResult;
@@ -158,11 +161,14 @@
   $: logText = getLogText(logs);
 
   let textareaRef;
+  let lastLogText = logText;
 
-  $: if (textareaRef && logText) {
-    textareaRef.value = logText;
-    textareaRef.scrollTop = textareaRef.scrollHeight;
-  }
+  afterUpdate(() => {
+    if (lastLogText !== logText) {
+      textareaRef.scrollTop = logText ? textareaRef.scrollHeight : 0;
+      lastLogText = logText;
+    }
+  });
 
   const clearLogs = () => {
     logs = [];

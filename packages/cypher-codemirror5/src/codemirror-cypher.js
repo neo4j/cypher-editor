@@ -171,7 +171,7 @@ const defaultOptions = {
   autocompleteCloseOnBlur: true,
   placeholder: undefined,
   autofocus: true,
-  theme: "light",
+  theme: THEME_LIGHT,
   lineNumbers: true,
   lineWrapping: false,
   lineNumberFormatter: defaultLineNumberFormatter,

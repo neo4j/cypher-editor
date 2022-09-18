@@ -52,7 +52,7 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     background-color: #d7d4f0;
 }
 
-.cm-dark .cm-editor {
+.cm-editor.cm-dark {
     background-color: #002b36;
     color: #839496;
 }
@@ -83,7 +83,7 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     padding: 0;
 }
 
-.cm-dark .cm-editor .cm-gutters {
+.cm-editor.cm-dark .cm-gutters {
     background-color: #073642;
     border-right: 3px solid #002b36;
 }
@@ -93,7 +93,7 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     border-left: 0.67em solid rgba(147, 161, 161, 0.37);
 }
 
-.cm-dark .cm-editor .cm-cursor {
+.cm-editor.cm-dark .cm-cursor {
     background-color: rgba(131, 148, 150, 0.37);
 }
 
@@ -101,7 +101,7 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     color: #93a1a1;
 }
 
-.cm-dark .cm-editor .cm-comment {
+.cm-editor.cm-dark .cm-comment {
     color: #586e75;
 }
 
@@ -159,8 +159,8 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
     color: #586e75;
 }
 
-.cm-dark .cm-editor .cm-p-property,
-.cm-dark .cm-editor .cm-p-property .cm-keyword {
+.cm-editor.cm-dark .cm-p-property,
+.cm-editor.cm-dark .cm-p-property .cm-keyword {
     color: #93a1a1;
 }
 

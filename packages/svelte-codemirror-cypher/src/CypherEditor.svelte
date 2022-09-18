@@ -4,9 +4,6 @@
   import "cypher-codemirror/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror";
 
-  const THEME_LIGHT = "light";
-  const THEME_DARK = "dark";
-
   export let initialPosition = undefined;
 
   export let initialOptions = undefined;
@@ -25,7 +22,7 @@
 
   export let initialValue = "MATCH (n) RETURN n LIMIT 10";
 
-  export let theme = THEME_LIGHT;
+  export let theme = undefined;
 
   export let onEditorCreated = undefined;
 
@@ -33,14 +30,10 @@
 
   export let onLineNumberClicked = undefined;
 
-  $: cypherEditorOptions = { ...(initialOptions || {}) };
-
   let cypherEditorRef;
   let cypherEditor;
 
-  $: editorClassNames = (classNames ? classNames : [])
-    .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
-    .join(" ");
+  $: editorClassNames = (classNames ? classNames : []).join(" ");
 
   const valueChanged = (value, changes) => {
     onValueChanged && onValueChanged(value, changes);
@@ -75,7 +68,10 @@
   };
 
   onMount(() => {
-    const { editor } = createCypherEditor(cypherEditorRef, cypherEditorOptions);
+    const { editor } = createCypherEditor(cypherEditorRef, {
+      ...initialOptions,
+      theme
+    });
     cypherEditor = editor;
 
     if (initialSchema) {

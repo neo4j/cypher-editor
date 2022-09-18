@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { createCypherEditor } from "cypher-codemirror";
 import "cypher-codemirror/css/cypher-codemirror.css";
 
-const THEME_LIGHT = "light";
-const THEME_DARK = "dark";
-
 class CypherEditor extends Component {
   constructor(props) {
     super(props);
@@ -62,9 +59,13 @@ class CypherEditor extends Component {
       initialSchema,
       initialValue = "MATCH (n) RETURN n LIMIT 10",
       initialPosition,
-      onEditorCreated
+      onEditorCreated,
+      theme
     } = this.props;
-    const { editor } = createCypherEditor(this.editorRef, initialOptions);
+    const { editor } = createCypherEditor(this.editorRef, {
+      ...initialOptions,
+      theme
+    });
     this.cypherEditor = editor;
 
     if (initialSchema) {
@@ -100,10 +101,8 @@ class CypherEditor extends Component {
   }
 
   render() {
-    const { classNames, theme = THEME_LIGHT } = this.props;
-    const editorClassNames = (classNames ? classNames : [])
-      .concat(theme !== THEME_DARK ? [] : ["cm-dark"])
-      .join(" ");
+    const { classNames } = this.props;
+    const editorClassNames = (classNames ? classNames : []).join(" ");
 
     return <div className={editorClassNames} ref={this.setEditorRef}></div>;
   }

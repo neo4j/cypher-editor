@@ -10,9 +10,6 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/addon/lint/lint.css";
 import "cypher-codemirror5/css/cypher-codemirror.css";
 
-const THEME_LIGHT = "light";
-const THEME_DARK = "dark";
-
 class CypherEditor extends Component {
   constructor(props) {
     super(props);
@@ -110,12 +107,6 @@ class CypherEditor extends Component {
       this.cypherEditor.off("lineclick", this.lineNumberClicked);
 
       this.cypherEditor.destroy();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.theme !== this.props.theme) {
-      this.cypherEditor.setTheme(this.props.theme);
     }
   }
 
