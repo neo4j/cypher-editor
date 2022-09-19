@@ -205,16 +205,27 @@ export const defaultTheme = "light";
 export const getTitle = ({ codemirrorVersion, framework, bundler }) =>
   `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;
 
+const trimOptions = (options) => {
+  const typeMap = {};
+  for (let { type } of options) {
+    if (typeMap[type] === undefined) {
+      typeMap[type] = 0;
+    }
+    typeMap[type]++;
+  }
+  return typeMap; // options.map(({ type }) => ({ type }));
+}
+
 const printArgument = (argument) => {
   try {
     if (typeof argument === "object" && argument !== null) {
-      const { scrollTop, scrollHeight, scrollExtent } = argument;
+      const { open, from, options } = argument;
       if (
-        scrollTop !== undefined &&
-        scrollHeight !== undefined &&
-        scrollExtent !== undefined
+        open !== undefined &&
+        from !== undefined &&
+        options !== undefined
       ) {
-        return JSON.stringify({ scrollTop, scrollHeight, scrollExtent });
+        return JSON.stringify({ open, from, options: trimOptions(options) });
       }
     }
     return JSON.stringify(argument);
