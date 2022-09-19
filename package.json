@@ -25,9 +25,9 @@
   "scripts": {
     "build:demos": "turbo run deploy",
     "build:libs": "turbo run build",
-    "clean:all": "turbo run clean:deploy clean:build && yarn clean:deps",
+    "clean:all": "turbo run clean:deploy clean:build && yarn clean:packages",
     "clean:demos": "turbo run clean:deploy",
-    "clean:deps": "rimraf packages/*/node_modules; rimraf node_modules",
+    "clean:packages": "rimraf packages/*/node_modules; rimraf node_modules",
     "clean:libs": "turbo run clean:build",
     "lerna": "lerna",
     "pm2": "pm2",
