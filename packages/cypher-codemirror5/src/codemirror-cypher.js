@@ -100,6 +100,11 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
 
   const { line, ch } = editor.getCursor();
   const { items, from, to } = editorSupport.getCompletion(line + 1, ch);
+  const { line: fromLine, column: fromColumn } = from;
+  const fromPosition = editor.indexFromPos({
+    line: fromLine - 1,
+    ch: fromColumn
+  });
 
   const position = translatePosition(from, to);
   const render = (element, self, data) => {
@@ -125,7 +130,10 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
   CM.on(
     data,
     "shown",
-    CM.signal.bind(editor, editor, "hint-shown", { items, position })
+    CM.signal.bind(editor, editor, "hint-shown", {
+      options: items,
+      from: fromPosition
+    })
   );
   return data;
 });
@@ -290,7 +298,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const valueChangedListeners = [];
   const positionChangedListeners = [];
-  const autocompleteOpenChangedListeners = [];
+  const autocompleteChangedListeners = [];
   const lineNumberClickedListeners = [];
   const focusListeners = [];
   const blurListeners = [];
@@ -422,10 +430,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const autocompleteOpenChanged = (newAutocompleteOpen) => {
+  const autocompleteChanged = (newAutocompleteOpen, from, options) => {
     autocompleteOpen = newAutocompleteOpen;
-    autocompleteOpenChangedListeners.forEach((listener) => {
-      listener(autocompleteOpen);
+    autocompleteChangedListeners.forEach((listener) => {
+      listener(autocompleteOpen, from, options);
     });
   };
 
@@ -467,7 +475,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     } else if (type === "position") {
       positionChangedListeners.push(listener);
     } else if (type === "autocomplete") {
-      autocompleteOpenChangedListeners.push(listener);
+      autocompleteChangedListeners.push(listener);
     } else if (type === "lineclick") {
       lineNumberClickedListeners.push(listener);
     } else if (type === "scroll") {
@@ -504,7 +512,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     } else if (type === "position") {
       removeListener(positionChangedListeners, listener);
     } else if (type === "autocomplete") {
-      removeListener(autocompleteOpenChangedListeners, listener);
+      removeListener(autocompleteChangedListeners, listener);
     } else if (type === "lineclick") {
       removeListener(lineNumberClickedListeners, listener);
     } else if (type === "scroll") {
@@ -539,17 +547,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   });
 
   // use this instead of: editor.on("startCompletion", (editor) => {});
-  editor.on("hint-shown", ({ items, position }) => {
-    // TODO - add items, position to event callback args
-    // console.log("a opened: ", { items, position });
+  editor.on("hint-shown", ({ from, options }) => {
     if (editor.autocomplete) {
-      autocompleteOpenChanged(true);
+      autocompleteChanged(true, from, options);
     }
   });
 
   editor.on("endCompletion", (editor) => {
     if (editor.autocomplete) {
-      autocompleteOpenChanged(false);
+      autocompleteChanged(false);
     }
   });
 

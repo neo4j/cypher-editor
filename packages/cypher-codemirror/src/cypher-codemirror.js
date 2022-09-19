@@ -486,11 +486,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
+  const onAutocompleteChanged = (newAutocompleteOpen, from, options) => {
     autocompleteOpen = newAutocompleteOpen;
     if (eventListenerTypeMap[AUTOCOMPLETE_KEY] !== undefined) {
       eventListenerTypeMap[AUTOCOMPLETE_KEY].forEach((listener) => {
-        listener(autocompleteOpen);
+        listener(autocompleteOpen, from, options);
       });
     }
   };
@@ -535,27 +535,45 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     } else if (v.selectionSet) {
       onPositionChanged(getPositionFromState(v.state));
     }
-  });
-
-  const autocompleteListener = EditorState.changeFilter.of((v) => {
     const startStatus = completionStatus(v.startState);
     const endStatus = completionStatus(v.state);
     if (startStatus !== "active" && endStatus === "active") {
-      // const newOptions = currentCompletions(v.state);
-      // console.log("a1 opened: ", { newFrom, newOptions });
-      const { effects } = v;
-      if (effects && effects.length === 1) {
-        const { value: activeResults } = effects[0];
-        if (activeResults.length === 1) {
-          const activeResult = activeResults[0];
-          const { result } = activeResult;
-          const { from, options } = result;
-          // console.log("a opened: ", { from, options });
-          onAutocompleteOpenChanged(true, { from, options });
+
+      // TODO any need to check autocomplete or autocompleteOpen here?
+      const { transactions } = v;
+
+      const autocompleteResults = [];
+
+      for (let transaction of transactions) {
+        const { effects } = transaction;
+        if (effects) {
+          for (let effect of effects) {
+            const { value: values } = effect;
+            if (values) {
+              for (let value of values) {
+                const { result } = value;
+                if (result && typeof result === "object") {
+                  const { from, options } = result;
+                  if (from !== undefined && options !== undefined) {
+                    autocompleteResults.push({ from, options });
+                  }
+                }
+              }
+            }
+          }
         }
       }
+      if (autocompleteResults.length > 0) {
+        if (autocompleteResults.length > 1) {
+          console.error(
+            "multiple autocomplete results found in update transactions"
+          );
+        }
+        const { from, options } = autocompleteResults[0];
+        onAutocompleteChanged(true, from, options);
+      }
     } else if (startStatus !== null && endStatus === null) {
-      onAutocompleteOpenChanged(false);
+      onAutocompleteChanged(false);
     }
   });
 
@@ -590,7 +608,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         onLineNumberClicked
       }),
       updateListener,
-      autocompleteListener,
       postConf.of(postExtensions)
     ]
   });

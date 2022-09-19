@@ -33,7 +33,7 @@
 
   export let onEditorCreated = undefined;
 
-  export let onAutocompleteOpenChanged = undefined;
+  export let onAutocompleteChanged = undefined;
 
   export let onLineNumberClicked = undefined;
 
@@ -64,8 +64,9 @@
     onPositionChanged && onPositionChanged(positionObject);
   };
 
-  const autocompleteOpenChanged = (autocompleteOpen) => {
-    onAutocompleteOpenChanged && onAutocompleteOpenChanged(autocompleteOpen);
+  const autocompleteChanged = (autocompleteOpen, from, options) => {
+    onAutocompleteChanged &&
+      onAutocompleteChanged(autocompleteOpen, from, options);
   };
 
   const lineNumberClicked = (line, event) => {
@@ -92,7 +93,7 @@
     cypherEditor.on("blur", () => focusChanged(false));
     cypherEditor.on("scroll", scrollChanged);
     cypherEditor.on("position", positionChanged);
-    cypherEditor.on("autocomplete", autocompleteOpenChanged);
+    cypherEditor.on("autocomplete", autocompleteChanged);
     cypherEditor.on("lineclick", lineNumberClicked);
 
     onEditorCreated && onEditorCreated(cypherEditor);
@@ -104,7 +105,7 @@
     cypherEditor.off("blur", () => focusChanged(false));
     cypherEditor.off("scroll", scrollChanged);
     cypherEditor.off("position", positionChanged);
-    cypherEditor.off("autocomplete", autocompleteOpenChanged);
+    cypherEditor.off("autocomplete", autocompleteChanged);
     cypherEditor.off("lineclick", lineNumberClicked);
 
     cypherEditor.destroy();

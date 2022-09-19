@@ -142,9 +142,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setPosition(positionObject);
   };
 
-  const onAutocompleteOpenChanged = (autocompleteOpen) => {
-    addEventLog("autocompleteOpenChanged", autocompleteOpen);
-    setAutocompleteOpen(autocompleteOpen);
+  const onAutocompleteChanged = (open, from, options) => {
+    addEventLog("autocompleteChanged", { open, from, options });
+    setAutocompleteOpen(open);
   };
 
   const onLineNumberClicked = (line, event) => {
@@ -774,8 +774,18 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="setting">
           <div className="setting-label">Value</div>
           <div className="setting-values">
-            <button className={cypher === longQuery ? "setting-active" : undefined} onClick={showLongValue}>Long</button>
-            <button className={cypher === simpleQuery ? "setting-active" : undefined} onClick={showSimpleValue}>Simple</button>
+            <button
+              className={cypher === longQuery ? "setting-active" : undefined}
+              onClick={showLongValue}
+            >
+              Long
+            </button>
+            <button
+              className={cypher === simpleQuery ? "setting-active" : undefined}
+              onClick={showSimpleValue}
+            >
+              Simple
+            </button>
           </div>
         </div>
       </div>
@@ -788,7 +798,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onValueChanged={onValueChanged}
             onPositionChanged={onPositionChanged}
             onFocusChanged={onFocusChanged}
-            onAutocompleteOpenChanged={onAutocompleteOpenChanged}
+            onAutocompleteChanged={onAutocompleteChanged}
             onLineNumberClicked={onLineNumberClicked}
             onScrollChanged={onScrollChanged}
             onEditorCreated={onEditorCreated}

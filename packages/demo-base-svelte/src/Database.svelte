@@ -109,11 +109,11 @@
     position = positionObject;
   };
 
-  const onAutocompleteOpenChanged = (newAutocompleteOpen) => {
+  const onAutocompleteChanged = (open, from, options) => {
     logs = logs.concat(
-      eventLog("autocompleteOpenChanged", newAutocompleteOpen)
+      eventLog("autocompleteChanged", { open, from, options })
     );
-    autocompleteOpen = newAutocompleteOpen;
+    autocompleteOpen = open;
   };
 
   const onLineNumberClicked = (line, event) => {
@@ -670,8 +670,14 @@
     <div class="setting">
       <div class="setting-label">Value</div>
       <div class="setting-values">
-        <button class={cypher === longQuery ? "setting-active" : undefined} on:click={showLongValue}>Long</button>
-        <button class={cypher === simpleQuery ? "setting-active" : undefined} on:click={showSimpleValue}>Simple</button>
+        <button
+          class={cypher === longQuery ? "setting-active" : undefined}
+          on:click={showLongValue}>Long</button
+        >
+        <button
+          class={cypher === simpleQuery ? "setting-active" : undefined}
+          on:click={showSimpleValue}>Simple</button
+        >
       </div>
     </div>
   </div>
@@ -687,7 +693,7 @@
         {onFocusChanged}
         {onScrollChanged}
         {onEditorCreated}
-        {onAutocompleteOpenChanged}
+        {onAutocompleteChanged}
         {onLineNumberClicked}
         {initialPosition}
         {initialSchema}

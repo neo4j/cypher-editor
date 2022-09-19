@@ -149,7 +149,7 @@ export class CypherEditorSupport {
       return pos != null ? pt : null;
     }
 
-    return getElement(this.parseTree);;
+    return getElement(this.parseTree);
   }
 
   getReferences(line, column) {

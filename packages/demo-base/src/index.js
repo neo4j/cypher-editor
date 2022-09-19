@@ -214,17 +214,13 @@ const trimOptions = (options) => {
     typeMap[type]++;
   }
   return typeMap; // options.map(({ type }) => ({ type }));
-}
+};
 
 const printArgument = (argument) => {
   try {
     if (typeof argument === "object" && argument !== null) {
       const { open, from, options } = argument;
-      if (
-        open !== undefined &&
-        from !== undefined &&
-        options !== undefined
-      ) {
+      if (open !== undefined && from !== undefined && options !== undefined) {
         return JSON.stringify({ open, from, options: trimOptions(options) });
       }
     }
