@@ -89,7 +89,11 @@ codemirror.registerHelper("lint", "cypher", (text, options, editor) => {
 
 codemirror.registerHelper("hint", "cypher", (editor) => {
   const editorSupport = editor.editorSupport;
-  if (!editorSupport || editor.autocomplete === false) {
+  if (
+    !editorSupport ||
+    editor.autocomplete === false ||
+    editor.forceAutocompleteClose === true
+  ) {
     return { list: [] };
   }
   editorSupport.update(editor.getValue());
@@ -105,7 +109,7 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
     }`;
   };
 
-  return {
+  const data = {
     list: items.map(({ type, view, content, postfix }) => ({
       text: content,
       displayText: view,
@@ -116,6 +120,14 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
     })),
     ...position
   };
+
+  const CM = editor.constructor;
+  CM.on(
+    data,
+    "shown",
+    CM.signal.bind(editor, editor, "hint-shown", { items, position })
+  );
+  return data;
 });
 
 const defaultLineNumberFormatter = (line, lineCount) => {
@@ -165,6 +177,7 @@ const defaultCodemirrorOptions = {
 
 const defaultOptions = {
   updateSyntaxHighlighting: true,
+  // value here
   text: "",
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autocomplete: true,
@@ -177,6 +190,7 @@ const defaultOptions = {
   lineNumberFormatter: defaultLineNumberFormatter,
   lint: true,
   readOnly: false,
+  history: true,
   codemirrorOptions: {
     ...defaultCodemirrorOptions
   }
@@ -190,6 +204,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const {
     updateSyntaxHighlighting,
     autofocus,
+    // value here
     text,
     autocomplete,
     placeholder,
@@ -197,6 +212,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineNumberFormatter,
     theme,
     readOnly,
+    history,
     lineWrapping,
     codemirrorOptions
   } = combinedOptions;
@@ -221,8 +237,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lint,
     lineNumbers,
     lineWrapping,
-    value: text // TODO check this works same as cm6
+    undoDepth: history ? 200 : 0,
+    // value here
+    value: text // TODO check this works same as cm6 - it is mentioned in cm5 docs: 'The starting value of the editor'
   };
+
+  // TODO cm6 vs cm5 - need to clearHistory?
 
   if (!lineNumbers) {
     combinedCodemirrorOptions.gutters = false;
@@ -238,8 +258,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   editor.on("gutterClick", onLineNumberClicked);
   editor.lint = lint;
   editor.autocomplete = autocomplete;
+  editor.forceAutocompleteClose = false;
 
   const valueChanged = (doc, changed) => {
+    valueChangedListeners.forEach((listener) => {
+      listener(doc, changed);
+    });
     if (
       editor.autocomplete &&
       Array.isArray(autocompleteTriggerStrings) &&
@@ -249,11 +273,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     ) {
       const text = changed.text[0];
       if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-        showAutoComplete();
+        showAutocomplete();
       } else if (changed.text.length === 2) {
         const longerText = text + changed.text[1];
         if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-          showAutoComplete();
+          showAutocomplete();
         }
       }
     }
@@ -264,6 +288,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return lineNumberFormatter(line, getLineCount(), editor);
   };
 
+  const valueChangedListeners = [];
   const positionChangedListeners = [];
   const autocompleteOpenChangedListeners = [];
   const lineNumberClickedListeners = [];
@@ -364,8 +389,18 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return position;
   };
 
-  const showAutoComplete = () => {
+  const showAutocomplete = () => {
     editor.execCommand("autocomplete");
+  };
+
+  const hideAutocomplete = () => {
+    editor.forceAutocompleteClose = true;
+    editor.execCommand("autocomplete");
+    editor.forceAutocompleteClose = false;
+  };
+
+  const setHistory = (history) => {
+    editor.setOption("undoDepth", history ? 200 : 0);
   };
 
   const clearHistory = () => {
@@ -427,7 +462,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const on = (type, listener) => {
-    if (type === "position") {
+    if (type === "change") {
+      valueChangedListeners.push(listener);
+    } else if (type === "position") {
       positionChangedListeners.push(listener);
     } else if (type === "autocomplete") {
       autocompleteOpenChangedListeners.push(listener);
@@ -454,47 +491,36 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
+  const removeListener = (listeners, listener) => {
+    const index = listeners.findIndex((l) => l === listener);
+    if (index >= 0) {
+      listeners.splice(index, 1);
+    }
+  };
+
   const off = (type, listener) => {
-    if (type === "position") {
-      const index = positionChangedListeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        positionChangedListeners.splice(index, 1);
-      }
+    if (type === "change") {
+      removeListener(valueChangedListeners, listener);
+    } else if (type === "position") {
+      removeListener(positionChangedListeners, listener);
     } else if (type === "autocomplete") {
-      const index = autocompleteOpenChangedListeners.findIndex(
-        (l) => l === listener
-      );
-      if (index >= 0) {
-        autocompleteOpenChangedListeners.splice(index, 1);
-      }
+      removeListener(autocompleteOpenChangedListeners, listener);
     } else if (type === "lineclick") {
-      const index = lineNumberClickedListeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        lineNumberClickedListeners.splice(index, 1);
-      }
+      removeListener(lineNumberClickedListeners, listener);
     } else if (type === "scroll") {
-      const index = scrollChangedListeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        scrollChangedListeners.splice(index, 1);
-      }
+      removeListener(scrollChangedListeners, listener);
       if (scrollChangedListeners.length === 0 && scrollListener) {
         editor.off(type, scrollListener);
         scrollListener = undefined;
       }
     } else if (type === "focus") {
-      const index = focusListeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        focusListeners.splice(index, 1);
-      }
+      removeListener(focusListeners, listener);
       if (focusListeners.length === 0 && focusListener) {
         editor.off(type, focusListener);
         focusListener = undefined;
       }
     } else if (type === "blur") {
-      const index = blurListeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        blurListeners.splice(index, 1);
-      }
+      removeListener(blurListeners, listener);
       if (blurListeners.length === 0 && focusListener) {
         editor.off(type, blurListener);
         blurListener = undefined;
@@ -512,7 +538,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     positionChanged({ line, column, position });
   });
 
-  editor.on("startCompletion", (editor) => {
+  // use this instead of: editor.on("startCompletion", (editor) => {});
+  editor.on("hint-shown", ({ items, position }) => {
+    // TODO - add items, position to event callback args
+    // console.log("a opened: ", { items, position });
     if (editor.autocomplete) {
       autocompleteOpenChanged(true);
     }
@@ -524,6 +553,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   });
 
+  // value here
   editor.setValue(text);
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
@@ -590,7 +620,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setSchema = (schema) => {
     editorSupport.setSchema(schema);
     if (autocompleteOpen) {
-      showAutoComplete();
+      showAutocomplete();
     }
   };
 
@@ -613,9 +643,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorAPI = {
     destroy,
     focus,
+    setHistory,
     clearHistory,
     goToPosition,
-    showAutoComplete,
+    showAutocomplete,
+    hideAutocomplete,
     setValue,
     setReadOnly,
     setPlaceholder,
@@ -639,6 +671,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
+    // value here
     editorSupport.update(text, version);
 
     fixColors(editor, editorSupport);

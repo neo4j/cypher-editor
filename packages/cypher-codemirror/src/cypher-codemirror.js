@@ -1,11 +1,17 @@
 // All of these packages are dependencies of "codemirror" package version >= 6;
 import {
-  autocompletion,
+  autocompletion as autocompletionExtension,
   completionKeymap,
   startCompletion,
-  completionStatus
+  closeCompletion,
+  completionStatus,
+  currentCompletions
 } from "@codemirror/autocomplete";
-import { history, defaultKeymap, historyKeymap } from "@codemirror/commands";
+import {
+  history as historyExtension,
+  defaultKeymap,
+  historyKeymap
+} from "@codemirror/commands";
 import {
   StreamLanguage,
   indentOnInput,
@@ -13,7 +19,7 @@ import {
   syntaxHighlighting,
   HighlightStyle
 } from "@codemirror/language";
-import { lintKeymap, linter } from "@codemirror/lint";
+import { lintKeymap, linter as linterExtension } from "@codemirror/lint";
 import { searchKeymap } from "@codemirror/search";
 import {
   EditorState,
@@ -24,10 +30,10 @@ import {
 import {
   EditorView,
   Decoration,
-  lineNumbers,
-  drawSelection,
-  rectangularSelection,
-  crosshairCursor,
+  lineNumbers as lineNumbersExtension,
+  drawSelection as drawSelectionExtension,
+  rectangularSelection as rectangularSelectionExtension,
+  crosshairCursor as crosshairCursorExtension,
   keymap,
   placeholder as placeholderExtension
 } from "@codemirror/view";
@@ -188,7 +194,7 @@ export const cypherLinter = ({
   showErrors = true,
   ...otherOptions
 } = {}) => [
-  linter(
+  linterExtension(
     (view) => {
       const editorSupport = getEditorSupport(view.state); // view.editorSupport;
       if (!editorSupport) return [];
@@ -223,7 +229,11 @@ const cypherCompletions = (context) => {
   );
   const completion = editorSupport.getCompletion(line, column, true);
   const { items, from, to } = completion;
-  const completions = items.map(({ type, view }) => ({ type, label: view }));
+  const completions = items.map(({ type, view, postfix }) => ({
+    type,
+    label: view,
+    detail: postfix
+  }));
   let word = context.matchBefore(/\w*/);
   let cypherCompletions = null;
   if (!(word.from == word.to && !context.explicit)) {
@@ -242,7 +252,7 @@ export const cypherCompletion = ({
   activateOnTyping = false,
   closeOnBlur = true
 } = {}) => [
-  autocompletion({
+  autocompletionExtension({
     activateOnTyping,
     closeOnBlur,
     override: [cypherCompletions]
@@ -273,7 +283,7 @@ export const cypherLineNumbers = ({
   lineNumberFormatter,
   onLineNumberClicked = () => {}
 }) => [
-  lineNumbers({
+  lineNumbersExtension({
     formatNumber: (number, state) =>
       lineNumberFormatter(number, state.doc.lines, state),
     domEventHandlers: {
@@ -296,14 +306,14 @@ const POSITION_KEY = "position";
 const AUTOCOMPLETE_KEY = "autocomplete";
 const LINE_CLICK_KEY = "lineclick";
 
-const historyExtensions = [history()];
+const historyExtensions = [historyExtension()];
 
 const readableExtensions = [
-  drawSelection(),
+  drawSelectionExtension(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
-  rectangularSelection(),
-  crosshairCursor(),
+  rectangularSelectionExtension(),
+  crosshairCursorExtension(),
   keymap.of([
     ...defaultKeymap,
     ...searchKeymap,
@@ -368,7 +378,7 @@ export const getExtensions = (
     onLineNumberClicked = () => {}
   } = {}
 ) => {
-  const combinedOptions = { ...defaultOptions, options };
+  const combinedOptions = { ...defaultOptions, ...options };
   const {
     autocomplete,
     autocompleteCloseOnBlur,
@@ -376,8 +386,9 @@ export const getExtensions = (
     lineNumbers,
     lineWrapping,
     readOnly,
-    placeholder: placeholderText,
-    theme
+    placeholder,
+    theme,
+    history
   } = combinedOptions;
   let { lineNumberFormatter } = combinedOptions;
 
@@ -397,12 +408,10 @@ export const getExtensions = (
         : []
     ),
     lineWrappingConf.of(lineWrapping ? lineWrappingExtensions : []),
-    historyConf.of(historyExtensions),
+    historyConf.of(history ? historyExtensions : []),
     readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
     placeholderConf.of(
-      placeholderText !== undefined
-        ? [placeholderExtension(placeholderText)]
-        : []
+      placeholder !== undefined ? [placeholderExtension(placeholder)] : []
     ),
     syntaxCSS,
     themeConf.of(theme === THEME_DARK ? darkExtensions : []),
@@ -418,6 +427,7 @@ export const getExtensions = (
 
 const defaultOptions = {
   updateSyntaxHighlighting: true,
+  // value here
   text: "",
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autocomplete: true,
@@ -429,14 +439,22 @@ const defaultOptions = {
   lineWrapping: false,
   lineNumberFormatter: defaultLineNumberFormatter,
   lint: true,
-  readOnly: false
+  readOnly: false,
+  history: true,
+  preExtensions: [],
+  postExtensions: []
 };
 
 export function createCypherEditor(parentDOMElement, options = {}) {
   const combinedOptions = { ...defaultOptions, ...options };
-  // TODO investigate passing theme to getExtensions, and make it a compartment toggle thing in cm 6.
-  const { updateSyntaxHighlighting, autofocus, text, extensions } =
-    combinedOptions;
+  // value here
+  const {
+    updateSyntaxHighlighting,
+    autofocus,
+    text,
+    preExtensions,
+    postExtensions
+  } = combinedOptions;
   let {
     autocompleteTriggerStrings,
     autocomplete,
@@ -510,25 +528,38 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  let settingValue = false;
-
   const updateListener = EditorView.updateListener.of((v) => {
-    if (v.docChanged && !settingValue) {
+    if (v.docChanged) {
       onValueChanged(v.state.doc.toString(), v.changes);
-    }
-    if (v.selectionSet) {
+      onPositionChanged(getPositionFromState(v.state));
+    } else if (v.selectionSet) {
       onPositionChanged(getPositionFromState(v.state));
     }
   });
 
   const autocompleteListener = EditorState.changeFilter.of((v) => {
-    const start = completionStatus(v.startState) !== null;
-    const end = completionStatus(v.state) !== null;
-    if (start !== end) {
-      onAutocompleteOpenChanged(end);
+    const startStatus = completionStatus(v.startState);
+    const endStatus = completionStatus(v.state);
+    if (startStatus !== "active" && endStatus === "active") {
+      // const newOptions = currentCompletions(v.state);
+      // console.log("a1 opened: ", { newFrom, newOptions });
+      const { effects } = v;
+      if (effects && effects.length === 1) {
+        const { value: activeResults } = effects[0];
+        if (activeResults.length === 1) {
+          const activeResult = activeResults[0];
+          const { result } = activeResult;
+          const { from, options } = result;
+          // console.log("a opened: ", { from, options });
+          onAutocompleteOpenChanged(true, { from, options });
+        }
+      }
+    } else if (startStatus !== null && endStatus === null) {
+      onAutocompleteOpenChanged(false);
     }
   });
 
+  const preConf = new Compartment();
   const lintConf = new Compartment();
   const autocompleteConf = new Compartment();
   const readableConf = new Compartment();
@@ -538,37 +569,49 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
   const themeConf = new Compartment();
-
-  const stateExtensions = [
-    ...(extensions
-      ? extensions
-      : [
-          ...getExtensions(combinedOptions, {
-            lintConf,
-            autocompleteConf,
-            readableConf,
-            readOnlyConf,
-            showLinesConf,
-            lineWrappingConf,
-            historyConf,
-            placeholderConf,
-            themeConf,
-            onLineNumberClicked
-          })
-        ]),
-    updateListener,
-    autocompleteListener
-  ];
+  const postConf = new Compartment();
 
   const initialState = EditorState.create({
+    // value here
     doc: text,
-    extensions: stateExtensions
+    extensions: [
+      preConf.of(preExtensions),
+      ...getExtensions(combinedOptions, {
+        lintConf,
+        autocompleteConf,
+        readableConf,
+        readOnlyConf,
+        showLinesConf,
+        lineWrappingConf,
+        historyConf,
+        placeholderConf,
+        themeConf,
+        postConf,
+        onLineNumberClicked
+      }),
+      updateListener,
+      autocompleteListener,
+      postConf.of(postExtensions)
+    ]
   });
+  // TODO cm6 vs cm5 - need to clearHistory?
 
   let editor = new EditorView({
     parent: parentDOMElement,
     state: initialState
   });
+
+  const setPreExtensions = (preExtensions) => {
+    editor.dispatch({
+      effects: preConf.reconfigure(preExtensions)
+    });
+  };
+
+  const setPostExtensions = (postExtensions) => {
+    editor.dispatch({
+      effects: postConf.reconfigure(postExtensions)
+    });
+  };
 
   const onValueChanged = (value, changes) => {
     if (autocomplete && Array.isArray(autocompleteTriggerStrings)) {
@@ -580,11 +623,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       if (changedText.length > 0 && changedText.length <= 2) {
         const text = changedText[0];
         if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          showAutoComplete();
+          showAutocomplete();
         } else if (changedText.length === 2) {
           const longerText = text + changedText[1];
           if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            showAutoComplete();
+            showAutocomplete();
           }
         }
       }
@@ -598,12 +641,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
-    settingValue = true;
     const update = editor.state.update({
       changes: { from: 0, to: editor.state.doc.length, insert: value }
     });
     editor.update([update]);
-    settingValue = false;
     if (updateSyntaxHighlighting !== false) {
       const version = editor.newContentVersion();
       const editorSupport = getEditorSupport(editor.state);
@@ -669,8 +710,18 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const showAutoComplete = () => {
+  const showAutocomplete = () => {
     startCompletion(editor);
+  };
+
+  const hideAutocomplete = () => {
+    closeCompletion(editor);
+  };
+
+  const setHistory = (history) => {
+    editor.dispatch({
+      effects: historyConf.reconfigure(history ? historyExtensions : [])
+    });
   };
 
   const clearHistory = () => {
@@ -721,7 +772,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
             : []
         ),
         autocompleteConf.reconfigure(
-          readOnly === false && autocomplete ? useAutocompleteExtensions : []
+          readOnly === false && autocomplete
+            ? !autocompleteCloseOnBlur
+              ? useStickyAutocompleteExtensions
+              : useAutocompleteExtensions
+            : []
         ),
         lintConf.reconfigure(
           readOnly === false && lint ? useLintExtensions : useNoLintExtensions
@@ -768,7 +823,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         readOnly === false && autocomplete
-          ? autocompleteCloseOnBlur
+          ? !autocompleteCloseOnBlur
             ? useStickyAutocompleteExtensions
             : useAutocompleteExtensions
           : []
@@ -803,7 +858,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setSchema = (schema) => {
     editorSupport.setSchema(schema);
     if (autocompleteOpen) {
-      showAutoComplete();
+      showAutocomplete();
     }
   };
 
@@ -824,9 +879,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorAPI = {
     focus,
     destroy,
+    setHistory,
     clearHistory,
     goToPosition,
-    showAutoComplete,
+    showAutocomplete,
+    hideAutocomplete,
     setValue,
     setReadOnly,
     setPlaceholder,
@@ -844,12 +901,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setTheme,
     on,
     off,
+    setPreExtensions,
+    setPostExtensions,
     codemirror: editor,
     editorSupport
   };
 
   if (updateSyntaxHighlighting !== false) {
     const version = editor.newContentVersion();
+    // value here
     editorSupport.update(text, version);
 
     fixColors(editor, editorSupport);

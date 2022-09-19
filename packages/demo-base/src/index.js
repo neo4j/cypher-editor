@@ -99,21 +99,75 @@ export const user = "neo4j";
 
 export const pass = "asdfgh";
 
-// Note: an automated test for the initial autofocus (defaultOptions.autofocus) would be good.
+const defaultCodemirrorOptions = {
+  // lineNumbers: true,
+  mode: "cypher",
+  // theme: theme,
+  // placeholder: undefined
 
-export const defaultOptions = {
-  lineNumbers: true, // whether to show the line numbers next to the editor
-  autofocus: true, // if true the editor will be focused once created
-  placeholder: undefined, // this text shows when the actual text is empty
-  readOnly: false, // can be one of: true / false / "nocursor"
-  autocomplete: true, // whether to show autocompletion
-  lint: true, // whether to show lint errors,
-  autocompleteTriggerStrings: [".", ":", "[]", "()", "{}", "[", "(", "{", "$"],
-  autocompleteCloseOnBlur: true,
-  lineWrapping: false
+  gutters: ["cypher-hints"],
+  // lineWrapping: false,
+  // autofocus: true,
+  smartIndent: false,
+  // lint: true,
+  extraKeys: {
+    "Ctrl-Space": "autocomplete"
+  },
+  hintOptions: {
+    completeSingle: false, //
+    closeOnUnfocus: false, //
+    alignWithWord: true, //
+    async: true //
+  },
+  autoCloseBrackets: {
+    explode: ""
+  }
 };
 
-export const defaultLineNumberFormatter = undefined;
+export const defaultLineNumberFormatter = (line, lineCount) => {
+  if (lineCount === 1) {
+    return "$";
+  } else {
+    return line;
+  }
+};
+
+export const defaultAutocompleteTriggerStrings = [
+  ".",
+  ":",
+  "[]",
+  "()",
+  "{}",
+  "[",
+  "(",
+  "{",
+  "$"
+];
+
+const THEME_LIGHT = "light";
+
+const defaultOptions = {
+  updateSyntaxHighlighting: true,
+  // value here
+  text: "",
+  value: "",
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocomplete: true,
+  autocompleteCloseOnBlur: true,
+  placeholder: undefined,
+  autofocus: true,
+  theme: THEME_LIGHT,
+  lineNumbers: true,
+  lineWrapping: false,
+  lineNumberFormatter: defaultLineNumberFormatter,
+  lint: true,
+  readOnly: false,
+  history: true,
+  codemirrorOptions: {
+    ...defaultCodemirrorOptions
+  }
+};
+
 export const noneLineNumberFormatter = (line) => line;
 export const customLineNumberFormatter = (line, lineCount) => {
   if (line === 1) {
@@ -131,7 +185,20 @@ export const samplePlaceholder = "Sample Placeholder";
 
 export const initialSchema = simpleSchema;
 export const initialValue = longQuery;
-export const initialOptions = defaultOptions;
+
+// Note: an automated test for the initial autofocus (defaultOptions.autofocus) would be good.
+export const initialOptions = {
+  ...defaultOptions,
+  lineNumbers: true, // whether to show the line numbers next to the editor
+  autofocus: true, // if true the editor will be focused once created
+  placeholder: undefined, // this text shows when the actual text is empty
+  readOnly: false, // can be one of: true / false / "nocursor"
+  autocomplete: true, // whether to show autocompletion
+  lint: true, // whether to show lint errors,
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocompleteCloseOnBlur: false, // TODO - change back to true after testing
+  lineWrapping: false
+};
 
 export const defaultTheme = "light";
 

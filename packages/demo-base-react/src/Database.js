@@ -32,26 +32,16 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [theme, setTheme] = useState(defaultTheme);
   const [position, setPosition] = useState(initialPosition);
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [focused, setFocused] = useState(
-    initialOptions.autofocus !== undefined ? initialOptions.autofocus : true
-  );
+  const [focused, setFocused] = useState(initialOptions.autofocus);
   const [editor, setEditor] = useState(null);
-  const [lineNumbers, setLineNumbers] = useState(
-    initialOptions.lineNumbers !== undefined ? initialOptions.lineNumbers : true
-  );
+  const [lineNumbers, setLineNumbers] = useState(initialOptions.lineNumbers);
   const [lineNumberFormatterObject, setLineNumberFormatterObject] = useState({
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialSchema);
-  const [readOnly, setReadOnly] = useState(
-    initialOptions.readOnly !== undefined ? initialOptions.readOnly : false
-  );
-  const [autocomplete, setAutocomplete] = useState(
-    initialOptions.autocomplete !== undefined
-      ? initialOptions.autocomplete
-      : true
-  );
+  const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
+  const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings
   );
@@ -59,14 +49,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     initialOptions.autocompleteCloseOnBlur
   );
   const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
-  const [lineWrapping, setLineWrapping] = useState(
-    initialOptions.lineWrapping !== undefined
-      ? initialOptions.lineWrapping
-      : false
-  );
-  const [lint, setLint] = useState(
-    initialOptions.lint !== undefined ? initialOptions.lint : true
-  );
+  const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
+  const [lint, setLint] = useState(initialOptions.lint);
+  const [history, setHistory] = useState(initialOptions.history);
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
   const [positionColumn, setPositionColumn] = useState("0");
@@ -280,6 +265,18 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     addCommandLog("setLint", false);
     setLint(false);
     editor && editor.setLint(false);
+  };
+
+  const enableHistory = () => {
+    addCommandLog("setHistory", true);
+    setHistory(true);
+    editor && editor.setHistory(true);
+  };
+
+  const disableHistory = () => {
+    addCommandLog("setHistory", false);
+    setHistory(false);
+    editor && editor.setHistory(false);
   };
 
   const clearHistory = () => {
@@ -700,6 +697,18 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="setting">
           <div className="setting-label">History</div>
           <div className="setting-values">
+            <button
+              className={history ? "setting-active" : undefined}
+              onClick={enableHistory}
+            >
+              True
+            </button>
+            <button
+              className={!history ? "setting-active" : undefined}
+              onClick={disableHistory}
+            >
+              False
+            </button>
             <button onClick={clearHistory}>Clear</button>
           </div>
         </div>
@@ -765,8 +774,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         <div className="setting">
           <div className="setting-label">Value</div>
           <div className="setting-values">
-            <button onClick={showLongValue}>Long</button>
-            <button onClick={showSimpleValue}>Simple</button>
+            <button className={cypher === longQuery ? "setting-active" : undefined} onClick={showLongValue}>Long</button>
+            <button className={cypher === simpleQuery ? "setting-active" : undefined} onClick={showSimpleValue}>Simple</button>
           </div>
         </div>
       </div>

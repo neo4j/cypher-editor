@@ -48,9 +48,7 @@
     .join(" ");
 
   const valueChanged = (doc: { getValue: () => string }, change: any) => {
-    if (onValueChanged && change.origin !== "setValue") {
-      onValueChanged(doc.getValue(), change);
-    }
+    onValueChanged && onValueChanged(doc.getValue(), change);
   };
 
   const focusChanged = (focused) => {

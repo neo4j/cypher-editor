@@ -43,6 +43,7 @@
   let lineWrapping = initialOptions.lineWrapping;
   let autocompleteOpen = false;
   let lint = initialOptions.lint;
+  let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
   let schema = initialSchema;
   let cypherEditor;
@@ -238,6 +239,18 @@
     logs = logs.concat(commandLog("setLint", false));
     lint = false;
     cypherEditor && cypherEditor.setLint(lint);
+  };
+
+  const enableHistory = () => {
+    logs = logs.concat(commandLog("setHistory", true));
+    history = true;
+    cypherEditor && cypherEditor.setHistory(true);
+  };
+
+  const disableHistory = () => {
+    logs = logs.concat(commandLog("setHistory", false));
+    history = false;
+    cypherEditor && cypherEditor.setHistory(false);
   };
 
   const clearHistory = () => {
@@ -592,6 +605,14 @@
     <div class="setting">
       <div class="setting-label">History</div>
       <div class="setting-values">
+        <button
+          class={history ? "setting-active" : undefined}
+          on:click={enableHistory}>True</button
+        >
+        <button
+          class={!history ? "setting-active" : undefined}
+          on:click={disableHistory}>False</button
+        >
         <button on:click={clearHistory}>Clear</button>
       </div>
     </div>
@@ -649,8 +670,8 @@
     <div class="setting">
       <div class="setting-label">Value</div>
       <div class="setting-values">
-        <button on:click={showLongValue}>Long</button>
-        <button on:click={showSimpleValue}>Simple</button>
+        <button class={cypher === longQuery ? "setting-active" : undefined} on:click={showLongValue}>Long</button>
+        <button class={cypher === simpleQuery ? "setting-active" : undefined} on:click={showSimpleValue}>Simple</button>
       </div>
     </div>
   </div>

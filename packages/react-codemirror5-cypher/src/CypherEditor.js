@@ -24,9 +24,7 @@ class CypherEditor extends Component {
 
   valueChanged = (doc, change) => {
     const { onValueChanged } = this.props;
-    if (onValueChanged && change.origin !== "setValue") {
-      onValueChanged(doc.getValue(), change);
-    }
+    onValueChanged && onValueChanged(doc.getValue(), change);
   };
 
   focusChanged = (focused) => {
