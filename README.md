@@ -11,7 +11,7 @@ yarn install
 Optionally to build all library packages for release preparation, run the following in the base directory:
 
 ```
-yarn build
+yarn build:libs
 ```
 
 ### Demos
