@@ -22,7 +22,7 @@
     "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
     "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
     "build": "npm run build-lib && npm run build-es",
-    "build-clean": "rimraf lib && rimraf es"
+    "clean:build": "rimraf lib && rimraf es"
   },
   "files": [
     "es/",
