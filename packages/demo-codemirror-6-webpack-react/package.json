@@ -7,8 +7,8 @@
     "start": "cross-env NODE_ENV=\"development\" webpack serve --config ./webpack.local.config.js",
     "e2e": "export PORT=5176; playwright test --config=../../playwright.config.js",
     "e2e:selector": "playwright codegen http://localhost:5176",
-    "deploy": "npm run deploy-clean && cross-env NODE_ENV=\"production\" webpack",
-    "deploy-clean": "rimraf dist",
+    "deploy": "npm run clean:deploy && cross-env NODE_ENV=\"production\" webpack",
+    "clean:deploy": "rimraf dist",
     "serve": "pm2 serve dist 5176 --spa --name demo5176",
     "unserve": "pm2 delete demo5176"
   },

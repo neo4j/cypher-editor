@@ -23,18 +23,19 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "rimraf packages/*/node_modules; rimraf demos/*/node_modules; rimraf node_modules",
-    "build": "turbo run build",
-    "deploy": "turbo run deploy",
-    "e2e": "turbo run e2e",
-    "e2e:cleanup": "turbo run unserve",
+    "build:demos": "turbo run deploy",
+    "build:libs": "turbo run build",
+    "clean:all": "turbo run clean:deploy clean:build && yarn clean:deps",
+    "clean:demos": "turbo run clean:deploy",
+    "clean:deps": "rimraf packages/*/node_modules; rimraf node_modules",
+    "clean:libs": "turbo run clean:build",
     "lerna": "lerna",
     "pm2": "pm2",
-    "build-clean": "turbo run build-clean",
-    "prepublishOnly": "yarn build",
-    "start": "turbo run start",
-    "deploy-clean": "turbo run deploy-clean",
-    "prettier": "prettier --write ."
+    "prepublishOnly": "yarn build:libs",
+    "prettier": "prettier --write .",
+    "start:demos": "turbo run start",
+    "start:e2e": "turbo run e2e",
+    "stop:e2e": "turbo run unserve"
   },
   "name": "cypher-editor"
 }

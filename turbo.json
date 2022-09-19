@@ -21,7 +21,11 @@
     "unserve": {
       "cache": false
     },
-    "deploy-clean": {},
-    "build-clean": {}
+    "clean:deploy": {
+      "cache": false
+    },
+    "clean:build": {
+      "cache": false
+    }
   }
 }

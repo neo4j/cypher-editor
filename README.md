@@ -47,6 +47,6 @@ Or all packages together:
 # in project root
 
 # for prod
-yarn e2e
-yarn e2e:cleanup
+yarn start:e2e
+yarn stop:e2e
 ```
