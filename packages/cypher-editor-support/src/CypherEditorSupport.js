@@ -149,9 +149,7 @@ export class CypherEditorSupport {
       return pos != null ? pt : null;
     }
 
-    // TODO remove debug
-    const element = getElement(this.parseTree);
-    return element;
+    return getElement(this.parseTree);;
   }
 
   getReferences(line, column) {
