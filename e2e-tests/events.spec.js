@@ -14,6 +14,9 @@ function getLogElement(page) {
 function getEditor(page) {
   return page.locator(".editor");
 }
+function sleep(ms) {
+  return new Promise((res) => setTimeout(res, ms));
+}
 
 test.describe("Commands and Editor events", () => {
   test.beforeEach(async ({ page }) => {
@@ -32,11 +35,13 @@ test.describe("Commands and Editor events", () => {
     // Blur
     const title = page.locator("text=/Cypher Codemirror/i");
     await title.click();
+    await sleep(1000);
     expect(await getLogEntry(page, -1)).toEqual("event focusChanged false");
 
     // Focus
     // This triggers two event, one for the focus and one for the cursor position
     await getEditor(page).click();
+    await sleep(1000);
     const lastEntries = [
       await getLogEntry(page, -1),
       await getLogEntry(page, -2)

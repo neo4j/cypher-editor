@@ -6,7 +6,9 @@
   "scripts": {
     "start": "vite --port 5175",
     "deploy": "vite build",
-    "serve": "npx -y http-server dist --port 5175",
+    "serve": "pm2 serve dist 5175 --spa --name demo5175",
+    "unserve": "pm2 delete demo5175",
+    "serve:bg": "npx -y http-server dist --port 5175",
     "e2e": "export PORT=5175; playwright test --config=../../playwright.config.js",
     "e2e:selector": "playwright codegen http://localhost:5175",
     "check": "svelte-check --tsconfig ./tsconfig.json"

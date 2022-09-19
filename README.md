@@ -11,7 +11,7 @@ yarn install
 Optionally to build all library packages for release preparation, run the following in the base directory:
 
 ```
-yarn build
+yarn build:libs
 ```
 
 ### Demos
@@ -32,12 +32,13 @@ cd packages/<demo-package-name>
 
 # for dev
 yarn start
+yarn e2e
 
 # for prod
 yarn build
 yarn serve
-
 yarn e2e
+yarn unserve
 ```
 
 Or all packages together:
@@ -46,14 +47,6 @@ Or all packages together:
 # in project root
 
 # for prod
-yarn e2e:prepare
-yarn serve
-
-yarn e2e
-```
-
-On CI systems with only one shell
-
-```
-yarn e2e:ci
+yarn start:e2e
+yarn stop:e2e
 ```

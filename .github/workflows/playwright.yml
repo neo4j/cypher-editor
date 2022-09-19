@@ -15,10 +15,15 @@ jobs:
           node-version: "lts/*"
       - name: Install dependencies
         run: yarn
+      - name: Warmup pm2
+        run: yarn pm2 list
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: yarn e2e:ci
+        run: yarn start:e2e
+      - name: Cleanup
+        if: always()
+        run: yarn stop:e2e
       - uses: actions/upload-artifact@v2
         if: always()
         with:
