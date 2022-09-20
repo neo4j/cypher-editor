@@ -63,27 +63,9 @@ class CypherEditor extends Component {
   };
 
   componentDidMount() {
-    const {
-      initialOptions,
-      initialSchema,
-      initialValue = "MATCH (n) RETURN n LIMIT 10",
-      initialPosition,
-      theme,
-      onEditorCreated
-    } = this.props;
-    const { editor } = createCypherEditor(this.editorRef, {
-      ...initialOptions,
-      theme
-    });
+    const { initialOptions, onEditorCreated } = this.props;
+    const { editor } = createCypherEditor(this.editorRef, initialOptions);
     this.cypherEditor = editor;
-
-    if (initialSchema) {
-      editor.setSchema(initialSchema);
-    }
-    this.cypherEditor.setValue(initialValue);
-    if (initialPosition) {
-      this.cypherEditor.goToPosition(initialPosition);
-    }
     this.cypherEditor.on("change", this.valueChanged);
     this.cypherEditor.on("focus", this.focused);
     this.cypherEditor.on("blur", this.blurred);

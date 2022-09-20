@@ -186,13 +186,35 @@ body {
 .logs-header {
     display: flex;
     flex-direction: row;
+    padding: 4px 0;
+}
+
+.logs-header h3 {
+    margin: 0;
 }
 
 .right .logs-header button {
-    margin: 16px;
+    margin: 0 16px;
     padding: 0.3em 0.6em;
     font-size: 0.8em;
     line-height: 1;
+}
+
+.logs-filters {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 0;
+}
+
+.logs-filter {
+    display: flex;
+    flex-direction: row;
+    padding: 0 4px;
+}
+
+.logs-filter input {
+    margin-left: 8px;
+    margin-right: 20px;
 }
 
 .logs textarea {

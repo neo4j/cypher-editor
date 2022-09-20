@@ -91,8 +91,6 @@ export const serverInfoQuery = `CALL dbms.components() YIELD name, versions, edi
 
 export const longQuery = metaQuery;
 
-export const initialPosition = { line: 2, column: 3 };
-
 export const host = "neo4j://localhost:7687";
 
 export const user = "neo4j";
@@ -147,22 +145,24 @@ export const defaultAutocompleteTriggerStrings = [
 const THEME_LIGHT = "light";
 
 const defaultOptions = {
-  updateSyntaxHighlighting: true,
-  // value here
-  text: "",
-  value: "",
-  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autocomplete: true,
+  autocompleteOpen: false,
   autocompleteCloseOnBlur: true,
-  placeholder: undefined,
+  autocompleteSchema: undefined,
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true,
-  theme: THEME_LIGHT,
+  history: true,
+  lineNumberFormatter: defaultLineNumberFormatter,
   lineNumbers: true,
   lineWrapping: false,
-  lineNumberFormatter: defaultLineNumberFormatter,
   lint: true,
+  placeholder: undefined,
+  position: undefined,
   readOnly: false,
-  history: true,
+  theme: THEME_LIGHT,
+  updateSyntaxHighlighting: true,
+  value: "",
+
   codemirrorOptions: {
     ...defaultCodemirrorOptions
   }
@@ -183,21 +183,23 @@ export const customLineNumberFormatter = (line, lineCount) => {
 
 export const samplePlaceholder = "Sample Placeholder";
 
-export const initialSchema = simpleSchema;
-export const initialValue = longQuery;
-
 // Note: an automated test for the initial autofocus (defaultOptions.autofocus) would be good.
 export const initialOptions = {
   ...defaultOptions,
-  lineNumbers: true, // whether to show the line numbers next to the editor
-  autofocus: true, // if true the editor will be focused once created
-  placeholder: undefined, // this text shows when the actual text is empty
-  readOnly: false, // can be one of: true / false / "nocursor"
   autocomplete: true, // whether to show autocompletion
-  lint: true, // whether to show lint errors,
-  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autocompleteOpen: false,
   autocompleteCloseOnBlur: false, // TODO - change back to true after testing
-  lineWrapping: false
+  autocompleteSchema: simpleSchema,
+  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
+  autofocus: true, // if true the editor will be focused once created
+  lineNumbers: true, // whether to show the line numbers next to the editor
+  lineWrapping: false,
+  lint: true, // whether to show lint errors,
+  placeholder: undefined, // this text shows when the actual text is empty
+  position: { line: 2, column: 3 },
+  readOnly: false, // can be one of: true / false / "nocursor"
+  theme: THEME_LIGHT,
+  value: longQuery
 };
 
 export const defaultTheme = "light";
@@ -230,13 +232,24 @@ const printArgument = (argument) => {
   }
 };
 
-export const getLogText = (logs) =>
-  logs
+export const getLogText = (logs, { eventFilters, commandFilters } = {}) => {
+  return (
+    eventFilters === undefined && commandFilters === undefined
+      ? logs
+      : logs.filter(
+          ({ type, label }) =>
+            (type === "event" &&
+              (eventFilters === undefined || eventFilters[label])) ||
+            (type === "command" &&
+              (commandFilters === undefined || commandFilters[label]))
+        )
+  )
     .map(
       ({ type, label, argument }) =>
         type + " " + label + " " + printArgument(argument)
     )
     .join("\n");
+};
 
 export const commandLog = (command, argument) => {
   return {
@@ -302,6 +315,23 @@ export const getChangedScrollInfo = (oldScrollInfo, newScrollInfo) => {
       return { scrollLeft, clientWidth, scrollWidth };
     }
   }
+};
+
+export const eventTypes = [
+  "autocompleteChanged",
+  "editorCreated",
+  "focusChanged",
+  "lineNumberClicked",
+  "positionChanged",
+  "valueChanged"
+];
+
+export const createEventTypeFilterMap = (initialValue = true) => {
+  const filterMap = {};
+  for (let eventType of eventTypes) {
+    filterMap[eventType] = initialValue;
+  }
+  return filterMap;
 };
 
 export const createDriver = () =>

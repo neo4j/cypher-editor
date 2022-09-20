@@ -11,11 +11,7 @@
   import "cypher-codemirror5/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror5";
 
-  export let initialPosition = undefined;
-
   export let initialOptions = undefined;
-
-  export let initialSchema = undefined;
 
   export let onValueChanged = undefined;
 
@@ -26,10 +22,6 @@
   export let onPositionChanged = undefined;
 
   export let classNames = undefined;
-
-  export let initialValue = "MATCH (n) RETURN n LIMIT 10";
-
-  export let theme = undefined;
 
   export let onEditorCreated = undefined;
 
@@ -74,20 +66,8 @@
   };
 
   onMount(() => {
-    const { editor } = createCypherEditor(cypherEditorRef, {
-      ...initialOptions,
-      theme
-    });
+    const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
     cypherEditor = editor;
-
-    if (initialSchema) {
-      cypherEditor.setSchema(initialSchema);
-    }
-    cypherEditor.setValue(initialValue);
-    if (initialPosition) {
-      cypherEditor.goToPosition(initialPosition);
-    }
-
     cypherEditor.on("change", valueChanged);
     cypherEditor.on("focus", () => focusChanged(true));
     cypherEditor.on("blur", () => focusChanged(false));

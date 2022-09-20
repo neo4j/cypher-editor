@@ -5,21 +5,19 @@
     simpleSchema,
     longQuery,
     simpleQuery,
-    initialPosition,
+    initialOptions,
     createDriver,
     defaultLineNumberFormatter,
     noneLineNumberFormatter,
     customLineNumberFormatter,
     samplePlaceholder,
-    defaultTheme,
-    initialSchema,
-    initialValue,
-    initialOptions,
     getTitle,
     getLogText,
     commandLog,
     eventLog,
-    getChangedScrollInfo
+    getChangedScrollInfo,
+    eventTypes,
+    createEventTypeFilterMap
   } from "demo-base";
 
   export let codemirrorVersion = undefined;
@@ -29,12 +27,12 @@
 
   const title = getTitle({ codemirrorVersion, framework, bundler });
 
-  let cypher = initialValue;
+  let cypher = initialOptions.value;
 
   const driver = createDriver();
 
-  let theme = defaultTheme;
-  let position = initialPosition;
+  let theme = initialOptions.theme;
+  let position = initialOptions.position;
   let focused = true;
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
@@ -45,7 +43,7 @@
   let lint = initialOptions.lint;
   let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
-  let schema = initialSchema;
+  let schema = initialOptions.autocompleteSchema;
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
@@ -55,6 +53,7 @@
   let lineCount = 0;
   let logs = [];
   let lastScrollInfo;
+  let eventFilters = createEventTypeFilterMap(true);
 
   const lightTheme = () => {
     logs = logs.concat(commandLog("setTheme", "light"));
@@ -159,7 +158,7 @@
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
   $: autocompleteString = autocompleteOpen + "";
-  $: logText = getLogText(logs);
+  $: logText = getLogText(logs, { eventFilters });
 
   let textareaRef;
   let lastLogText = logText;
@@ -297,15 +296,15 @@
   };
 
   const showSimpleSchema = () => {
-    logs = logs.concat(commandLog("setSchema", "simple"));
+    logs = logs.concat(commandLog("setAutocompleteSchema", "simple"));
     schema = simpleSchema;
-    cypherEditor && cypherEditor.setSchema(schema);
+    cypherEditor && cypherEditor.setAutocompleteSchema(schema);
   };
 
   const showLongSchema = () => {
-    logs = logs.concat(commandLog("setSchema", "long"));
+    logs = logs.concat(commandLog("setAutocompleteSchema", "long"));
     schema = neo4jSchema;
-    cypherEditor && cypherEditor.setSchema(schema);
+    cypherEditor && cypherEditor.setAutocompleteSchema(schema);
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
@@ -341,8 +340,8 @@
   };
 
   const goToPosition = (position) => {
-    logs = logs.concat(commandLog("goToPosition", position));
-    cypherEditor && cypherEditor.goToPosition(position);
+    logs = logs.concat(commandLog("setPosition", position));
+    cypherEditor && cypherEditor.setPosition(position);
     cypherEditor && cypherEditor.focus();
   };
 
@@ -695,11 +694,7 @@
         {onEditorCreated}
         {onAutocompleteChanged}
         {onLineNumberClicked}
-        {initialPosition}
-        {initialSchema}
-        {initialValue}
         {initialOptions}
-        {theme}
         classNames={["editor"]}
       />
     </div>
@@ -717,6 +712,23 @@
         <div class="logs-header">
           <h3>Logs</h3>
           <button on:click={clearLogs}> Clear </button>
+        </div>
+        <div class="logs-filters">
+          {#each eventTypes as eventType}
+            <div class="logs-filter">
+              <label for={eventType}>{eventType}</label>
+              <input
+                type="checkbox"
+                checked={eventFilters[eventType]}
+                on:input={() => {
+                  eventFilters = {
+                    ...eventFilters,
+                    [eventType]: !eventFilters[eventType]
+                  };
+                }}
+              />
+            </div>
+          {/each}
         </div>
         <textarea id="log" readonly bind:this={textareaRef} value={logText} />
       </div>

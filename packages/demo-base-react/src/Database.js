@@ -4,33 +4,31 @@ import {
   simpleSchema,
   longQuery,
   simpleQuery,
-  initialPosition,
   createDriver,
   defaultLineNumberFormatter,
   noneLineNumberFormatter,
   customLineNumberFormatter,
   samplePlaceholder,
-  defaultTheme,
-  initialSchema,
-  initialValue,
   initialOptions,
   getTitle,
   getLogText,
   commandLog,
   eventLog,
-  getChangedScrollInfo
+  getChangedScrollInfo,
+  eventTypes,
+  createEventTypeFilterMap
 } from "demo-base";
 
 const driver = createDriver();
 
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = getTitle({ codemirrorVersion, framework, bundler });
-  const [cypher, setCypher] = useState(initialValue);
+  const [cypher, setCypher] = useState(initialOptions.value);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
-  const [theme, setTheme] = useState(defaultTheme);
-  const [position, setPosition] = useState(initialPosition);
+  const [theme, setTheme] = useState(initialOptions.theme);
+  const [position, setPosition] = useState(initialOptions.position);
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const [focused, setFocused] = useState(initialOptions.autofocus);
   const [editor, setEditor] = useState(null);
@@ -39,7 +37,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   const { lineNumberFormatter } = lineNumberFormatterObject;
-  const [schema, setSchema] = useState(initialSchema);
+  const [schema, setSchema] = useState(initialOptions.autocompleteSchema);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
   const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
@@ -63,11 +61,21 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [logs, setLogs] = useState([]);
   const [logText, setLogText] = useState("");
   const [lastScrollInfo, setLastScrollInfo] = useState(undefined);
+  const [eventFilters, setEventFilters] = useState(
+    createEventTypeFilterMap(true)
+  );
   const textareaRef = useRef(null);
 
+  const onFilterChange = (eventType) => {
+    setEventFilters((filters) => ({
+      ...filters,
+      [eventType]: !filters[eventType]
+    }));
+  };
+
   useEffect(() => {
-    setLogText(getLogText(logs));
-  }, [logs]);
+    setLogText(getLogText(logs, { eventFilters }));
+  }, [logs, eventFilters]);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -314,15 +322,15 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showSimpleSchema = () => {
-    addCommandLog("setSchema", "simple");
+    addCommandLog("setAutocompleteSchema", "simple");
     setSchema(simpleSchema);
-    editor && editor.setSchema(simpleSchema);
+    editor && editor.setAutocompleteSchema(simpleSchema);
   };
 
   const showLongSchema = () => {
-    addCommandLog("setSchema", "long");
+    addCommandLog("setAutocompleteSchema", "long");
     setSchema(neo4jSchema);
-    editor && editor.setSchema(neo4jSchema);
+    editor && editor.setAutocompleteSchema(neo4jSchema);
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
@@ -356,8 +364,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const goToPosition = (position) => {
-    addCommandLog("goToPosition", position);
-    editor && editor.goToPosition(position);
+    addCommandLog("setPosition", position);
+    editor && editor.setPosition(position);
     editor && editor.focus();
   };
 
@@ -802,11 +810,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onLineNumberClicked={onLineNumberClicked}
             onScrollChanged={onScrollChanged}
             onEditorCreated={onEditorCreated}
-            initialPosition={initialPosition}
-            initialSchema={initialSchema}
-            initialValue={initialValue}
             initialOptions={initialOptions}
-            theme={theme}
             classNames={["editor"]}
           />
         </div>
@@ -826,6 +830,20 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <div className="logs-header">
               <h3>Logs</h3>
               <button onClick={clearLogs}> Clear </button>
+            </div>
+            <div className="logs-filters">
+              {eventTypes.map((eventType) => (
+                <div key={eventType} className="logs-filter">
+                  <label htmlFor={eventType}>{eventType}</label>
+                  <input
+                    type="checkbox"
+                    checked={eventFilters[eventType]}
+                    onChange={() => {
+                      onFilterChange(eventType);
+                    }}
+                  />
+                </div>
+              ))}
             </div>
             <textarea id="log" readOnly value={logText} ref={textareaRef} />
           </div>
