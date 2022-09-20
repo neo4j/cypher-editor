@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate } from "svelte";
+  import { tick } from "svelte";
   import {
     neo4jSchema,
     simpleSchema,
@@ -162,14 +162,14 @@
   $: logText = getLogText(logs, { eventFilters });
 
   let textareaRef;
-  let lastLogText = logText;
 
-  afterUpdate(() => {
-    if (lastLogText !== logText) {
-      textareaRef.scrollTop = logText ? textareaRef.scrollHeight : 0;
-      lastLogText = logText;
-    }
-  });
+  $: if (logText) autoScrollLog();
+
+  async function autoScrollLog() {
+    // Let the DOM populate before scrolling
+    await tick();
+    textareaRef.scrollTop = logText ? textareaRef.scrollHeight : 0;
+  }
 
   const clearLogs = () => {
     logs = [];
