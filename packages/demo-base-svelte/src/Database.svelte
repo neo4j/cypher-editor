@@ -36,6 +36,7 @@
   let focused = true;
   let lineNumbers = initialOptions.lineNumbers;
   let readOnly = initialOptions.readOnly;
+  let readOnlyCursor = initialOptions.readOnlyCursor;
   let autocomplete = initialOptions.autocomplete;
   let placeholder = initialOptions.placeholder;
   let lineWrapping = initialOptions.lineWrapping;
@@ -211,9 +212,15 @@
   };
 
   const makeReadOnlyNoCursor = () => {
-    logs = logs.concat(commandLog("setReadOnly", "nocursor"));
-    readOnly = "nocursor";
-    cypherEditor && cypherEditor.setReadOnly(readOnly);
+    logs = logs.concat(commandLog("setReadOnlyCursor", false));
+    readOnlyCursor = false;
+    cypherEditor && cypherEditor.setReadOnlyCursor(false);
+  };
+
+  const makeReadOnlyCursor = () => {
+    logs = logs.concat(commandLog("setReadOnlyCursor", true));
+    readOnlyCursor = true;
+    cypherEditor && cypherEditor.setReadOnlyCursor(true);
   };
 
   const enableAutocomplete = () => {
@@ -542,9 +549,21 @@
           class={readOnly === true ? "setting-active" : undefined}
           on:click={makeReadOnly}>True</button
         >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Read Only Cursor</div>
+      <div class="setting-values">
         <button
-          class={readOnly === "nocursor" ? "setting-active" : undefined}
-          on:click={makeReadOnlyNoCursor}>No Cursor</button
+          disabled={!readOnly}
+          class={readOnlyCursor === false ? "setting-active" : undefined}
+          on:click={makeReadOnlyNoCursor}>False</button
+        >
+        <button
+          disabled={!readOnly}
+          class={readOnlyCursor === true ? "setting-active" : undefined}
+          on:click={makeReadOnlyCursor}>True</button
         >
       </div>
     </div>

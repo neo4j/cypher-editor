@@ -197,6 +197,7 @@ const defaultOptions = {
   placeholder: undefined,
   position: undefined,
   readOnly: false,
+  readOnlyCursor: false,
   theme: THEME_LIGHT,
   updateSyntaxHighlighting: true,
   value: "",
@@ -221,7 +222,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lint,
     placeholder,
     position,
-    readOnly,
     theme,
     updateSyntaxHighlighting,
     value,
@@ -233,7 +233,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteOpen,
     autocompleteCloseOnBlur,
     autocompleteTriggerStrings,
-    lineNumbers
+    lineNumbers,
+    readOnly,
+    readOnlyCursor
   } = combinedOptions;
   const baseHintOptions = codemirrorOptions.hintOptions || {};
 
@@ -249,7 +251,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineWrapping,
     lint,
     placeholder,
-    readOnly,
+    readOnly: readOnly ? (!readOnlyCursor ? "nocursor" : true) : false,
     theme: THEME_MAP[theme],
     undoDepth: history ? 200 : 0,
     value
@@ -586,8 +588,20 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const setReadOnly = (readOnly) => {
-    editor.setOption("readOnly", readOnly);
+  const setReadOnly = (newReadOnly) => {
+    readOnly = newReadOnly;
+    editor.setOption(
+      "readOnly",
+      readOnly ? (!readOnlyCursor ? "nocursor" : true) : false
+    );
+  };
+
+  const setReadOnlyCursor = (newReadOnlyCursor) => {
+    readOnlyCursor = newReadOnlyCursor;
+    editor.setOption(
+      "readOnly",
+      readOnly ? (!readOnlyCursor ? "nocursor" : true) : false
+    );
   };
 
   const setPlaceholder = (placeholder) => {
@@ -688,6 +702,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setPlaceholder,
     setPosition,
     setReadOnly,
+    setReadOnlyCursor,
     setTheme,
     setValue,
 

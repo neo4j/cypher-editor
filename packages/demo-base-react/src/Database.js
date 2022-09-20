@@ -39,6 +39,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const { lineNumberFormatter } = lineNumberFormatterObject;
   const [schema, setSchema] = useState(initialOptions.autocompleteSchema);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
+  const [readOnlyCursor, setReadOnlyCursor] = useState(
+    initialOptions.readOnlyCursor
+  );
   const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
   const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
     initialOptions.autocompleteTriggerStrings
@@ -246,9 +249,15 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const makeReadOnlyNoCursor = () => {
-    addCommandLog("setReadOnly", "nocursor");
-    setReadOnly("nocursor");
-    editor && editor.setReadOnly("nocursor");
+    addCommandLog("setReadOnlyCursor", false);
+    setReadOnlyCursor(false);
+    editor && editor.setReadOnlyCursor(false);
+  };
+
+  const makeReadOnlyCursor = () => {
+    addCommandLog("setReadOnlyCursor", true);
+    setReadOnlyCursor(true);
+    editor && editor.setReadOnlyCursor(true);
   };
 
   const enableAutocomplete = () => {
@@ -623,11 +632,27 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             >
               True
             </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Read Only Cursor</div>
+          <div className="setting-values">
             <button
-              className={readOnly === "nocursor" ? "setting-active" : undefined}
+              disabled={!readOnly}
+              className={
+                readOnlyCursor === false ? "setting-active" : undefined
+              }
               onClick={makeReadOnlyNoCursor}
             >
-              No Cursor
+              False
+            </button>
+            <button
+              disabled={!readOnly}
+              className={readOnlyCursor === true ? "setting-active" : undefined}
+              onClick={makeReadOnlyCursor}
+            >
+              True
             </button>
           </div>
         </div>

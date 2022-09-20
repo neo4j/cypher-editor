@@ -374,6 +374,51 @@ const defaultAutocompleteTriggerStrings = [
   "$"
 ];
 
+const getReadableExtensions = ({ readOnly, readOnlyCursor }) =>
+  !readOnly || readOnlyCursor ? readableExtensions : [];
+
+const getReadOnlyExtensions = ({ readOnly, readOnlyCursor }) =>
+  readOnly
+    ? readOnlyCursor
+      ? readOnlyExtensions
+      : readOnlyNoCursorExtensions
+    : [];
+
+const getPlaceholderExtensions = ({ placeholder }) =>
+  placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
+
+const getThemeExtensions = ({ theme }) =>
+  theme === THEME_DARK ? darkExtensions : [];
+
+const getLineNumbersExtensions = ({
+  lineNumbers,
+  lineNumberFormatter,
+  onLineNumberClicked
+}) =>
+  lineNumbers
+    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
+    : [];
+
+const getAutocompleteExtensions = ({
+  readOnly,
+  autocomplete,
+  autocompleteCloseOnBlur
+}) =>
+  readOnly === false && autocomplete
+    ? !autocompleteCloseOnBlur
+      ? useStickyAutocompleteExtensions
+      : useAutocompleteExtensions
+    : [];
+
+const getLineWrappingExtensions = ({ lineWrapping }) =>
+  lineWrapping ? lineWrappingExtensions : [];
+
+const getHistoryExtensions = ({ history }) =>
+  history ? historyExtensions : [];
+
+const getLintExtensions = ({ readOnly, lint }) =>
+  readOnly === false && lint ? useLintExtensions : useNoLintExtensions;
+
 export const getExtensions = (
   options = {},
   {
@@ -401,39 +446,34 @@ export const getExtensions = (
     lint,
     placeholder,
     readOnly,
+    readOnlyCursor,
     theme
   } = combinedOptions;
 
   return [
     cypherLanguage(),
-    lintConf.of(lint ? useLintExtensions : useNoLintExtensions),
+    lintConf.of(getLintExtensions({ readOnly, lint })),
     autocompleteConf.of(
-      readOnly === false && autocomplete
-        ? !autocompleteCloseOnBlur
-          ? useStickyAutocompleteExtensions
-          : useAutocompleteExtensions
-        : []
+      getAutocompleteExtensions({
+        readOnly,
+        autocomplete,
+        autocompleteCloseOnBlur
+      })
     ),
     showLinesConf.of(
-      lineNumbers
-        ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
-        : []
+      getLineNumbersExtensions({
+        lineNumbers,
+        lineNumberFormatter,
+        onLineNumberClicked
+      })
     ),
-    lineWrappingConf.of(lineWrapping ? lineWrappingExtensions : []),
-    historyConf.of(history ? historyExtensions : []),
-    readableConf.of(readOnly !== "nocursor" ? readableExtensions : []),
-    placeholderConf.of(
-      placeholder !== undefined ? [placeholderExtension(placeholder)] : []
-    ),
+    lineWrappingConf.of(getLineWrappingExtensions({ lineWrapping })),
+    historyConf.of(getHistoryExtensions({ history })),
+    readableConf.of(getReadableExtensions({ readOnly, readOnlyCursor })),
+    placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
-    themeConf.of(theme === THEME_DARK ? darkExtensions : []),
-    readOnlyConf.of(
-      readOnly == true
-        ? readOnlyExtensions
-        : readOnly === "nocursor"
-        ? readOnlyNoCursorExtensions
-        : []
-    ),
+    themeConf.of(getThemeExtensions({ theme })),
+    readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor })),
     focusListener({ onFocusChanged })
   ];
 };
@@ -453,6 +493,7 @@ const defaultOptions = {
   placeholder: undefined,
   position: undefined,
   readOnly: false,
+  readOnlyCursor: false,
   theme: THEME_LIGHT,
   updateSyntaxHighlighting: true,
   value: "",
@@ -481,7 +522,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineWrapping,
     lint,
     placeholder,
-    readOnly
+    readOnly,
+    readOnlyCursor,
+    history
   } = combinedOptions;
 
   const eventListenerTypeMap = {};
@@ -758,9 +801,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const setHistory = (history) => {
+  const setHistory = (newHistory) => {
+    history = newHistory;
     editor.dispatch({
-      effects: historyConf.reconfigure(history ? historyExtensions : [])
+      effects: historyConf.reconfigure(getHistoryExtensions({ history }))
     });
   };
 
@@ -769,7 +813,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       effects: historyConf.reconfigure([])
     });
     editor.dispatch({
-      effects: historyConf.reconfigure(historyExtensions)
+      effects: historyConf.reconfigure(getHistoryExtensions({ history }))
     });
   };
 
@@ -777,9 +821,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineNumbers = newLineNumbers;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
-          : []
+        getLineNumbersExtensions({
+          lineNumbers,
+          lineNumberFormatter,
+          onLineNumberClicked
+        })
       )
     });
   };
@@ -790,9 +836,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineNumberFormatter = newLineNumberFormatter;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
-        lineNumbers
-          ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
-          : []
+        getLineNumbersExtensions({
+          lineNumbers,
+          lineNumberFormatter,
+          onLineNumberClicked
+        })
       )
     });
   };
@@ -802,24 +850,32 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor.dispatch({
       effects: [
         readableConf.reconfigure(
-          readOnly !== "nocursor" ? readableExtensions : []
+          getReadableExtensions({ readOnly, readOnlyCursor })
         ),
         readOnlyConf.reconfigure(
-          readOnly == true
-            ? readOnlyExtensions
-            : readOnly === "nocursor"
-            ? readOnlyNoCursorExtensions
-            : []
+          getReadOnlyExtensions({ readOnly, readOnlyCursor })
         ),
         autocompleteConf.reconfigure(
-          readOnly === false && autocomplete
-            ? !autocompleteCloseOnBlur
-              ? useStickyAutocompleteExtensions
-              : useAutocompleteExtensions
-            : []
+          getAutocompleteExtensions({
+            readOnly,
+            autocomplete,
+            autocompleteCloseOnBlur
+          })
         ),
-        lintConf.reconfigure(
-          readOnly === false && lint ? useLintExtensions : useNoLintExtensions
+        lintConf.reconfigure(getLintExtensions({ readOnly, lint }))
+      ]
+    });
+  };
+
+  const setReadOnlyCursor = (newReadOnlyCursor) => {
+    readOnlyCursor = newReadOnlyCursor;
+    editor.dispatch({
+      effects: [
+        readableConf.reconfigure(
+          getReadableExtensions({ readOnly, readOnlyCursor })
+        ),
+        readOnlyConf.reconfigure(
+          getReadOnlyExtensions({ readOnly, readOnlyCursor })
         )
       ]
     });
@@ -829,9 +885,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder = newPlaceholder;
     editor.dispatch({
       effects: [
-        placeholderConf.reconfigure(
-          placeholder !== undefined ? [placeholderExtension(placeholder)] : []
-        )
+        placeholderConf.reconfigure(getPlaceholderExtensions({ placeholder }))
       ]
     });
   };
@@ -840,7 +894,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     lineWrapping = newLineWrapping;
     editor.dispatch({
       effects: [
-        lineWrappingConf.reconfigure(lineWrapping ? lineWrappingExtensions : [])
+        lineWrappingConf.reconfigure(
+          getLineWrappingExtensions({ lineWrapping })
+        )
       ]
     });
   };
@@ -849,11 +905,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocomplete = newAutocomplete;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
-        readOnly === false && autocomplete
-          ? !autocompleteCloseOnBlur
-            ? useStickyAutocompleteExtensions
-            : useAutocompleteExtensions
-          : []
+        getAutocompleteExtensions({
+          readOnly,
+          autocomplete,
+          autocompleteCloseOnBlur
+        })
       )
     });
   };
@@ -862,11 +918,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
-        readOnly === false && autocomplete
-          ? !autocompleteCloseOnBlur
-            ? useStickyAutocompleteExtensions
-            : useAutocompleteExtensions
-          : []
+        getAutocompleteExtensions({
+          readOnly,
+          autocomplete,
+          autocompleteCloseOnBlur
+        })
       )
     });
   };
@@ -878,9 +934,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setLint = (newLint) => {
     lint = newLint;
     editor.dispatch({
-      effects: lintConf.reconfigure(
-        readOnly === false && lint ? useLintExtensions : useNoLintExtensions
-      )
+      effects: lintConf.reconfigure(getLintExtensions({ readOnly, lint }))
     });
   };
 
@@ -901,7 +955,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const setTheme = (theme) => {
     editor.dispatch({
-      effects: themeConf.reconfigure(theme === THEME_DARK ? darkExtensions : [])
+      effects: themeConf.reconfigure(getThemeExtensions({ theme }))
     });
   };
 
@@ -941,6 +995,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setPlaceholder,
     setPosition,
     setReadOnly,
+    setReadOnlyCursor,
     setTheme,
     setValue,
 

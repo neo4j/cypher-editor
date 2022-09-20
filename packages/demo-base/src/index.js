@@ -159,6 +159,7 @@ const defaultOptions = {
   placeholder: undefined,
   position: undefined,
   readOnly: false,
+  readOnlyCursor: false,
   theme: THEME_LIGHT,
   updateSyntaxHighlighting: true,
   value: "",
