@@ -1,329 +1,39 @@
 // All of these packages are dependencies of "codemirror" package version >= 6;
 import {
-  autocompletion as autocompletionExtension,
-  completionKeymap,
   startCompletion,
   closeCompletion,
-  completionStatus,
-  currentCompletions
+  completionStatus
+  // currentCompletions (could use this if we could get currentCompletionsFrom as well)
 } from "@codemirror/autocomplete";
+import { EditorState, Compartment } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
+
+import { initEditorSupportEffect } from "./cypher-state-definitions";
 import {
-  history as historyExtension,
-  defaultKeymap,
-  historyKeymap
-} from "@codemirror/commands";
+  getStatePositionAbsolute,
+  getStateEditorSupport,
+  getStateLineCount,
+  getStateValue,
+  getStateLength,
+  getStatePosition,
+  getStatePositionForAny
+} from "./cypher-state-selectors";
 import {
-  StreamLanguage,
-  indentOnInput,
-  foldKeymap,
-  syntaxHighlighting,
-  HighlightStyle
-} from "@codemirror/language";
-import { lintKeymap, linter as linterExtension } from "@codemirror/lint";
-import { searchKeymap } from "@codemirror/search";
-import {
-  EditorState,
-  StateEffect,
-  StateField,
-  Compartment
-} from "@codemirror/state";
-import {
-  EditorView,
-  Decoration,
-  lineNumbers as lineNumbersExtension,
-  drawSelection as drawSelectionExtension,
-  rectangularSelection as rectangularSelectionExtension,
-  crosshairCursor as crosshairCursorExtension,
-  keymap,
-  placeholder as placeholderExtension
-} from "@codemirror/view";
-import { tags } from "@lezer/highlight";
-
-import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
-
-import { cypher } from "./cypher";
-
-const THEME_LIGHT = "light";
-const THEME_DARK = "dark";
-
-const editorSupportField = StateField.define({
-  create() {
-    return new CypherEditorSupport();
-  },
-  update(editorSupport, tr) {
-    return editorSupport;
-  }
-});
-
-function editorSupportInit(view) {
-  // TODO - check if this function is needed, and remove if not needed
-  if (!view.state.field(editorSupportField, false)) {
-    const effects = [StateEffect.appendConfig.of([editorSupportField])];
-    view.dispatch({ effects });
-    return true;
-  }
-}
-
-const isNumber = (v) =>
-  v !== undefined &&
-  (typeof v === "number" || v instanceof Number) &&
-  isFinite(v);
-const isInteger = (v) => isNumber(v) && v % 1 === 0;
-
-const getStatePositionAbsolute = (state) => state.selection.main.head;
-const getStateEditorSupport = (state) => state.field(editorSupportField, false);
-const getStateLineCount = (state) => state.doc.lines;
-const getStateValue = (state) => state.doc.toString();
-const getStateLength = (state) => state.doc.length;
-const getStateLineObjectForLine = (state, line) => state.doc.line(line);
-const getStateLineObjectForAbsolute = (state, position) =>
-  state.doc.lineAt(position);
-const getStatePositionAbsoluteForLineColumn = (state, { line, column }) =>
-  state.doc.line(line).from + column;
-
-const getStatePositionForAbsolute = (state, position) => {
-  const { number: line, from: lineStart } = getStateLineObjectForAbsolute(
-    state,
-    position
-  );
-  const column = position - lineStart;
-  return { line, column, position };
-};
-
-const getStatePosition = (state) =>
-  getStatePositionForAbsolute(state, getStatePositionAbsolute(state));
-
-const getStatePositionForAny = (state, positionValue) => {
-  let position = null;
-  if (isInteger(positionValue) && positionValue >= 0) {
-    position = positionValue;
-  } else if (typeof positionValue === "object" && positionValue) {
-    const { line, column, position: maybePosition } = positionValue;
-    if (isInteger(maybePosition) && maybePosition >= 0) {
-      position = maybePosition;
-    } else if (
-      isInteger(line) &&
-      line >= 1 &&
-      isInteger(column) &&
-      column >= 0
-    ) {
-      const lineCount = getStateLineCount(state);
-      if (line <= lineCount) {
-        const lineObject = getStateLineObjectForLine(state, line);
-        if (lineObject) {
-          const { from, to } = lineObject;
-          if (isInteger(from) && isInteger(to) && column <= to - from) {
-            position = from + column;
-          }
-        }
-      }
-    }
-  }
-  if (position !== null) {
-    if (position <= getStateLength(view.state)) {
-      const lineObject = getStateLineObjectForAbsolute(state, position);
-      if (lineObject) {
-        const { number: line, from: lineStart, to: lineEnd } = lineObject;
-        const column = position - lineStart;
-        if (lineStart + column <= lineEnd) {
-          position = {
-            line,
-            column,
-            position
-          };
-        } else {
-          position = null;
-        }
-      } else {
-        position = null;
-      }
-    } else {
-      position = null;
-    }
-  }
-  return position;
-};
-
-const addTypeMarker = StateEffect.define();
-const clearTypeMarkers = StateEffect.define();
-
-const typeMarkerField = StateField.define({
-  create() {
-    return Decoration.none;
-  },
-  update(typeMarkers, tr) {
-    typeMarkers = typeMarkers.map(tr.changes);
-    for (let e of tr.effects) {
-      if (e.is(clearTypeMarkers)) {
-        typeMarkers = typeMarkers.filter(() => false);
-      } else if (e.is(addTypeMarker)) {
-        if (e.value.from !== e.value.to) {
-          typeMarkers = typeMarkers.update({
-            add: [
-              Decoration.mark({ class: "cm-p-" + e.value.type }).range(
-                e.value.from,
-                e.value.to
-              )
-            ]
-          });
-        }
-      }
-    }
-    return typeMarkers;
-  },
-  provide: (f) => EditorView.decorations.from(f)
-});
-
-const typeMarkerTheme = EditorView.baseTheme({
-  // ".cm-underline": { textDecoration: "underline 3px red" }
-});
-
-export function typeMarkerFromTo(view, options = {}) {
-  let effects = [addTypeMarker.of(options)];
-
-  if (!view.state.field(typeMarkerField, false)) {
-    effects.push(
-      StateEffect.appendConfig.of([typeMarkerField, typeMarkerTheme])
-    );
-  }
-  view.dispatch({ effects });
-  return true;
-}
-
-function fixColors(view, editorSupport) {
-  view.dispatch(clearTypeMarkers.of());
-  if (editorSupport.parseTree == null) {
-    return;
-  }
-
-  editorSupport.applyHighlighthing((element, type) => {
-    const { start: from, stop: to } = TreeUtils.getPosition(element) || {
-      start: 0,
-      stop: 0
-    };
-    typeMarkerFromTo(view, { from, to: to + 1, type });
-  });
-}
-
-export const cypherLinter = ({
-  delay = 750,
-  showErrors = true,
-  ...otherOptions
-} = {}) => [
-  linterExtension(
-    (view) => {
-      const editorSupport = getStateEditorSupport(view.state); // view.editorSupport;
-      if (!editorSupport) return [];
-      const version = view.newContentVersion();
-      editorSupport.update(getStateValue(view.state), version);
-
-      fixColors(view, editorSupport);
-
-      return ((showErrors && editorSupport.parseErrors) || []).map(
-        ({ msg, start, stop }) => {
-          return {
-            severity: "error",
-            from: start,
-            to: stop + 1,
-            message: msg
-          };
-        }
-      );
-    },
-    { ...otherOptions, delay }
-  )
-];
-
-const cypherCompletions = (context) => {
-  const editorSupport = getStateEditorSupport(context.state);
-  editorSupport.update(getStateValue(context.state));
-
-  const { line, column } = editorSupport.positionConverter.toRelative(
-    context.pos
-  );
-  const completion = editorSupport.getCompletion(line, column, true);
-  const { items, from, to } = completion;
-  const completions = items.map(({ type, view, postfix }) => ({
-    type,
-    label: view,
-    detail: postfix
-  }));
-  let word = context.matchBefore(/\w*/);
-  let cypherCompletions = null;
-  if (!(word.from == word.to && !context.explicit)) {
-    cypherCompletions = {
-      //from: word.from,
-      // TODO - line is 1 based, column is 0 based
-      from: getStatePositionAbsoluteForLineColumn(context.state, from),
-      options: completions,
-      filter: false,
-      getMatch: () => []
-    };
-  }
-  return cypherCompletions;
-};
-
-export const cypherCompletion = ({
-  activateOnTyping = false,
-  closeOnBlur = true
-} = {}) => [
-  autocompletionExtension({
-    activateOnTyping,
-    closeOnBlur,
-    override: [cypherCompletions]
-  })
-];
-
-const darkExtensions = [
-  EditorView.theme({}, { dark: true }),
-  EditorView.editorAttributes.of({ class: "cm-dark" })
-];
-
-const syntaxStyles = [
-  { tag: tags.comment, class: "cm-comment" },
-  { tag: tags.variableName, class: "cm-variable" },
-  {
-    tag: [tags.string, tags.special(tags.brace)],
-    class: "cm-string"
-  },
-  { tag: tags.number, class: "cm-number" },
-  { tag: tags.keyword, class: "cm-keyword" },
-  { tag: tags.operator, class: "cm-operator" }
-];
-
-const syntaxStyle = HighlightStyle.define(syntaxStyles);
-export const syntaxCSS = [syntaxHighlighting(syntaxStyle)];
-
-export const cypherLineNumbers = ({
-  lineNumberFormatter,
-  onLineNumberClicked = () => {}
-}) => [
-  lineNumbersExtension({
-    formatNumber: (number, state) =>
-      lineNumberFormatter(number, getStateLineCount(state), state),
-    domEventHandlers: {
-      click(view, lineObject, event) {
-        const { line } =
-          getStatePositionForAbsolute(view.state, lineObject.from) || {};
-        onLineNumberClicked(line, event);
-        return true;
-      }
-    }
-  })
-];
-
-export const focusListener = ({ onFocusChanged = () => {} }) => [
-  EditorView.domEventHandlers({
-    focus: () => {
-      onFocusChanged(true);
-    },
-    blur: () => {
-      onFocusChanged(false);
-    }
-  })
-];
-
-export const cypherLanguage = () => [StreamLanguage.define(cypher)];
+  fixColors,
+  syntaxCSS,
+  focusListener,
+  cypherLanguage,
+  getReadableExtensions,
+  getReadOnlyExtensions,
+  getPlaceholderExtensions,
+  getThemeExtensions,
+  getLineNumbersExtensions,
+  getAutocompleteExtensions,
+  getLineWrappingExtensions,
+  getHistoryExtensions,
+  getLintExtensions
+} from "./cypher-extensions";
+import { THEME_LIGHT, defaultLineNumberFormatter, defaultAutocompleteTriggerStrings } from "./constants";
 
 const VALUE_KEY = "change";
 const FOCUS_KEY = "focus";
@@ -332,108 +42,6 @@ const SCROLL_KEY = "scroll";
 const POSITION_KEY = "position";
 const AUTOCOMPLETE_KEY = "autocomplete";
 const LINE_CLICK_KEY = "lineclick";
-
-const historyExtensions = [historyExtension()];
-
-const readableExtensions = [
-  drawSelectionExtension(),
-  EditorState.allowMultipleSelections.of(true),
-  indentOnInput(),
-  rectangularSelectionExtension(),
-  crosshairCursorExtension(),
-  keymap.of([
-    ...defaultKeymap,
-    ...searchKeymap,
-    ...historyKeymap,
-    ...foldKeymap,
-    ...completionKeymap,
-    ...lintKeymap
-  ])
-];
-
-const readOnlyExtensions = [EditorState.readOnly.of(true)];
-
-const readOnlyNoCursorExtensions = [
-  EditorState.readOnly.of(true),
-  EditorView.editable.of(false)
-];
-
-const lineWrappingExtensions = [EditorView.lineWrapping];
-
-const useLintExtensions = [cypherLinter()];
-
-const useNoLintExtensions = [cypherLinter({ showErrors: false })];
-
-const useAutocompleteExtensions = [cypherCompletion()];
-
-const useStickyAutocompleteExtensions = [
-  cypherCompletion({ closeOnBlur: false })
-];
-
-const defaultLineNumberFormatter = (line, lineCount) => {
-  if (lineCount === 1) {
-    return "$";
-  } else {
-    return line;
-  }
-};
-
-const defaultAutocompleteTriggerStrings = [
-  ".",
-  ":",
-  "[]",
-  "()",
-  "{}",
-  "[",
-  "(",
-  "{",
-  "$"
-];
-
-const getReadableExtensions = ({ readOnly, readOnlyCursor }) =>
-  !readOnly || readOnlyCursor ? readableExtensions : [];
-
-const getReadOnlyExtensions = ({ readOnly, readOnlyCursor }) =>
-  readOnly
-    ? readOnlyCursor
-      ? readOnlyExtensions
-      : readOnlyNoCursorExtensions
-    : [];
-
-const getPlaceholderExtensions = ({ placeholder }) =>
-  placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
-
-const getThemeExtensions = ({ theme }) =>
-  theme === THEME_DARK ? darkExtensions : [];
-
-const getLineNumbersExtensions = ({
-  lineNumbers,
-  lineNumberFormatter,
-  onLineNumberClicked
-}) =>
-  lineNumbers
-    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
-    : [];
-
-const getAutocompleteExtensions = ({
-  readOnly,
-  autocomplete,
-  autocompleteCloseOnBlur
-}) =>
-  readOnly === false && autocomplete
-    ? !autocompleteCloseOnBlur
-      ? useStickyAutocompleteExtensions
-      : useAutocompleteExtensions
-    : [];
-
-const getLineWrappingExtensions = ({ lineWrapping }) =>
-  lineWrapping ? lineWrappingExtensions : [];
-
-const getHistoryExtensions = ({ history }) =>
-  history ? historyExtensions : [];
-
-const getLintExtensions = ({ readOnly, lint }) =>
-  readOnly === false && lint ? useLintExtensions : useNoLintExtensions;
 
 export const getExtensions = (
   options = {},
@@ -699,7 +307,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return this.version;
   };
   editor.newContentVersion.bind(editor);
-  editorSupportInit(editor);
+  editor.dispatch({ effects: [initEditorSupportEffect] });
   const editorSupport = getStateEditorSupport(editor.state);
   editorSupport.update(value);
 
