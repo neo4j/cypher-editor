@@ -173,3 +173,58 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 .cm-editor .cm-p-procedureOutput .cm-keyword {
     color: #268bd2;
 }
+
+.cm-completionLabel {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.cm-editor .cm-completionIcon {
+    vertical-align: middle;
+    width: 18px;
+    padding-top: 4px;
+}
+
+.cm-editor .cm-completionIcon-keyword:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>K</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-label:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>L</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-relationshipType:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>R</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-variable:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23268bd2'>V</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-procedure:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%236c71c4'>λ</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-function:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%236c71c4'>λ</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-parameter:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23dc322f'>$</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-propertyKey:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23586e75'>P</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-consoleCommand:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23d33682'>C</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-consoleCommandSubcommand:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23d33682'>C</text></svg>");
+}
+
+.cm-editor .cm-completionIcon-procedureOutput:after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23268bd2'>V</text></svg>");
+}
