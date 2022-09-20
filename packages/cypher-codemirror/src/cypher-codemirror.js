@@ -46,13 +46,54 @@ import { cypher } from "./cypher";
 const THEME_LIGHT = "light";
 const THEME_DARK = "dark";
 
+const editorSupportField = StateField.define({
+  create() {
+    return new CypherEditorSupport();
+  },
+  update(editorSupport, tr) {
+    return editorSupport;
+  }
+});
+
+function editorSupportInit(view) {
+  // TODO - check if this function is needed, and remove if not needed
+  if (!view.state.field(editorSupportField, false)) {
+    const effects = [StateEffect.appendConfig.of([editorSupportField])];
+    view.dispatch({ effects });
+    return true;
+  }
+}
+
 const isNumber = (v) =>
   v !== undefined &&
   (typeof v === "number" || v instanceof Number) &&
   isFinite(v);
 const isInteger = (v) => isNumber(v) && v % 1 === 0;
 
-const getGlobalPositionForValue = (view, positionValue) => {
+const getStatePositionAbsolute = (state) => state.selection.main.head;
+const getStateEditorSupport = (state) => state.field(editorSupportField, false);
+const getStateLineCount = (state) => state.doc.lines;
+const getStateValue = (state) => state.doc.toString();
+const getStateLength = (state) => state.doc.length;
+const getStateLineObjectForLine = (state, line) => state.doc.line(line);
+const getStateLineObjectForAbsolute = (state, position) =>
+  state.doc.lineAt(position);
+const getStatePositionAbsoluteForLineColumn = (state, { line, column }) =>
+  state.doc.line(line).from + column;
+
+const getStatePositionForAbsolute = (state, position) => {
+  const { number: line, from: lineStart } = getStateLineObjectForAbsolute(
+    state,
+    position
+  );
+  const column = position - lineStart;
+  return { line, column, position };
+};
+
+const getStatePosition = (state) =>
+  getStatePositionForAbsolute(state, getStatePositionAbsolute(state));
+
+const getStatePositionForAny = (state, positionValue) => {
   let position = null;
   if (isInteger(positionValue) && positionValue >= 0) {
     position = positionValue;
@@ -66,9 +107,9 @@ const getGlobalPositionForValue = (view, positionValue) => {
       isInteger(column) &&
       column >= 0
     ) {
-      const lineCount = view.state.doc.lines;
+      const lineCount = getStateLineCount(state);
       if (line <= lineCount) {
-        const lineObject = view.state.doc.line(line);
+        const lineObject = getStateLineObjectForLine(state, line);
         if (lineObject) {
           const { from, to } = lineObject;
           if (isInteger(from) && isInteger(to) && column <= to - from) {
@@ -79,8 +120,8 @@ const getGlobalPositionForValue = (view, positionValue) => {
     }
   }
   if (position !== null) {
-    if (position <= view.state.doc.length) {
-      const lineObject = view.state.doc.lineAt(position);
+    if (position <= getStateLength(view.state)) {
+      const lineObject = getStateLineObjectForAbsolute(state, position);
       if (lineObject) {
         const { number: line, from: lineStart, to: lineEnd } = lineObject;
         const column = position - lineStart;
@@ -101,14 +142,6 @@ const getGlobalPositionForValue = (view, positionValue) => {
     }
   }
   return position;
-};
-
-const getPositionFromState = (state) => {
-  const { from, to, head, anchor } = state.selection.main;
-  const position = head;
-  const { number: line, from: lineStart } = state.doc.lineAt(position);
-  const column = position - lineStart;
-  return { line, column, position };
 };
 
 const addTypeMarker = StateEffect.define();
@@ -172,23 +205,6 @@ function fixColors(view, editorSupport) {
   });
 }
 
-const editorSupportField = StateField.define({
-  create() {
-    return new CypherEditorSupport();
-  },
-  update(editorSupport, tr) {
-    return editorSupport;
-  }
-});
-
-function editorSupportInit(view) {
-  if (!view.state.field(editorSupportField, false)) {
-    const effects = [StateEffect.appendConfig.of([editorSupportField])];
-    view.dispatch({ effects });
-    return true;
-  }
-}
-
 export const cypherLinter = ({
   delay = 750,
   showErrors = true,
@@ -196,10 +212,10 @@ export const cypherLinter = ({
 } = {}) => [
   linterExtension(
     (view) => {
-      const editorSupport = getEditorSupport(view.state); // view.editorSupport;
+      const editorSupport = getStateEditorSupport(view.state); // view.editorSupport;
       if (!editorSupport) return [];
       const version = view.newContentVersion();
-      editorSupport.update(view.state.doc.toString(), version);
+      editorSupport.update(getStateValue(view.state), version);
 
       fixColors(view, editorSupport);
 
@@ -218,11 +234,9 @@ export const cypherLinter = ({
   )
 ];
 
-const getEditorSupport = (state) => state.field(editorSupportField, false);
-
 const cypherCompletions = (context) => {
-  const editorSupport = getEditorSupport(context.state);
-  editorSupport.update(context.state.doc.toString());
+  const editorSupport = getStateEditorSupport(context.state);
+  editorSupport.update(getStateValue(context.state));
 
   const { line, column } = editorSupport.positionConverter.toRelative(
     context.pos
@@ -239,7 +253,8 @@ const cypherCompletions = (context) => {
   if (!(word.from == word.to && !context.explicit)) {
     cypherCompletions = {
       //from: word.from,
-      from: context.state.doc.line(from.line).from + from.column,
+      // TODO - line is 1 based, column is 0 based
+      from: getStatePositionAbsoluteForLineColumn(context.state, from),
       options: completions,
       filter: false,
       getMatch: () => []
@@ -285,10 +300,11 @@ export const cypherLineNumbers = ({
 }) => [
   lineNumbersExtension({
     formatNumber: (number, state) =>
-      lineNumberFormatter(number, state.doc.lines, state),
+      lineNumberFormatter(number, getStateLineCount(state), state),
     domEventHandlers: {
       click(view, lineObject, event) {
-        const { line } = getGlobalPositionForValue(view, lineObject.from) || {};
+        const { line } =
+          getStatePositionForAbsolute(view.state, lineObject.from) || {};
         onLineNumberClicked(line, event);
         return true;
       }
@@ -589,13 +605,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const updateListener = EditorView.updateListener.of((v) => {
     if (v.docChanged) {
-      onValueChanged(v.state.doc.toString(), v.changes);
-      onPositionChanged(getPositionFromState(v.state));
+      onValueChanged(getStateValue(v.state), v.changes);
+      onPositionChanged(getStatePosition(v.state));
     } else if (v.selectionSet) {
-      const oldPosition = getPositionFromState(v.startState);
-      const newPosition = getPositionFromState(v.state);
-      if (oldPosition.position !== newPosition.position) {
-        onPositionChanged(getPositionFromState(v.state));
+      const oldPosition = getStatePositionAbsolute(v.startState);
+      const newPosition = getStatePositionAbsolute(v.state);
+      if (oldPosition !== newPosition) {
+        onPositionChanged(getStatePosition(v.state));
       }
     }
     const startStatus = completionStatus(v.startState);
@@ -684,11 +700,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
   editor.newContentVersion.bind(editor);
   editorSupportInit(editor);
-  const editorSupport = getEditorSupport(editor.state);
+  const editorSupport = getStateEditorSupport(editor.state);
   editorSupport.update(value);
 
   const getPositionForValue = (positionValue) =>
-    getGlobalPositionForValue(editor, positionValue);
+    getStatePositionForAny(editor.state, positionValue);
 
   const setPosition = (positionParam, scrollIntoView = true) => {
     const positionObject = getPositionForValue(positionParam);
@@ -787,12 +803,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
     const update = editor.state.update({
-      changes: { from: 0, to: editor.state.doc.length, insert: value }
+      changes: { from: 0, to: getStateLength(editor.state), insert: value }
     });
     editor.update([update]);
     if (updateSyntaxHighlighting !== false) {
       const version = editor.newContentVersion();
-      const editorSupport = getEditorSupport(editor.state);
+      const editorSupport = getStateEditorSupport(editor.state);
       editorSupport.update(value, version);
 
       fixColors(editor, editorSupport);
@@ -937,11 +953,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const getPosition = () => {
-    return getPositionFromState(editor.state);
+    return getStatePosition(editor.state);
   };
 
   const getLineCount = () => {
-    return editor ? editor.state.doc.lines : 0;
+    return editor ? getStateLineCount(editor.state) : 0;
   };
 
   const setAutocompleteSchema = (schema) => {
