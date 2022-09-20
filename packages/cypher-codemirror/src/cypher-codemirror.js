@@ -601,7 +601,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     const startStatus = completionStatus(v.startState);
     const endStatus = completionStatus(v.state);
     if (startStatus !== "active" && endStatus === "active") {
-      // TODO any need to check autocomplete or autocompleteOpen here?
       const { transactions } = v;
 
       const autocompleteResults = [];
@@ -673,7 +672,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       postConf.of(postExtensions)
     ]
   });
-  // TODO cm6 vs cm5 - need to clearHistory?
 
   let editor = new EditorView({
     parent: parentDOMElement,
