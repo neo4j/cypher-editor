@@ -189,7 +189,7 @@ export const initialOptions = {
   ...defaultOptions,
   autocomplete: true, // whether to show autocompletion
   autocompleteOpen: false,
-  autocompleteCloseOnBlur: false, // TODO - change back to true after testing
+  autocompleteCloseOnBlur: true,
   autocompleteSchema: simpleSchema,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
