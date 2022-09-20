@@ -538,7 +538,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     const startStatus = completionStatus(v.startState);
     const endStatus = completionStatus(v.state);
     if (startStatus !== "active" && endStatus === "active") {
-
       // TODO any need to check autocomplete or autocompleteOpen here?
       const { transactions } = v;
 
