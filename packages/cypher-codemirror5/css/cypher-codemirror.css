@@ -293,6 +293,11 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 }
 
 .cm-hint-keyword {
+    padding-left: 22px !important;
+    background-size: auto 80% !important;
+    background-position: 3px center;
+    background-repeat: no-repeat !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>K</text></svg>");
 }
 
 .cm-hint-label {
