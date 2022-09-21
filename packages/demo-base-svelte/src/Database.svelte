@@ -714,7 +714,7 @@
         {onAutocompleteChanged}
         {onLineNumberClicked}
         {initialOptions}
-        classNames={["editor"]}
+        className="database-editor"
       />
     </div>
     <div class="card">

@@ -19,11 +19,16 @@
  */
 
 import codemirror from "codemirror";
+import {
+  THEME_LIGHT,
+  THEME_DARK,
+  defaultOptions as baseDefaultOptions,
+  defaultLineNumberFormatter,
+  createEventHandlers
+} from "cypher-codemirror-base";
 import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 import "./codemirror-cypher-mode";
 
-const THEME_LIGHT = "light";
-const THEME_DARK = "dark";
 const INNER_THEME_LIGHT = "cypher";
 const INNER_THEME_DARK = "cypher cypher-dark";
 const THEME_MAP = {
@@ -108,7 +113,6 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
 
   const position = translatePosition(from, to);
   const render = (element, self, data) => {
-    // eslint-disable-next-line no-param-reassign
     element.innerHTML += `<b>${data.displayText}</b>${
       data.postfix ? data.postfix : ""
     }`;
@@ -138,27 +142,8 @@ codemirror.registerHelper("hint", "cypher", (editor) => {
   return data;
 });
 
-const defaultLineNumberFormatter = (line, lineCount) => {
-  if (lineCount === 1) {
-    return "$";
-  } else {
-    return line;
-  }
-};
-
-const defaultAutocompleteTriggerStrings = [
-  ".",
-  ":",
-  "[]",
-  "()",
-  "{}",
-  "[",
-  "(",
-  "{",
-  "$"
-];
-
-const defaultCodemirrorOptions = {
+export const defaultCodemirrorOptions = {
+  // options overriden by top level options are commented out
   autoCloseBrackets: {
     explode: ""
   },
@@ -183,29 +168,18 @@ const defaultCodemirrorOptions = {
 };
 
 const defaultOptions = {
-  autocomplete: true,
-  autocompleteOpen: false,
-  autocompleteCloseOnBlur: true,
-  autocompleteSchema: undefined,
-  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
-  autofocus: true,
-  history: true,
-  lineNumberFormatter: defaultLineNumberFormatter,
-  lineNumbers: true,
-  lineWrapping: false,
-  lint: true,
-  placeholder: undefined,
-  position: undefined,
-  readOnly: false,
-  readOnlyCursor: false,
-  theme: THEME_LIGHT,
-  updateSyntaxHighlighting: true,
-  value: "",
-
+  ...baseDefaultOptions,
   codemirrorOptions: {
     ...defaultCodemirrorOptions
   }
 };
+
+export const getDefaultOptions = () => ({
+  ...defaultOptions,
+  codemirrorOptions: {
+    ...defaultCodemirrorOptions
+  }
+});
 
 export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = new CypherEditorSupport();
@@ -260,6 +234,42 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     combinedCodemirrorOptions.gutters = false;
   }
 
+  const {
+    on: onValueChanged,
+    off: offValueChanged,
+    fire: fireValueChanged
+  } = createEventHandlers();
+
+  const {
+    on: onFocusChanged,
+    off: offFocusChanged,
+    fire: fireFocusChanged
+  } = createEventHandlers();
+
+  const {
+    on: onScrollChanged,
+    off: offScrollChanged,
+    fire: fireScrollChanged
+  } = createEventHandlers();
+
+  const {
+    on: onPositioChanged,
+    off: offPositionChanged,
+    fire: firePositionChanged
+  } = createEventHandlers();
+
+  const {
+    on: onAutocompleteChanged,
+    off: offAutocompleteChanged,
+    fire: fireAutocompleteChanged
+  } = createEventHandlers();
+
+  const {
+    on: onLineNumberClicked,
+    off: offLineNumberClicked,
+    fire: fireLineNumberClicked
+  } = createEventHandlers();
+
   const editor = codemirror(parentDOMElement, combinedCodemirrorOptions);
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
@@ -273,12 +283,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   editor.autocomplete = autocomplete;
   editor.forceAutocompleteClose = false;
 
-  const onLineNumberClicked = (cm, lineIndex, _, event) => {
-    lineNumberClickedListeners.forEach((listener) => {
-      listener(lineIndex + 1, event);
-    });
+  const lineNumberClicked = (cm, lineIndex, _, event) => {
+    fireLineNumberClicked(lineIndex + 1, event);
   };
-  editor.on("gutterClick", onLineNumberClicked);
+  editor.on("gutterClick", lineNumberClicked);
 
   const setPosition = (position) => {
     const positionObject = getPositionForValue(position);
@@ -388,9 +396,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   }
 
   const valueChanged = (doc, changed) => {
-    valueChangedListeners.forEach((listener) => {
-      listener(doc, changed);
-    });
+    fireValueChanged(doc, changed);
+    // valueChangedListeners.forEach((listener) => {
+    //   listener(doc, changed);
+    // });
     if (
       editor.autocomplete &&
       Array.isArray(autocompleteTriggerStrings) &&
@@ -415,14 +424,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return lineNumberFormatter(line, getLineCount(), editor);
   };
 
-  const valueChangedListeners = [];
-  const positionChangedListeners = [];
-  const autocompleteChangedListeners = [];
-  const lineNumberClickedListeners = [];
-  const focusListeners = [];
-  const blurListeners = [];
-  const scrollChangedListeners = [];
-
   const getPosition = () => {
     const { line: lineIndex, ch } = editor.getCursor();
     const position = editor.indexFromPos(editor.getCursor());
@@ -438,23 +439,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const positionChanged = (positionObject) => {
-    positionChangedListeners.forEach((listener) => {
-      listener(positionObject);
-    });
+    firePositionChanged(positionObject);
   };
 
   const autocompleteChanged = (newAutocompleteOpen, from, options) => {
     autocompleteOpen = newAutocompleteOpen;
-    autocompleteChangedListeners.forEach((listener) => {
-      listener(autocompleteOpen, from, options);
-    });
+    fireAutocompleteChanged(newAutocompleteOpen, from, options);
   };
 
-  let scrollListener;
-  let focusListener;
-  let blurListener;
-
-  const onScrollChanged = (cm) => {
+  const scrollChanged = (cm) => {
     const scrollInfo = cm.getScrollInfo();
     const { top, clientHeight, height, left, clientWidth, width } = scrollInfo;
     const newScrollInfo = {
@@ -474,109 +467,46 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const onFocus = () => {
     if (mounted) {
-      focusListeners.forEach((listener) => {
-        listener();
-      });
+      fireFocusChanged(true);
     } else {
       mounted = true;
     }
   };
 
   const onBlur = () => {
-    blurListeners.forEach((listener) => {
-      listener();
-    });
+    fireFocusChanged(false);
   };
 
-  const on = (type, listener) => {
-    if (type === "change") {
-      valueChangedListeners.push(listener);
-    } else if (type === "position") {
-      positionChangedListeners.push(listener);
-    } else if (type === "autocomplete") {
-      autocompleteChangedListeners.push(listener);
-    } else if (type === "lineclick") {
-      lineNumberClickedListeners.push(listener);
-    } else if (type === "scroll") {
-      if (!scrollListener) {
-        scrollListener = onScrollChanged;
-        editor.on(type, scrollListener);
-      }
-      scrollChangedListeners.push(listener);
-    } else if (type === "focus") {
-      if (!focusListener) {
-        focusListener = onFocus;
-        editor.on(type, focusListener);
-      }
-      focusListeners.push(listener);
-    } else if (type === "blur") {
-      if (!blurListener) {
-        blurListener = onBlur;
-        editor.on("blur", blurListener);
-      }
-      blurListeners.push(listener);
-    }
-  };
+  editor.on("scroll", scrollChanged);
+  editor.on("focus", onFocus);
+  editor.on("blur", onBlur);
 
-  const removeListener = (listeners, listener) => {
-    const index = listeners.findIndex((l) => l === listener);
-    if (index >= 0) {
-      listeners.splice(index, 1);
-    }
-  };
-
-  const off = (type, listener) => {
-    if (type === "change") {
-      removeListener(valueChangedListeners, listener);
-    } else if (type === "position") {
-      removeListener(positionChangedListeners, listener);
-    } else if (type === "autocomplete") {
-      removeListener(autocompleteChangedListeners, listener);
-    } else if (type === "lineclick") {
-      removeListener(lineNumberClickedListeners, listener);
-    } else if (type === "scroll") {
-      removeListener(scrollChangedListeners, listener);
-      if (scrollChangedListeners.length === 0 && scrollListener) {
-        editor.off(type, scrollListener);
-        scrollListener = undefined;
-      }
-    } else if (type === "focus") {
-      removeListener(focusListeners, listener);
-      if (focusListeners.length === 0 && focusListener) {
-        editor.off(type, focusListener);
-        focusListener = undefined;
-      }
-    } else if (type === "blur") {
-      removeListener(blurListeners, listener);
-      if (blurListeners.length === 0 && focusListener) {
-        editor.off(type, blurListener);
-        blurListener = undefined;
-      }
-    } else {
-      editor.off(type, listener);
-    }
-  };
-
-  editor.on("cursorActivity", (e) => {
+  const onCursorActivity = (e) => {
     const cursor = e.doc.getCursor();
     const line = cursor.line + 1;
     const column = cursor.ch;
     const position = editorSupport.positionConverter.toAbsolute(line, column);
     positionChanged({ line, column, position });
-  });
+  };
 
-  // this is used instead of: editor.on("startCompletion", (editor) => {});
-  editor.on("hint-shown", ({ from, options }) => {
+  editor.on("cursorActivity", onCursorActivity);
+
+  const onHintShown = ({ from, options }) => {
     if (editor.autocomplete) {
       autocompleteChanged(true, from, options);
     }
-  });
+  };
 
-  editor.on("endCompletion", (editor) => {
+  // this is used instead of: editor.on("startCompletion", (editor) => {});
+  editor.on("hint-shown", onHintShown);
+
+  const onEndCompletion = (editor) => {
     if (editor.autocomplete) {
       autocompleteChanged(false);
     }
-  });
+  };
+
+  editor.on("endCompletion", onEndCompletion);
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
     editor.setValue(value);
@@ -663,8 +593,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const destroy = () => {
-    // TODO - check if cm 5 has any thing that should be called here
-    // should the mode be unregistered or something?
+    // TODO - should the mode be unregistered or something?
+    editor.off("gutterClick", lineNumberClicked);
+    editor.off("change", valueChanged);
+    editor.off("scroll", scrollChanged);
+    editor.off("focus", onFocus);
+    editor.off("blur", onBlur);
+    editor.off("cursorActivity", onCursorActivity);
+    editor.off("hint-shown", onHintShown);
+    editor.off("endCompletion", onEndCompletion);
   };
 
   const setTheme = (theme) => {
@@ -706,8 +643,19 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setTheme,
     setValue,
 
-    on,
-    off,
+    onAutocompleteChanged,
+    offAutocompleteChanged,
+    onFocusChanged,
+    offFocusChanged,
+    onLineNumberClicked,
+    offLineNumberClicked,
+    onPositioChanged,
+    offPositionChanged,
+    onScrollChanged,
+    offScrollChanged,
+    onValueChanged,
+    offValueChanged,
+
     codemirror: editor,
     editorSupport
   };

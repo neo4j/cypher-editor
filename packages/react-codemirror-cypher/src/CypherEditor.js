@@ -25,14 +25,6 @@ class CypherEditor extends Component {
     onFocusChanged && onFocusChanged(focused);
   };
 
-  focused = () => {
-    this.focusChanged(true);
-  };
-
-  blurred = () => {
-    this.focusChanged(false);
-  };
-
   scrollChanged = (scrollInfo) => {
     const { onScrollChanged } = this.props;
     onScrollChanged && onScrollChanged(scrollInfo);
@@ -58,36 +50,37 @@ class CypherEditor extends Component {
     const { initialOptions, onEditorCreated } = this.props;
     const { editor } = createCypherEditor(this.editorRef, initialOptions);
     this.cypherEditor = editor;
-    this.cypherEditor.on("change", this.valueChanged);
-    this.cypherEditor.on("focus", this.focused);
-    this.cypherEditor.on("blur", this.blurred);
-    this.cypherEditor.on("scroll", this.scrollChanged);
-    this.cypherEditor.on("position", this.positionChanged);
-    this.cypherEditor.on("autocomplete", this.autocompleteChanged);
-    this.cypherEditor.on("lineclick", this.lineNumberClicked);
+    this.cypherEditor.onValueChanged(this.valueChanged);
+    this.cypherEditor.onFocusChanged(this.focusChanged);
+    this.cypherEditor.onScrollChanged(this.scrollChanged);
+    this.cypherEditor.onPositioChanged(this.positionChanged);
+    this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
+    this.cypherEditor.onLineNumberClicked(this.lineNumberClicked);
 
     onEditorCreated && onEditorCreated(this.cypherEditor);
   }
 
   componentWillUnmount() {
     if (this.cypherEditor) {
-      this.cypherEditor.off("change", this.valueChanged);
-      this.cypherEditor.off("focus", this.focused);
-      this.cypherEditor.off("blur", this.blurred);
-      this.cypherEditor.off("scroll", this.scrollChanged);
-      this.cypherEditor.off("position", this.positionChanged);
-      this.cypherEditor.off("autocomplete", this.autocompleteChanged);
-      this.cypherEditor.off("lineclick", this.lineNumberClicked);
+      this.cypherEditor.offValueChanged(this.valueChanged);
+      this.cypherEditor.offFocusChanged(this.focusChanged);
+      this.cypherEditor.offScrollChanged(this.scrollChanged);
+      this.cypherEditor.offPositionChanged(this.positionChanged);
+      this.cypherEditor.offAutocompleteChanged(this.autocompleteChanged);
+      this.cypherEditor.offLineNumberClicked(this.lineNumberClicked);
 
       this.cypherEditor.destroy();
     }
   }
 
   render() {
-    const { classNames } = this.props;
-    const editorClassNames = (classNames ? classNames : []).join(" ");
+    const { className, focusedClassName } = this.props;
+    const { focused } = this.state;
+    const editorClassName =
+      (className ? className + " " : "") +
+      (focused && focusedClassName ? focusedClassName : "");
 
-    return <div className={editorClassNames} ref={this.setEditorRef}></div>;
+    return <div className={editorClassName} ref={this.setEditorRef}></div>;
   }
 }
 

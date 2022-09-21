@@ -13,6 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      // "cypher-codemirror-base": absPath('../cypher-codemirror-base/src/index.js'),
       // 'cypher-codemirror/css/cypher-codemirror.css': absPath('../cypher-codemirror/css/cypher-codemirror.css'),
       // 'cypher-codemirror': absPath('../cypher-codemirror/src/index.js'),
       // 'cypher-antlr4': absPath('../cypher-antlr4/src/index.js'),
@@ -20,6 +21,7 @@ export default defineConfig({
       // 'cypher-editor-support': absPath('../cypher-editor-support/src/index.js'),
       // 'demo-base': absPath('../demo-base/src/index.js')
 
+      "cypher-codemirror-base": "cypher-codemirror-base/src/index.js",
       "cypher-codemirror/css/cypher-codemirror.css":
         "cypher-codemirror/css/cypher-codemirror.css",
       "cypher-codemirror": "cypher-codemirror/src/index.js",

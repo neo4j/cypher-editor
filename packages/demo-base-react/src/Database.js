@@ -836,7 +836,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onScrollChanged={onScrollChanged}
             onEditorCreated={onEditorCreated}
             initialOptions={initialOptions}
-            classNames={["editor"]}
+            className="database-editor"
           />
         </div>
         <div className="card">

@@ -7,6 +7,11 @@ import {
 } from "@codemirror/autocomplete";
 import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
+import {
+  defaultLineNumberFormatter,
+  defaultOptions as baseDefaultOptions,
+  createEventHandlers
+} from "cypher-codemirror-base";
 
 import { initEditorSupportEffect } from "./cypher-state-definitions";
 import {
@@ -33,15 +38,8 @@ import {
   getHistoryExtensions,
   getLintExtensions
 } from "./cypher-extensions";
-import { THEME_LIGHT, defaultLineNumberFormatter, defaultAutocompleteTriggerStrings } from "./constants";
 
-const VALUE_KEY = "change";
-const FOCUS_KEY = "focus";
-const BLUR_KEY = "blur";
-const SCROLL_KEY = "scroll";
-const POSITION_KEY = "position";
-const AUTOCOMPLETE_KEY = "autocomplete";
-const LINE_CLICK_KEY = "lineclick";
+export * from "./cypher-extensions";
 
 export const getExtensions = (
   options = {},
@@ -103,27 +101,12 @@ export const getExtensions = (
 };
 
 const defaultOptions = {
-  autocomplete: true,
-  autocompleteOpen: false,
-  autocompleteCloseOnBlur: true,
-  autocompleteSchema: undefined,
-  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
-  autofocus: true,
-  history: true,
-  lineNumberFormatter: defaultLineNumberFormatter,
-  lineNumbers: true,
-  lineWrapping: false,
-  lint: true,
-  placeholder: undefined,
-  position: undefined,
-  readOnly: false,
-  readOnlyCursor: false,
-  theme: THEME_LIGHT,
-  updateSyntaxHighlighting: true,
-  value: "",
+  ...baseDefaultOptions,
   preExtensions: [],
   postExtensions: []
 };
+
+export const getDefaultOptions = () => ({ ...defaultOptions });
 
 export function createCypherEditor(parentDOMElement, options = {}) {
   const combinedOptions = { ...defaultOptions, ...options };
@@ -151,75 +134,87 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     history
   } = combinedOptions;
 
-  const eventListenerTypeMap = {};
+  const {
+    on: onValueChanged,
+    off: offValueChanged,
+    fire: fireValueChanged
+  } = createEventHandlers();
 
-  const onLineNumberClicked = (line, event) => {
-    if (eventListenerTypeMap[LINE_CLICK_KEY] !== undefined) {
-      eventListenerTypeMap[LINE_CLICK_KEY].forEach((listener) => {
-        listener(line, event);
-      });
-    }
+  const {
+    on: onFocusChanged,
+    off: offFocusChanged,
+    fire: fireFocusChanged
+  } = createEventHandlers();
+
+  const {
+    on: onScrollChanged,
+    off: offScrollChanged,
+    fire: fireScrollChanged
+  } = createEventHandlers();
+
+  const {
+    on: onPositioChanged,
+    off: offPositionChanged,
+    fire: firePositionChanged
+  } = createEventHandlers();
+
+  const {
+    on: onAutocompleteChanged,
+    off: offAutocompleteChanged,
+    fire: fireAutocompleteChanged
+  } = createEventHandlers();
+
+  const {
+    on: onLineNumberClicked,
+    off: offLineNumberClicked,
+    fire: fireLineNumberClicked
+  } = createEventHandlers();
+
+  const lineNumberClicked = (line, event) => {
+    fireLineNumberClicked(line, event);
   };
 
-  const onPositionChanged = (positionObject) => {
-    if (eventListenerTypeMap[POSITION_KEY] !== undefined) {
-      eventListenerTypeMap[POSITION_KEY].forEach((listener) => {
-        listener(positionObject);
-      });
-    }
+  const positionChanged = (positionObject) => {
+    firePositionChanged(positionObject);
   };
 
-  const onAutocompleteChanged = (newAutocompleteOpen, from, options) => {
+  const autocompleteChanged = (newAutocompleteOpen, from, options) => {
     autocompleteOpen = newAutocompleteOpen;
-    if (eventListenerTypeMap[AUTOCOMPLETE_KEY] !== undefined) {
-      eventListenerTypeMap[AUTOCOMPLETE_KEY].forEach((listener) => {
-        listener(autocompleteOpen, from, options);
-      });
-    }
+    fireAutocompleteChanged(autocompleteOpen, from, options);
   };
 
-  const onFocusChanged = (focused) => {
-    const key = focused ? FOCUS_KEY : BLUR_KEY;
-    if (eventListenerTypeMap[key] !== undefined) {
-      eventListenerTypeMap[key].forEach((listener) => {
-        listener(focused);
-      });
-    }
+  const focusChanged = (focused) => {
+    fireFocusChanged(focused);
   };
 
-  const onScrollChanged = (editor) => {
-    if (eventListenerTypeMap[SCROLL_KEY] !== undefined) {
-      const {
-        scrollTop,
-        clientHeight,
-        scrollHeight,
-        scrollLeft,
-        clientWidth,
-        scrollWidth
-      } = editor.scrollDOM;
-
-      eventListenerTypeMap[SCROLL_KEY].forEach((listener) => {
-        listener({
-          scrollTop,
-          clientHeight,
-          scrollHeight,
-          scrollLeft,
-          clientWidth,
-          scrollWidth
-        });
-      });
-    }
+  const scrollChanged = (editor) => {
+    const {
+      scrollTop,
+      clientHeight,
+      scrollHeight,
+      scrollLeft,
+      clientWidth,
+      scrollWidth
+    } = editor.scrollDOM;
+    fireScrollChanged({
+      scrollTop,
+      clientHeight,
+      scrollHeight,
+      scrollLeft,
+      clientWidth,
+      scrollWidth
+    });
   };
 
   const updateListener = EditorView.updateListener.of((v) => {
     if (v.docChanged) {
-      onValueChanged(getStateValue(v.state), v.changes);
-      onPositionChanged(getStatePosition(v.state));
+      valueChanged(getStateValue(v.state), v.changes);
+      positionChanged(getStatePosition(v.state));
     } else if (v.selectionSet) {
       const oldPosition = getStatePositionAbsolute(v.startState);
       const newPosition = getStatePositionAbsolute(v.state);
       if (oldPosition !== newPosition) {
-        onPositionChanged(getStatePosition(v.state));
+        positionChanged(getStatePosition(v.state));
       }
     }
     const startStatus = completionStatus(v.startState);
@@ -255,10 +250,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
           );
         }
         const { from, options } = autocompleteResults[0];
-        onAutocompleteChanged(true, from, options);
+        autocompleteChanged(true, from, options);
       }
     } else if (startStatus !== null && endStatus === null) {
-      onAutocompleteChanged(false);
+      autocompleteChanged(false);
     }
   });
 
@@ -289,8 +284,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         placeholderConf,
         themeConf,
         postConf,
-        onLineNumberClicked,
-        onFocusChanged
+        onLineNumberClicked: lineNumberClicked,
+        onFocusChanged: focusChanged
       }),
       updateListener,
       postConf.of(postExtensions)
@@ -347,28 +342,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   }
 
   editor.scrollDOM.addEventListener("scroll", () => {
-    onScrollChanged(editor);
+    scrollChanged(editor);
   });
-
-  const on = (type, listener) => {
-    if (eventListenerTypeMap[type] === undefined) {
-      eventListenerTypeMap[type] = [];
-    }
-    eventListenerTypeMap[type].push(listener);
-  };
-
-  const off = (type, listener) => {
-    if (eventListenerTypeMap[type] !== undefined) {
-      const listeners = eventListenerTypeMap[type];
-      const index = listeners.findIndex((l) => l === listener);
-      if (index >= 0) {
-        listeners.splice(index, 1);
-      }
-      if (eventListenerTypeMap[type].length === 0) {
-        delete eventListenerTypeMap[type];
-      }
-    }
-  };
 
   const setPreExtensions = (preExtensions) => {
     editor.dispatch({
@@ -382,7 +357,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const onValueChanged = (value, changes) => {
+  const valueChanged = (value, changes) => {
     if (autocomplete && Array.isArray(autocompleteTriggerStrings)) {
       let changedText = [];
       changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
@@ -402,11 +377,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       }
     }
 
-    if (eventListenerTypeMap[VALUE_KEY] !== undefined) {
-      eventListenerTypeMap[VALUE_KEY].forEach((listener) => {
-        listener(value, changes);
-      });
-    }
+    fireValueChanged(value, changes);
   };
 
   const setValue = (value, updateSyntaxHighlighting = true) => {
@@ -446,7 +417,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         getLineNumbersExtensions({
           lineNumbers,
           lineNumberFormatter,
-          onLineNumberClicked
+          onLineNumberClicked: lineNumberClicked
         })
       )
     });
@@ -461,7 +432,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         getLineNumbersExtensions({
           lineNumbers,
           lineNumberFormatter,
-          onLineNumberClicked
+          onLineNumberClicked: lineNumberClicked
         })
       )
     });
@@ -621,8 +592,19 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setTheme,
     setValue,
 
-    on,
-    off,
+    onAutocompleteChanged,
+    offAutocompleteChanged,
+    onFocusChanged,
+    offFocusChanged,
+    onLineNumberClicked,
+    offLineNumberClicked,
+    onPositioChanged,
+    offPositionChanged,
+    onScrollChanged,
+    offScrollChanged,
+    onValueChanged,
+    offValueChanged,
+
     setPreExtensions,
     setPostExtensions,
     codemirror: editor,

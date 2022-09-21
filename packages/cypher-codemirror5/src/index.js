@@ -18,4 +18,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { createCypherEditor } from "./codemirror-cypher";
+export * from "./codemirror-cypher";

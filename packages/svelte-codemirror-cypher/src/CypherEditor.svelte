@@ -14,7 +14,9 @@
 
   export let onPositionChanged = undefined;
 
-  export let classNames = undefined;
+  export let className = undefined;
+
+  export let focusedClassName = undefined;
 
   export let onEditorCreated = undefined;
 
@@ -25,7 +27,9 @@
   let cypherEditorRef;
   let cypherEditor;
 
-  $: editorClassNames = (classNames ? classNames : []).join(" ");
+  $: editorClassName =
+    (className ? className + " " : "") +
+    (isFocused && focusedClassName ? focusedClassName : "");
 
   const valueChanged = (value, changes) => {
     onValueChanged && onValueChanged(value, changes);
@@ -33,14 +37,6 @@
 
   const focusChanged = (focused) => {
     onFocusChanged && onFocusChanged(focused);
-  };
-
-  const focused = () => {
-    focusChanged(true);
-  };
-
-  const blurred = () => {
-    focusChanged(false);
   };
 
   const scrollChanged = (scrollInfo) => {
@@ -63,30 +59,28 @@
   onMount(() => {
     const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
     cypherEditor = editor;
-    cypherEditor.on("change", valueChanged);
-    cypherEditor.on("focus", focused);
-    cypherEditor.on("blur", blurred);
-    cypherEditor.on("scroll", scrollChanged);
-    cypherEditor.on("position", positionChanged);
-    cypherEditor.on("autocomplete", autocompleteChanged);
-    cypherEditor.on("lineclick", lineNumberClicked);
+    cypherEditor.onValueChanged(valueChanged);
+    cypherEditor.onFocusChanged(focusChanged);
+    cypherEditor.onScrollChanged(scrollChanged);
+    cypherEditor.onPositioChanged(positionChanged);
+    cypherEditor.onAutocompleteChanged(autocompleteChanged);
+    cypherEditor.onLineNumberClicked(lineNumberClicked);
 
     onEditorCreated && onEditorCreated(cypherEditor);
   });
 
   onDestroy(() => {
     if (cypherEditor) {
-      cypherEditor.off("change", valueChanged);
-      cypherEditor.off("focus", focused);
-      cypherEditor.off("blur", blurred);
-      cypherEditor.off("scroll", scrollChanged);
-      cypherEditor.off("position", positionChanged);
-      cypherEditor.off("autocomplete", autocompleteChanged);
-      cypherEditor.off("lineclick", lineNumberClicked);
+      cypherEditor.offValueChanged(valueChanged);
+      cypherEditor.offFocusChanged(focusChanged);
+      cypherEditor.offScrollChanged(scrollChanged);
+      cypherEditor.offPositionChanged(positionChanged);
+      cypherEditor.offAutocompleteChanged(autocompleteChanged);
+      cypherEditor.offLineNumberClicked(lineNumberClicked);
 
       cypherEditor.destroy();
     }
   });
 </script>
 
-<div class={editorClassNames} bind:this={cypherEditorRef} />
+<div class={editorClassName} bind:this={cypherEditorRef} />

@@ -16,10 +16,7 @@ import {
 } from "@codemirror/language";
 import { linter, lintKeymap } from "@codemirror/lint";
 import { searchKeymap } from "@codemirror/search";
-import {
-  EditorState,
-  StateEffect
-} from "@codemirror/state";
+import { EditorState, StateEffect } from "@codemirror/state";
 import {
   EditorView,
   lineNumbers as lineNumbersExtension,
@@ -30,11 +27,15 @@ import {
   placeholder as placeholderExtension
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
+import { THEME_DARK } from "cypher-codemirror-base";
 import { TreeUtils } from "cypher-editor-support";
 
 import { cypher } from "./cypher";
-import { THEME_DARK } from "./constants";
-import { typeMarkerField, addTypeMarkerEffect, clearTypeMarkersEffect } from "./cypher-state-definitions";
+import {
+  typeMarkerField,
+  addTypeMarkerEffect,
+  clearTypeMarkersEffect
+} from "./cypher-state-definitions";
 import {
   getStateEditorSupport,
   getStateLineCount,

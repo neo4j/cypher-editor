@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [svelte()],
   resolve: {
     alias: {
+      "cypher-codemirror-base": "cypher-codemirror-base/src/index.js",
       "cypher-codemirror5/css/cypher-codemirror.css":
         "cypher-codemirror5/css/cypher-codemirror.css",
       "cypher-codemirror5": "cypher-codemirror5/src/index.js",
