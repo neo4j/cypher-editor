@@ -118,7 +118,7 @@ export const cypherLinter = ({
   linter(
     (view) => {
       // Empty editor, no need to lint
-      if (!view.state.doc.toString().length) return [];
+      if (!getStateValue(view.state).length) return [];
       const editorSupport = getStateEditorSupport(view.state);
       if (!editorSupport) return [];
       const version = view.newContentVersion();
