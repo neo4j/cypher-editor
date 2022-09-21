@@ -39,7 +39,8 @@ import {
 import {
   getStateEditorSupport,
   getStateLineCount,
-  getStateValue
+  getStateValue,
+  getStatePositionAbsoluteForLineColumn
 } from "./cypher-state-selectors";
 
 const typeMarkerTheme = EditorView.baseTheme({
