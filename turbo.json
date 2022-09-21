@@ -13,10 +13,12 @@
       "outputs": ["dist/**"]
     },
     "serve": {
-      "dependsOn": ["deploy"]
+      "dependsOn": ["deploy"],
+      "cache": false
     },
     "e2e": {
-      "dependsOn": ["serve"]
+      "dependsOn": ["serve"],
+      "cache": false
     },
     "unserve": {
       "cache": false

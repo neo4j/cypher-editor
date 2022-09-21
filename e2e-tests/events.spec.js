@@ -12,7 +12,7 @@ function getLogElement(page) {
   return page.locator("#log");
 }
 function getEditor(page) {
-  return page.locator(".editor");
+  return page.locator(".database-editor");
 }
 function sleep(ms) {
   return new Promise((res) => setTimeout(res, ms));
