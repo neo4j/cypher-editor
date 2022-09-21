@@ -24,6 +24,8 @@
 
   export let onLineNumberClicked = undefined;
 
+  let isFocused = false;
+
   let cypherEditorRef;
   let cypherEditor;
 
