@@ -77,6 +77,7 @@ export const getExtensions = (
   } = combinedOptions;
 
   return [
+    domListener({ onFocusChanged, onScrollChanged, onKeyDown }),
     cypherLanguage(),
     lintConf.of(getLintExtensions({ readOnly, lint })),
     autocompleteConf.of(
@@ -99,8 +100,7 @@ export const getExtensions = (
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
     themeConf.of(getThemeExtensions({ theme })),
-    readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor })),
-    domListener({ onFocusChanged, onScrollChanged, onKeyDown })
+    readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor }))
   ];
 };
 
