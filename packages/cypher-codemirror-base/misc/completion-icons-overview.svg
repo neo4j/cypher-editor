@@ -1,0 +1,145 @@
+<!--
+.ͼ1 .cm-completionIcon {font-size: 90%; width: .8em; display: inline-block; text-align: center; padding-right: .6em; opacity: 0.6;} // done
+.ͼ1 .cm-completionIcon-function:after, .ͼ1 .cm-completionIcon-method:after {content: 'ƒ';} // done
+.ͼ1 .cm-completionIcon-class:after {content: '○';} // not used
+.ͼ1 .cm-completionIcon-interface:after {content: '◌';} // not used
+.ͼ1 .cm-completionIcon-variable:after {content: '𝑥';} // done
+.ͼ1 .cm-completionIcon-constant:after {content: '𝐶';} // not used
+.ͼ1 .cm-completionIcon-type:after {content: '𝑡';} // not used
+.ͼ1 .cm-completionIcon-enum:after {content: '∪';} // not used
+.ͼ1 .cm-completionIcon-property:after {content: '□';} // not used
+.ͼ1 .cm-completionIcon-keyword:after {content: '🔑︎';} // done
+.ͼ1 .cm-completionIcon-namespace:after {content: '▢';}// not used
+.ͼ1 .cm-completionIcon-text:after {content: 'abc'; font-size: 50%; vertical-align: middle;} // not used
+-->
+
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'>
+  <style>
+    .text-label {
+      text-anchor: start;
+      dy: 1em;
+      fill: black
+    }
+    .text-icon {
+      opacity: 0.6;
+      text-anchor: middle;
+      dy: .35em;
+      font-size: 28px;
+      fill: black;
+      transform: translate(20px, 20px);
+    }
+  </style>
+  <g transform="translate(0, 0)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Keyword</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>K</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+      <text class="text-icon">🔑︎</text>
+    </g>
+  </g>
+  <g transform="translate(200, 0)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Label</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>L</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(400, 0)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Relationship Type</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>R</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(0, 150)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Variable</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>V</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+      <text class="text-icon">𝑥</text>
+    </g>
+  </g>
+   <g transform="translate(200, 150)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Procedure</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>λ</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(400, 150)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Function</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>λ</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+      <text class="text-icon">ƒ</text>
+    </g>
+  </g>
+  <g transform="translate(0, 300)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Parameter</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>$</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(200, 300)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Property Key</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>P</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(400, 300)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Procedure Output</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>V</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+  <g transform="translate(0, 450)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Console Command</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>C</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+   <g transform="translate(200, 450)">
+    <g transform="translate(0, 0)">
+      <text class="text-label">Console Command Sub Command</text>
+    </g>
+    <g transform="translate(0, 25)">
+      <svg viewBox='0 0 40 40' width='40px' height='40px'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>C</text></svg>
+    </g>
+    <g transform="translate(0, 75)">
+    </g>
+  </g>
+</svg>
