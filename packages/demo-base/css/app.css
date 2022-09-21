@@ -146,7 +146,7 @@ body {
     padding-right: 16px;
 }
 
-.editor {
+.database-editor {
     display: flex;
     width: calc(100% - 16px);
     min-width: calc(100% - 16px);
