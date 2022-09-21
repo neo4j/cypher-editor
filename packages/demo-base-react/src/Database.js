@@ -162,6 +162,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     addEventLog("lineNumberClicked", line);
   };
 
+  const onKeyDown = (event) => {
+    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
+    addEventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey });
+  };
+
   const onEditorCreated = (editor) => {
     addEventLog("editorCreated", "");
     setEditor(editor);
@@ -833,6 +838,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onFocusChanged={onFocusChanged}
             onAutocompleteChanged={onAutocompleteChanged}
             onLineNumberClicked={onLineNumberClicked}
+            onKeyDown={onKeyDown}
             onScrollChanged={onScrollChanged}
             onEditorCreated={onEditorCreated}
             initialOptions={initialOptions}

@@ -43,7 +43,7 @@ function translatePosition(from, to) {
   };
 }
 
-function getPosition(element, editorSupport) {
+function getPositionForElement(element, editorSupport) {
   const { start, stop } = TreeUtils.getPosition(element) || {
     start: 0,
     stop: 0
@@ -62,7 +62,7 @@ function fixColors(editor, editorSupport) {
   }
 
   editorSupport.applyHighlighthing((element, type) => {
-    const { from, to } = getPosition(element, editorSupport);
+    const { from, to } = getPositionForElement(element, editorSupport);
     markers.push(
       editor.markText(from, to, {
         className: `cm-p-${type}`
@@ -270,6 +270,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fire: fireLineNumberClicked
   } = createEventHandlers();
 
+  const {
+    on: onKeyDown,
+    off: offKeyDown,
+    fire: fireKeyDown
+  } = createEventHandlers();
+
   const editor = codemirror(parentDOMElement, combinedCodemirrorOptions);
   editor.cypherMarkers = [];
   editor.editorSupport = editorSupport;
@@ -288,6 +294,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
   editor.on("gutterClick", lineNumberClicked);
 
+  // TODO POSITION - Only used for export, and setting the initial position
   const setPosition = (position) => {
     const positionObject = getPositionForValue(position);
     if (positionObject) {
@@ -326,6 +333,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     isFinite(v);
   const isInteger = (v) => isNumber(v) && v % 1 === 0;
 
+  // TODO POSITION - Only used for export & setPosition
   const getPositionForValue = (positionValue) => {
     let position = null;
     if (isInteger(positionValue) && positionValue >= 0) {
@@ -397,9 +405,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const valueChanged = (doc, changed) => {
     fireValueChanged(doc, changed);
-    // valueChangedListeners.forEach((listener) => {
-    //   listener(doc, changed);
-    // });
     if (
       editor.autocomplete &&
       Array.isArray(autocompleteTriggerStrings) &&
@@ -418,12 +423,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       }
     }
   };
+  // change is triggered BEFORE dom update, "changes" is triggered AFTER dom update
   editor.on("change", valueChanged);
 
   lineFormatter = (line) => {
     return lineNumberFormatter(line, getLineCount(), editor);
   };
 
+  // TODO POSITION - Only used for export
   const getPosition = () => {
     const { line: lineIndex, ch } = editor.getCursor();
     const position = editor.indexFromPos(editor.getCursor());
@@ -439,6 +446,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const positionChanged = (positionObject) => {
+    // TODO POSITION - This is where all position events are dispatched
     firePositionChanged(positionObject);
   };
 
@@ -458,9 +466,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       clientWidth,
       scrollWidth: width
     };
-    scrollChangedListeners.forEach((listener) => {
-      listener(newScrollInfo);
-    });
+    fireScrollChanged(newScrollInfo);
+  };
+
+  const keyDown = (editor, event) => {
+    fireKeyDown(event);
   };
 
   let mounted = autofocus !== true;
@@ -477,6 +487,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireFocusChanged(false);
   };
 
+  editor.on("keydown", keyDown);
   editor.on("scroll", scrollChanged);
   editor.on("focus", onFocus);
   editor.on("blur", onBlur);
@@ -595,6 +606,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const destroy = () => {
     // TODO - should the mode be unregistered or something?
     editor.off("gutterClick", lineNumberClicked);
+    // change is triggered BEFORE dom update, "changes" is triggered AFTER dom update
     editor.off("change", valueChanged);
     editor.off("scroll", scrollChanged);
     editor.off("focus", onFocus);
@@ -647,6 +659,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offAutocompleteChanged,
     onFocusChanged,
     offFocusChanged,
+    onKeyDown,
+    offKeyDown,
     onLineNumberClicked,
     offLineNumberClicked,
     onPositioChanged,

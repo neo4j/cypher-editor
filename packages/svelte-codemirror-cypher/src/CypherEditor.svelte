@@ -24,6 +24,8 @@
 
   export let onLineNumberClicked = undefined;
 
+  export let onKeyDown = undefined;
+
   let isFocused = false;
 
   let cypherEditorRef;
@@ -59,6 +61,10 @@
     onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
+  const keyDown = (event) => {
+    onKeyDown && onKeyDown(event);
+  };
+
   onMount(() => {
     const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
     cypherEditor = editor;
@@ -68,6 +74,7 @@
     cypherEditor.onPositioChanged(positionChanged);
     cypherEditor.onAutocompleteChanged(autocompleteChanged);
     cypherEditor.onLineNumberClicked(lineNumberClicked);
+    cypherEditor.onKeyDown(keyDown);
 
     onEditorCreated && onEditorCreated(cypherEditor);
   });
@@ -80,6 +87,7 @@
       cypherEditor.offPositionChanged(positionChanged);
       cypherEditor.offAutocompleteChanged(autocompleteChanged);
       cypherEditor.offLineNumberClicked(lineNumberClicked);
+      cypherEditor.offKeyDown(keyDown);
 
       cypherEditor.destroy();
     }

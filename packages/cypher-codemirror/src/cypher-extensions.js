@@ -74,13 +74,38 @@ export const fixColors = (view, editorSupport) => {
   });
 };
 
-export const focusListener = ({ onFocusChanged = () => {} }) => [
+export const domListener = ({
+  onFocusChanged = () => {},
+  onScrollChanged = () => {},
+  onKeyDown = () => {}
+}) => [
   EditorView.domEventHandlers({
     focus: () => {
       onFocusChanged(true);
     },
     blur: () => {
       onFocusChanged(false);
+    },
+    scroll: (event) => {
+      const {
+        scrollTop,
+        clientHeight,
+        scrollHeight,
+        scrollLeft,
+        clientWidth,
+        scrollWidth
+      } = event.target;
+      onScrollChanged({
+        scrollTop,
+        clientHeight,
+        scrollHeight,
+        scrollLeft,
+        clientWidth,
+        scrollWidth
+      });
+    },
+    keydown: (event) => {
+      onKeyDown(event);
     }
   })
 ];

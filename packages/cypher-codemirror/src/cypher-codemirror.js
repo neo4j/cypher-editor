@@ -26,7 +26,7 @@ import {
 import {
   fixColors,
   syntaxCSS,
-  focusListener,
+  domListener,
   cypherLanguage,
   getReadableExtensions,
   getReadOnlyExtensions,
@@ -54,7 +54,9 @@ export const getExtensions = (
     placeholderConf = new Compartment(),
     themeConf = new Compartment(),
     onLineNumberClicked = () => {},
-    onFocusChanged = () => {}
+    onFocusChanged = () => {},
+    onScrollChanged = () => {},
+    onKeyDown = () => {}
   } = {}
 ) => {
   const combinedOptions = { ...defaultOptions, ...options };
@@ -96,7 +98,7 @@ export const getExtensions = (
     syntaxCSS,
     themeConf.of(getThemeExtensions({ theme })),
     readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor })),
-    focusListener({ onFocusChanged })
+    domListener({ onFocusChanged, onScrollChanged, onKeyDown })
   ];
 };
 
@@ -170,11 +172,22 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fire: fireLineNumberClicked
   } = createEventHandlers();
 
+  const {
+    on: onKeyDown,
+    off: offKeyDown,
+    fire: fireKeyDown
+  } = createEventHandlers();
+
   const lineNumberClicked = (line, event) => {
     fireLineNumberClicked(line, event);
   };
 
+  const keyDown = (event) => {
+    fireKeyDown(event);
+  };
+
   const positionChanged = (positionObject) => {
+    // TODO POSITION - This is where all position events are dispatched
     firePositionChanged(positionObject);
   };
 
@@ -187,23 +200,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireFocusChanged(focused);
   };
 
-  const scrollChanged = (editor) => {
-    const {
-      scrollTop,
-      clientHeight,
-      scrollHeight,
-      scrollLeft,
-      clientWidth,
-      scrollWidth
-    } = editor.scrollDOM;
-    fireScrollChanged({
-      scrollTop,
-      clientHeight,
-      scrollHeight,
-      scrollLeft,
-      clientWidth,
-      scrollWidth
-    });
+  const scrollChanged = (scrollInfo) => {
+    fireScrollChanged(scrollInfo);
   };
 
   const updateListener = EditorView.updateListener.of((v) => {
@@ -285,7 +283,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         themeConf,
         postConf,
         onLineNumberClicked: lineNumberClicked,
-        onFocusChanged: focusChanged
+        onFocusChanged: focusChanged,
+        onScrollChanged: scrollChanged,
+        onKeyDown: keyDown
       }),
       updateListener,
       postConf.of(postExtensions)
@@ -306,9 +306,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = getStateEditorSupport(editor.state);
   editorSupport.update(value);
 
+  // TODO POSITION - Only used for export & setPosition
   const getPositionForValue = (positionValue) =>
     getStatePositionForAny(editor.state, positionValue);
 
+  // TODO POSITION - Only used for export, and setting the initial position
   const setPosition = (positionParam, scrollIntoView = true) => {
     const positionObject = getPositionForValue(positionParam);
     if (positionObject) {
@@ -340,10 +342,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   if (autofocus) {
     editor.contentDOM.focus();
   }
-
-  editor.scrollDOM.addEventListener("scroll", () => {
-    scrollChanged(editor);
-  });
 
   const setPreExtensions = (preExtensions) => {
     editor.dispatch({
@@ -531,6 +529,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
+  // TODO POSITION - This is only used for export
   const getPosition = () => {
     return getStatePosition(editor.state);
   };
@@ -596,6 +595,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offAutocompleteChanged,
     onFocusChanged,
     offFocusChanged,
+    onKeyDown,
+    offKeyDown,
     onLineNumberClicked,
     offLineNumberClicked,
     onPositioChanged,

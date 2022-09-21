@@ -323,6 +323,7 @@ export const eventTypes = [
   "editorCreated",
   "focusChanged",
   "lineNumberClicked",
+  "keyDown",
   "positionChanged",
   "valueChanged"
 ];

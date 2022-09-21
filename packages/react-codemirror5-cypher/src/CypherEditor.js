@@ -54,6 +54,11 @@ class CypherEditor extends Component {
     onLineNumberClicked && onLineNumberClicked(line, event);
   };
 
+  keyDown = (event) => {
+    const { onKeyDown } = this.props;
+    onKeyDown && onKeyDown(event);
+  };
+
   componentDidMount() {
     const { initialOptions, onEditorCreated } = this.props;
     const { editor } = createCypherEditor(this.editorRef, initialOptions);
@@ -64,6 +69,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onPositioChanged(this.positionChanged);
     this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
     this.cypherEditor.onLineNumberClicked(this.lineNumberClicked);
+    this.cypherEditor.onKeyDown(this.keyDown);
 
     onEditorCreated && onEditorCreated(this.cypherEditor);
   }
@@ -76,6 +82,7 @@ class CypherEditor extends Component {
       this.cypherEditor.offPositionChanged(this.positionChanged);
       this.cypherEditor.offAutocompleteChanged(this.autocompleteChanged);
       this.cypherEditor.offLineNumberClicked(this.lineNumberClicked);
+      this.cypherEditor.offKeyDown(this.keyDown);
 
       this.cypherEditor.destroy();
     }

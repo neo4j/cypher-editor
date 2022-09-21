@@ -120,6 +120,11 @@
     logs = logs.concat(eventLog("lineNumberClicked", line));
   };
 
+  const onKeyDown = (event) => {
+    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
+    logs = logs.concat(eventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey }));
+  };
+
   const onEditorCreated = (editor) => {
     logs = logs.concat(eventLog("editorCreated", ""));
     cypherEditor = editor;
@@ -713,6 +718,7 @@
         {onEditorCreated}
         {onAutocompleteChanged}
         {onLineNumberClicked}
+        {onKeyDown}
         {initialOptions}
         className="database-editor"
       />
