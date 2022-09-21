@@ -24,7 +24,6 @@
     "clean:build": "rimraf lib && rimraf es"
   },
   "files": [
-    "css/",
     "es/",
     "lib/",
     "README.md"
