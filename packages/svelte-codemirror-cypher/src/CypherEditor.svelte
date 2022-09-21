@@ -24,6 +24,8 @@
 
   export let onLineNumberClicked = undefined;
 
+  let isFocused = false;
+
   let cypherEditorRef;
   let cypherEditor;
 
@@ -36,6 +38,7 @@
   };
 
   const focusChanged = (focused) => {
+    isFocused = focused;
     onFocusChanged && onFocusChanged(focused);
   };
 
