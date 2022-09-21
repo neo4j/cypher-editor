@@ -20,6 +20,9 @@
 
 import codemirror from "codemirror";
 import {
+  isAbsolutePosition,
+  isLineColumnPosition,
+  isLineColumnAbsolutePosition,
   THEME_LIGHT,
   THEME_DARK,
   defaultOptions as baseDefaultOptions,
@@ -327,34 +330,21 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const isNumber = (v) =>
-    v !== undefined &&
-    (typeof v === "number" || v instanceof Number) &&
-    isFinite(v);
-  const isInteger = (v) => isNumber(v) && v % 1 === 0;
-
   // TODO POSITION - Only used for export & setPosition
   const getPositionForValue = (positionValue) => {
     let position = null;
-    if (isInteger(positionValue) && positionValue >= 0) {
+    if (isAbsolutePosition(positionValue)) {
       position = positionValue;
-    } else if (typeof positionValue === "object" && positionValue) {
-      const { line, column, position: maybePosition } = positionValue;
-      if (isInteger(maybePosition) && maybePosition >= 0) {
-        position = maybePosition;
-      } else if (
-        isInteger(line) &&
-        line >= 1 &&
-        isInteger(column) &&
-        column >= 0
-      ) {
-        const lineIndex = editor.indexFromPos({ line: line - 1, ch: column });
-        if (lineIndex >= 0) {
-          const positionFromLineIndex = editor.posFromIndex(lineIndex);
-          const { line: newLineIndex, ch } = positionFromLineIndex;
-          if (newLineIndex === line - 1 && ch === column) {
-            position = lineIndex;
-          }
+    } else if (isLineColumnAbsolutePosition(positionValue)) {
+      position = positionValue.position;
+    }  else if (isLineColumnPosition(positionValue)) {
+      const { line, column } = positionValue;
+      const lineIndex = editor.indexFromPos({ line: line - 1, ch: column });
+      if (lineIndex >= 0) {
+        const positionFromLineIndex = editor.posFromIndex(lineIndex);
+        const { line: newLineIndex, ch } = positionFromLineIndex;
+        if (newLineIndex === line - 1 && ch === column) {
+          position = lineIndex;
         }
       }
     }

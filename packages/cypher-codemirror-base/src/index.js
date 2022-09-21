@@ -42,6 +42,17 @@ export const defaultOptions = {
   value: ""
 };
 
+export const isNumber = (v) =>
+  v !== undefined &&
+  (typeof v === "number" || v instanceof Number) &&
+  isFinite(v);
+export const isInteger = (v) => isNumber(v) && v % 1 === 0;
+export const isObject = (v) => typeof v === "object" && v !== null;
+
+export const isAbsolutePosition = v => isInteger(v) && v >= 0;
+export const isLineColumnPosition = v => isObject(v) && isInteger(v.line) && v.line >= 1 && isInteger(v.column) && v.column >= 0;
+export const isLineColumnAbsolutePosition = v => isObject(v) && isInteger(v.position) && v.position >= 0;
+
 export const createEventHandlers = () => {
   const listeners = [];
 

@@ -1,10 +1,11 @@
-import { editorSupportField } from "./cypher-state-definitions";
+import {
+  isInteger,
+  isAbsolutePosition,
+  isLineColumnPosition,
+  isLineColumnAbsolutePosition
+} from "cypher-codemirror-base";
 
-const isNumber = (v) =>
-  v !== undefined &&
-  (typeof v === "number" || v instanceof Number) &&
-  isFinite(v);
-const isInteger = (v) => isNumber(v) && v % 1 === 0;
+import { editorSupportField } from "./cypher-state-definitions";
 
 export const getStatePositionAbsolute = (state) => state.selection.main.head;
 export const getStateEditorSupport = (state) =>
@@ -34,26 +35,19 @@ export const getStatePosition = (state) =>
 
 export const getStatePositionForAny = (state, positionValue) => {
   let position = null;
-  if (isInteger(positionValue) && positionValue >= 0) {
+  if (isAbsolutePosition(positionValue)) {
     position = positionValue;
-  } else if (typeof positionValue === "object" && positionValue) {
-    const { line, column, position: maybePosition } = positionValue;
-    if (isInteger(maybePosition) && maybePosition >= 0) {
-      position = maybePosition;
-    } else if (
-      isInteger(line) &&
-      line >= 1 &&
-      isInteger(column) &&
-      column >= 0
-    ) {
-      const lineCount = getStateLineCount(state);
-      if (line <= lineCount) {
-        const lineObject = getStateLineObjectForLine(state, line);
-        if (lineObject) {
-          const { from, to } = lineObject;
-          if (isInteger(from) && isInteger(to) && column <= to - from) {
-            position = from + column;
-          }
+  } else if (isLineColumnAbsolutePosition(positionValue)) {
+    position = positionValue.position;
+  } else if (isLineColumnPosition(positionValue)) {
+    const { line, column } = positionValue;
+    const lineCount = getStateLineCount(state);
+    if (line <= lineCount) {
+      const lineObject = getStateLineObjectForLine(state, line);
+      if (lineObject) {
+        const { from, to } = lineObject;
+        if (isInteger(from) && isInteger(to) && column <= to - from) {
+          position = from + column;
         }
       }
     }
