@@ -50,7 +50,7 @@
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let positionPosition = "0";
   let positionLine = "1";
-  let positionColumn = "0";
+  let positionColumn = "1";
   let lineCount = 0;
   let logs = [];
   let lastScrollInfo;
@@ -122,7 +122,9 @@
 
   const onKeyDown = (event) => {
     const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
-    logs = logs.concat(eventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey }));
+    logs = logs.concat(
+      eventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey })
+    );
   };
 
   const onEditorCreated = (editor) => {

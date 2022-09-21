@@ -27,7 +27,9 @@ import {
   THEME_DARK,
   defaultOptions as baseDefaultOptions,
   defaultLineNumberFormatter,
-  createEventHandlers
+  createEventHandlers,
+  positionNewToOld,
+  positionOldToNew
 } from "cypher-codemirror-base";
 import { CypherEditorSupport, TreeUtils } from "cypher-editor-support";
 import "./codemirror-cypher-mode";
@@ -297,7 +299,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
   editor.on("gutterClick", lineNumberClicked);
 
-  // TODO POSITION - Only used for export, and setting the initial position
   const setPosition = (position) => {
     const positionObject = getPositionForValue(position);
     if (positionObject) {
@@ -330,14 +331,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  // TODO POSITION - Only used for export & setPosition
-  const getPositionForValue = (positionValue) => {
+  const getPositionForValue = (positionArg) => {
+    const positionValue = positionNewToOld(positionArg);
     let position = null;
     if (isAbsolutePosition(positionValue)) {
       position = positionValue;
     } else if (isLineColumnAbsolutePosition(positionValue)) {
       position = positionValue.position;
-    }  else if (isLineColumnPosition(positionValue)) {
+    } else if (isLineColumnPosition(positionValue)) {
       const { line, column } = positionValue;
       const lineIndex = editor.indexFromPos({ line: line - 1, ch: column });
       if (lineIndex >= 0) {
@@ -420,11 +421,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return lineNumberFormatter(line, getLineCount(), editor);
   };
 
-  // TODO POSITION - Only used for export
   const getPosition = () => {
     const { line: lineIndex, ch } = editor.getCursor();
     const position = editor.indexFromPos(editor.getCursor());
-    return { line: lineIndex + 1, column: ch, position };
+    return positionOldToNew({ line: lineIndex + 1, column: ch, position });
   };
 
   const setHistory = (history) => {
@@ -436,8 +436,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const positionChanged = (positionObject) => {
-    // TODO POSITION - This is where all position events are dispatched
-    firePositionChanged(positionObject);
+    firePositionChanged(positionOldToNew(positionObject));
   };
 
   const autocompleteChanged = (newAutocompleteOpen, from, options) => {

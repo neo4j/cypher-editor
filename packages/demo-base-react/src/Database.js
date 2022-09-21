@@ -55,7 +55,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [history, setHistory] = useState(initialOptions.history);
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
-  const [positionColumn, setPositionColumn] = useState("0");
+  const [positionColumn, setPositionColumn] = useState("1");
   const [goPositionPositionEnabled, setGoPositionPositionEnabled] =
     useState(false);
   const [goPositionLineColumnEnabled, setGoPositionLineColumnEnabled] =
@@ -164,7 +164,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const onKeyDown = (event) => {
     const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
-    addEventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey });
+    addEventLog("keyDown", {
+      code,
+      altKey,
+      key,
+      controlKey,
+      metaKey,
+      shiftKey
+    });
   };
 
   const onEditorCreated = (editor) => {

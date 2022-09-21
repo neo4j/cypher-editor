@@ -49,9 +49,37 @@ export const isNumber = (v) =>
 export const isInteger = (v) => isNumber(v) && v % 1 === 0;
 export const isObject = (v) => typeof v === "object" && v !== null;
 
-export const isAbsolutePosition = v => isInteger(v) && v >= 0;
-export const isLineColumnPosition = v => isObject(v) && isInteger(v.line) && v.line >= 1 && isInteger(v.column) && v.column >= 0;
-export const isLineColumnAbsolutePosition = v => isObject(v) && isInteger(v.position) && v.position >= 0;
+export const isAbsolutePosition = (v) => isInteger(v) && v >= 0;
+export const isLineColumnPosition = (v) =>
+  isObject(v) &&
+  isInteger(v.line) &&
+  v.line >= 1 &&
+  isInteger(v.column) &&
+  v.column >= 0;
+export const isLineColumnAbsolutePosition = (v) =>
+  isObject(v) && isInteger(v.position) && v.position >= 0;
+
+export const positionColumnNewToOld = ({ line, column, ...rest }) => ({
+  line,
+  column: column - 1,
+  ...rest
+});
+
+export const positionColumnOldToNew = ({ line, column, ...rest }) => ({
+  line,
+  column: column + 1,
+  ...rest
+});
+
+export const positionNewToOld = (positionValue) =>
+  isLineColumnPosition(positionValue)
+    ? positionColumnNewToOld(positionValue)
+    : positionValue;
+
+export const positionOldToNew = (positionValue) =>
+  isLineColumnPosition(positionValue)
+    ? positionColumnOldToNew(positionValue)
+    : positionValue;
 
 export const createEventHandlers = () => {
   const listeners = [];

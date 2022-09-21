@@ -10,7 +10,9 @@ import { EditorView } from "@codemirror/view";
 import {
   defaultLineNumberFormatter,
   defaultOptions as baseDefaultOptions,
-  createEventHandlers
+  createEventHandlers,
+  positionNewToOld,
+  positionOldToNew
 } from "cypher-codemirror-base";
 
 import { initEditorSupportEffect } from "./cypher-state-definitions";
@@ -187,8 +189,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const positionChanged = (positionObject) => {
-    // TODO POSITION - This is where all position events are dispatched
-    firePositionChanged(positionObject);
+    firePositionChanged(positionOldToNew(positionObject));
   };
 
   const autocompleteChanged = (newAutocompleteOpen, from, options) => {
@@ -306,11 +307,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const editorSupport = getStateEditorSupport(editor.state);
   editorSupport.update(value);
 
-  // TODO POSITION - Only used for export & setPosition
   const getPositionForValue = (positionValue) =>
-    getStatePositionForAny(editor.state, positionValue);
+    getStatePositionForAny(editor.state, positionNewToOld(positionValue));
 
-  // TODO POSITION - Only used for export, and setting the initial position
   const setPosition = (positionParam, scrollIntoView = true) => {
     const positionObject = getPositionForValue(positionParam);
     if (positionObject) {
@@ -529,9 +528,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  // TODO POSITION - This is only used for export
   const getPosition = () => {
-    return getStatePosition(editor.state);
+    return positionOldToNew(getStatePosition(editor.state));
   };
 
   const getLineCount = () => {
