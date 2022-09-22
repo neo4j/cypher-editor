@@ -1,6 +1,6 @@
 <script lang="ts">
   import { App, Database } from "demo-base-svelte";
-  import CypherEditor from "svelte-codemirror5-cypher";
+  import { CypherEditor } from "svelte-codemirror5-cypher";
 </script>
 
 <App>

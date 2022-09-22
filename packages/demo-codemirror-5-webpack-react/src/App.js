@@ -1,7 +1,7 @@
 import React from "react";
 
 import { App as AppBase, Database } from "demo-base-react";
-import CypherEditor from "react-codemirror5-cypher";
+import { CypherEditor } from "react-codemirror5-cypher";
 
 const App = () => {
   return (

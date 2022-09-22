@@ -21,10 +21,13 @@
 import neo4j from "neo4j-driver";
 import {
   THEME_LIGHT,
+  THEME_DARK,
   defaultAutocompleteTriggerStrings,
   defaultLineNumberFormatter,
   defaultOptions as baseDefaultOptions
 } from "cypher-codemirror-base";
+
+export { THEME_LIGHT, THEME_DARK, defaultAutocompleteTriggerStrings, defaultLineNumberFormatter };
 
 export { neo4jSchema, simpleSchema } from "./schema-data";
 import { simpleSchema } from "./schema-data";
