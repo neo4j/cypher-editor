@@ -19,6 +19,12 @@
  */
 
 import neo4j from "neo4j-driver";
+import {
+  THEME_LIGHT,
+  defaultAutocompleteTriggerStrings,
+  defaultLineNumberFormatter,
+  defaultOptions as baseDefaultOptions
+} from "cypher-codemirror-base";
 
 export { neo4jSchema, simpleSchema } from "./schema-data";
 import { simpleSchema } from "./schema-data";
@@ -122,51 +128,15 @@ const defaultCodemirrorOptions = {
   }
 };
 
-export const defaultLineNumberFormatter = (line, lineCount) => {
-  if (lineCount === 1) {
-    return "$";
-  } else {
-    return line;
-  }
-};
-
-export const defaultAutocompleteTriggerStrings = [
-  ".",
-  ":",
-  "[]",
-  "()",
-  "{}",
-  "[",
-  "(",
-  "{",
-  "$"
-];
-
-const THEME_LIGHT = "light";
-
 const defaultOptions = {
-  autocomplete: true,
-  autocompleteOpen: false,
-  autocompleteCloseOnBlur: true,
-  autocompleteSchema: undefined,
-  autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
-  autofocus: true,
-  history: true,
-  lineNumberFormatter: defaultLineNumberFormatter,
-  lineNumbers: true,
-  lineWrapping: false,
-  lint: true,
-  placeholder: undefined,
-  position: undefined,
-  readOnly: false,
-  readOnlyCursor: false,
-  theme: THEME_LIGHT,
-  updateSyntaxHighlighting: true,
-  value: "",
+  ...baseDefaultOptions,
 
   codemirrorOptions: {
     ...defaultCodemirrorOptions
-  }
+  },
+
+  preExtensions: [],
+  postExtensions: []
 };
 
 export const noneLineNumberFormatter = (line) => line;
@@ -193,13 +163,17 @@ export const initialOptions = {
   autocompleteSchema: simpleSchema,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
+  history: true,
+  lineNumberFormatter: defaultLineNumberFormatter,
   lineNumbers: true, // whether to show the line numbers next to the editor
   lineWrapping: false,
   lint: true, // whether to show lint errors,
   placeholder: undefined, // this text shows when the actual text is empty
   position: { line: 2, column: 3 },
   readOnly: false, // can be one of: true / false / "nocursor"
+  readOnlyCursor: false,
   theme: THEME_LIGHT,
+  updateSyntaxHighlighting: true,
   value: longQuery
 };
 
