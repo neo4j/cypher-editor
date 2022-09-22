@@ -258,7 +258,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   } = createEventHandlers();
 
   const {
-    on: onPositioChanged,
+    on: onPositionChanged,
     off: offPositionChanged,
     fire: firePositionChanged
   } = createEventHandlers();
@@ -652,7 +652,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offKeyDown,
     onLineNumberClick,
     offLineNumberClick,
-    onPositioChanged,
+    onPositionChanged,
     offPositionChanged,
     onScrollChanged,
     offScrollChanged,

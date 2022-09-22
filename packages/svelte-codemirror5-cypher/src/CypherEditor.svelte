@@ -78,7 +78,7 @@
     cypherEditor.onValueChanged(valueChanged);
     cypherEditor.onFocusChanged(focusChanged);
     cypherEditor.onScrollChanged(scrollChanged);
-    cypherEditor.onPositioChanged(positionChanged);
+    cypherEditor.onPositionChanged(positionChanged);
     cypherEditor.onAutocompleteChanged(autocompleteChanged);
     cypherEditor.onLineNumberClick(lineNumberClick);
     cypherEditor.onKeyDown(keyDown);

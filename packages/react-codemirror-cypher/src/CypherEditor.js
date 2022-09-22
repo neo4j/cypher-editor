@@ -58,7 +58,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onValueChanged(this.valueChanged);
     this.cypherEditor.onFocusChanged(this.focusChanged);
     this.cypherEditor.onScrollChanged(this.scrollChanged);
-    this.cypherEditor.onPositioChanged(this.positionChanged);
+    this.cypherEditor.onPositionChanged(this.positionChanged);
     this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
     this.cypherEditor.onLineNumberClick(this.lineNumberClick);
     this.cypherEditor.onKeyDown(this.keyDown);
