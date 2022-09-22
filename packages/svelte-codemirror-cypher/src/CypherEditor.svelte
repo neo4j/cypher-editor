@@ -22,7 +22,7 @@
 
   export let onAutocompleteChanged = undefined;
 
-  export let onLineNumberClicked = undefined;
+  export let onLineNumberClick = undefined;
 
   export let onKeyDown = undefined;
 
@@ -57,8 +57,8 @@
       onAutocompleteChanged(autocompleteOpen, from, options);
   };
 
-  const lineNumberClicked = (line, event) => {
-    onLineNumberClicked && onLineNumberClicked(line, event);
+  const lineNumberClick = (line, event) => {
+    onLineNumberClick && onLineNumberClick(line, event);
   };
 
   const keyDown = (event) => {
@@ -73,7 +73,7 @@
     cypherEditor.onScrollChanged(scrollChanged);
     cypherEditor.onPositioChanged(positionChanged);
     cypherEditor.onAutocompleteChanged(autocompleteChanged);
-    cypherEditor.onLineNumberClicked(lineNumberClicked);
+    cypherEditor.onLineNumberClick(lineNumberClick);
     cypherEditor.onKeyDown(keyDown);
 
     onEditorCreated && onEditorCreated(cypherEditor);
@@ -86,7 +86,7 @@
       cypherEditor.offScrollChanged(scrollChanged);
       cypherEditor.offPositionChanged(positionChanged);
       cypherEditor.offAutocompleteChanged(autocompleteChanged);
-      cypherEditor.offLineNumberClicked(lineNumberClicked);
+      cypherEditor.offLineNumberClick(lineNumberClick);
       cypherEditor.offKeyDown(keyDown);
 
       cypherEditor.destroy();

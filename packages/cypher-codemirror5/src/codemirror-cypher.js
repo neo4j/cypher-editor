@@ -270,9 +270,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   } = createEventHandlers();
 
   const {
-    on: onLineNumberClicked,
-    off: offLineNumberClicked,
-    fire: fireLineNumberClicked
+    on: onLineNumberClick,
+    off: offLineNumberClick,
+    fire: fireLineNumberClick
   } = createEventHandlers();
 
   const {
@@ -294,10 +294,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   editor.autocomplete = autocomplete;
   editor.forceAutocompleteClose = false;
 
-  const lineNumberClicked = (cm, lineIndex, _, event) => {
-    fireLineNumberClicked(lineIndex + 1, event);
+  const lineNumberClick = (cm, lineIndex, _, event) => {
+    fireLineNumberClick(lineIndex + 1, event);
   };
-  editor.on("gutterClick", lineNumberClicked);
+  editor.on("gutterClick", lineNumberClick);
 
   const setPosition = (position) => {
     const positionObject = getPositionForValue(position);
@@ -594,7 +594,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const destroy = () => {
     // TODO - should the mode be unregistered or something?
-    editor.off("gutterClick", lineNumberClicked);
+    editor.off("gutterClick", lineNumberClick);
     // change is triggered BEFORE dom update, "changes" is triggered AFTER dom update
     editor.off("change", valueChanged);
     editor.off("scroll", scrollChanged);
@@ -650,8 +650,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offFocusChanged,
     onKeyDown,
     offKeyDown,
-    onLineNumberClicked,
-    offLineNumberClicked,
+    onLineNumberClick,
+    offLineNumberClick,
     onPositioChanged,
     offPositionChanged,
     onScrollChanged,

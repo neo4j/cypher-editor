@@ -41,9 +41,9 @@ class CypherEditor extends Component {
       onAutocompleteChanged(autocompleteOpen, from, options);
   };
 
-  lineNumberClicked = (line, event) => {
-    const { onLineNumberClicked } = this.props;
-    onLineNumberClicked && onLineNumberClicked(line, event);
+  lineNumberClick = (line, event) => {
+    const { onLineNumberClick } = this.props;
+    onLineNumberClick && onLineNumberClick(line, event);
   };
 
   keyDown = (event) => {
@@ -60,7 +60,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onScrollChanged(this.scrollChanged);
     this.cypherEditor.onPositioChanged(this.positionChanged);
     this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
-    this.cypherEditor.onLineNumberClicked(this.lineNumberClicked);
+    this.cypherEditor.onLineNumberClick(this.lineNumberClick);
     this.cypherEditor.onKeyDown(this.keyDown);
 
     onEditorCreated && onEditorCreated(this.cypherEditor);
@@ -73,7 +73,7 @@ class CypherEditor extends Component {
       this.cypherEditor.offScrollChanged(this.scrollChanged);
       this.cypherEditor.offPositionChanged(this.positionChanged);
       this.cypherEditor.offAutocompleteChanged(this.autocompleteChanged);
-      this.cypherEditor.offLineNumberClicked(this.lineNumberClicked);
+      this.cypherEditor.offLineNumberClick(this.lineNumberClick);
       this.cypherEditor.offKeyDown(this.keyDown);
 
       this.cypherEditor.destroy();

@@ -158,8 +158,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setAutocompleteOpen(open);
   };
 
-  const onLineNumberClicked = (line, event) => {
-    addEventLog("lineNumberClicked", line);
+  const onLineNumberClick = (line, event) => {
+    addEventLog("lineNumberClick", line);
   };
 
   const onKeyDown = (event) => {
@@ -844,7 +844,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onPositionChanged={onPositionChanged}
             onFocusChanged={onFocusChanged}
             onAutocompleteChanged={onAutocompleteChanged}
-            onLineNumberClicked={onLineNumberClicked}
+            onLineNumberClick={onLineNumberClick}
             onKeyDown={onKeyDown}
             onScrollChanged={onScrollChanged}
             onEditorCreated={onEditorCreated}

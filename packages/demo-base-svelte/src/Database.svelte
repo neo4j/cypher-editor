@@ -116,8 +116,8 @@
     autocompleteOpen = open;
   };
 
-  const onLineNumberClicked = (line, event) => {
-    logs = logs.concat(eventLog("lineNumberClicked", line));
+  const onLineNumberClick = (line, event) => {
+    logs = logs.concat(eventLog("lineNumberClick", line));
   };
 
   const onKeyDown = (event) => {
@@ -719,7 +719,7 @@
         {onScrollChanged}
         {onEditorCreated}
         {onAutocompleteChanged}
-        {onLineNumberClicked}
+        {onLineNumberClick}
         {onKeyDown}
         {initialOptions}
         className="database-editor"

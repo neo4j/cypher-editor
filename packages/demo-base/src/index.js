@@ -299,7 +299,7 @@ export const eventTypes = [
   "autocompleteChanged",
   "editorCreated",
   "focusChanged",
-  "lineNumberClicked",
+  "lineNumberClick",
   "keyDown",
   "positionChanged",
   "valueChanged"

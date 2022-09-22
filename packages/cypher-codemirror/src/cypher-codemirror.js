@@ -55,7 +55,7 @@ export const getExtensions = (
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
     themeConf = new Compartment(),
-    onLineNumberClicked = () => {},
+    onLineNumberClick = () => {},
     onFocusChanged = () => {},
     onScrollChanged = () => {},
     onKeyDown = () => {}
@@ -91,7 +91,7 @@ export const getExtensions = (
       getLineNumbersExtensions({
         lineNumbers,
         lineNumberFormatter,
-        onLineNumberClicked
+        onLineNumberClick
       })
     ),
     lineWrappingConf.of(getLineWrappingExtensions({ lineWrapping })),
@@ -169,9 +169,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   } = createEventHandlers();
 
   const {
-    on: onLineNumberClicked,
-    off: offLineNumberClicked,
-    fire: fireLineNumberClicked
+    on: onLineNumberClick,
+    off: offLineNumberClick,
+    fire: fireLineNumberClick
   } = createEventHandlers();
 
   const {
@@ -180,8 +180,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fire: fireKeyDown
   } = createEventHandlers();
 
-  const lineNumberClicked = (line, event) => {
-    fireLineNumberClicked(line, event);
+  const lineNumberClick = (line, event) => {
+    fireLineNumberClick(line, event);
   };
 
   const keyDown = (event) => {
@@ -283,7 +283,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         placeholderConf,
         themeConf,
         postConf,
-        onLineNumberClicked: lineNumberClicked,
+        onLineNumberClick: lineNumberClick,
         onFocusChanged: focusChanged,
         onScrollChanged: scrollChanged,
         onKeyDown: keyDown
@@ -414,7 +414,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         getLineNumbersExtensions({
           lineNumbers,
           lineNumberFormatter,
-          onLineNumberClicked: lineNumberClicked
+          onLineNumberClick: lineNumberClick
         })
       )
     });
@@ -429,7 +429,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         getLineNumbersExtensions({
           lineNumbers,
           lineNumberFormatter,
-          onLineNumberClicked: lineNumberClicked
+          onLineNumberClick: lineNumberClick
         })
       )
     });
@@ -595,8 +595,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offFocusChanged,
     onKeyDown,
     offKeyDown,
-    onLineNumberClicked,
-    offLineNumberClicked,
+    onLineNumberClick,
+    offLineNumberClick,
     onPositioChanged,
     offPositionChanged,
     onScrollChanged,

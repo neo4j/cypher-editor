@@ -40,7 +40,8 @@ import {
   getStateEditorSupport,
   getStateLineCount,
   getStateValue,
-  getStatePositionAbsoluteForLineColumn
+  getStatePositionAbsoluteForLineColumn,
+  getStatePositionForAbsolute
 } from "./cypher-state-selectors";
 
 const typeMarkerTheme = EditorView.baseTheme({
@@ -200,7 +201,7 @@ export const syntaxCSS = [syntaxHighlighting(syntaxStyle)];
 
 export const cypherLineNumbers = ({
   lineNumberFormatter,
-  onLineNumberClicked = () => {}
+  onLineNumberClick = () => {}
 }) => [
   lineNumbersExtension({
     formatNumber: (number, state) =>
@@ -209,7 +210,7 @@ export const cypherLineNumbers = ({
       click(view, lineObject, event) {
         const { line } =
           getStatePositionForAbsolute(view.state, lineObject.from) || {};
-        onLineNumberClicked(line, event);
+        onLineNumberClick(line, event);
         return true;
       }
     }
@@ -281,10 +282,10 @@ export const getThemeExtensions = ({ theme }) =>
 export const getLineNumbersExtensions = ({
   lineNumbers,
   lineNumberFormatter,
-  onLineNumberClicked
+  onLineNumberClick
 }) =>
   lineNumbers
-    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClicked })]
+    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClick })]
     : [];
 
 export const getAutocompleteExtensions = ({
