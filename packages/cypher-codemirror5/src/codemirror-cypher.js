@@ -202,7 +202,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder,
     position,
     theme,
-    updateSyntaxHighlighting,
+    parseOnSetValue,
     value,
     codemirrorOptions
   } = combinedOptions;
@@ -508,9 +508,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   editor.on("endCompletion", onEndCompletion);
 
-  const setValue = (value, updateSyntaxHighlighting = true) => {
+  const setValue = (value, parseOnSetValueParam = parseOnSetValue) => {
     editor.setValue(value);
-    if (updateSyntaxHighlighting !== false) {
+    if (parseOnSetValueParam !== false) {
       const version = editor.newContentVersion();
       editorSupport.update(value, version);
 
@@ -663,7 +663,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editorSupport
   };
 
-  if (updateSyntaxHighlighting !== false) {
+  if (parseOnSetValue !== false) {
     const version = editor.newContentVersion();
     editorSupport.update(value, version);
 

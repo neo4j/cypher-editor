@@ -38,7 +38,7 @@ export const defaultOptions = {
   readOnly: false,
   readOnlyCursor: false,
   theme: THEME_LIGHT,
-  updateSyntaxHighlighting: true,
+  parseOnSetValue: true,
   value: ""
 };
 

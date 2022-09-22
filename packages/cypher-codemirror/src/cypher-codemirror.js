@@ -118,7 +118,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteSchema,
     autofocus,
     position,
-    updateSyntaxHighlighting,
+    parseOnSetValue,
     value,
     preExtensions,
     postExtensions
@@ -377,12 +377,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireValueChanged(value, changes);
   };
 
-  const setValue = (value, updateSyntaxHighlighting = true) => {
+  const setValue = (value, parseOnSetValueParam = parseOnSetValue) => {
     const update = editor.state.update({
       changes: { from: 0, to: getStateLength(editor.state), insert: value }
     });
     editor.update([update]);
-    if (updateSyntaxHighlighting !== false) {
+    if (parseOnSetValueParam !== false) {
       const version = editor.newContentVersion();
       const editorSupport = getStateEditorSupport(editor.state);
       editorSupport.update(value, version);
@@ -610,7 +610,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editorSupport
   };
 
-  if (updateSyntaxHighlighting !== false) {
+  if (parseOnSetValue !== false) {
     const version = editor.newContentVersion();
     editorSupport.update(value, version);
 

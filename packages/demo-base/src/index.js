@@ -176,7 +176,7 @@ export const initialOptions = {
   readOnly: false, // can be one of: true / false / "nocursor"
   readOnlyCursor: false,
   theme: THEME_LIGHT,
-  updateSyntaxHighlighting: true,
+  parseOnSetValue: true,
   value: longQuery
 };
 
