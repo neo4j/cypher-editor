@@ -61,7 +61,7 @@ const tokenBase = (stream) => {
   }
 
   // stream.next();
-  stream.eatWhile(/[_\w\d]/);
+  stream.eatWhile(/[_\p{Letter}\p{Emoji}\d]/u);
 
   return "variable";
 };
@@ -107,6 +107,12 @@ export const cypher = {
       state.context.type !== "pattern"
     ) {
       state.context.align = true;
+    }
+    if (curPunc === "ø") {
+      console.log("here");
+    }
+    if (curPunc === "Z") {
+      console.log("here");
     }
     if (curPunc === "(") {
       pushContext(state, ")", stream.column());
