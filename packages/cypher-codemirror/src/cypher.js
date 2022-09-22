@@ -108,12 +108,6 @@ export const cypher = {
     ) {
       state.context.align = true;
     }
-    if (curPunc === "ø") {
-      console.log("here");
-    }
-    if (curPunc === "Z") {
-      console.log("here");
-    }
     if (curPunc === "(") {
       pushContext(state, ")", stream.column());
     } else if (curPunc === "[") {
