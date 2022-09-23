@@ -44,7 +44,7 @@
   let lint = initialOptions.lint;
   let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
-  let schema = initialOptions.autocompleteSchema;
+  let autocompleteSchema = initialOptions.autocompleteSchema;
   let cypherEditor;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
@@ -55,18 +55,6 @@
   let logs = [];
   let lastScrollInfo;
   let eventFilters = createEventTypeFilterMap(true);
-
-  const lightTheme = () => {
-    logs = logs.concat(commandLog("setTheme", "light"));
-    theme = "light";
-    cypherEditor && cypherEditor.setTheme(theme);
-  };
-
-  const darkTheme = () => {
-    logs = logs.concat(commandLog("setTheme", "dark"));
-    theme = "dark";
-    cypherEditor && cypherEditor.setTheme(theme);
-  };
 
   let promisedResult;
 
@@ -150,18 +138,6 @@
     lastScrollInfo = scrollInfo;
   };
 
-  const showLineNumbers = () => {
-    logs = logs.concat(commandLog("setLineNumbers", true));
-    lineNumbers = true;
-    cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
-  };
-
-  const hideLineNumbers = () => {
-    logs = logs.concat(commandLog("setLineNumbers", false));
-    lineNumbers = false;
-    cypherEditor && cypherEditor.setLineNumbers(lineNumbers);
-  };
-
   $: cypherLength = cypher ? cypher.length : 0;
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
@@ -169,7 +145,6 @@
   $: logText = getLogText(logs, { eventFilters });
 
   let textareaRef;
-
   $: if (logText) autoScrollLog();
 
   async function autoScrollLog() {
@@ -182,175 +157,71 @@
     logs = [];
   };
 
-  const setNoPlaceholder = () => {
-    logs = logs.concat(commandLog("setPlaceholder", undefined));
-    placeholder = undefined;
-    cypherEditor && cypherEditor.setPlaceholder(placeholder);
-  };
+  function appendLog(newEntry) {
+    if (cypherEditor) {
+      return logs.concat(newEntry);
+    }
+    return logs;
+  }
 
   const setSamplePlaceholder = () => {
-    logs = logs.concat(commandLog("setPlaceholder", samplePlaceholder));
     placeholder = samplePlaceholder;
-    cypherEditor && cypherEditor.setPlaceholder(placeholder);
   };
-
-  const showLineWrapping = () => {
-    logs = logs.concat(commandLog("setLineWrapping", true));
-    lineWrapping = true;
-    cypherEditor && cypherEditor.setLineWrapping(lineWrapping);
-  };
-
-  const showNoLineWrapping = () => {
-    logs = logs.concat(commandLog("setLineWrapping", false));
-    lineWrapping = false;
-    cypherEditor && cypherEditor.setLineWrapping(lineWrapping);
-  };
-
-  const makeReadable = () => {
-    logs = logs.concat(commandLog("setReadOnly", false));
-    readOnly = false;
-    cypherEditor && cypherEditor.setReadOnly(readOnly);
-  };
-
-  const makeReadOnly = () => {
-    logs = logs.concat(commandLog("setReadOnly", true));
-    readOnly = true;
-    cypherEditor && cypherEditor.setReadOnly(readOnly);
-  };
-
-  const makeReadOnlyNoCursor = () => {
-    logs = logs.concat(commandLog("setReadOnlyCursor", false));
-    readOnlyCursor = false;
-    cypherEditor && cypherEditor.setReadOnlyCursor(false);
-  };
-
-  const makeReadOnlyCursor = () => {
-    logs = logs.concat(commandLog("setReadOnlyCursor", true));
-    readOnlyCursor = true;
-    cypherEditor && cypherEditor.setReadOnlyCursor(true);
-  };
-
-  const enableAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocomplete", true));
-    autocomplete = true;
-    cypherEditor && cypherEditor.setAutocomplete(true);
-  };
-
-  const disableAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocomplete", false));
-    autocomplete = false;
-    cypherEditor && cypherEditor.setAutocomplete(false);
-  };
-
-  const enableLint = () => {
-    logs = logs.concat(commandLog("setLint", true));
-    lint = true;
-    cypherEditor && cypherEditor.setLint(lint);
-  };
-
-  const disableLint = () => {
-    logs = logs.concat(commandLog("setLint", false));
-    lint = false;
-    cypherEditor && cypherEditor.setLint(lint);
-  };
-
-  const enableHistory = () => {
-    logs = logs.concat(commandLog("setHistory", true));
-    history = true;
-    cypherEditor && cypherEditor.setHistory(true);
-  };
-
-  const disableHistory = () => {
-    logs = logs.concat(commandLog("setHistory", false));
-    history = false;
-    cypherEditor && cypherEditor.setHistory(false);
-  };
-
   const clearHistory = () => {
-    logs = logs.concat(commandLog("clearHistory", ""));
+    logs = appendLog(commandLog("clearHistory", ""));
     cypherEditor && cypherEditor.clearHistory();
   };
+
+  $: logs = appendLog(commandLog("setAutocomplete", autocomplete));
+  $: logs = appendLog(
+    commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
+  );
+  $: logs = appendLog(commandLog("setHistory", history));
+  $: logs = appendLog(commandLog("setLineNumbers", lineNumbers));
+  $: logs = appendLog(commandLog("setLineWrapping", lineWrapping));
+  $: logs = appendLog(commandLog("setLint", lint));
+  $: logs = appendLog(commandLog("setPlaceholder", placeholder));
+  $: logs = appendLog(commandLog("setReadOnly", readOnly));
+  $: logs = appendLog(commandLog("setReadOnlyCursor", readOnlyCursor));
+  $: logs = appendLog(commandLog("setTheme", theme));
+  $: logs = appendLog(commandLog("setValue", cypher.length + " (length)"));
+  $: logs = appendLog(
+    commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
+  );
+  $: logs = appendLog(
+    commandLog("setAutocompleteSchema", deriveSchemaName(autocompleteSchema))
+  );
+  $: logs = appendLog(
+    commandLog(
+      "setLineNumberFormatter",
+      deriveLineNumberFormatterName() + " " + typeof lineNumberFormatter
+    )
+  );
+
+  function deriveSchemaName(checkSchema) {
+    if (checkSchema === simpleSchema) {
+      return "simple";
+    }
+    if (checkSchema === neo4jSchema) {
+      return "long";
+    }
+  }
+
+  function deriveLineNumberFormatterName() {
+    if (lineNumberFormatter === defaultLineNumberFormatter) {
+      return "default";
+    }
+    if (lineNumberFormatter === noneLineNumberFormatter) {
+      return "none";
+    }
+    if (lineNumberFormatter === customLineNumberFormatter) {
+      return "custom";
+    }
+  }
 
   const focusEditor = () => {
     logs = logs.concat(commandLog("focus", ""));
     cypherEditor && cypherEditor.focus();
-  };
-
-  const showDefaultLineNumberFormatter = () => {
-    logs = logs.concat(
-      commandLog(
-        "setLineNumberFormatter",
-        "default " + typeof defaultLineNumberFormatter
-      )
-    );
-    lineNumberFormatter = defaultLineNumberFormatter;
-    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-  };
-
-  const showNoneLineNumberFormatter = () => {
-    logs = logs.concat(
-      commandLog(
-        "setLineNumberFormatter",
-        "none " + typeof noneLineNumberFormatter
-      )
-    );
-    lineNumberFormatter = noneLineNumberFormatter;
-    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-  };
-
-  const showCustomLineNumberFormatter = () => {
-    logs = logs.concat(
-      commandLog(
-        "setLineNumberFormatter",
-        "custom " + typeof customLineNumberFormatter
-      )
-    );
-    lineNumberFormatter = customLineNumberFormatter;
-    cypherEditor && cypherEditor.setLineNumberFormatter(lineNumberFormatter);
-  };
-
-  const showSimpleSchema = () => {
-    logs = logs.concat(commandLog("setAutocompleteSchema", "simple"));
-    schema = simpleSchema;
-    cypherEditor && cypherEditor.setAutocompleteSchema(schema);
-  };
-
-  const showLongSchema = () => {
-    logs = logs.concat(commandLog("setAutocompleteSchema", "long"));
-    schema = neo4jSchema;
-    cypherEditor && cypherEditor.setAutocompleteSchema(schema);
-  };
-
-  const showDefaultAutocompleteTriggerStrings = () => {
-    logs = logs.concat(
-      commandLog(
-        "setAutocompleteTriggerStrings",
-        initialOptions.autocompleteTriggerStrings
-      )
-    );
-    autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
-    cypherEditor &&
-      cypherEditor.setAutocompleteTriggerStrings(
-        initialOptions.autocompleteTriggerStrings
-      );
-  };
-
-  const showNoAutocompleteTriggerStrings = () => {
-    logs = logs.concat(commandLog("setAutocompleteTriggerStrings", false));
-    autocompleteTriggerStrings = false;
-    cypherEditor && cypherEditor.setAutocompleteTriggerStrings(false);
-  };
-
-  const showStickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", false));
-    autocompleteCloseOnBlur = false;
-    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(false);
-  };
-
-  const showUnstickyAutocomplete = () => {
-    logs = logs.concat(commandLog("setAutocompleteCloseOnBlur", true));
-    autocompleteCloseOnBlur = true;
-    cypherEditor && cypherEditor.setAutocompleteCloseOnBlur(true);
   };
 
   const goToPosition = (position) => {
@@ -416,19 +287,18 @@
 
   const showLongValue = () => {
     if (cypherEditor) {
-      logs = logs.concat(commandLog("setValue", longQuery.length + " (long)"));
-      cypherEditor.setValue(longQuery);
       updateValue(longQuery);
     }
   };
 
   const showSimpleValue = () => {
     if (cypherEditor) {
-      logs = logs.concat(
-        commandLog("setValue", simpleQuery.length + " (simple)")
-      );
-      cypherEditor.setValue(simpleQuery);
       updateValue(simpleQuery);
+    }
+  };
+  const clearCypher = () => {
+    if (cypherEditor) {
+      updateValue("");
     }
   };
 </script>
@@ -440,11 +310,11 @@
       <div class="setting-values">
         <button
           class={theme === "light" ? "setting-active" : undefined}
-          on:click={lightTheme}>Light</button
+          on:click={() => (theme = "light")}>Light</button
         >
         <button
           class={theme === "dark" ? "setting-active" : undefined}
-          on:click={darkTheme}>Dark</button
+          on:click={() => (theme = "dark")}>Dark</button
         >
       </div>
     </div>
@@ -454,7 +324,7 @@
       <div class="setting-values">
         <button
           class={placeholder === undefined ? "setting-active" : undefined}
-          on:click={setNoPlaceholder}>None</button
+          on:click={() => (placeholder = undefined)}>None</button
         >
         <button
           class={placeholder === samplePlaceholder
@@ -465,16 +335,20 @@
       </div>
     </div>
 
-    <div class="setting setting-short">
+    <div class="setting setting-short autocompleteSchema">
       <div class="setting-label">Schema</div>
       <div class="setting-values">
         <button
-          class={schema === simpleSchema ? "setting-active" : undefined}
-          on:click={showSimpleSchema}>Simple</button
+          class={autocompleteSchema === simpleSchema
+            ? "setting-active"
+            : undefined}
+          on:click={() => (autocompleteSchema = simpleSchema)}>Simple</button
         >
         <button
-          class={schema === neo4jSchema ? "setting-active" : undefined}
-          on:click={showLongSchema}>Long</button
+          class={autocompleteSchema === neo4jSchema
+            ? "setting-active"
+            : undefined}
+          on:click={() => (autocompleteSchema = neo4jSchema)}>Long</button
         >
       </div>
     </div>
@@ -484,11 +358,11 @@
       <div class="setting-values">
         <button
           class={lint === true ? "setting-active" : undefined}
-          on:click={enableLint}>True</button
+          on:click={() => (lint = true)}>True</button
         >
         <button
           class={lint === false ? "setting-active" : undefined}
-          on:click={disableLint}>False</button
+          on:click={() => (lint = false)}>False</button
         >
       </div>
     </div>
@@ -498,11 +372,11 @@
       <div class="setting-values">
         <button
           class={lineNumbers === true ? "setting-active" : undefined}
-          on:click={showLineNumbers}>True</button
+          on:click={() => (lineNumbers = true)}>True</button
         >
         <button
           class={lineNumbers === false ? "setting-active" : undefined}
-          on:click={hideLineNumbers}>False</button
+          on:click={() => (lineNumbers = false)}>False</button
         >
       </div>
     </div>
@@ -512,11 +386,11 @@
       <div class="setting-values">
         <button
           class={lineWrapping === false ? "setting-active" : undefined}
-          on:click={showNoLineWrapping}>False</button
+          on:click={() => (lineWrapping = false)}>False</button
         >
         <button
           class={lineWrapping === true ? "setting-active" : undefined}
-          on:click={showLineWrapping}>True</button
+          on:click={() => (lineWrapping = true)}>True</button
         >
       </div>
     </div>
@@ -528,19 +402,22 @@
           class={lineNumberFormatter === defaultLineNumberFormatter
             ? "setting-active"
             : undefined}
-          on:click={showDefaultLineNumberFormatter}>Default</button
+          on:click={() => (lineNumberFormatter = defaultLineNumberFormatter)}
+          >Default</button
         >
         <button
           class={lineNumberFormatter === noneLineNumberFormatter
             ? "setting-active"
             : undefined}
-          on:click={showNoneLineNumberFormatter}>None</button
+          on:click={() => (lineNumberFormatter = noneLineNumberFormatter)}
+          >None</button
         >
         <button
           class={lineNumberFormatter === customLineNumberFormatter
             ? "setting-active"
             : undefined}
-          on:click={showCustomLineNumberFormatter}>Custom</button
+          on:click={() => (lineNumberFormatter = customLineNumberFormatter)}
+          >Custom</button
         >
       </div>
     </div>
@@ -550,11 +427,11 @@
       <div class="setting-values">
         <button
           class={readOnly === false ? "setting-active" : undefined}
-          on:click={makeReadable}>False</button
+          on:click={() => (readOnly = false)}>False</button
         >
         <button
           class={readOnly === true ? "setting-active" : undefined}
-          on:click={makeReadOnly}>True</button
+          on:click={() => (readOnly = true)}>True</button
         >
       </div>
     </div>
@@ -565,12 +442,12 @@
         <button
           disabled={!readOnly}
           class={readOnlyCursor === false ? "setting-active" : undefined}
-          on:click={makeReadOnlyNoCursor}>False</button
+          on:click={() => (readOnlyCursor = false)}>False</button
         >
         <button
           disabled={!readOnly}
           class={readOnlyCursor === true ? "setting-active" : undefined}
-          on:click={makeReadOnlyCursor}>True</button
+          on:click={() => (readOnlyCursor = true)}>True</button
         >
       </div>
     </div>
@@ -580,11 +457,11 @@
       <div class="setting-values">
         <button
           class={autocomplete === true ? "setting-active" : undefined}
-          on:click={enableAutocomplete}>True</button
+          on:click={() => (autocomplete = true)}>True</button
         >
         <button
           class={autocomplete === false ? "setting-active" : undefined}
-          on:click={disableAutocomplete}>False</button
+          on:click={() => (autocomplete = false)}>False</button
         >
       </div>
     </div>
@@ -597,13 +474,15 @@
           initialOptions.autocompleteTriggerStrings
             ? "setting-active"
             : undefined}
-          on:click={showDefaultAutocompleteTriggerStrings}>Default</button
+          on:click={() =>
+            (autocompleteTriggerStrings =
+              initialOptions.autocompleteTriggerStrings)}>Default</button
         >
         <button
           class={autocompleteTriggerStrings === false
             ? "setting-active"
             : undefined}
-          on:click={showNoAutocompleteTriggerStrings}>False</button
+          on:click={() => (autocompleteTriggerStrings = false)}>False</button
         >
       </div>
     </div>
@@ -615,14 +494,14 @@
           class={autocompleteCloseOnBlur === false
             ? "setting-active"
             : undefined}
-          on:click={showStickyAutocomplete}>False</button
+          on:click={() => (autocompleteCloseOnBlur = false)}>False</button
         >
         <button
           class={autocompleteCloseOnBlur === true ||
           autocompleteCloseOnBlur === undefined
             ? "setting-active"
             : undefined}
-          on:click={showUnstickyAutocomplete}>True</button
+          on:click={() => (autocompleteCloseOnBlur = true)}>True</button
         >
       </div>
     </div>
@@ -632,11 +511,11 @@
       <div class="setting-values">
         <button
           class={history ? "setting-active" : undefined}
-          on:click={enableHistory}>True</button
+          on:click={() => (history = true)}>True</button
         >
         <button
           class={!history ? "setting-active" : undefined}
-          on:click={disableHistory}>False</button
+          on:click={() => (history = false)}>False</button
         >
         <button on:click={clearHistory}>Clear</button>
       </div>
@@ -692,7 +571,7 @@
       </div>
     </div>
 
-    <div class="setting">
+    <div class="setting cypher">
       <div class="setting-label">Value</div>
       <div class="setting-values">
         <button
@@ -702,6 +581,10 @@
         <button
           class={cypher === simpleQuery ? "setting-active" : undefined}
           on:click={showSimpleValue}>Simple</button
+        >
+        <button
+          class={cypher === "" ? "setting-active" : undefined}
+          on:click={clearCypher}>Clear</button
         >
       </div>
     </div>
@@ -721,7 +604,20 @@
         {onAutocompleteChanged}
         {onLineNumberClick}
         {onKeyDown}
-        {initialOptions}
+        {autocomplete}
+        {autocompleteCloseOnBlur}
+        {autocompleteSchema}
+        {lineNumbers}
+        {placeholder}
+        {lineWrapping}
+        {readOnly}
+        {readOnlyCursor}
+        {lint}
+        {history}
+        {theme}
+        {autocompleteTriggerStrings}
+        {lineNumberFormatter}
+        bind:value={cypher}
         className="database-editor"
       />
     </div>
