@@ -66,7 +66,7 @@
   let isFocused = false;
   let cypherEditorRef;
   let cypherEditor;
-  let prevValue = value;
+  let innerValue = value;
 
   $: editorClassName =
     (className ? className + " " : "") +
@@ -79,7 +79,7 @@
     const key = Object.keys(prop).pop();
 
     // Call setValue only if the change comes from the outside
-    if (key === "value" && prevValue === value) {
+    if (key === "value" && innerValue === value) {
       return;
     }
 
@@ -90,7 +90,8 @@
   }
 
   const valueChanged = (newValue, changes) => {
-    prevValue = newValue;
+    innerValue = newValue;
+    value = newValue;
     onValueChanged && onValueChanged(newValue, changes);
   };
 
