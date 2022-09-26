@@ -10,40 +10,98 @@
   import "codemirror/addon/lint/lint.css";
   import "cypher-codemirror5/css/cypher-codemirror.css";
   import { createCypherEditor } from "cypher-codemirror5";
+  import { defaultOptions } from "cypher-codemirror-base";
 
-  export let initialOptions = undefined;
+  export let autocomplete: boolean = defaultOptions.autocomplete;
+  $: updateOption({ autocomplete });
+
+  export let autocompleteCloseOnBlur: boolean =
+    defaultOptions.autocompleteCloseOnBlur;
+  $: updateOption({ autocompleteCloseOnBlur });
+
+  export let autocompleteSchema = defaultOptions.autocompleteSchema;
+  $: updateOption({ autocompleteSchema });
+
+  export let autocompleteTriggerStrings: string[] =
+    defaultOptions.autocompleteTriggerStrings;
+  $: updateOption({ autocompleteTriggerStrings });
+
+  export let history: boolean = defaultOptions.history;
+  $: updateOption({ history });
+
+  export let lineNumberFormatter: (line: string, lineNumber: number) => string =
+    defaultOptions.lineNumberFormatter;
+  $: updateOption({ lineNumberFormatter });
+
+  export let lineNumbers: boolean = defaultOptions.lineNumbers;
+  $: updateOption({ lineNumbers });
+
+  export let lineWrapping: boolean = defaultOptions.lineWrapping;
+  $: updateOption({ lineWrapping });
+
+  export let lint: boolean = defaultOptions.lint;
+  $: updateOption({ lint });
+
+  export let placeholder: string = defaultOptions.placeholder;
+  $: updateOption({ placeholder });
+
+  export let readOnly: boolean = defaultOptions.readOnly;
+  $: updateOption({ readOnly });
+
+  export let readOnlyCursor: boolean = defaultOptions.readOnlyCursor;
+  $: updateOption({ readOnlyCursor });
+
+  export let theme = defaultOptions.theme;
+  $: updateOption({ theme });
+
+  export let value: string = "";
+  $: updateOption({ value });
+
+  export let className: string = undefined;
+  export let focusedClassName: string = undefined;
+  export let autofocus: boolean | undefined = undefined;
+  export let parseOnSetValue: boolean | undefined = true;
 
   export let onValueChanged = undefined;
-
   export let onFocusChanged = undefined;
-
   export let onScrollChanged = undefined;
-
   export let onPositionChanged = undefined;
-
-  export let className = undefined;
-
-  export let focusedClassName = undefined;
-
   export let onEditorCreated = undefined;
-
   export let onAutocompleteChanged = undefined;
-
   export let onLineNumberClick = undefined;
-
   export let onKeyDown = undefined;
 
   let isFocused = false;
 
   let cypherEditorRef;
   let cypherEditor;
+  let prevValue = value;
 
   $: editorClassName =
     (className ? className + " " : "") +
     (isFocused && focusedClassName ? focusedClassName : "");
 
+  function updateOption(prop) {
+    if (!cypherEditor) {
+      return;
+    }
+    const key = Object.keys(prop).pop();
+
+    // Call setValue only if the change comes from the outside
+    if (key === "value" && prevValue === value) {
+      return;
+    }
+
+    const methodName = "set" + key[0].toUpperCase() + key.slice(1);
+    if (cypherEditor[methodName]) {
+      cypherEditor[methodName](prop[key]);
+    }
+  }
+
   const valueChanged = (doc: { getValue: () => string }, change: any) => {
-    onValueChanged && onValueChanged(doc.getValue(), change);
+    const newValue = doc.getValue();
+    prevValue = newValue;
+    onValueChanged && onValueChanged(newValue, change);
   };
 
   const focusChanged = (focused) => {
@@ -73,7 +131,24 @@
   };
 
   onMount(() => {
-    const { editor } = createCypherEditor(cypherEditorRef, initialOptions);
+    const { editor } = createCypherEditor(cypherEditorRef, {
+      autocomplete,
+      autocompleteCloseOnBlur,
+      autocompleteSchema,
+      autocompleteTriggerStrings,
+      autofocus,
+      history,
+      lineNumberFormatter,
+      lineNumbers,
+      lineWrapping,
+      lint,
+      placeholder,
+      readOnly,
+      readOnlyCursor,
+      theme,
+      parseOnSetValue,
+      value
+    });
     cypherEditor = editor;
     cypherEditor.onValueChanged(valueChanged);
     cypherEditor.onFocusChanged(focusChanged);

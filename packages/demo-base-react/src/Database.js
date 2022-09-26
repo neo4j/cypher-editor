@@ -467,6 +467,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     }
   };
 
+  const clearValue = () => {
+    if (editor) {
+      addCommandLog("setValue", "(clear)");
+      editor && editor.setValue("");
+      updateValue("");
+    }
+  };
+
   let content = "";
   if (loading) {
     content = <p>...waiting</p>;
@@ -521,7 +529,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting setting-short">
+        <div className="setting setting-short autocompleteSchema">
           <div className="setting-label">Schema</div>
           <div className="setting-values">
             <button
@@ -816,7 +824,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting">
+        <div className="setting cypher">
           <div className="setting-label">Value</div>
           <div className="setting-values">
             <button
@@ -830,6 +838,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               onClick={showSimpleValue}
             >
               Simple
+            </button>
+            <button
+              className={cypher === "" ? "setting-active" : undefined}
+              onClick={clearValue}
+            >
+              Clear
             </button>
           </div>
         </div>

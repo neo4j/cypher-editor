@@ -104,7 +104,7 @@ export const simpleSchema = {
 };
 
 export const neo4jSchema = {
-  consoleCommands,
+  consoleCommands: consoleCommands.concat({ name: ":long" }),
   labels: [
     ":Spacey mc spaceface",
     ":Legislator",

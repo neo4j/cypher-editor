@@ -14,6 +14,18 @@ function getLogElement(page) {
 function getEditor(page) {
   return page.locator(".database-editor");
 }
+async function getEditorContents(page) {
+  const cm6Locator = page.locator(".cm-content");
+  if ((await cm6Locator.count()) > 0) {
+    return await cm6Locator.textContent();
+  }
+  const cm5Content = await page
+    .locator(".CodeMirror-code .CodeMirror-line")
+    .allTextContents();
+  const cm5String = cm5Content.join("\n");
+  // Annoyingly it has a "zero width space" if empty, let's drop them
+  return cm5String.replace(/\u200B/g, "");
+}
 function sleep(ms) {
   return new Promise((res) => setTimeout(res, ms));
 }
@@ -31,6 +43,7 @@ test.describe("Commands and Editor events", () => {
   test("Focus events", async ({ page }) => {
     // Setup
     await getEditor(page).click();
+    let lastEntries = [];
 
     // Blur
     const title = page.locator("text=/Cypher Codemirror/i");
@@ -42,10 +55,62 @@ test.describe("Commands and Editor events", () => {
     // This triggers two event, one for the focus and one for the cursor position
     await getEditor(page).click();
     await sleep(1000);
-    const lastEntries = [
-      await getLogEntry(page, -1),
-      await getLogEntry(page, -2)
-    ];
+    lastEntries = [await getLogEntry(page, -1), await getLogEntry(page, -2)];
     expect(lastEntries).toContain("event focusChanged true");
+  });
+  test("Change schema", async ({ page }) => {
+    // Setup
+    let lastEntries = [];
+    const clearCypherBtn = page.locator(".cypher >> text=/clear/i");
+    const simpleButton = page.locator(".autocompleteSchema >> text=/simple/i");
+    const longButton = page.locator(".autocompleteSchema >> text=/long/i");
+
+    // Empty getEditor
+    await clearCypherBtn.click();
+    expect(await getEditorContents(page)).toBe("");
+
+    // Click simple schema
+    await simpleButton.click();
+    await sleep(1000);
+    expect(await getLogEntry(page, -1)).toEqual(
+      'command setAutocompleteSchema "simple"'
+    );
+
+    // Check log for autocomplete items in consoleCommand
+    await getEditor(page).click();
+    await getEditor(page).type(":", { delay: 100 });
+    await sleep(1000);
+    lastEntries = [
+      await getLogEntry(page, -1),
+      await getLogEntry(page, -2),
+      await getLogEntry(page, -3)
+    ];
+    expect(lastEntries).toContain(
+      'event autocompleteChanged {"open":true,"from":0,"options":{"consoleCommand":7}}'
+    );
+
+    // Click long schema
+    await longButton.click();
+    await sleep(1000);
+    lastEntries = [
+      await getLogEntry(page, -1),
+      await getLogEntry(page, -2),
+      await getLogEntry(page, -3)
+    ];
+    expect(lastEntries).toContain('command setAutocompleteSchema "long"');
+
+    // Check log for autocomplete items in consoleCommand
+    await getEditor(page).click();
+    await getEditor(page).press("Backspace");
+    await getEditor(page).type(":", { delay: 100 });
+    await sleep(1000);
+    lastEntries = [
+      await getLogEntry(page, -1),
+      await getLogEntry(page, -2),
+      await getLogEntry(page, -3)
+    ];
+    expect(lastEntries).toContain(
+      'event autocompleteChanged {"open":true,"from":0,"options":{"consoleCommand":8}}'
+    );
   });
 });
