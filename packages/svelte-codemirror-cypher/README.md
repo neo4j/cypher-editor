@@ -2,29 +2,96 @@
 
 This package exports a Svelte component that provides a cypher editor using codemirror 6.
 
-You can use this package like the following:
+You can use this package like the following full app example:
 
 ```
-<script lang="js">
+<script lang="ts">
+  import { onMount, onDestroy } from "svelte";
+  import { CypherEditor } from "svelte-codemirror-cypher";
+  import neo4j from "neo4j-driver";
 
-import CypherEditor from 'svelte-codemirror-cypher';
+  let cypher = "MATCH (n) RETURN count(n)";
+  let viewState: "loading" | "idle" | "executing" = "loading";
+  let autocompleteSchema = {};
+  let driver;
+  let response;
 
-const editorProps = {
-  onValueChanged: value => {}, // optional
-  onFocusChanged: focused => {}, // optional
-  onScrollChanged: scrollInfo => {}, // optional
-  onPositionChanged: ({ line, column, position }) => {}, // optional
-  initialOptions: {
-    theme: 'light', // optional, defaults to light
-    extensions: [ /* override extensions  */ ] // optional, defaults to a sensible list of extensions.
-  },
-  initialSchema: { /* ... */ }, // optional, see example in demos
-  initialValue: 'this is the text to show in the editor',
-  initialPosition: { row: 2, column: 3},  // optional, rows are 1 based, columns are 0 based
-  classNames: [], // optional, array of classnames to add to the root dom element.
-  theme: 'light' // optional, should be light or dark, defaults to light
-};
+  onMount(async () => {
+    driver = neo4j.driver(
+      "neo4j://localhost:7687",
+      neo4j.auth.basic("neo4j", "password")
+    );
+    await driver.verifyConnectivity();
+    viewState = "idle";
+  });
+  onDestroy(() => {
+    driver.close();
+  });
+
+  function execute() {
+    return new Promise(async (resolve, reject) => {
+      viewState = "executing";
+      const session = driver.session();
+      try {
+        const res = await session.run(cypher.trim());
+        resolve(res);
+        cypher = "";
+      } catch (e) {
+        console.log(`Query "${cypher}" failed`, e);
+        reject(e);
+      }
+      session.close();
+      viewState = "idle";
+    });
+  }
+
+  function keyDown({ key, metaKey, ctrlKey }) {
+    if (viewState !== "idle") {
+      return;
+    }
+    if (cypher && key === "Enter" && (metaKey || ctrlKey)) {
+      response = execute();
+    }
+  }
 </script>
 
-<CypherEditor {...editorProps} />
+<div class="container">
+  <CypherEditor
+    bind:value={cypher}
+    readOnly={viewState === "executing"}
+    onKeyDown={keyDown}
+    {autocompleteSchema}
+    theme="dark"
+  />
+  {#if viewState !== "loading" && response}
+    <div class="response">
+      {#await response then res}
+        {JSON.stringify(res.records, null, 2)}
+      {:catch e}
+        {e}
+      {/await}
+    </div>
+  {/if}
+</div>
+
+<style>
+  .container {
+    margin: 0 auto;
+    width: 600px;
+    padding: 16px;
+  }
+  .response {
+    margin-top: 8px;
+    white-space: pre;
+    font-family: monospace;
+    font-size: 12px;
+    height: 400px;
+    background-color: #eee;
+    overflow: auto;
+  }
+  :global(.cm-editor) {
+    height: 200px;
+  }
+</style>
+
 ```
