@@ -27,7 +27,12 @@ import {
   defaultOptions as baseDefaultOptions
 } from "cypher-codemirror-base";
 
-export { THEME_LIGHT, THEME_DARK, defaultAutocompleteTriggerStrings, defaultLineNumberFormatter };
+export {
+  THEME_LIGHT,
+  THEME_DARK,
+  defaultAutocompleteTriggerStrings,
+  defaultLineNumberFormatter
+};
 
 export { neo4jSchema, simpleSchema } from "./schema-data";
 import { simpleSchema } from "./schema-data";
