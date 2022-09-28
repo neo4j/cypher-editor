@@ -113,4 +113,32 @@ test.describe("Commands and Editor events", () => {
       'event autocompleteChanged {"open":true,"from":0,"options":{"consoleCommand":8}}'
     );
   });
+
+  test("External value updates from (button click)", async ({ page }) => {
+    // Setup
+    const clearCypherBtn = page.locator(".cypher >> text=/clear/i");
+
+    // Clear from outside
+    await clearCypherBtn.click();
+
+    const lastEntries = [
+      await getLogEntry(page, -1),
+      await getLogEntry(page, -2),
+      await getLogEntry(page, -3),
+      await getLogEntry(page, -4)
+    ];
+
+    // Check command side
+    const commandReqs = [
+      'event bind:value "0 (length)"', // svelte binding
+      'command setValue "(clear)"' // react imperative
+    ];
+    const commandHits = lastEntries.filter((entry) =>
+      commandReqs.includes(entry)
+    );
+    expect(commandHits.length).toBeGreaterThan(0);
+
+    // Check event side
+    expect(lastEntries).toContain("event valueChanged 0");
+  });
 });
