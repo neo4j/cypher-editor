@@ -54,10 +54,12 @@
   export let value: string = "";
   $: updateOption({ value });
 
-  export let className: string | undefined = undefined;
-  export let focusedClassName: string | undefined = undefined;
-  export let autofocus: boolean = defaultOptions.autofocus;
-  export let parseOnSetValue: boolean = defaultOptions.parseOnSetValue;
+  export let className: string | undefined = "";
+  export let focusedClassName: string | undefined = "";
+  export let autofocus: typeof defaultOptions.autofocus =
+    defaultOptions.autofocus;
+  export let parseOnSetValue: typeof defaultOptions.parseOnSetValue =
+    defaultOptions.parseOnSetValue;
 
   export let onValueChanged = undefined;
   export let onFocusChanged = undefined;

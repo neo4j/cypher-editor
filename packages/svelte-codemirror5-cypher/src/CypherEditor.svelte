@@ -12,55 +12,64 @@
   import { createCypherEditor } from "cypher-codemirror5";
   import { defaultOptions } from "cypher-codemirror-base";
 
-  export let autocomplete: boolean = defaultOptions.autocomplete;
+  export let autocomplete: typeof defaultOptions.autocomplete =
+    defaultOptions.autocomplete;
   $: updateOption({ autocomplete });
 
-  export let autocompleteCloseOnBlur: boolean =
+  export let autocompleteCloseOnBlur: typeof defaultOptions.autocompleteCloseOnBlur =
     defaultOptions.autocompleteCloseOnBlur;
   $: updateOption({ autocompleteCloseOnBlur });
 
-  export let autocompleteSchema = defaultOptions.autocompleteSchema;
+  export let autocompleteSchema: typeof defaultOptions.autocompleteSchema =
+    defaultOptions.autocompleteSchema;
   $: updateOption({ autocompleteSchema });
 
-  export let autocompleteTriggerStrings: string[] =
+  export let autocompleteTriggerStrings: typeof defaultOptions.autocompleteTriggerStrings =
     defaultOptions.autocompleteTriggerStrings;
   $: updateOption({ autocompleteTriggerStrings });
 
-  export let history: boolean = defaultOptions.history;
+  export let history: typeof defaultOptions.history = defaultOptions.history;
   $: updateOption({ history });
 
-  export let lineNumberFormatter: (line: string, lineNumber: number) => string =
+  export let lineNumberFormatter: typeof defaultOptions.lineNumberFormatter =
     defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
 
-  export let lineNumbers: boolean = defaultOptions.lineNumbers;
+  export let lineNumbers: typeof defaultOptions.lineNumbers =
+    defaultOptions.lineNumbers;
   $: updateOption({ lineNumbers });
 
-  export let lineWrapping: boolean = defaultOptions.lineWrapping;
+  export let lineWrapping: typeof defaultOptions.lineWrapping =
+    defaultOptions.lineWrapping;
   $: updateOption({ lineWrapping });
 
-  export let lint: boolean = defaultOptions.lint;
+  export let lint: typeof defaultOptions.lint = defaultOptions.lint;
   $: updateOption({ lint });
 
-  export let placeholder: string = defaultOptions.placeholder;
+  export let placeholder: typeof defaultOptions.placeholder =
+    defaultOptions.placeholder;
   $: updateOption({ placeholder });
 
-  export let readOnly: boolean = defaultOptions.readOnly;
+  export let readOnly: typeof defaultOptions.readOnly = defaultOptions.readOnly;
   $: updateOption({ readOnly });
 
-  export let readOnlyCursor: boolean = defaultOptions.readOnlyCursor;
+  export let readOnlyCursor: typeof defaultOptions.readOnlyCursor =
+    defaultOptions.readOnlyCursor;
   $: updateOption({ readOnlyCursor });
 
-  export let theme = defaultOptions.theme;
+  export let theme: typeof defaultOptions.theme = defaultOptions.theme;
   $: updateOption({ theme });
 
   export let value: string = "";
   $: updateOption({ value });
 
-  export let className: string = undefined;
-  export let focusedClassName: string = undefined;
-  export let autofocus: boolean | undefined = undefined;
-  export let parseOnSetValue: boolean | undefined = true;
+  export let className: string = "";
+  export let focusedClassName: string = "";
+  export let autofocus: typeof defaultOptions.autofocus | undefined =
+    defaultOptions.autofocus;
+  export let parseOnSetValue:
+    | typeof defaultOptions.parseOnSetValue
+    | undefined = defaultOptions.parseOnSetValue;
 
   export let onValueChanged = undefined;
   export let onFocusChanged = undefined;
