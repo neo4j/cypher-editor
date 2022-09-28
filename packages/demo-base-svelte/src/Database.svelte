@@ -172,6 +172,8 @@
     cypherEditor && cypherEditor.clearHistory();
   };
 
+  $: logs = appendLog(eventLog("bind:value", cypher.length + " (length)"));
+
   $: logs = appendLog(commandLog("setAutocomplete", autocomplete));
   $: logs = appendLog(
     commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
@@ -184,7 +186,6 @@
   $: logs = appendLog(commandLog("setReadOnly", readOnly));
   $: logs = appendLog(commandLog("setReadOnlyCursor", readOnlyCursor));
   $: logs = appendLog(commandLog("setTheme", theme));
-  $: logs = appendLog(commandLog("setValue", cypher.length + " (length)"));
   $: logs = appendLog(
     commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
   );
