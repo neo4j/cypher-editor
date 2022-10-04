@@ -11,6 +11,7 @@
   "author": "Neo Technology Inc.",
   "license": "GPL-3.0",
   "svelte": "src/index.js",
+  "types": "src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
