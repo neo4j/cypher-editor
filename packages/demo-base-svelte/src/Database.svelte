@@ -296,7 +296,9 @@
 
   const showSimpleValue = () => {
     if (cypherEditor) {
-      logs = appendLog(commandLog("setValue", simpleQuery.length + " (simple)"));
+      logs = appendLog(
+        commandLog("setValue", simpleQuery.length + " (simple)")
+      );
       updateValue(simpleQuery);
     }
   };
