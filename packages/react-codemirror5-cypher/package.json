@@ -8,7 +8,7 @@
     "codemirror 5"
   ],
   "version": "1.0.0",
-  "author": "Neo Technology Inc.",
+  "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/index.js",
   "module": "./es/index.js",
