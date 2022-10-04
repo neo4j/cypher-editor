@@ -307,8 +307,7 @@ export const eventTypes = [
   "lineNumberClick",
   "keyDown",
   "positionChanged",
-  "valueChanged",
-  "bind:value"
+  "valueChanged"
 ];
 
 export const createEventTypeFilterMap = (initialValue = true) => {

@@ -27,27 +27,30 @@
 
   const title = getTitle({ codemirrorVersion, framework, bundler });
 
-  let cypher = initialOptions.value;
-
   const driver = createDriver();
 
-  let theme = initialOptions.theme;
-  let position = initialOptions.position;
-  let focused = true;
-  let lineNumbers = initialOptions.lineNumbers;
-  let readOnly = initialOptions.readOnly;
-  let readOnlyCursor = initialOptions.readOnlyCursor;
   let autocomplete = initialOptions.autocomplete;
-  let placeholder = initialOptions.placeholder;
-  let lineWrapping = initialOptions.lineWrapping;
-  let autocompleteOpen = false;
-  let lint = initialOptions.lint;
+  let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
+  let autocompleteSchema = initialOptions.autocompleteSchema;
+  let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
-  let autocompleteSchema = initialOptions.autocompleteSchema;
+  let lineNumbers = initialOptions.lineNumbers;
+  let lineWrapping = initialOptions.lineWrapping;
+  let lint = initialOptions.lint;
+  let placeholder = initialOptions.placeholder;
+  let position = initialOptions.position;
+  let readOnly = initialOptions.readOnly;
+  let readOnlyCursor = initialOptions.readOnlyCursor;
+  let theme = initialOptions.theme;
+  let cypher = initialOptions.value;
+
+  let autofocus = initialOptions.autofocus;
+  let parseOnSetValue = initialOptions.parseOnSetValue;
+
   let cypherEditor;
-  let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
-  let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
+  let autocompleteOpen = false;
+  let focused = true;
   let positionPosition = "0";
   let positionLine = "1";
   let positionColumn = "1";
@@ -172,8 +175,6 @@
     cypherEditor && cypherEditor.clearHistory();
   };
 
-  $: logs = appendLog(eventLog("bind:value", cypher.length + " (length)"));
-
   $: logs = appendLog(commandLog("setAutocomplete", autocomplete));
   $: logs = appendLog(
     commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
@@ -288,17 +289,20 @@
 
   const showLongValue = () => {
     if (cypherEditor) {
+      logs = appendLog(commandLog("setValue", longQuery.length + " (long)"));
       updateValue(longQuery);
     }
   };
 
   const showSimpleValue = () => {
     if (cypherEditor) {
+      logs = appendLog(commandLog("setValue", simpleQuery.length + " (simple)"));
       updateValue(simpleQuery);
     }
   };
   const clearCypher = () => {
     if (cypherEditor) {
+      logs = appendLog(commandLog("setValue", "0 (clear)"));
       updateValue("");
     }
   };
@@ -608,17 +612,19 @@
         {autocomplete}
         {autocompleteCloseOnBlur}
         {autocompleteSchema}
+        {autocompleteTriggerStrings}
+        {history}
+        {lineNumberFormatter}
         {lineNumbers}
-        {placeholder}
         {lineWrapping}
+        {lint}
+        {placeholder}
         {readOnly}
         {readOnlyCursor}
-        {lint}
-        {history}
         {theme}
-        {autocompleteTriggerStrings}
-        {lineNumberFormatter}
-        bind:value={cypher}
+        value={cypher}
+        {autofocus}
+        {parseOnSetValue}
         className="database-editor"
       />
     </div>

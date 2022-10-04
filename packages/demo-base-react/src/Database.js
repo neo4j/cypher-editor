@@ -469,7 +469,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   const clearValue = () => {
     if (editor) {
-      addCommandLog("setValue", "(clear)");
+      addCommandLog("setValue", "0 (clear)");
       editor && editor.setValue("");
       updateValue("");
     }

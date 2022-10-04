@@ -129,14 +129,7 @@ test.describe("Commands and Editor events", () => {
     ];
 
     // Check command side
-    const commandReqs = [
-      'event bind:value "0 (length)"', // svelte binding
-      'command setValue "(clear)"' // react imperative
-    ];
-    const commandHits = lastEntries.filter((entry) =>
-      commandReqs.includes(entry)
-    );
-    expect(commandHits.length).toBeGreaterThan(0);
+    expect(lastEntries).toContain('command setValue "0 (clear)"');
 
     // Check event side
     expect(lastEntries).toContain("event valueChanged 0");
