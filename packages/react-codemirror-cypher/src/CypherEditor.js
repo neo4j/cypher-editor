@@ -16,7 +16,7 @@ class CypherEditor extends Component {
 
   valueChanged = (value, changes) => {
     const { onValueChanged } = this.props;
-    onValueChanged && onValueChanged(value);
+    onValueChanged && onValueChanged(value, changes);
   };
 
   focusChanged = (focused) => {
