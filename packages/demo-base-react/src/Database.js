@@ -204,13 +204,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const lightTheme = () => {
     addCommandLog("setTheme", "light");
     setTheme("light");
-    // editor && editor.setTheme("light");
   };
 
   const darkTheme = () => {
     addCommandLog("setTheme", "dark");
     setTheme("dark");
-    // editor && editor.setTheme("dark");
   };
 
   const cypherLength = cypher.length;
@@ -221,97 +219,81 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const showLineNumbers = () => {
     addCommandLog("setLineNumbers", true);
     setLineNumbers(true);
-    // editor && editor.setLineNumbers(true);
   };
 
   const hideLineNumbers = () => {
     addCommandLog("setLineNumbers", false);
     setLineNumbers(false);
-    // editor && editor.setLineNumbers(false);
   };
 
   const setNoPlaceholder = () => {
     addCommandLog("setPlaceholder", undefined);
     setPlaceholder(undefined);
-    // editor && editor.setPlaceholder(undefined);
   };
 
   const setSamplePlaceholder = () => {
     addCommandLog("setPlaceholder", samplePlaceholder);
     setPlaceholder(samplePlaceholder);
-    // editor && editor.setPlaceholder(samplePlaceholder);
   };
 
   const showLineWrapping = () => {
     addCommandLog("setLineWrapping", true);
     setLineWrapping(true);
-    // editor && editor.setLineWrapping(true);
   };
 
   const showNoLineWrapping = () => {
     addCommandLog("setLineWrapping", false);
     setLineWrapping(false);
-    // editor && editor.setLineWrapping(false);
   };
 
   const makeReadable = () => {
     addCommandLog("setReadOnly", false);
     setReadOnly(false);
-    // editor && editor.setReadOnly(false);
   };
 
   const makeReadOnly = () => {
     addCommandLog("setReadOnly", true);
     setReadOnly(true);
-    // editor && editor.setReadOnly(true);
   };
 
   const makeReadOnlyNoCursor = () => {
     addCommandLog("setReadOnlyCursor", false);
     setReadOnlyCursor(false);
-    // editor && editor.setReadOnlyCursor(false);
   };
 
   const makeReadOnlyCursor = () => {
     addCommandLog("setReadOnlyCursor", true);
     setReadOnlyCursor(true);
-    // editor && editor.setReadOnlyCursor(true);
   };
 
   const enableAutocomplete = () => {
     addCommandLog("setAutocomplete", true);
     setAutocomplete(true);
-    // editor && editor.setAutocomplete(true);
   };
 
   const disableAutocomplete = () => {
     addCommandLog("setAutocomplete", false);
     setAutocomplete(false);
-    // editor && editor.setAutocomplete(false);
   };
 
   const enableLint = () => {
     addCommandLog("setLint", true);
     setLint(true);
-    // editor && editor.setLint(true);
   };
 
   const disableLint = () => {
     addCommandLog("setLint", false);
     setLint(false);
-    // editor && editor.setLint(false);
   };
 
   const enableHistory = () => {
     addCommandLog("setHistory", true);
     setHistory(true);
-    // editor && editor.setHistory(true);
   };
 
   const disableHistory = () => {
     addCommandLog("setHistory", false);
     setHistory(false);
-    // editor && editor.setHistory(false);
   };
 
   const clearHistory = () => {
@@ -329,7 +311,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setLineNumberFormatterObject({
       lineNumberFormatter: defaultLineNumberFormatter
     });
-    // editor && editor.setLineNumberFormatter(defaultLineNumberFormatter);
   };
 
   const showNoneLineNumberFormatter = () => {
@@ -337,7 +318,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setLineNumberFormatterObject({
       lineNumberFormatter: noneLineNumberFormatter
     });
-    // editor && editor.setLineNumberFormatter(noneLineNumberFormatter);
   };
 
   const showCustomLineNumberFormatter = () => {
@@ -345,19 +325,16 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setLineNumberFormatterObject({
       lineNumberFormatter: customLineNumberFormatter
     });
-    // editor && editor.setLineNumberFormatter(customLineNumberFormatter);
   };
 
   const showSimpleSchema = () => {
     addCommandLog("setAutocompleteSchema", "simple");
     setAutocompleteSchema(simpleSchema);
-    // editor && editor.setAutocompleteSchema(simpleSchema);
   };
 
   const showLongSchema = () => {
     addCommandLog("setAutocompleteSchema", "long");
     setAutocompleteSchema(neo4jSchema);
-    // editor && editor.setAutocompleteSchema(neo4jSchema);
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
@@ -366,34 +343,26 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
       initialOptions.autocompleteTriggerStrings
     );
     setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
-    // editor &&
-    //   editor.setAutocompleteTriggerStrings(
-    //     initialOptions.autocompleteTriggerStrings
-    //   );
   };
 
   const showNoAutocompleteTriggerStrings = () => {
     addCommandLog("setAutocompleteTriggerStrings", false);
     setAutocompleteTriggerStrings(false);
-    // editor && editor.setAutocompleteTriggerStrings(false);
   };
 
   const showStickyAutocomplete = () => {
     addCommandLog("setAutocompleteCloseOnBlur", false);
     setAutocompleteCloseOnBlur(false);
-    // editor && editor.setAutocompleteCloseOnBlur(false);
   };
 
   const showUnstickyAutocomplete = () => {
     addCommandLog("setAutocompleteCloseOnBlur", true);
     setAutocompleteCloseOnBlur(true);
-    // editor && editor.setAutocompleteCloseOnBlur(true);
   };
 
   const goToPosition = (position) => {
     addCommandLog("setPosition", position);
     setPosition(position);
-    // editor && editor.setPosition(position);
     editor && editor.focus();
   };
 
@@ -461,7 +430,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const showLongValue = () => {
     if (editor) {
       addCommandLog("setValue", longQuery.length + " (long)");
-      // editor && editor.setValue(longQuery);
       updateValue(longQuery);
     }
   };
@@ -469,7 +437,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const showSimpleValue = () => {
     if (editor) {
       addCommandLog("setValue", simpleQuery.length + " (simple)");
-      // editor && editor.setValue(simpleQuery);
       updateValue(simpleQuery);
     }
   };
@@ -477,7 +444,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const clearValue = () => {
     if (editor) {
       addCommandLog("setValue", "0 (clear)");
-      // editor && editor.setValue("");
       updateValue("");
     }
   };
