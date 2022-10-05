@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { onMount, onDestroy } from "svelte";
 
   import "codemirror/addon/lint/lint";
@@ -12,72 +12,59 @@
   import { createCypherEditor } from "cypher-codemirror5";
   import { defaultOptions } from "cypher-codemirror-base";
 
-  export let autocomplete: typeof defaultOptions.autocomplete =
-    defaultOptions.autocomplete;
+  export let autocomplete = defaultOptions.autocomplete;
   $: updateOption({ autocomplete });
 
-  export let autocompleteCloseOnBlur: typeof defaultOptions.autocompleteCloseOnBlur =
-    defaultOptions.autocompleteCloseOnBlur;
+  export let autocompleteCloseOnBlur = defaultOptions.autocompleteCloseOnBlur;
   $: updateOption({ autocompleteCloseOnBlur });
 
-  export let autocompleteOpen: boolean | undefined =
-    defaultOptions.autocompleteOpen;
+  export let autocompleteOpen = defaultOptions.autocompleteOpen;
   $: updateOption({ autocompleteOpen });
 
-  export let autocompleteSchema: typeof defaultOptions.autocompleteSchema =
-    defaultOptions.autocompleteSchema;
+  export let autocompleteSchema = defaultOptions.autocompleteSchema;
   $: updateOption({ autocompleteSchema });
 
-  export let autocompleteTriggerStrings: typeof defaultOptions.autocompleteTriggerStrings =
+  export let autocompleteTriggerStrings =
     defaultOptions.autocompleteTriggerStrings;
   $: updateOption({ autocompleteTriggerStrings });
 
-  export let history: typeof defaultOptions.history = defaultOptions.history;
+  export let history = defaultOptions.history;
   $: updateOption({ history });
 
-  export let lineNumberFormatter: typeof defaultOptions.lineNumberFormatter =
-    defaultOptions.lineNumberFormatter;
+  export let lineNumberFormatter = defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
 
-  export let lineNumbers: typeof defaultOptions.lineNumbers =
-    defaultOptions.lineNumbers;
+  export let lineNumbers = defaultOptions.lineNumbers;
   $: updateOption({ lineNumbers });
 
-  export let lineWrapping: typeof defaultOptions.lineWrapping =
-    defaultOptions.lineWrapping;
+  export let lineWrapping = defaultOptions.lineWrapping;
   $: updateOption({ lineWrapping });
 
-  export let lint: typeof defaultOptions.lint = defaultOptions.lint;
+  export let lint = defaultOptions.lint;
   $: updateOption({ lint });
 
-  export let placeholder: typeof defaultOptions.placeholder =
-    defaultOptions.placeholder;
+  export let placeholder = defaultOptions.placeholder;
   $: updateOption({ placeholder });
 
-  export let position: number | { line: number; column: number } | undefined =
-    defaultOptions.position;
+  export let position = defaultOptions.position;
   $: updateOption({ position });
 
-  export let readOnly: typeof defaultOptions.readOnly = defaultOptions.readOnly;
+  export let readOnly = defaultOptions.readOnly;
   $: updateOption({ readOnly });
 
-  export let readOnlyCursor: typeof defaultOptions.readOnlyCursor =
-    defaultOptions.readOnlyCursor;
+  export let readOnlyCursor = defaultOptions.readOnlyCursor;
   $: updateOption({ readOnlyCursor });
 
-  export let theme: typeof defaultOptions.theme = defaultOptions.theme;
+  export let theme = defaultOptions.theme;
   $: updateOption({ theme });
 
-  export let value: string = "";
+  export let value = "";
   $: updateOption({ value });
 
-  export let className: string = "";
-  export let focusedClassName: string = "";
-  export let autofocus: typeof defaultOptions.autofocus | undefined =
-    defaultOptions.autofocus;
-  export let parseOnSetValue:
-    | typeof defaultOptions.parseOnSetValue
-    | undefined = defaultOptions.parseOnSetValue;
+  export let className = "";
+  export let focusedClassName = "";
+  export let autofocus = defaultOptions.autofocus;
+  export let parseOnSetValue = defaultOptions.parseOnSetValue;
 
   export let onValueChanged = undefined;
   export let onFocusChanged = undefined;
@@ -115,7 +102,7 @@
     }
   }
 
-  const valueChanged = (doc: { getValue: () => string }, change: any) => {
+  const valueChanged = (doc, change) => {
     const newValue = doc.getValue();
     innerValue = newValue;
     value = newValue;
