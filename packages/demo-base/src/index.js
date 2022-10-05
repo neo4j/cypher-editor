@@ -166,8 +166,8 @@ export const samplePlaceholder = "Sample Placeholder";
 export const initialOptions = {
   ...defaultOptions,
   autocomplete: true, // whether to show autocompletion
-  autocompleteOpen: false,
   autocompleteCloseOnBlur: true,
+  autocompleteOpen: false,
   autocompleteSchema: simpleSchema,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
