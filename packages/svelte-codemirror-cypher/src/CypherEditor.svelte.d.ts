@@ -23,6 +23,15 @@ export interface CypherEditorProps {
   autofocus?: boolean;
   parseOnSetValue?: boolean;
 
+  onEditorCreated: (editor: any) => void;
+  onValueChanged: (value: string, changes: any) => void;
+  onFocusChanged: (focused: boolean) => void;
+  onScrollChanged: (scrollInfo: any) => void;
+  onPositionChanged: (position: { line: number; column: number, position: number }) => void;
+  onAutocompleteChanged: (open: boolean, from: number, options: [any]) => void;
+  onLineNumberClick: (lineNumber: number, event: any) => void;
+  onKeyDown: (event: any) => void;
+
   // TODO - add types for pre/post extension props?
 }
 
