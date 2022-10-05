@@ -25,7 +25,7 @@
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "codemirror": "^6.0.1",

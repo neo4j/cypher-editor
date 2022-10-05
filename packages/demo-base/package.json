@@ -28,7 +28,7 @@
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "neo4j-driver": "^4.4.7"
