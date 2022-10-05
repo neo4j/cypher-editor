@@ -215,6 +215,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       if (oldPosition !== newPosition) {
         positionChanged(getStatePosition(v.state));
       }
+      if (deferredAutocomplete) {
+        deferredAutocomplete = false;
+        showAutocomplete();
+      }
     }
     const startStatus = completionStatus(v.startState);
     const endStatus = completionStatus(v.state);
@@ -320,6 +324,18 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
+  let deferredAutocomplete = false;
+
+  const showDeferredAutocomplete = () => {
+    deferredAutocomplete = true;
+    setTimeout(() => {
+      if (deferredAutocomplete) {
+        deferredAutocomplete = false;
+        showAutocomplete();
+      }
+    }, 50);
+  };
+
   const showAutocomplete = () => {
     startCompletion(editor);
   };
@@ -364,11 +380,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       if (changedText.length > 0 && changedText.length <= 2) {
         const text = changedText[0];
         if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          showAutocomplete();
+          showDeferredAutocomplete();
         } else if (changedText.length === 2) {
           const longerText = text + changedText[1];
           if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            showAutocomplete();
+            showDeferredAutocomplete();
           }
         }
       }
