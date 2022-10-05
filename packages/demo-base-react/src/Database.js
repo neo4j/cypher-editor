@@ -29,9 +29,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [results, setResults] = useState(null);
   const [theme, setTheme] = useState(initialOptions.theme);
   const [position, setPosition] = useState(initialOptions.position);
-  const [autocompleteOpen, setAutocompleteOpen] = useState(initialOptions.autocompleteOpen);
+  const [autocompleteOpen, setAutocompleteOpen] = useState(
+    initialOptions.autocompleteOpen
+  );
   const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
-  const [parseOnSetValue, setParseOnSetValue] = useState(initialOptions.parseOnSetValue);
+  const [parseOnSetValue, setParseOnSetValue] = useState(
+    initialOptions.parseOnSetValue
+  );
   const [focused, setFocused] = useState(initialOptions.autofocus);
   const [editor, setEditor] = useState(null);
   const [lineNumbers, setLineNumbers] = useState(initialOptions.lineNumbers);
@@ -39,7 +43,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   let { lineNumberFormatter } = lineNumberFormatterObject;
-  const [autocompleteSchema, setAutocompleteSchema] = useState(initialOptions.autocompleteSchema);
+  const [autocompleteSchema, setAutocompleteSchema] = useState(
+    initialOptions.autocompleteSchema
+  );
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
   const [readOnlyCursor, setReadOnlyCursor] = useState(
     initialOptions.readOnlyCursor
@@ -80,7 +86,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
 
   useEffect(() => {
     ({ lineNumberFormatter } = lineNumberFormatterObject);
-  }, [lineNumberFormatterObject])
+  }, [lineNumberFormatterObject]);
 
   useEffect(() => {
     setLogText(getLogText(logs, { eventFilters }));
@@ -506,13 +512,21 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           <div className="setting-label">Schema</div>
           <div className="setting-values">
             <button
-              className={autocompleteSchema === simpleSchema ? "setting-active" : undefined}
+              className={
+                autocompleteSchema === simpleSchema
+                  ? "setting-active"
+                  : undefined
+              }
               onClick={showSimpleSchema}
             >
               Simple
             </button>
             <button
-              className={autocompleteSchema === neo4jSchema ? "setting-active" : undefined}
+              className={
+                autocompleteSchema === neo4jSchema
+                  ? "setting-active"
+                  : undefined
+              }
               onClick={showLongSchema}
             >
               Long
