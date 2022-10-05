@@ -42,6 +42,27 @@ export const defaultOptions = {
   value: ""
 };
 
+export const reactiveOptionKeys = [
+  "autocomplete",
+  "autocompleteCloseOnBlur",
+  "autocompleteOpen",
+  "autocompleteSchema",
+  "autocompleteTriggerStrings",
+  // "autofocus",
+  "history",
+  "lineNumberFormatter",
+  "lineNumbers",
+  "lineWrapping",
+  "lint",
+  "placeholder",
+  "position",
+  "readOnly",
+  "readOnlyCursor",
+  "theme",
+  // "parseOnSetValue",
+  "value"
+];
+
 export const isNumber = (v) =>
   v !== undefined &&
   (typeof v === "number" || v instanceof Number) &&
