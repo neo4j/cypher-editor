@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { createCypherEditor } from "cypher-codemirror";
+import { reactiveOptionKeys } from "cypher-codemirror-base";
+
 import "cypher-codemirror/css/cypher-codemirror.css";
 
 class CypherEditor extends Component {
@@ -15,6 +17,8 @@ class CypherEditor extends Component {
   };
 
   valueChanged = (value, changes) => {
+    this.innerValue = value;
+    this.value = value;
     const { onValueChanged } = this.props;
     onValueChanged && onValueChanged(value, changes);
   };
@@ -52,8 +56,50 @@ class CypherEditor extends Component {
   };
 
   componentDidMount() {
-    const { initialOptions, onEditorCreated } = this.props;
-    const { editor } = createCypherEditor(this.editorRef, initialOptions);
+    const {
+      autocomplete,
+      autocompleteCloseOnBlur,
+      autocompleteOpen,
+      autocompleteSchema,
+      autocompleteTriggerStrings,
+      autofocus,
+      history,
+      lineNumberFormatter,
+      lineNumbers,
+      lineWrapping,
+      lint,
+      placeholder,
+      position,
+      readOnly,
+      readOnlyCursor,
+      theme,
+      parseOnSetValue,
+      value,
+      onEditorCreated
+    } = this.props;
+
+    this.value = this.innerValue = value;
+
+    const { editor } = createCypherEditor(this.editorRef, {
+      autocomplete,
+      autocompleteCloseOnBlur,
+      autocompleteOpen,
+      autocompleteSchema,
+      autocompleteTriggerStrings,
+      autofocus,
+      history,
+      lineNumberFormatter,
+      lineNumbers,
+      lineWrapping,
+      lint,
+      placeholder,
+      position,
+      readOnly,
+      readOnlyCursor,
+      theme,
+      parseOnSetValue,
+      value
+    });
     this.cypherEditor = editor;
     this.cypherEditor.onValueChanged(this.valueChanged);
     this.cypherEditor.onFocusChanged(this.focusChanged);
@@ -77,6 +123,34 @@ class CypherEditor extends Component {
       this.cypherEditor.offKeyDown(this.keyDown);
 
       this.cypherEditor.destroy();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.value = this.props.value;
+    }
+    for (let key of reactiveOptionKeys) {
+      if (prevProps[key] !== this.props[key]) {
+        this.updateOption({ [key]: this.props[key] });
+      }
+    }
+  }
+
+  updateOption(prop) {
+    if (!this.cypherEditor) {
+      return;
+    }
+    const key = Object.keys(prop).pop();
+
+    // Call setValue only if the change comes from the outside
+    if (key === "value" && this.innerValue === this.value) {
+      return; // TODO - this probably isn't needed for React (only needed for bind:value in Svelte?)
+    }
+
+    const methodName = "set" + key[0].toUpperCase() + key.slice(1);
+    if (this.cypherEditor[methodName]) {
+      this.cypherEditor[methodName](prop[key]);
     }
   }
 
