@@ -28,10 +28,10 @@
     "node": ">=14"
   },
   "dependencies": {
+    "codemirror": "^5.65.7",
     "cypher-codemirror5": "*"
   },
   "peerDependencies": {
-    "codemirror": "^5.65.7",
     "svelte": "^3.49.0"
   },
   "devDependencies": {}
