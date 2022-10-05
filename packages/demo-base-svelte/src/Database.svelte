@@ -226,9 +226,9 @@
     cypherEditor && cypherEditor.focus();
   };
 
-  const goToPosition = (position) => {
-    logs = logs.concat(commandLog("setPosition", position));
-    cypherEditor && cypherEditor.setPosition(position);
+  const goToPosition = (newPosition) => {
+    logs = logs.concat(commandLog("setPosition", newPosition));
+    position = newPosition;
     cypherEditor && cypherEditor.focus();
   };
 

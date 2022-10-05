@@ -20,6 +20,10 @@
     defaultOptions.autocompleteCloseOnBlur;
   $: updateOption({ autocompleteCloseOnBlur });
 
+  export let autocompleteOpen: boolean | undefined =
+    defaultOptions.autocompleteOpen;
+  $: updateOption({ autocompleteOpen });
+
   export let autocompleteSchema: typeof defaultOptions.autocompleteSchema =
     defaultOptions.autocompleteSchema;
   $: updateOption({ autocompleteSchema });
@@ -49,6 +53,10 @@
   export let placeholder: typeof defaultOptions.placeholder =
     defaultOptions.placeholder;
   $: updateOption({ placeholder });
+
+  export let position: number | { line: number; column: number } | undefined =
+    defaultOptions.position;
+  $: updateOption({ position });
 
   export let readOnly: typeof defaultOptions.readOnly = defaultOptions.readOnly;
   $: updateOption({ readOnly });
@@ -144,6 +152,7 @@
     const { editor } = createCypherEditor(cypherEditorRef, {
       autocomplete,
       autocompleteCloseOnBlur,
+      autocompleteOpen,
       autocompleteSchema,
       autocompleteTriggerStrings,
       autofocus,
@@ -153,6 +162,7 @@
       lineWrapping,
       lint,
       placeholder,
+      position,
       readOnly,
       readOnlyCursor,
       theme,
