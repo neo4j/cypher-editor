@@ -45,11 +45,13 @@ You can use this package like the following full app example:
     });
   }
 
-  function keyDown({ key, metaKey, ctrlKey }) {
+  function keyDown(event: KeyboardEvent) {
+    const { key, metaKey, ctrlKey } = event;
     if (viewState !== "idle") {
       return;
     }
     if (cypher && key === "Enter" && (metaKey || ctrlKey)) {
+      event.preventDefault();
       response = execute();
     }
   }
