@@ -27,14 +27,14 @@ export interface CypherEditorProps {
   autofocus?: boolean;
   parseOnSetValue?: boolean;
 
-  onEditorCreated: (editor: EditorApi) => void;
-  onValueChanged: (value: string, changes: ChangeSet) => void;
-  onFocusChanged: (focused: boolean) => void;
-  onScrollChanged: (scrollInfo: ScrollInfo) => void;
-  onPositionChanged: (position: PositionObject) => void;
-  onAutocompleteChanged: (open: boolean, from: number, options: AutocompleteOption[]) => void;
-  onLineNumberClick: (lineNumber: number, event: Event) => void;
-  onKeyDown: (event: KeyboardEvent) => void;
+  onEditorCreated?: (editor: EditorApi) => void;
+  onValueChanged?: (value: string, changes: ChangeSet) => void;
+  onFocusChanged?: (focused: boolean) => void;
+  onScrollChanged?: (scrollInfo: ScrollInfo) => void;
+  onPositionChanged?: (position: PositionObject) => void;
+  onAutocompleteChanged?: (open: boolean, from: number, options: AutocompleteOption[]) => void;
+  onLineNumberClick?: (lineNumber: number, event: Event) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
 
   // TODO - add these props
   // preExtensions?: Extension[],
