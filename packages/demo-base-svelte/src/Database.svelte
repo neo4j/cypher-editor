@@ -88,7 +88,7 @@
   const updatePickGoButtons = () => {
     selectAutocompleteOptionEnabled =
       isNumberString(autocompleteOptionIndex) &&
-      autocompleteOpen  &&
+      autocompleteOpen &&
       autocompleteOptions !== undefined &&
       +autocompleteOptionIndex >= 0 &&
       +autocompleteOptionIndex < autocompleteOptions.length;
@@ -268,7 +268,8 @@
 
   const selectCompletion = () => {
     logs = appendLog(commandLog("selectCompletion", autocompleteOptionIndex));
-    cypherEditor && cypherEditor.selectAutocompleteOption(+autocompleteOptionIndex);
+    cypherEditor &&
+      cypherEditor.selectAutocompleteOption(+autocompleteOptionIndex);
   };
 
   const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
