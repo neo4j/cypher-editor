@@ -30,7 +30,7 @@
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "antlr4": "4.10.1"

@@ -25,13 +25,13 @@
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
+    "codemirror": "^5.65.7",
     "cypher-codemirror5": "*"
   },
   "peerDependencies": {
-    "codemirror": "^5.65.7",
     "svelte": "^3.49.0"
   },
   "devDependencies": {}

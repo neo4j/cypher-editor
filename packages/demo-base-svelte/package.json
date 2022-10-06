@@ -19,7 +19,7 @@
   ],
   "engineStrict": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "peerDependencies": {
     "svelte": "^3.49.0"
