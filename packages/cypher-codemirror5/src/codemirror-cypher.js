@@ -299,35 +299,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
   editor.on("gutterClick", lineNumberClick);
 
-  const setPosition = (position) => {
-    const positionObject = getPositionForValue(position);
+  const setPosition = (positionValue) => {
+    const positionObject = getPositionForValue(positionValue);
     if (positionObject) {
       const { line, column } = positionObject;
-      const { line: currentLineIndex, ch } = editor.getCursor();
-      const currentLine = currentLineIndex + 1;
-      const currentColumn = ch;
-      if (line < currentLine) {
-        const steps = currentLine - line;
-        for (let i = 0; i < steps; i++) {
-          editor.execCommand("goLineUp");
-        }
-      } else if (line > currentLine) {
-        const steps = line - currentLine;
-        for (let i = 0; i < steps; i++) {
-          editor.execCommand("goLineDown");
-        }
-      }
-      if (column < currentColumn) {
-        const steps = currentColumn - column;
-        for (let i = 0; i < steps; i++) {
-          editor.execCommand("goCharLeft");
-        }
-      } else if (column > currentColumn) {
-        const steps = column - currentColumn;
-        for (let i = 0; i < steps; i++) {
-          editor.execCommand("goCharRight");
-        }
-      }
+      editor.setCursor(line - 1, column);
     }
   };
 
