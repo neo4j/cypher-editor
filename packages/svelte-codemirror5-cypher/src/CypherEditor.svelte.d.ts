@@ -1,42 +1,43 @@
 /// <reference types="svelte" />
 import type { SvelteComponentTyped } from "svelte";
+import type { EditorChange } from "codemirror";
+import type { EditorSupportSchema } from "cypher-editor-support";
+import type { EditorApi } from "cypher-codemirror5";
+import type { ScrollInfo, PositionObject, PositionAny, Theme, AutocompleteOption } from "cypher-codemirror-base";
 
 export interface CypherEditorProps {
   autocomplete?: boolean;
   autocompleteCloseOnBlur?: boolean;
   autocompleteOpen?: boolean;
-  autocompleteSchema?: any;
+  autocompleteSchema?: EditorSupportSchema;
   autocompleteTriggerStrings?: string[];
   history?: boolean;
-  lineNumberFormatter?: any;
+  lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
   lineNumbers?: boolean;
   lineWrapping?: boolean;
   lint?: boolean;
   placeholder?: string;
-  position?: number | { line: number; column: number };
+  position?: PositionAny;
   readOnly?: boolean;
   readOnlyCursor?: boolean;
-  theme?: "light" | "dark";
+  theme?: Theme;
   value?: string;
   className?: string;
   focusedClassName?: string;
   autofocus?: boolean;
   parseOnSetValue?: boolean;
 
-  onEditorCreated: (editor: any) => void;
-  onValueChanged: (value: string, changes: any) => void;
+  onEditorCreated: (editor: EditorApi) => void;
+  onValueChanged: (value: string, changes: EditorChange) => void;
   onFocusChanged: (focused: boolean) => void;
-  onScrollChanged: (scrollInfo: any) => void;
-  onPositionChanged: (position: {
-    line: number;
-    column: number;
-    position: number;
-  }) => void;
-  onAutocompleteChanged: (open: boolean, from: number, options: [any]) => void;
-  onLineNumberClick: (lineNumber: number, event: any) => void;
-  onKeyDown: (event: any) => void;
+  onScrollChanged: (scrollInfo: ScrollInfo) => void;
+  onPositionChanged: (position: PositionObject) => void;
+  onAutocompleteChanged: (open: boolean, from: number, options: AutocompleteOption[]) => void;
+  onLineNumberClick: (lineNumber: number, event: Event) => void;
+  onKeyDown: (event: KeyboardEvent) => void;
 
-  // TODO - add types for codemirror (cm5) options?
+  // TODO - add props for codemirror (cm5) options?
+  // codemirrorOptions: any
 }
 
 export default class CypherEditor extends SvelteComponentTyped<

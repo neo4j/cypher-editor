@@ -1,41 +1,43 @@
 import * as React from "react";
+import type { ChangeSet, Extension } from "@codemirror/state";
+import type { EditorSupportSchema } from "cypher-editor-support";
+import type { EditorApi } from "cypher-codemirror";
+import type { ScrollInfo, PositionObject, PositionAny, Theme, AutocompleteOption } from "cypher-codemirror-base";
 
 export interface CypherEditorProps {
   autocomplete?: boolean;
   autocompleteCloseOnBlur?: boolean;
   autocompleteOpen?: boolean;
-  autocompleteSchema?: any;
+  autocompleteSchema?: EditorSupportSchema;
   autocompleteTriggerStrings?: string[];
   history?: boolean;
-  lineNumberFormatter?: any;
+  lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
   lineNumbers?: boolean;
   lineWrapping?: boolean;
   lint?: boolean;
   placeholder?: string;
-  position?: number | { line: number; column: number };
+  position?: PositionAny;
   readOnly?: boolean;
   readOnlyCursor?: boolean;
-  theme?: "light" | "dark";
+  theme?: Theme;
   value?: string;
   className?: string;
   focusedClassName?: string;
   autofocus?: boolean;
   parseOnSetValue?: boolean;
 
-  onEditorCreated: (editor: any) => void;
-  onValueChanged: (value: string, changes: any) => void;
+  onEditorCreated: (editor: EditorApi) => void;
+  onValueChanged: (value: string, changes: ChangeSet) => void;
   onFocusChanged: (focused: boolean) => void;
-  onScrollChanged: (scrollInfo: any) => void;
-  onPositionChanged: (position: {
-    line: number;
-    column: number;
-    position: number;
-  }) => void;
-  onAutocompleteChanged: (open: boolean, from: number, options: [any]) => void;
-  onLineNumberClick: (lineNumber: number, event: any) => void;
-  onKeyDown: (event: any) => void;
+  onScrollChanged: (scrollInfo: ScrollInfo) => void;
+  onPositionChanged: (position: PositionObject) => void;
+  onAutocompleteChanged: (open: boolean, from: number, options: AutocompleteOption[]) => void;
+  onLineNumberClick: (lineNumber: number, event: Event) => void;
+  onKeyDown: (event: KeyboardEvent) => void;
 
-  // TODO - add types for pre/post extension props?
+  // TODO - add these props
+  // preExtensions?: Extension[],
+  // postExtensions?: Extension[]
 }
 
 declare class CypherEditor extends React.Component<CypherEditorProps, any> {}
