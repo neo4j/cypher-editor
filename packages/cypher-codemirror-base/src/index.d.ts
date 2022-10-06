@@ -33,13 +33,20 @@ export interface ScrollInfo {
   scrollWidth: number;
 }
 
-export type AutocompleteChangedListener = (open: boolean, from?: number, options?: AutocompleteOption[]) => void;
+export type AutocompleteChangedListener = (
+  open: boolean,
+  from?: number,
+  options?: AutocompleteOption[]
+) => void;
 export type PositionChangedListener = (position: PositionObject) => void;
 export type FocusChangedListener = (focused: boolean) => void;
 export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 export type ValueChangedListener = (value: string, changes: any) => void;
 export type KeyDownListener = (event: KeyboardEvent) => void;
-export type LineNumberClickListener = (lineNumber: number, event: Event) => void;
+export type LineNumberClickListener = (
+  lineNumber: number,
+  event: Event
+) => void;
 
 export interface BaseEditorApi {
   clearHistory: () => void;

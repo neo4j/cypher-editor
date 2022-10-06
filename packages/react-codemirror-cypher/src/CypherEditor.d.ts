@@ -2,7 +2,13 @@ import * as React from "react";
 import type { ChangeSet, Extension } from "@codemirror/state";
 import type { EditorSupportSchema } from "cypher-editor-support";
 import type { EditorApi } from "cypher-codemirror";
-import type { ScrollInfo, PositionObject, PositionAny, Theme, AutocompleteOption } from "cypher-codemirror-base";
+import type {
+  ScrollInfo,
+  PositionObject,
+  PositionAny,
+  Theme,
+  AutocompleteOption
+} from "cypher-codemirror-base";
 
 export interface CypherEditorProps {
   autocomplete?: boolean;
@@ -31,7 +37,11 @@ export interface CypherEditorProps {
   onFocusChanged?: (focused: boolean) => void;
   onScrollChanged?: (scrollInfo: ScrollInfo) => void;
   onPositionChanged?: (position: PositionObject) => void;
-  onAutocompleteChanged?: (open: boolean, from: number, options: AutocompleteOption[]) => void;
+  onAutocompleteChanged?: (
+    open: boolean,
+    from: number,
+    options: AutocompleteOption[]
+  ) => void;
   onLineNumberClick?: (lineNumber: number, event: Event) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
 
