@@ -549,6 +549,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteTriggerStrings = newAutocompleteTriggerStrings;
   };
 
+  const selectAutocompleteOption = (index) => {
+    if (editor && editor.state && editor.state.completionActive) {
+      editor.state.completionActive.widget.changeActive(index);
+      editor.state.completionActive.widget.pick();
+    }
+  };
+
   const setLint = (lint) => {
     editor.lint = lint;
   };
@@ -603,6 +610,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     getLineCount,
     getPosition,
     getPositionForValue,
+    selectAutocompleteOption,
     setAutocomplete,
     setAutocompleteCloseOnBlur,
     setAutocompleteOpen,

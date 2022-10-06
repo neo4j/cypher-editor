@@ -32,6 +32,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [autocompleteOpen, setAutocompleteOpen] = useState(
     initialOptions.autocompleteOpen
   );
+  const [autocompleteOptions, setAutocompleteOptions] = useState(undefined);
   const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
   const [parseOnSetValue, setParseOnSetValue] = useState(
     initialOptions.parseOnSetValue
@@ -67,6 +68,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [goPositionPositionEnabled, setGoPositionPositionEnabled] =
     useState(false);
   const [goPositionLineColumnEnabled, setGoPositionLineColumnEnabled] =
+    useState(false);
+  const [autocompleteOptionIndex, setAutocompleteOptionIndex] = useState("0");
+  const [selectAutocompleteOptionEnabled, setAutocompleteOptionEnabled] =
     useState(false);
   const [lineCount, setLineCount] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -149,6 +153,21 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     );
   };
 
+  const updatePickGoButtons = ({
+    autocompleteOptionIndex:
+      goAutocompleteOptionIndex = autocompleteOptionIndex,
+    autocompleteOpen: goAutocompleteOpen = autocompleteOpen,
+    autocompleteOptions: goAutocompleteOptions = autocompleteOptions
+  } = {}) => {
+    setAutocompleteOptionEnabled(
+      isNumberString(goAutocompleteOptionIndex) &&
+        goAutocompleteOpen &&
+        goAutocompleteOptions !== undefined &&
+        +goAutocompleteOptionIndex >= 0 &&
+        +goAutocompleteOptionIndex < goAutocompleteOptions.length
+    );
+  };
+
   const updateValue = (value) => {
     setCypher(value);
     updateGoButtons();
@@ -168,6 +187,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const onAutocompleteChanged = (open, from, options) => {
     addEventLog("autocompleteChanged", { open, from, options });
     setAutocompleteOpen(open);
+    setAutocompleteOptions(options);
+    updatePickGoButtons({
+      autocompleteOpen: open,
+      autocompleteOptions: options
+    });
   };
 
   const onLineNumberClick = (line, event) => {
@@ -392,6 +416,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     }
   };
 
+  const selectCompletion = () => {
+    addCommandLog("selectCompletion", autocompleteOptionIndex);
+    editor && editor.selectAutocompleteOption(+autocompleteOptionIndex);
+  };
+
   const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
 
   const positionPositionChanged = (e) => {
@@ -431,6 +460,19 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
       e.target.value = positionColumn;
     }
     updateGoButtons(updateParams);
+  };
+
+  const autocompleteOptionIndexChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    let updateParams;
+    if (value === "" || isNumberString(value)) {
+      setAutocompleteOptionIndex(value);
+      updateParams = { autocompleteOptionIndex: value };
+    } else {
+      e.target.value = autocompleteOptionIndex;
+    }
+    updatePickGoButtons(updateParams);
   };
 
   const showLongValue = () => {
@@ -805,6 +847,27 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <button
               disabled={!goPositionLineColumnEnabled}
               onClick={goToPositionLineColumn}
+            >
+              Go
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Select Completion</div>
+
+          <div className="setting-values">
+            <label htmlFor="autocompleteOptionIndex">index</label>
+            <input
+              className="short-input"
+              name="autocompleteOptionIndex"
+              type="text"
+              value={autocompleteOptionIndex}
+              onInput={autocompleteOptionIndexChanged}
+            />
+            <button
+              disabled={!selectAutocompleteOptionEnabled}
+              onClick={selectCompletion}
             >
               Go
             </button>

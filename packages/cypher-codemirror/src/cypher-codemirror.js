@@ -2,6 +2,8 @@
 import {
   startCompletion,
   closeCompletion,
+  acceptCompletion,
+  setSelectedCompletion,
   completionStatus
   // currentCompletions (could use this if we could get currentCompletionsFrom as well)
 } from "@codemirror/autocomplete";
@@ -407,6 +409,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
+  const selectAutocompleteOption = (index) => {
+    editor.dispatch({ effects: setSelectedCompletion(index) });
+    acceptCompletion(editor);
+  };
+
   const setHistory = (newHistory) => {
     history = newHistory;
     editor.dispatch({
@@ -588,6 +595,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     getLineCount,
     getPosition,
     getPositionForValue,
+    selectAutocompleteOption,
     setAutocomplete,
     setAutocompleteCloseOnBlur,
     setAutocompleteOpen,

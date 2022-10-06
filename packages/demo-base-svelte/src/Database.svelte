@@ -50,6 +50,7 @@
 
   let cypherEditor;
   let autocompleteOpen = false;
+  let autocompleteOptions = undefined;
   let focused = true;
   let positionPosition = "0";
   let positionLine = "1";
@@ -68,6 +69,8 @@
 
   let goPositionPositionEnabled;
   let goPositionLineColumnEnabled;
+  let autocompleteOptionIndex = "0";
+  let selectAutocompleteOptionEnabled = false;
 
   const updateGoButtons = () => {
     goPositionPositionEnabled =
@@ -80,6 +83,15 @@
         line: +positionLine,
         column: +positionColumn
       }) !== null;
+  };
+
+  const updatePickGoButtons = () => {
+    selectAutocompleteOptionEnabled =
+      isNumberString(autocompleteOptionIndex) &&
+      autocompleteOpen  &&
+      autocompleteOptions !== undefined &&
+      +autocompleteOptionIndex >= 0 &&
+      +autocompleteOptionIndex < autocompleteOptions.length;
   };
 
   const updateValue = (value) => {
@@ -105,6 +117,8 @@
       eventLog("autocompleteChanged", { open, from, options })
     );
     autocompleteOpen = open;
+    autocompleteOptions = options;
+    updatePickGoButtons();
   };
 
   const onLineNumberClick = (line, event) => {
@@ -252,6 +266,11 @@
     }
   };
 
+  const selectCompletion = () => {
+    logs = appendLog(commandLog("selectCompletion", autocompleteOptionIndex));
+    cypherEditor && cypherEditor.selectAutocompleteOption(+autocompleteOptionIndex);
+  };
+
   const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
 
   const positionPositionChanged = (e) => {
@@ -285,6 +304,17 @@
       e.target.value = positionColumn;
     }
     updateGoButtons();
+  };
+
+  const autocompleteOptionIndexChanged = (e) => {
+    const { target } = e;
+    const { value } = target;
+    if (value === "" || isNumberString(value)) {
+      autocompleteOptionIndex = value;
+    } else {
+      e.target.value = autocompleteOptionIndex;
+    }
+    updatePickGoButtons();
   };
 
   const showLongValue = () => {
@@ -575,6 +605,27 @@
           disabled={!goPositionLineColumnEnabled}
           on:click={goToPositionLineColumn}>Go</button
         >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Select Completion</div>
+
+      <div class="setting-values">
+        <label for="autocompleteOptionIndex">index</label>
+        <input
+          class="short-input"
+          name="autocompleteOptionIndex"
+          type="text"
+          value={autocompleteOptionIndex}
+          on:input={autocompleteOptionIndexChanged}
+        />
+        <button
+          disabled={!selectAutocompleteOptionEnabled}
+          on:click={selectCompletion}
+        >
+          Go
+        </button>
       </div>
     </div>
 

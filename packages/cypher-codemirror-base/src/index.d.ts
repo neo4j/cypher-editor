@@ -55,6 +55,7 @@ export interface BaseEditorApi {
   getLineCount: () => void;
   getPosition: () => PositionObject;
   getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
+  selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
   setAutocomplete: (autocomplete: boolean) => void;
   setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
   setAutocompleteOpen: (autocompleteOpen: boolean) => void;
