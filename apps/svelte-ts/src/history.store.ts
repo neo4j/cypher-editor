@@ -1,6 +1,11 @@
 import { get, writable } from "svelte/store";
 
-type HistoryStoreEvents = "EXECUTED" | "STEP_BACK" | "STEP_FORWARD";
+type HistoryStoreEvents =
+  | "PUSH_CURRENT"
+  | "STEP_BACK"
+  | "STEP_FORWARD"
+  | "SET_CURRENT";
+type EventPayload = string;
 
 export function historyStore(initValue: string = "", stackSize: number = 20) {
   let stackIndex: number | null = null;
@@ -9,9 +14,9 @@ export function historyStore(initValue: string = "", stackSize: number = 20) {
 
   const store = writable<string>(initValue);
 
-  const send = (event: HistoryStoreEvents): void => {
+  const send = (event: HistoryStoreEvents, payload?: EventPayload): void => {
     switch (event) {
-      case "EXECUTED":
+      case "PUSH_CURRENT":
         stack.push(get(store));
         stack = stack.slice(-1 * stackSize);
         stackIndex = null;
@@ -35,6 +40,10 @@ export function historyStore(initValue: string = "", stackSize: number = 20) {
           stackIndex = null;
           store.set(editBuffer);
         }
+        break;
+      case "SET_CURRENT":
+        store.set(payload);
+        stackIndex = null;
         break;
       default:
         break;
