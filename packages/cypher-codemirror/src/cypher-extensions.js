@@ -87,7 +87,7 @@ export const domListener = ({
     blur: () => {
       onFocusChanged(false);
     },
-    scroll: (event) => {
+    scroll: (event, view) => {
       const {
         scrollTop,
         clientHeight,
@@ -96,14 +96,16 @@ export const domListener = ({
         clientWidth,
         scrollWidth
       } = event.target;
-      onScrollChanged({
-        scrollTop,
-        clientHeight,
-        scrollHeight,
-        scrollLeft,
-        clientWidth,
-        scrollWidth
-      });
+      if (event.target === view.scrollDOM) {
+        onScrollChanged({
+          scrollTop,
+          clientHeight,
+          scrollHeight,
+          scrollLeft,
+          clientWidth,
+          scrollWidth
+        });
+      }
     },
     keydown: (event) => {
       onKeyDown(event);
