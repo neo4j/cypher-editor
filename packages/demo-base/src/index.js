@@ -307,6 +307,7 @@ export const eventTypes = [
   "lineNumberClick",
   "keyDown",
   "positionChanged",
+  "scrollChanged",
   "valueChanged"
 ];
 
