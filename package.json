@@ -20,7 +20,8 @@
     "turbo": "^1.4.7"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "build:demos": "turbo run deploy",
