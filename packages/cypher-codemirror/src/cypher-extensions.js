@@ -88,15 +88,15 @@ export const domListener = ({
       onFocusChanged(false);
     },
     scroll: (event, view) => {
-      const {
-        scrollTop,
-        clientHeight,
-        scrollHeight,
-        scrollLeft,
-        clientWidth,
-        scrollWidth
-      } = event.target;
       if (event.target === view.scrollDOM) {
+        const {
+          scrollTop,
+          clientHeight,
+          scrollHeight,
+          scrollLeft,
+          clientWidth,
+          scrollWidth
+        } = event.target;
         onScrollChanged({
           scrollTop,
           clientHeight,
