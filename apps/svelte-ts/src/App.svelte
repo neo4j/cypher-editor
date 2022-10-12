@@ -59,7 +59,7 @@
   }
 
   function executeEditor() {
-    if (viewState !== "idle" || !$history.trim().length) {
+    if (!$history.trim().length) {
       return;
     }
     const toExec = $history;
@@ -68,6 +68,7 @@
   }
 
   function execute(input: string) {
+    const currentViewState = viewState;
     viewState = "executing";
     const execPromise = isCommand(input)
       ? runCommand(input)
@@ -76,7 +77,7 @@
       cmd: input,
       // Promise chain to let UI handle the error
       promise: execPromise.finally(() => {
-        viewState = "idle";
+        viewState = currentViewState;
         updateEditorSchema();
       })
     });
@@ -256,8 +257,8 @@
   .error {
     color: red;
     background-color: pink;
-    padding: 8px;
-    margin: 8px 0;
+    padding: 16px;
+    margin: 0;
   }
   :global(.cm-editor) {
     max-height: 200px;
