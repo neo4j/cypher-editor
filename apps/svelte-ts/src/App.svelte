@@ -1,14 +1,18 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import { CypherEditor } from "svelte-codemirror-cypher";
-  import neo4j, { type Driver } from "neo4j-driver";
+  import neo4j, { type Driver, type QueryResult } from "neo4j-driver";
   import { runQuery, schemaQuery } from "./cypher.utils";
   import { historyStore } from "./history.store";
   import { slide } from "svelte/transition";
+  import Cypher from "./frames/Cypher.svelte";
+  import { isCommand, runCommand } from "./command.utils";
+  import Generic from "./frames/Generic.svelte";
+  import type { GenericResult } from "./frames/Generic.types";
 
   type StreamResponse = {
-    cypher: string;
-    promise: Promise<any>;
+    cmd: string;
+    promise: Promise<QueryResult | GenericResult>;
     id?: number;
   };
 
@@ -35,6 +39,7 @@
       console.log(`Couldn't connect ${e.message}`);
       viewState = "disconnected";
     }
+    execute(":help");
   });
   onDestroy(() => {
     driver.close();
@@ -53,17 +58,24 @@
     }
   }
 
-  function execute() {
+  function executeEditor() {
     if (viewState !== "idle" || !$history.trim().length) {
       return;
     }
-    viewState = "executing";
     const toExec = $history;
     history.send("PUSH_CURRENT");
+    execute(toExec);
+  }
+
+  function execute(input: string) {
+    viewState = "executing";
+    const execPromise = isCommand(input)
+      ? runCommand(input)
+      : runQuery(driver, input);
     addResponse({
-      cypher: toExec,
+      cmd: input,
       // Promise chain to let UI handle the error
-      promise: runQuery(driver, toExec).finally(() => {
+      promise: execPromise.finally(() => {
         viewState = "idle";
         updateEditorSchema();
       })
@@ -84,7 +96,7 @@
     // cmd + enter to exec
     if (key === "Enter" && hasModKey) {
       event.preventDefault();
-      execute();
+      executeEditor();
       return;
     }
 
@@ -102,59 +114,86 @@
   }
 </script>
 
-<div class="container">
-  <CypherEditor
-    bind:value={$history}
-    readOnly={viewState === "executing"}
-    readOnlyCursor={true}
-    onKeyDown={keyDown}
-    {autocompleteSchema}
-    theme="dark"
-    lint={$history.trim().length > 0}
-  />
+<div class="wrapper">
+  <div class="editor-section">
+    <div class="editor-wrapper">
+      <CypherEditor
+        bind:value={$history}
+        readOnly={viewState === "executing"}
+        readOnlyCursor={true}
+        onKeyDown={keyDown}
+        {autocompleteSchema}
+        theme="light"
+        lint={$history.trim().length > 0}
+      />
+    </div>
+  </div>
   {#if viewState === "disconnected"}
     <div class="error">Not connected, can't execute queries.</div>
   {/if}
-  {#if viewState !== "booting" && responses}
-    {#each responses as response (response.id)}
-      <div class="response" transition:slide>
-        <div class="header">
-          <div
-            title={response.cypher}
-            class="cypher"
-            on:click={() => history.send("SET_CURRENT", response.cypher)}
-          >
-            {response.cypher}
+  <div class="stream-section">
+    {#if viewState !== "booting" && responses}
+      {#each responses as response (response.id)}
+        <div class="response" transition:slide>
+          <div class="header">
+            <div
+              title={response.cmd}
+              class="cypher"
+              on:click={() => history.send("SET_CURRENT", response.cmd)}
+            >
+              {response.cmd}
+            </div>
+            <button
+              class="close-btn"
+              on:click={() => removeResponse(response.id)}>&times;</button
+            >
           </div>
-          <button class="close-btn" on:click={() => removeResponse(response.id)}
-            >&times;</button
-          >
+          <div class="body">
+            {#await response.promise}
+              Executing command...
+            {:then res}
+              {#if "data" in res}
+                <Generic result={res} />
+              {:else}
+                <Cypher result={res} />
+              {/if}
+            {:catch e}
+              {e}
+            {/await}
+          </div>
         </div>
-        <div class="body">
-          {#await response.promise}
-            Running query...
-          {:then res}
-            {JSON.stringify(res.records, null, 2)}
-          {:catch e}
-            {e}
-          {/await}
-        </div>
-      </div>
-    {/each}
-  {/if}
+      {/each}
+    {/if}
+  </div>
 </div>
 
 <style>
-  :global(html) {
-    scrollbar-gutter: stable;
-  }
   :global(body) {
-    background-color: #eee;
+    background-color: #f6f7fa;
+    margin: 0;
+    padding: 0;
   }
-  .container {
-    margin: 0 auto;
-    width: 600px;
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .stream-section {
     padding: 16px;
+    overflow-y: auto;
+  }
+  .editor-section {
+    min-height: 46px;
+    padding: 16px;
+    border-bottom: 1px solid rgb(238 241 246);
+    background-color: white;
+  }
+  .editor-wrapper {
+    border: 1px solid rgb(196 200 205);
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 34px;
+    padding-top: 8px;
   }
   .response {
     margin-top: 14px;
@@ -162,44 +201,56 @@
     font-size: 12px;
     background-color: white;
     overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid rgb(238 241 246);
   }
   .response .header {
-    height: 30px;
-    border-bottom: 1px solid #ccc;
+    height: 36px;
+    padding: 16px;
     color: #888;
-    font-size: 14px;
+    font-size: 17px;
     display: flex;
-    align-items: baseline;
-    cursor: pointer;
+    align-items: center;
     position: relative;
     overflow: hidden;
   }
   .response .header .cypher {
-    padding: 4px 8px;
     flex: auto 1 1;
     text-overflow: ellipsis;
     overflow: hidden;
     height: 30px;
     white-space: nowrap;
+    border-radius: 6px;
+    border: 1px solid rgb(196 200 205);
+    line-height: 29px;
+    padding: 0 16px;
   }
 
   .response .header .close-btn {
-    width: 30px;
-    height: 30px;
+    font-weight: normal;
+    font-family: "times new roman", times, georgia, serif;
+    font-size: 200%;
+    color: #888;
+    width: 20px;
+    height: 20px;
     border: 0;
-    padding: 0;
-    margin: 0;
+    padding: 8px;
+    margin-left: 16px;
     background: none;
-    border-left: 1px solid #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: auto 0 0;
+    border-radius: 6px;
+    box-sizing: content-box;
+  }
+  .response .header .close-btn:hover {
+    background-color: rgb(230 248 255);
   }
   .response .body {
     white-space: pre;
     height: 180px;
-    padding: 4px 8px;
+    padding: 16px;
     overflow: auto;
   }
   .error {
@@ -209,7 +260,11 @@
     margin: 8px 0;
   }
   :global(.cm-editor) {
-    height: 200px;
+    max-height: 200px;
     font-size: 18px;
+    outline: none !important;
+  }
+  :global(.cm-editor .cm-gutters) {
+    border: 0;
   }
 </style>
