@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { createCypherEditor } from "cypher-codemirror5";
-import { reactiveOptionKeys } from "cypher-codemirror-base";
+import { reactiveOptionKeys, defaultOptions } from "cypher-codemirror-base";
 
 import "codemirror/addon/lint/lint";
 import "codemirror/addon/hint/show-hint";
@@ -159,6 +159,15 @@ class CypherEditor extends Component {
     const methodName = "set" + key[0].toUpperCase() + key.slice(1);
     if (this.cypherEditor[methodName]) {
       this.cypherEditor[methodName](prop[key]);
+    }
+
+    const autofocusProps =
+      this.props.autofocusProps !== undefined
+        ? this.props.autofocusProps
+        : defaultOptions.autofocusProps;
+
+    if (autofocusProps.includes(key)) {
+      this.cypherEditor.focus();
     }
   }
 

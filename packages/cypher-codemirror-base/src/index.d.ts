@@ -18,6 +18,8 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 
 export type Theme = "light" | "dark";
 
+export type AutofocusProp = "position" | "readOnly" | "value";
+
 export interface AutocompleteOption {
   label: string;
   detail?: string;

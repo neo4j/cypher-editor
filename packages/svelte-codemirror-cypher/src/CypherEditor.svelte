@@ -20,6 +20,8 @@
     defaultOptions.autocompleteTriggerStrings;
   $: updateOption({ autocompleteTriggerStrings });
 
+  export let autofocusProps = defaultOptions.autofocusProps;
+
   export let history = defaultOptions.history;
   $: updateOption({ history });
 
@@ -90,6 +92,10 @@
     const methodName = "set" + key[0].toUpperCase() + key.slice(1);
     if (cypherEditor[methodName]) {
       cypherEditor[methodName](prop[key]);
+    }
+
+    if (autofocusProps.includes(key)) {
+      cypherEditor.focus();
     }
   }
 

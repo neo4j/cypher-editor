@@ -28,6 +28,7 @@ export const defaultOptions = {
   autocompleteSchema: undefined,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true,
+  autofocusProps: ["position", "readOnly", "value"],
   history: true,
   lineNumberFormatter: defaultLineNumberFormatter,
   lineNumbers: true,

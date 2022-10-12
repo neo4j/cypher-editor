@@ -7,7 +7,8 @@ import type {
   PositionObject,
   PositionAny,
   Theme,
-  AutocompleteOption
+  AutocompleteOption,
+  AutofocusProp
 } from "cypher-codemirror-base";
 
 export interface CypherEditorProps {
@@ -16,6 +17,7 @@ export interface CypherEditorProps {
   autocompleteOpen?: boolean;
   autocompleteSchema?: EditorSupportSchema;
   autocompleteTriggerStrings?: string[];
+  autofocusProps?: AutofocusProp[];
   history?: boolean;
   lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
   lineNumbers?: boolean;
