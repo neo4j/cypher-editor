@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { CypherEditor } from "svelte-codemirror-cypher";
-  import neo4j, { type Driver, type QueryResult } from "neo4j-driver";
+  import type { Driver, QueryResult } from "neo4j-driver";
   import { runQuery, schemaQuery } from "./cypher.utils";
   import { historyStore } from "./history.store";
   import { slide } from "svelte/transition";
@@ -9,6 +9,7 @@
   import { isCommand, runCommand } from "./command.utils";
   import Generic from "./frames/Generic.svelte";
   import type { GenericResult } from "./frames/Generic.types";
+  import ConnectModal from "./ConnectModal.svelte";
 
   type StreamResponse = {
     cmd: string;
@@ -17,32 +18,15 @@
   };
 
   const history = historyStore("MATCH (n) RETURN count(n)", 20);
-  let viewState: "booting" | "idle" | "executing" | "disconnected" = "booting";
+  let viewState: "idle" | "executing" | "disconnected" | "connection-modal" =
+    "connection-modal";
   let autocompleteSchema = {};
   let driver: Driver;
   let responses: StreamResponse[] = [];
   let id = 0;
 
-  onMount(async () => {
-    driver = neo4j.driver(
-      "neo4j://localhost:7687",
-      neo4j.auth.basic(
-        import.meta.env.VITE_NEO4J_USERNAME,
-        import.meta.env.VITE_NEO4J_PASSWORD
-      )
-    );
-    try {
-      await driver.verifyConnectivity();
-      updateEditorSchema();
-      viewState = "idle";
-    } catch (e) {
-      console.log(`Couldn't connect ${e.message}`);
-      viewState = "disconnected";
-    }
+  onMount(() => {
     execute(":help");
-  });
-  onDestroy(() => {
-    driver.close();
   });
 
   async function updateEditorSchema() {
@@ -55,6 +39,19 @@
       };
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  function didConnect(newDriver) {
+    driver = newDriver;
+    viewState = "idle";
+    updateEditorSchema();
+  }
+  function didCancelConnect() {
+    if (!driver) {
+      viewState = "disconnected";
+    } else {
+      viewState = "idle";
     }
   }
 
@@ -78,7 +75,9 @@
       // Promise chain to let UI handle the error
       promise: execPromise.finally(() => {
         viewState = currentViewState;
-        updateEditorSchema();
+        if (!isCommand(input)) {
+          updateEditorSchema();
+        }
       })
     });
   }
@@ -130,10 +129,15 @@
     </div>
   </div>
   {#if viewState === "disconnected"}
-    <div class="error">Not connected, can't execute queries.</div>
+    <div class="error">
+      Not connected, can't execute queries. <button
+        class="connect-btn"
+        on:click={() => (viewState = "connection-modal")}>Connect now</button
+      >
+    </div>
   {/if}
   <div class="stream-section">
-    {#if viewState !== "booting" && responses}
+    {#if responses}
       {#each responses as response (response.id)}
         <div class="response" transition:slide>
           <div class="header">
@@ -167,13 +171,13 @@
     {/if}
   </div>
 </div>
+<ConnectModal
+  open={viewState === "connection-modal"}
+  on:connect={({ detail }) => didConnect(detail.driver)}
+  on:cancel={didCancelConnect}
+/>
 
 <style>
-  :global(body) {
-    background-color: #f6f7fa;
-    margin: 0;
-    padding: 0;
-  }
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -190,10 +194,10 @@
     background-color: white;
   }
   .editor-wrapper {
-    border: 1px solid rgb(196 200 205);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     overflow: hidden;
-    min-height: 34px;
+    min-height: 44px;
     padding-top: 8px;
   }
   .response {
@@ -206,7 +210,6 @@
     border: 1px solid rgb(238 241 246);
   }
   .response .header {
-    height: 36px;
     padding: 16px;
     color: #888;
     font-size: 17px;
@@ -225,6 +228,7 @@
     border: 1px solid rgb(196 200 205);
     line-height: 29px;
     padding: 0 16px;
+    cursor: pointer;
   }
 
   .response .header .close-btn {
@@ -250,7 +254,8 @@
   }
   .response .body {
     white-space: pre;
-    height: 180px;
+
+    max-height: 400px;
     padding: 16px;
     overflow: auto;
   }
@@ -259,6 +264,15 @@
     background-color: pink;
     padding: 16px;
     margin: 0;
+  }
+  .connect-btn {
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    background: transparent;
+    color: red;
+    border-radius: 4px;
+    padding: 2px 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
   }
   :global(.cm-editor) {
     max-height: 200px;
