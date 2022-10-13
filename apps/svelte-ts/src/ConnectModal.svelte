@@ -7,6 +7,7 @@
 
   let error: string = "";
   let dialog: HTMLDialogElement;
+  let passwordElement: HTMLInputElement;
   let connectURL = "neo4j://localhost:7687";
   let username = "neo4j";
   let password = "";
@@ -17,13 +18,21 @@
 
   onMount(() => {
     dialog.addEventListener("close", dialogCloseHandler);
+    dialog.addEventListener("keydown", keyDownHandler);
   });
   onDestroy(() => {
+    dialog.removeEventListener("keydown", keyDownHandler);
     dialog.removeEventListener("close", dialogCloseHandler);
     if (driver) {
       driver.close();
     }
   });
+
+  function keyDownHandler(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      dialog.close("cancel");
+    }
+  }
 
   function dialogCloseHandler() {
     error = "";
@@ -62,6 +71,9 @@
     }
     if (show && !dialog.open) {
       dialog.showModal();
+      if (passwordElement) {
+        passwordElement.focus();
+      }
     }
   }
 </script>
@@ -86,8 +98,8 @@
       <label>
         <span>Database password</span>
         <input
+          bind:this={passwordElement}
           type="password"
-          placeholder="***************"
           bind:value={password}
         />
       </label>
