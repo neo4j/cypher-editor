@@ -6,7 +6,7 @@
   import { historyStore } from "./history.store";
   import { slide } from "svelte/transition";
   import Cypher from "./frames/Cypher.svelte";
-  import { isCommand, runCommand } from "./command.utils";
+  import { consoleCommands, isCommand, runCommand } from "./command.utils";
   import Generic from "./frames/Generic.svelte";
   import type { GenericResult } from "./frames/Generic.types";
   import ConnectModal from "./ConnectModal.svelte";
@@ -16,11 +16,17 @@
     promise: Promise<QueryResult | GenericResult>;
     id?: number;
   };
+  type AutocompleteSchema = {
+    // Not complete types here
+    consoleCommands?: Array<{ name: string }>;
+    labels?: string[];
+    relationshipTypes?: string[];
+  };
 
   const history = historyStore("MATCH (n) RETURN count(n)", 20);
   let viewState: "idle" | "executing" | "disconnected" | "connection-modal" =
     "connection-modal";
-  let autocompleteSchema = {};
+  let autocompleteSchema: AutocompleteSchema = { consoleCommands };
   let driver: Driver;
   let responses: StreamResponse[] = [];
   let id = 0;
@@ -34,10 +40,14 @@
       const res = await runQuery(driver, schemaQuery);
       const obj = res.records[0].toObject();
       autocompleteSchema = {
+        consoleCommands,
         labels: obj.labels.map((x: string) => `:${x}`),
         relationshipTypes: obj.relationshipTypes.map((x: string) => `:${x}`)
       };
     } catch (e) {
+      autocompleteSchema = {
+        consoleCommands
+      };
       console.log(e);
     }
   }
