@@ -188,7 +188,6 @@
     overflow-y: auto;
   }
   .editor-section {
-    min-height: 46px;
     padding: 16px;
     border-bottom: 1px solid rgb(238 241 246);
     background-color: white;
