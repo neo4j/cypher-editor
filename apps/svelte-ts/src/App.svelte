@@ -173,7 +173,7 @@
                 <Cypher result={res} />
               {/if}
             {:catch e}
-              {e}
+              <Generic result={{ data: `Error: ${e.message}` }} />
             {/await}
           </div>
         </div>
