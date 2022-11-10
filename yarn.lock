@@ -1858,7 +1858,7 @@
     js-yaml "~3.13.1"
     resolve "~1.17.0"
 
-"@microsoft/api-extractor-model@7.25.2":
+"@microsoft/api-extractor-model@7.25.2", "@microsoft/api-extractor-model@^7.25.2":
   version "7.25.2"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.25.2.tgz#a3e69e952122bbe3f0fc339a8ce0d9d20dd06406"
   integrity sha512-+h1uCrLQXFAKMUdghhdDcnniDB+6UA/lS9ArlB4QZQ34UbLuXNy2oQ6fafFK8cKXU4mUPTF/yGRjv7JKD5L7eg==
@@ -1895,7 +1895,7 @@
     jju "~1.4.0"
     resolve "~1.19.0"
 
-"@microsoft/tsdoc@0.14.2":
+"@microsoft/tsdoc@0.14.2", "@microsoft/tsdoc@^0.14.2":
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.14.2.tgz#c3ec604a0b54b9a9b87e9735dfc59e1a5da6a5fb"
   integrity sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==
@@ -2287,7 +2287,7 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@rushstack/node-core-library@3.53.2":
+"@rushstack/node-core-library@3.53.2", "@rushstack/node-core-library@^3.53.2":
   version "3.53.2"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.53.2.tgz#f442e121f9e6c8bef9a23b7337e6399ab5c0c579"
   integrity sha512-FggLe5DQs0X9MNFeJN3/EXwb+8hyZUTEp2i+V1e8r4Va4JgkjBNY0BuEaQI+3DW6S4apV3UtXU3im17MSY00DA==
@@ -2309,7 +2309,7 @@
     resolve "~1.17.0"
     strip-json-comments "~3.1.1"
 
-"@rushstack/ts-command-line@4.13.1":
+"@rushstack/ts-command-line@4.13.1", "@rushstack/ts-command-line@^4.13.1":
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.13.1.tgz#148b644b627131480363b4853b558ba5eaa0d75c"
   integrity sha512-UTQMRyy/jH1IS2U+6pyzyn9xQ2iMcoUKkTcZUzOP/aaMiKlWLwCTDiBVwhw/M1crDx6apF9CwyjuWO9r1SBdJQ==
@@ -2883,22 +2883,26 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-api-docdown@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/api-docdown/-/api-docdown-1.0.0.tgz#7065b83d4d0f47c098c5e680f7e4ccd84c76e134"
-  integrity sha512-r8zo/qC7Jhu5UPy9/KlYzYLsVXvpX4f+gzP8phFG1Xf/3A7PZwaT458cFjTJnlP2Zb8Vca5LaOvYHlPAD69ZLg==
+api-docdown@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/api-docdown/-/api-docdown-1.0.1.tgz#d27ca95377343038cc17ba66cbffd77f6c04a274"
+  integrity sha512-g/sj2aNSBRRO9eANt5vslTZqYFM+BZwZHa8GOpY2bECaZ/CXM2KEwbw6buE7zrsDopzkaRL+YqcAUzYMAza0qw==
   dependencies:
     "@microsoft/api-documenter" "^7.19.24"
     "@microsoft/api-extractor" "^7.33.6"
-    api-markdown-documenter "^1.0.0"
+    api-markdown-documenter "^1.0.1"
     glob "^8.0.3"
     micromatch "^4.0.5"
 
-api-markdown-documenter@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/api-markdown-documenter/-/api-markdown-documenter-1.0.0.tgz#a6836b555136e76567c1c88832ed909f6ea98ed8"
-  integrity sha512-K+E7u3w2jdGSYqaWXSPujJdCmfPoRMuJiOt61tkStGTlegVuD1ut1ty8NvNPv0Qr44Zo9fOnLzD5mU3U6j5vuA==
+api-markdown-documenter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/api-markdown-documenter/-/api-markdown-documenter-1.0.1.tgz#09e9da5b393d3542109aa0d9a4a7fc46d23feae1"
+  integrity sha512-P9L9thAZ6XGx+oHjr4f1ogRcuQa7vXcOW6X2xsynNzoim63dHXkiozoeyK1pQh4YQPhBBR9/VNUbQqz0vnxRNg==
   dependencies:
+    "@microsoft/api-extractor-model" "^7.25.2"
+    "@microsoft/tsdoc" "^0.14.2"
+    "@rushstack/node-core-library" "^3.53.2"
+    "@rushstack/ts-command-line" "^4.13.1"
     colors "~1.2.1"
     js-yaml "~3.13.1"
     resolve "~1.17.0"
