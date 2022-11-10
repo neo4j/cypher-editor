@@ -17,7 +17,8 @@
     "prettier-plugin-svelte": "^2.7.0",
     "pretty-quick": "^3.1.3",
     "rimraf": "^3.0.2",
-    "turbo": "^1.4.7"
+    "turbo": "^1.4.7",
+    "api-docdown": "^1.0.0"
   },
   "workspaces": [
     "packages/*",
@@ -26,6 +27,7 @@
   "scripts": {
     "build:demos": "turbo run deploy",
     "build:libs": "turbo run build",
+    "build:docs": "api-docdown generate",
     "clean:all": "turbo run clean:deploy clean:build && yarn clean:packages",
     "clean:demos": "turbo run clean:deploy",
     "clean:packages": "rimraf packages/*/node_modules; rimraf node_modules",

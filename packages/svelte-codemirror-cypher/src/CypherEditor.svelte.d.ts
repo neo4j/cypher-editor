@@ -2,6 +2,7 @@
 import type { SvelteComponentTyped } from "svelte";
 import type { ChangeSet, Extension } from "@codemirror/state";
 import type { EditorSupportSchema } from "cypher-editor-support";
+// import type { EditorApi as BaseEditorApi } from "cypher-codemirror";
 import type { EditorApi } from "cypher-codemirror";
 import type {
   ScrollInfo,
@@ -12,10 +13,76 @@ import type {
   AutofocusProp
 } from "cypher-codemirror-base";
 
+/**
+ * AutocompleteSchema docs
+ */
+// export type AutocompleteSchema = EditorSupportSchema;
+//  export interface AutocompleteSchema extends EditorSupportSchema {};
+
+ /**
+  * EditorApi docs
+  */
+// export type EditorApi = BaseEditorApi;
+//  export interface EditorApi extends BaseEditorApi {};
+
+// /**
+//  * @property schema {@link cypher-editor-support.EditorSupportSchema }
+//  * @property foo string
+//  */
+// export interface MyFooType {
+//   schema?: EditorSupportSchema;
+//   foo?: string;
+// };
+// // export type MyFooType = {
+// //   /** that comment is ignored */
+// //   schema:? string;
+// // };
+
+/**
+ * Docs for CypherEditorProps.
+ * 
+ * @example
+ * Here's some example code using the props:
+ *
+ * ```ts
+ * const props = { autocomplete: false };
+ * <CypherEditor {...props} />
+ * ```
+ */
 export interface CypherEditorProps {
+/**
+ * Whether autocomplete is enabled.
+ *
+ * @defaultValue `true`
+ */
   autocomplete?: boolean;
+/**
+ * Whether autocomplete is closed when the editor loses focus.
+ *
+ * @defaultValue `true`
+ */
   autocompleteCloseOnBlur?: boolean;
+/**
+ * Whether the autocomplete window is open.
+ * Changing this can be used to manually control the autocomplete open state.
+ *
+ * @defaultValue `false`
+ */
   autocompleteOpen?: boolean;
+// /**
+//  * The autocomplete schema to use when showing autocomplete suggestions.
+//  * 
+//  * {@link cypher-editor-support.EditorSupportSchema } SCHEMA
+//  * 
+//  * @typeParam {@link cypher-editor-support.EditorSupportSchema }
+//  * 
+//  * @defaultValue `undefined`
+//  */
+/**
+ * The autocomplete schema to use when showing autocomplete suggestions.
+ * 
+ * @defaultValue `undefined`
+ */
   autocompleteSchema?: EditorSupportSchema;
   autocompleteTriggerStrings?: string[];
   autofocusProps?: AutofocusProp[];
@@ -51,10 +118,13 @@ export interface CypherEditorProps {
   // TODO - add these props
   // preExtensions?: Extension[],
   // postExtensions?: Extension[]
-}
+};
 
+/**
+ * Cypher Editor Svelte Component
+ */
 export default class CypherEditor extends SvelteComponentTyped<
   CypherEditorProps,
   {},
   {}
-> {}
+> {};

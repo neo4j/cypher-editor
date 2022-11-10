@@ -52,6 +52,4 @@ export interface CypherEditorProps {
   // postExtensions?: Extension[]
 }
 
-declare class CypherEditor extends React.Component<CypherEditorProps, any> {}
-
-export default CypherEditor;
+export default class CypherEditor extends React.Component<CypherEditorProps, any> {}

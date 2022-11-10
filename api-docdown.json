@@ -1,0 +1,24 @@
+{
+  "docRootDir": ".",
+  "docApiDir": "docs/apis",
+  "docMarkdownDir": "docs/generated",
+
+  "generateApi": false,
+
+  "operation": "generate",
+  "showInheritedMembers": false,
+  "newlineKind": "crlf",
+
+  "markdownOptions": {
+    "fileLevel": "all",
+    "indexFilename": "index",
+    "indexTitle": "API Reference",
+    "indexBreadcrumbTitle": "Home",
+    "showPropertyDefaults": true,
+    "hideEmptyTableColumns": true,
+    "showBreadcrumb": true
+  },
+
+  "includePackageNames": [],
+  "excludePackageNames": ["cypher-antlr4*", "cypher-extract-statements", "demo-*"]
+}

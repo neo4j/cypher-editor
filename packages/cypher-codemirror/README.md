@@ -4,7 +4,7 @@ This package provides a variety of extensions to enable cypher language support 
 
 This package exports those extensions, and provides a convenience method to create an editor with the following API:
 
-```
+```js
 // import { EditorView } from 'codemirror';
 // import { CypherEditorSupport } from 'cypher-editor-support';
 

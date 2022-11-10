@@ -51,6 +51,6 @@ export interface CypherEditorProps {
   // codemirrorOptions: any
 }
 
-declare class CypherEditor extends React.Component<CypherEditorProps, any> {}
+export default class CypherEditor extends React.Component<CypherEditorProps, any> {}
 
-export default CypherEditor;
+// export default CypherEditor;

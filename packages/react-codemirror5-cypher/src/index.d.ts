@@ -1,1 +1,1 @@
-export { default as CypherEditor } from "./CypherEditor";
+export { default as CypherEditor, CypherEditorProps } from "./CypherEditor";

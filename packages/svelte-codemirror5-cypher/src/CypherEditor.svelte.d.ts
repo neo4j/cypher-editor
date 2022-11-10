@@ -2,6 +2,7 @@
 import type { SvelteComponentTyped } from "svelte";
 import type { EditorChange } from "codemirror";
 import type { EditorSupportSchema } from "cypher-editor-support";
+// import type { EditorApi as BaseEditorApi } from "cypher-codemirror5";
 import type { EditorApi } from "cypher-codemirror5";
 import type {
   ScrollInfo,
@@ -12,7 +13,33 @@ import type {
   AutofocusProp
 } from "cypher-codemirror-base";
 
+/**
+ * AutocompleteSchema docs
+ */
+// export interface AutocompleteSchema extends EditorSupportSchema {};
+
+/**
+ * EditorApi docs
+ */
+// export interface EditorApi extends BaseEditorApi {};
+
+/**
+ * Docs for CypherEditorProps.
+ * 
+ * @example
+ * Here's some example code using the props:
+ *
+ * ```ts
+ * const props = { autocomplete: false };
+ * <CypherEditor {...props} />
+ * ```
+ */
 export interface CypherEditorProps {
+/**
+ * Whether autocomplete is enabled.
+ *
+ * @defaultValue `true`
+ */
   autocomplete?: boolean;
   autocompleteCloseOnBlur?: boolean;
   autocompleteOpen?: boolean;
@@ -52,6 +79,9 @@ export interface CypherEditorProps {
   // codemirrorOptions: any
 }
 
+/**
+ * Cypher Editor Svelte Component
+ */
 export default class CypherEditor extends SvelteComponentTyped<
   CypherEditorProps,
   {},
