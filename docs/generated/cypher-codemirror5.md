@@ -4,7 +4,7 @@
 
 ## cypher-codemirror5 package
 
-<br>
+---
 
 ### Interfaces:
 
@@ -12,8 +12,6 @@
 |  --- |
 |  [EditorApi](#editorapi) |
 |  [EditorOptions](#editoroptions) |
-
-<br>
 
 <a name="editorapi"></a>
 
@@ -27,8 +25,6 @@ export interface EditorApi
 ```
 <b>Extends:</b> Omit&lt;[BaseEditorApi](./cypher-codemirror-base.md#baseeditorapi)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
-<br>
-
 #### Properties:
 
 |  Property | Type |
@@ -36,8 +32,6 @@ export interface EditorApi
 |  [codemirror](#editorapi.codemirror) | Editor |
 |  [offValueChanged](#editorapi.offvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; void |
 |  [onValueChanged](#editorapi.onvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; () =&gt; void |
-
-<br>
 
 <a name="editorapi.codemirror"></a>
 
@@ -49,8 +43,6 @@ export interface EditorApi
 codemirror: Editor;
 ```
 
-<br>
-
 <a name="editorapi.offvaluechanged"></a>
 
 #### EditorApi.offValueChanged property
@@ -61,8 +53,6 @@ codemirror: Editor;
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
 
-<br>
-
 <a name="editorapi.onvaluechanged"></a>
 
 #### EditorApi.onValueChanged property
@@ -72,8 +62,6 @@ offValueChanged: (listener: ValueChangedListener) => void;
 ```typescript
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
-
-<br>
 
 <a name="editoroptions"></a>
 
@@ -86,15 +74,11 @@ export interface EditorOptions extends BaseEditorOptions
 ```
 <b>Extends:</b> [BaseEditorOptions](./cypher-codemirror-base.md#baseeditoroptions)
 
-<br>
-
 #### Properties:
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [codemirrorOptions?](#editoroptions.codemirroroptions) | any | <i>(Optional)</i> |
-
-<br>
 
 <a name="editoroptions.codemirroroptions"></a>
 
@@ -106,7 +90,7 @@ export interface EditorOptions extends BaseEditorOptions
 codemirrorOptions?: any;
 ```
 
-<br>
+---
 
 ### Type Aliases:
 
@@ -114,8 +98,6 @@ codemirrorOptions?: any;
 |  --- |
 |  [createCypherEditor](#createcyphereditor) |
 |  [ValueChangedListener](#valuechangedlistener) |
-
-<br>
 
 <a name="createcyphereditor"></a>
 
@@ -131,8 +113,6 @@ export type createCypherEditor = (
 ```
 <b>References:</b> [EditorOptions](#editoroptions)<!-- -->, [EditorApi](#editorapi)
 
-<br>
-
 <a name="valuechangedlistener"></a>
 
 ### ValueChangedListener type
@@ -145,3 +125,6 @@ export type ValueChangedListener = (
   changes: EditorChange
 ) => void;
 ```
+
+---
+

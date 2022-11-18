@@ -14,6 +14,8 @@ export interface EditorApi
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
@@ -21,6 +23,8 @@ export interface EditorApi
 |  [codemirror](#codemirror) | Editor |
 |  [offValueChanged](#offvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror5.valuechangedlistener.md)<!-- -->) =&gt; void |
 |  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror5.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+
+<br>
 
 <a name="codemirror"></a>
 
@@ -32,6 +36,8 @@ export interface EditorApi
 codemirror: Editor;
 ```
 
+<br>
+
 <a name="offvaluechanged"></a>
 
 ### EditorApi.offValueChanged property
@@ -41,6 +47,8 @@ codemirror: Editor;
 ```typescript
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
+
+<br>
 
 <a name="onvaluechanged"></a>
 

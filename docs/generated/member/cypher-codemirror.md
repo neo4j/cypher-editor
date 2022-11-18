@@ -4,17 +4,22 @@
 
 ## cypher-codemirror package
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [createCypherEditor(parentDOMElement, options)](./cypher-codemirror.createcyphereditor.md) | This is the createCypherEditor function |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi |
-|  [EditorOptions](./cypher-codemirror.editoroptions.md) | This is the EditorOptions |
+|  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi which wraps all of the interaction with the cypher editor |
+|  [EditorOptions](./cypher-codemirror.editoroptions.md) | These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [createCypherEditor](./cypher-codemirror.createcyphereditor.md) | This is the createCypherEditor function |
-|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This is the ValueChangedListener |
+|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This listener is fired when the value of the cypher editor is changed |
 

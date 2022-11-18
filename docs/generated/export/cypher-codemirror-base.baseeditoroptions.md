@@ -12,6 +12,8 @@ export interface BaseEditorOptions
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
@@ -35,6 +37,8 @@ export interface BaseEditorOptions
 |  [theme?](#theme) | [Theme](./cypher-codemirror-base.theme.md) | <i>(Optional)</i> |
 |  [value?](#value) | string | <i>(Optional)</i> |
 
+<br>
+
 <a name="autocomplete"></a>
 
 ### BaseEditorOptions.autocomplete property
@@ -44,6 +48,8 @@ export interface BaseEditorOptions
 ```typescript
 autocomplete?: boolean;
 ```
+
+<br>
 
 <a name="autocompletecloseonblur"></a>
 
@@ -55,6 +61,8 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
+<br>
+
 <a name="autocompleteopen"></a>
 
 ### BaseEditorOptions.autocompleteOpen property
@@ -64,6 +72,8 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+<br>
 
 <a name="autocompleteschema"></a>
 
@@ -75,6 +85,8 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
+<br>
+
 <a name="autocompletetriggerstrings"></a>
 
 ### BaseEditorOptions.autocompleteTriggerStrings property
@@ -84,6 +96,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="autofocus"></a>
 
@@ -95,6 +109,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="history"></a>
 
 ### BaseEditorOptions.history property
@@ -104,6 +120,8 @@ autofocus?: boolean;
 ```typescript
 history?: boolean;
 ```
+
+<br>
 
 <a name="linenumberformatter"></a>
 
@@ -115,6 +133,8 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
+<br>
+
 <a name="linenumbers"></a>
 
 ### BaseEditorOptions.lineNumbers property
@@ -124,6 +144,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
+
+<br>
 
 <a name="linewrapping"></a>
 
@@ -135,6 +157,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="lint"></a>
 
 ### BaseEditorOptions.lint property
@@ -144,6 +168,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="parseonsetvalue"></a>
 
@@ -155,6 +181,8 @@ lint?: boolean;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="placeholder"></a>
 
 ### BaseEditorOptions.placeholder property
@@ -164,6 +192,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="position"></a>
 
@@ -175,6 +205,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="readonly"></a>
 
 ### BaseEditorOptions.readOnly property
@@ -184,6 +216,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="readonlycursor"></a>
 
@@ -195,6 +229,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="theme"></a>
 
 ### BaseEditorOptions.theme property
@@ -204,6 +240,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="value"></a>
 

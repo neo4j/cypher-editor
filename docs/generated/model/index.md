@@ -23,18 +23,55 @@
 
 ### cypher-codemirror package
 
+<br>
+
+#### Functions:
+
+|  Function | Description |
+|  --- | --- |
+|  [createCypherEditor(parentDOMElement, options)](#cypher-codemirror.createcyphereditor) | This is the createCypherEditor function |
+
+<br>
+
+<a name="cypher-codemirror.createcyphereditor"></a>
+
+#### createCypherEditor() function
+
+This is the createCypherEditor function
+
+<b>Signature:</b>
+
+```typescript
+export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions): EditorApi;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  parentDOMElement | Element \| DocumentFragment |
+|  options | [EditorOptions](#cypher-codemirror.editoroptions) |
+
+<b>Returns:</b>
+
+[EditorApi](#cypher-codemirror.editorapi)
+
+<br>
+
 #### Interfaces:
 
 |  Interface | Description |
 |  --- | --- |
-|  [EditorApi](#cypher-codemirror.editorapi) | This is the EditorApi |
-|  [EditorOptions](#cypher-codemirror.editoroptions) | This is the EditorOptions |
+|  [EditorApi](#cypher-codemirror.editorapi) | This is the EditorApi which wraps all of the interaction with the cypher editor |
+|  [EditorOptions](#cypher-codemirror.editoroptions) | These are the options for the [createCypherEditor](#cypher-codemirror.createcyphereditor) function |
+
+<br>
 
 <a name="cypher-codemirror.editorapi"></a>
 
 #### EditorApi interface
 
-This is the EditorApi
+This is the EditorApi which wraps all of the interaction with the cypher editor
 
 <b>Signature:</b>
 
@@ -44,6 +81,7 @@ export interface EditorApi
 ```
 <b>Extends:</b> Omit&lt;[BaseEditorApi](#cypher-codemirror-base.baseeditorapi)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -53,6 +91,8 @@ export interface EditorApi
 |  [onValueChanged](#cypher-codemirror.editorapi.onvaluechanged) | (listener: [ValueChangedListener](#cypher-codemirror.valuechangedlistener)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
 |  [setPostExtensions](#cypher-codemirror.editorapi.setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
 |  [setPreExtensions](#cypher-codemirror.editorapi.setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
+
+<br>
 
 <a name="cypher-codemirror.editorapi.codemirror"></a>
 
@@ -64,6 +104,8 @@ export interface EditorApi
 codemirror: EditorView;
 ```
 
+<br>
+
 <a name="cypher-codemirror.editorapi.offvaluechanged"></a>
 
 #### EditorApi.offValueChanged property
@@ -73,6 +115,8 @@ codemirror: EditorView;
 ```typescript
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror.editorapi.onvaluechanged"></a>
 
@@ -86,6 +130,8 @@ ON VALUE CHANGED
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror.editorapi.setpostextensions"></a>
 
 #### EditorApi.setPostExtensions property
@@ -95,6 +141,8 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 ```typescript
 setPostExtensions: (preExtensions: Extension[]) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror.editorapi.setpreextensions"></a>
 
@@ -106,11 +154,13 @@ setPostExtensions: (preExtensions: Extension[]) => void;
 setPreExtensions: (preExtensions: Extension[]) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror.editoroptions"></a>
 
 #### EditorOptions interface
 
-This is the EditorOptions
+These are the options for the [createCypherEditor](#cypher-codemirror.createcyphereditor) function
 
 <b>Signature:</b>
 
@@ -119,12 +169,15 @@ export interface EditorOptions extends BaseEditorOptions
 ```
 <b>Extends:</b> [BaseEditorOptions](#cypher-codemirror-base.baseeditoroptions)
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [postExtensions?](#cypher-codemirror.editoroptions.postextensions) | Extension\[\] | <i>(Optional)</i> |
 |  [preExtensions?](#cypher-codemirror.editoroptions.preextensions) | Extension\[\] | <i>(Optional)</i> |
+
+<br>
 
 <a name="cypher-codemirror.editoroptions.postextensions"></a>
 
@@ -136,6 +189,8 @@ export interface EditorOptions extends BaseEditorOptions
 postExtensions?: Extension[];
 ```
 
+<br>
+
 <a name="cypher-codemirror.editoroptions.preextensions"></a>
 
 #### EditorOptions.preExtensions property
@@ -146,34 +201,21 @@ postExtensions?: Extension[];
 preExtensions?: Extension[];
 ```
 
+<br>
+
 #### Type Aliases:
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [createCypherEditor](#cypher-codemirror.createcyphereditor) | This is the createCypherEditor function |
-|  [ValueChangedListener](#cypher-codemirror.valuechangedlistener) | This is the ValueChangedListener |
+|  [ValueChangedListener](#cypher-codemirror.valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
 
-<a name="cypher-codemirror.createcyphereditor"></a>
-
-#### createCypherEditor type
-
-This is the createCypherEditor function
-
-<b>Signature:</b>
-
-```typescript
-export type createCypherEditor = (
-  parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions
-) => EditorApi;
-```
-<b>References:</b> [EditorOptions](#cypher-codemirror.editoroptions)<!-- -->, [EditorApi](#cypher-codemirror.editorapi)
+<br>
 
 <a name="cypher-codemirror.valuechangedlistener"></a>
 
 #### ValueChangedListener type
 
-This is the ValueChangedListener
+This listener is fired when the value of the cypher editor is changed
 
 <b>Signature:</b>
 
@@ -185,6 +227,8 @@ export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 
 ### cypher-codemirror-base package
 
+<br>
+
 #### Interfaces:
 
 |  Interface |
@@ -193,6 +237,8 @@ export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 |  [BaseEditorApi](#cypher-codemirror-base.baseeditorapi) |
 |  [BaseEditorOptions](#cypher-codemirror-base.baseeditoroptions) |
 |  [ScrollInfo](#cypher-codemirror-base.scrollinfo) |
+
+<br>
 
 <a name="cypher-codemirror-base.autocompleteoption"></a>
 
@@ -203,6 +249,8 @@ export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 ```typescript
 export interface AutocompleteOption 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -210,6 +258,8 @@ export interface AutocompleteOption
 |  [detail?](#cypher-codemirror-base.autocompleteoption.detail) | string | <i>(Optional)</i> |
 |  [label](#cypher-codemirror-base.autocompleteoption.label) | string |  |
 |  [type?](#cypher-codemirror-base.autocompleteoption.type) | string | <i>(Optional)</i> |
+
+<br>
 
 <a name="cypher-codemirror-base.autocompleteoption.detail"></a>
 
@@ -221,6 +271,8 @@ export interface AutocompleteOption
 detail?: string;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.autocompleteoption.label"></a>
 
 #### AutocompleteOption.label property
@@ -230,6 +282,8 @@ detail?: string;
 ```typescript
 label: string;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.autocompleteoption.type"></a>
 
@@ -241,6 +295,8 @@ label: string;
 type?: string;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi"></a>
 
 #### BaseEditorApi interface
@@ -250,6 +306,8 @@ type?: string;
 ```typescript
 export interface BaseEditorApi 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
@@ -293,6 +351,8 @@ export interface BaseEditorApi
 |  [setTheme](#cypher-codemirror-base.baseeditorapi.settheme) | (theme: [Theme](#cypher-codemirror-base.theme)<!-- -->) =&gt; void |
 |  [setValue](#cypher-codemirror-base.baseeditorapi.setvalue) | (value: string, parseOnSetValue?: boolean) =&gt; void |
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.clearhistory"></a>
 
 #### BaseEditorApi.clearHistory property
@@ -302,6 +362,8 @@ export interface BaseEditorApi
 ```typescript
 clearHistory: () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.destroy"></a>
 
@@ -313,6 +375,8 @@ clearHistory: () => void;
 destroy: () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.editorsupport"></a>
 
 #### BaseEditorApi.editorSupport property
@@ -322,6 +386,8 @@ destroy: () => void;
 ```typescript
 editorSupport: CypherEditorSupport;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.focus"></a>
 
@@ -333,6 +399,8 @@ editorSupport: CypherEditorSupport;
 focus: () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.getlinecount"></a>
 
 #### BaseEditorApi.getLineCount property
@@ -342,6 +410,8 @@ focus: () => void;
 ```typescript
 getLineCount: () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.getposition"></a>
 
@@ -353,6 +423,8 @@ getLineCount: () => void;
 getPosition: () => PositionObject;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.getpositionforvalue"></a>
 
 #### BaseEditorApi.getPositionForValue property
@@ -362,6 +434,8 @@ getPosition: () => PositionObject;
 ```typescript
 getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.offautocompletechanged"></a>
 
@@ -373,6 +447,8 @@ getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
 offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.offfocuschanged"></a>
 
 #### BaseEditorApi.offFocusChanged property
@@ -382,6 +458,8 @@ offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
 ```typescript
 offFocusChanged: (listener: FocusChangedListener) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.offkeydown"></a>
 
@@ -393,6 +471,8 @@ offFocusChanged: (listener: FocusChangedListener) => void;
 offKeyDown: (listener: KeyDownListener) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.offlinenumberclick"></a>
 
 #### BaseEditorApi.offLineNumberClick property
@@ -402,6 +482,8 @@ offKeyDown: (listener: KeyDownListener) => void;
 ```typescript
 offLineNumberClick: (listener: LineNumberClickListener) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.offpositionchanged"></a>
 
@@ -413,6 +495,8 @@ offLineNumberClick: (listener: LineNumberClickListener) => void;
 offPositionChanged: (listener: PositionChangedListener) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.offscrollchanged"></a>
 
 #### BaseEditorApi.offScrollChanged property
@@ -422,6 +506,8 @@ offPositionChanged: (listener: PositionChangedListener) => void;
 ```typescript
 offScrollChanged: (listener: ScrollChangedListener) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.offvaluechanged"></a>
 
@@ -433,6 +519,8 @@ offScrollChanged: (listener: ScrollChangedListener) => void;
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.onautocompletechanged"></a>
 
 #### BaseEditorApi.onAutocompleteChanged property
@@ -442,6 +530,8 @@ offValueChanged: (listener: ValueChangedListener) => void;
 ```typescript
 onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.onfocuschanged"></a>
 
@@ -453,6 +543,8 @@ onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
 onFocusChanged: (listener: FocusChangedListener) => () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.onkeydown"></a>
 
 #### BaseEditorApi.onKeyDown property
@@ -462,6 +554,8 @@ onFocusChanged: (listener: FocusChangedListener) => () => void;
 ```typescript
 onKeyDown: (listener: KeyDownListener) => () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.onlinenumberclick"></a>
 
@@ -473,6 +567,8 @@ onKeyDown: (listener: KeyDownListener) => () => void;
 onLineNumberClick: (listener: LineNumberClickListener) => () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.onpositionchanged"></a>
 
 #### BaseEditorApi.onPositionChanged property
@@ -482,6 +578,8 @@ onLineNumberClick: (listener: LineNumberClickListener) => () => void;
 ```typescript
 onPositionChanged: (listener: PositionChangedListener) => () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.onscrollchanged"></a>
 
@@ -493,6 +591,8 @@ onPositionChanged: (listener: PositionChangedListener) => () => void;
 onScrollChanged: (listener: ScrollChangedListener) => () => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.onvaluechanged"></a>
 
 #### BaseEditorApi.onValueChanged property
@@ -502,6 +602,8 @@ onScrollChanged: (listener: ScrollChangedListener) => () => void;
 ```typescript
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.selectautocompleteoption"></a>
 
@@ -513,6 +615,8 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setautocomplete"></a>
 
 #### BaseEditorApi.setAutocomplete property
@@ -522,6 +626,8 @@ selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
 ```typescript
 setAutocomplete: (autocomplete: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setautocompletecloseonblur"></a>
 
@@ -533,6 +639,8 @@ setAutocomplete: (autocomplete: boolean) => void;
 setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setautocompleteopen"></a>
 
 #### BaseEditorApi.setAutocompleteOpen property
@@ -542,6 +650,8 @@ setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
 ```typescript
 setAutocompleteOpen: (autocompleteOpen: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setautocompleteschema"></a>
 
@@ -553,6 +663,8 @@ setAutocompleteOpen: (autocompleteOpen: boolean) => void;
 setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setautocompletetriggerstrings"></a>
 
 #### BaseEditorApi.setAutocompleteTriggerStrings property
@@ -563,6 +675,8 @@ setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
 setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.sethistory"></a>
 
 #### BaseEditorApi.setHistory property
@@ -572,6 +686,8 @@ setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
 ```typescript
 setHistory: (history: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setlinenumberformatter"></a>
 
@@ -585,6 +701,8 @@ setLineNumberFormatter: (
   ) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setlinenumbers"></a>
 
 #### BaseEditorApi.setLineNumbers property
@@ -594,6 +712,8 @@ setLineNumberFormatter: (
 ```typescript
 setLineNumbers: (lineNumbers: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setlinewrapping"></a>
 
@@ -605,6 +725,8 @@ setLineNumbers: (lineNumbers: boolean) => void;
 setLineWrapping: (lineWrapping: boolean) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setlint"></a>
 
 #### BaseEditorApi.setLint property
@@ -614,6 +736,8 @@ setLineWrapping: (lineWrapping: boolean) => void;
 ```typescript
 setLint: (lint: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setplaceholder"></a>
 
@@ -625,6 +749,8 @@ setLint: (lint: boolean) => void;
 setPlaceholder: (placeholder: string | undefined) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setposition"></a>
 
 #### BaseEditorApi.setPosition property
@@ -634,6 +760,8 @@ setPlaceholder: (placeholder: string | undefined) => void;
 ```typescript
 setPosition: (position: PositionAny) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.setreadonly"></a>
 
@@ -645,6 +773,8 @@ setPosition: (position: PositionAny) => void;
 setReadOnly: (readOnly: boolean) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setreadonlycursor"></a>
 
 #### BaseEditorApi.setReadOnlyCursor property
@@ -654,6 +784,8 @@ setReadOnly: (readOnly: boolean) => void;
 ```typescript
 setReadOnlyCursor: (readOnlyCursor: boolean) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditorapi.settheme"></a>
 
@@ -665,6 +797,8 @@ setReadOnlyCursor: (readOnlyCursor: boolean) => void;
 setTheme: (theme: Theme) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditorapi.setvalue"></a>
 
 #### BaseEditorApi.setValue property
@@ -675,6 +809,8 @@ setTheme: (theme: Theme) => void;
 setValue: (value: string, parseOnSetValue?: boolean) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions"></a>
 
 #### BaseEditorOptions interface
@@ -684,6 +820,8 @@ setValue: (value: string, parseOnSetValue?: boolean) => void;
 ```typescript
 export interface BaseEditorOptions 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -707,6 +845,8 @@ export interface BaseEditorOptions
 |  [theme?](#cypher-codemirror-base.baseeditoroptions.theme) | [Theme](#cypher-codemirror-base.theme) | <i>(Optional)</i> |
 |  [value?](#cypher-codemirror-base.baseeditoroptions.value) | string | <i>(Optional)</i> |
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.autocomplete"></a>
 
 #### BaseEditorOptions.autocomplete property
@@ -716,6 +856,8 @@ export interface BaseEditorOptions
 ```typescript
 autocomplete?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.autocompletecloseonblur"></a>
 
@@ -727,6 +869,8 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.autocompleteopen"></a>
 
 #### BaseEditorOptions.autocompleteOpen property
@@ -736,6 +880,8 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.autocompleteschema"></a>
 
@@ -747,6 +893,8 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.autocompletetriggerstrings"></a>
 
 #### BaseEditorOptions.autocompleteTriggerStrings property
@@ -756,6 +904,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.autofocus"></a>
 
@@ -767,6 +917,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.history"></a>
 
 #### BaseEditorOptions.history property
@@ -776,6 +928,8 @@ autofocus?: boolean;
 ```typescript
 history?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.linenumberformatter"></a>
 
@@ -787,6 +941,8 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.linenumbers"></a>
 
 #### BaseEditorOptions.lineNumbers property
@@ -796,6 +952,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.linewrapping"></a>
 
@@ -807,6 +965,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.lint"></a>
 
 #### BaseEditorOptions.lint property
@@ -816,6 +976,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.parseonsetvalue"></a>
 
@@ -827,6 +989,8 @@ lint?: boolean;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.placeholder"></a>
 
 #### BaseEditorOptions.placeholder property
@@ -836,6 +1000,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.position"></a>
 
@@ -847,6 +1013,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.readonly"></a>
 
 #### BaseEditorOptions.readOnly property
@@ -856,6 +1024,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.readonlycursor"></a>
 
@@ -867,6 +1037,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.baseeditoroptions.theme"></a>
 
 #### BaseEditorOptions.theme property
@@ -876,6 +1048,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.baseeditoroptions.value"></a>
 
@@ -887,6 +1061,8 @@ theme?: Theme;
 value?: string;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.scrollinfo"></a>
 
 #### ScrollInfo interface
@@ -896,6 +1072,8 @@ value?: string;
 ```typescript
 export interface ScrollInfo 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
@@ -907,6 +1085,8 @@ export interface ScrollInfo
 |  [scrollTop](#cypher-codemirror-base.scrollinfo.scrolltop) | number |
 |  [scrollWidth](#cypher-codemirror-base.scrollinfo.scrollwidth) | number |
 
+<br>
+
 <a name="cypher-codemirror-base.scrollinfo.clientheight"></a>
 
 #### ScrollInfo.clientHeight property
@@ -916,6 +1096,8 @@ export interface ScrollInfo
 ```typescript
 clientHeight: number;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.scrollinfo.clientwidth"></a>
 
@@ -927,6 +1109,8 @@ clientHeight: number;
 clientWidth: number;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.scrollinfo.scrollheight"></a>
 
 #### ScrollInfo.scrollHeight property
@@ -936,6 +1120,8 @@ clientWidth: number;
 ```typescript
 scrollHeight: number;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.scrollinfo.scrollleft"></a>
 
@@ -947,6 +1133,8 @@ scrollHeight: number;
 scrollLeft: number;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.scrollinfo.scrolltop"></a>
 
 #### ScrollInfo.scrollTop property
@@ -957,6 +1145,8 @@ scrollLeft: number;
 scrollTop: number;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.scrollinfo.scrollwidth"></a>
 
 #### ScrollInfo.scrollWidth property
@@ -966,6 +1156,8 @@ scrollTop: number;
 ```typescript
 scrollWidth: number;
 ```
+
+<br>
 
 #### Type Aliases:
 
@@ -984,6 +1176,8 @@ scrollWidth: number;
 |  [Theme](#cypher-codemirror-base.theme) |
 |  [ValueChangedListener](#cypher-codemirror-base.valuechangedlistener) |
 
+<br>
+
 <a name="cypher-codemirror-base.autocompletechangedlistener"></a>
 
 #### AutocompleteChangedListener type
@@ -999,6 +1193,8 @@ export type AutocompleteChangedListener = (
 ```
 <b>References:</b> [AutocompleteOption](#cypher-codemirror-base.autocompleteoption)
 
+<br>
+
 <a name="cypher-codemirror-base.autofocusprop"></a>
 
 #### AutofocusProp type
@@ -1008,6 +1204,8 @@ export type AutocompleteChangedListener = (
 ```typescript
 export type AutofocusProp = "position" | "readOnly" | "value";
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.focuschangedlistener"></a>
 
@@ -1019,6 +1217,8 @@ export type AutofocusProp = "position" | "readOnly" | "value";
 export type FocusChangedListener = (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.keydownlistener"></a>
 
 #### KeyDownListener type
@@ -1028,6 +1228,8 @@ export type FocusChangedListener = (focused: boolean) => void;
 ```typescript
 export type KeyDownListener = (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.linenumberclicklistener"></a>
 
@@ -1042,6 +1244,8 @@ export type LineNumberClickListener = (
 ) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.partialpositionobject"></a>
 
 #### PartialPositionObject type
@@ -1055,6 +1259,8 @@ export type PartialPositionObject = {
 };
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.positionany"></a>
 
 #### PositionAny type
@@ -1066,6 +1272,8 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 ```
 <b>References:</b> [PositionObject](#cypher-codemirror-base.positionobject)<!-- -->, [PartialPositionObject](#cypher-codemirror-base.partialpositionobject)
 
+<br>
+
 <a name="cypher-codemirror-base.positionchangedlistener"></a>
 
 #### PositionChangedListener type
@@ -1076,6 +1284,8 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 export type PositionChangedListener = (position: PositionObject) => void;
 ```
 <b>References:</b> [PositionObject](#cypher-codemirror-base.positionobject)
+
+<br>
 
 <a name="cypher-codemirror-base.positionobject"></a>
 
@@ -1091,6 +1301,8 @@ export type PositionObject = {
 };
 ```
 
+<br>
+
 <a name="cypher-codemirror-base.scrollchangedlistener"></a>
 
 #### ScrollChangedListener type
@@ -1102,6 +1314,8 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 ```
 <b>References:</b> [ScrollInfo](#cypher-codemirror-base.scrollinfo)
 
+<br>
+
 <a name="cypher-codemirror-base.theme"></a>
 
 #### Theme type
@@ -1111,6 +1325,8 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 ```typescript
 export type Theme = "light" | "dark";
 ```
+
+<br>
 
 <a name="cypher-codemirror-base.valuechangedlistener"></a>
 
@@ -1126,12 +1342,16 @@ export type ValueChangedListener = (value: string, changes: any) => void;
 
 ### cypher-codemirror5 package
 
+<br>
+
 #### Interfaces:
 
 |  Interface |
 |  --- |
 |  [EditorApi](#cypher-codemirror5.editorapi) |
 |  [EditorOptions](#cypher-codemirror5.editoroptions) |
+
+<br>
 
 <a name="cypher-codemirror5.editorapi"></a>
 
@@ -1145,6 +1365,7 @@ export interface EditorApi
 ```
 <b>Extends:</b> Omit&lt;[BaseEditorApi](#cypher-codemirror-base.baseeditorapi)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
@@ -1152,6 +1373,8 @@ export interface EditorApi
 |  [codemirror](#cypher-codemirror5.editorapi.codemirror) | Editor |
 |  [offValueChanged](#cypher-codemirror5.editorapi.offvaluechanged) | (listener: [ValueChangedListener](#cypher-codemirror5.valuechangedlistener)<!-- -->) =&gt; void |
 |  [onValueChanged](#cypher-codemirror5.editorapi.onvaluechanged) | (listener: [ValueChangedListener](#cypher-codemirror5.valuechangedlistener)<!-- -->) =&gt; () =&gt; void |
+
+<br>
 
 <a name="cypher-codemirror5.editorapi.codemirror"></a>
 
@@ -1163,6 +1386,8 @@ export interface EditorApi
 codemirror: Editor;
 ```
 
+<br>
+
 <a name="cypher-codemirror5.editorapi.offvaluechanged"></a>
 
 #### EditorApi.offValueChanged property
@@ -1173,6 +1398,8 @@ codemirror: Editor;
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
 
+<br>
+
 <a name="cypher-codemirror5.editorapi.onvaluechanged"></a>
 
 #### EditorApi.onValueChanged property
@@ -1182,6 +1409,8 @@ offValueChanged: (listener: ValueChangedListener) => void;
 ```typescript
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
+
+<br>
 
 <a name="cypher-codemirror5.editoroptions"></a>
 
@@ -1194,11 +1423,14 @@ export interface EditorOptions extends BaseEditorOptions
 ```
 <b>Extends:</b> [BaseEditorOptions](#cypher-codemirror-base.baseeditoroptions)
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [codemirrorOptions?](#cypher-codemirror5.editoroptions.codemirroroptions) | any | <i>(Optional)</i> |
+
+<br>
 
 <a name="cypher-codemirror5.editoroptions.codemirroroptions"></a>
 
@@ -1210,12 +1442,16 @@ export interface EditorOptions extends BaseEditorOptions
 codemirrorOptions?: any;
 ```
 
+<br>
+
 #### Type Aliases:
 
 |  Type Alias |
 |  --- |
 |  [createCypherEditor](#cypher-codemirror5.createcyphereditor) |
 |  [ValueChangedListener](#cypher-codemirror5.valuechangedlistener) |
+
+<br>
 
 <a name="cypher-codemirror5.createcyphereditor"></a>
 
@@ -1230,6 +1466,8 @@ export type createCypherEditor = (
 ) => EditorApi;
 ```
 <b>References:</b> [EditorOptions](#cypher-codemirror5.editoroptions)<!-- -->, [EditorApi](#cypher-codemirror5.editorapi)
+
+<br>
 
 <a name="cypher-codemirror5.valuechangedlistener"></a>
 
@@ -1248,11 +1486,15 @@ export type ValueChangedListener = (
 
 ### cypher-editor-support package
 
+<br>
+
 #### Classes:
 
 |  Class |
 |  --- |
 |  [CypherEditorSupport](#cypher-editor-support.cyphereditorsupport) |
+
+<br>
 
 <a name="cypher-editor-support.cyphereditorsupport"></a>
 
@@ -1263,11 +1505,15 @@ export type ValueChangedListener = (
 ```typescript
 export class CypherEditorSupport 
 ```
+
+<br>
 <b>Constructors:</b>
 
 |  Constructor | Description |
 |  --- | --- |
 |  [(constructor)(input)](#cypher-editor-support.cyphereditorsupport.(constructor)) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+
+<br>
 
 <a name="cypher-editor-support.cyphereditorsupport.(constructor)"></a>
 
@@ -1286,6 +1532,7 @@ constructor(input: string);
 |  --- | --- |
 |  input | string |
 
+<br>
 <b>Methods:</b>
 
 |  Method |
@@ -1293,6 +1540,8 @@ constructor(input: string);
 |  [getCompletion(line, column, doFilter)](#cypher-editor-support.cyphereditorsupport.getcompletion) |
 |  [setSchema(schema)](#cypher-editor-support.cyphereditorsupport.setschema) |
 |  [update(input)](#cypher-editor-support.cyphereditorsupport.update) |
+
+<br>
 
 <a name="cypher-editor-support.cyphereditorsupport.getcompletion"></a>
 
@@ -1323,6 +1572,8 @@ getCompletion(
 
 { from: [EditorSupportPosition](#cypher-editor-support.editorsupportposition)<!-- -->; to: [EditorSupportPosition](#cypher-editor-support.editorsupportposition)<!-- -->; items: [EditorSupportCompletionItem](#cypher-editor-support.editorsupportcompletionitem)<!-- -->\[\]; }
 
+<br>
+
 <a name="cypher-editor-support.cyphereditorsupport.setschema"></a>
 
 #### CypherEditorSupport.setSchema() method
@@ -1341,6 +1592,8 @@ setSchema(schema: EditorSupportSchema): void;
 <b>Returns:</b>
 
 void
+
+<br>
 
 <a name="cypher-editor-support.cyphereditorsupport.update"></a>
 
@@ -1361,6 +1614,8 @@ update(input: string): void;
 
 void
 
+<br>
+
 #### Interfaces:
 
 |  Interface | Description |
@@ -1372,6 +1627,8 @@ void
 |  [FunctionSchema](#cypher-editor-support.functionschema) |  |
 |  [ProcedureSchema](#cypher-editor-support.procedureschema) |  |
 
+<br>
+
 <a name="cypher-editor-support.consolecommand"></a>
 
 #### ConsoleCommand interface
@@ -1381,6 +1638,8 @@ void
 ```typescript
 export interface ConsoleCommand 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -1388,6 +1647,8 @@ export interface ConsoleCommand
 |  [commands?](#cypher-editor-support.consolecommand.commands) | [ConsoleCommand](./.md#cypher-editor-support.consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
 |  [description?](#cypher-editor-support.consolecommand.description) | string | <i>(Optional)</i> |
 |  [name](#cypher-editor-support.consolecommand.name) | string |  |
+
+<br>
 
 <a name="cypher-editor-support.consolecommand.commands"></a>
 
@@ -1399,6 +1660,8 @@ export interface ConsoleCommand
 commands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="cypher-editor-support.consolecommand.description"></a>
 
 #### ConsoleCommand.description property
@@ -1409,6 +1672,8 @@ commands?: ConsoleCommand[];
 description?: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.consolecommand.name"></a>
 
 #### ConsoleCommand.name property
@@ -1418,6 +1683,8 @@ description?: string;
 ```typescript
 name: string;
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportcompletionitem"></a>
 
@@ -1430,6 +1697,8 @@ EditorSupportCompletionItem
 ```typescript
 export interface EditorSupportCompletionItem 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
@@ -1438,6 +1707,8 @@ export interface EditorSupportCompletionItem
 |  [postfix](#cypher-editor-support.editorsupportcompletionitem.postfix) | null |
 |  [type](#cypher-editor-support.editorsupportcompletionitem.type) | string |
 |  [view](#cypher-editor-support.editorsupportcompletionitem.view) | string |
+
+<br>
 
 <a name="cypher-editor-support.editorsupportcompletionitem.content"></a>
 
@@ -1449,6 +1720,8 @@ export interface EditorSupportCompletionItem
 content: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportcompletionitem.postfix"></a>
 
 #### EditorSupportCompletionItem.postfix property
@@ -1458,6 +1731,8 @@ content: string;
 ```typescript
 postfix: null;
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportcompletionitem.type"></a>
 
@@ -1469,6 +1744,8 @@ postfix: null;
 type: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportcompletionitem.view"></a>
 
 #### EditorSupportCompletionItem.view property
@@ -1478,6 +1755,8 @@ type: string;
 ```typescript
 view: string;
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportposition"></a>
 
@@ -1490,12 +1769,16 @@ EditorSupportPosition
 ```typescript
 export interface EditorSupportPosition 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
 |  --- | --- |
 |  [column](#cypher-editor-support.editorsupportposition.column) | number |
 |  [line](#cypher-editor-support.editorsupportposition.line) | number |
+
+<br>
 
 <a name="cypher-editor-support.editorsupportposition.column"></a>
 
@@ -1507,6 +1790,8 @@ export interface EditorSupportPosition
 column: number;
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportposition.line"></a>
 
 #### EditorSupportPosition.line property
@@ -1516,6 +1801,8 @@ column: number;
 ```typescript
 line: number;
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportschema"></a>
 
@@ -1528,6 +1815,8 @@ Editor Support Autocomplete Schema
 ```typescript
 export interface EditorSupportSchema 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -1540,6 +1829,8 @@ export interface EditorSupportSchema
 |  [propertyKeys?](#cypher-editor-support.editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> |
 |  [relationshipTypes?](#cypher-editor-support.editorsupportschema.relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 
+<br>
+
 <a name="cypher-editor-support.editorsupportschema.consolecommands"></a>
 
 #### EditorSupportSchema.consoleCommands property
@@ -1550,6 +1841,8 @@ export interface EditorSupportSchema
 consoleCommands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportschema.functions"></a>
 
 #### EditorSupportSchema.functions property
@@ -1559,6 +1852,8 @@ consoleCommands?: ConsoleCommand[];
 ```typescript
 functions?: FunctionSchema[];
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportschema.labels"></a>
 
@@ -1572,6 +1867,8 @@ The list of labels in the graph database
 labels?: string[];
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportschema.parameters"></a>
 
 #### EditorSupportSchema.parameters property
@@ -1581,6 +1878,8 @@ labels?: string[];
 ```typescript
 parameters?: string[];
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportschema.procedures"></a>
 
@@ -1592,6 +1891,8 @@ parameters?: string[];
 procedures?: ProcedureSchema[];
 ```
 
+<br>
+
 <a name="cypher-editor-support.editorsupportschema.propertykeys"></a>
 
 #### EditorSupportSchema.propertyKeys property
@@ -1601,6 +1902,8 @@ procedures?: ProcedureSchema[];
 ```typescript
 propertyKeys?: string[];
 ```
+
+<br>
 
 <a name="cypher-editor-support.editorsupportschema.relationshiptypes"></a>
 
@@ -1614,6 +1917,8 @@ The list of relationship types in the graph database
 relationshipTypes?: string[];
 ```
 
+<br>
+
 <a name="cypher-editor-support.functionschema"></a>
 
 #### FunctionSchema interface
@@ -1623,12 +1928,16 @@ relationshipTypes?: string[];
 ```typescript
 export interface FunctionSchema 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
 |  --- | --- |
 |  [name](#cypher-editor-support.functionschema.name) | string |
 |  [signature](#cypher-editor-support.functionschema.signature) | string |
+
+<br>
 
 <a name="cypher-editor-support.functionschema.name"></a>
 
@@ -1640,6 +1949,8 @@ export interface FunctionSchema
 name: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.functionschema.signature"></a>
 
 #### FunctionSchema.signature property
@@ -1650,6 +1961,8 @@ name: string;
 signature: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.procedureschema"></a>
 
 #### ProcedureSchema interface
@@ -1659,6 +1972,8 @@ signature: string;
 ```typescript
 export interface ProcedureSchema 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type |
@@ -1666,6 +1981,8 @@ export interface ProcedureSchema
 |  [name](#cypher-editor-support.procedureschema.name) | string |
 |  [returnItems](#cypher-editor-support.procedureschema.returnitems) | [FunctionSchema](#cypher-editor-support.functionschema)<!-- -->\[\] |
 |  [signature](#cypher-editor-support.procedureschema.signature) | string |
+
+<br>
 
 <a name="cypher-editor-support.procedureschema.name"></a>
 
@@ -1677,6 +1994,8 @@ export interface ProcedureSchema
 name: string;
 ```
 
+<br>
+
 <a name="cypher-editor-support.procedureschema.returnitems"></a>
 
 #### ProcedureSchema.returnItems property
@@ -1686,6 +2005,8 @@ name: string;
 ```typescript
 returnItems: FunctionSchema[];
 ```
+
+<br>
 
 <a name="cypher-editor-support.procedureschema.signature"></a>
 
@@ -1701,11 +2022,15 @@ signature: string;
 
 ### react-codemirror-cypher package
 
+<br>
+
 #### Classes:
 
 |  Class |
 |  --- |
 |  [CypherEditor](#react-codemirror-cypher.cyphereditor) |
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditor"></a>
 
@@ -1718,11 +2043,15 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 ```
 <b>Extends:</b> React.Component&lt;[CypherEditorProps](#react-codemirror-cypher.cyphereditorprops)<!-- -->, any&gt;
 
+<br>
+
 #### Interfaces:
 
 |  Interface |
 |  --- |
 |  [CypherEditorProps](#react-codemirror-cypher.cyphereditorprops) |
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops"></a>
 
@@ -1733,6 +2062,8 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 ```typescript
 export interface CypherEditorProps 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -1767,6 +2098,8 @@ export interface CypherEditorProps
 |  [theme?](#react-codemirror-cypher.cyphereditorprops.theme) | [Theme](#cypher-codemirror-base.theme) | <i>(Optional)</i> |
 |  [value?](#react-codemirror-cypher.cyphereditorprops.value) | string | <i>(Optional)</i> |
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -1776,6 +2109,8 @@ export interface CypherEditorProps
 ```typescript
 autocomplete?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.autocompletecloseonblur"></a>
 
@@ -1787,6 +2122,8 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.autocompleteopen"></a>
 
 #### CypherEditorProps.autocompleteOpen property
@@ -1796,6 +2133,8 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.autocompleteschema"></a>
 
@@ -1807,6 +2146,8 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings"></a>
 
 #### CypherEditorProps.autocompleteTriggerStrings property
@@ -1816,6 +2157,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.autofocus"></a>
 
@@ -1827,6 +2170,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.autofocusprops"></a>
 
 #### CypherEditorProps.autofocusProps property
@@ -1836,6 +2181,8 @@ autofocus?: boolean;
 ```typescript
 autofocusProps?: AutofocusProp[];
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.classname"></a>
 
@@ -1847,6 +2194,8 @@ autofocusProps?: AutofocusProp[];
 className?: string;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.focusedclassname"></a>
 
 #### CypherEditorProps.focusedClassName property
@@ -1856,6 +2205,8 @@ className?: string;
 ```typescript
 focusedClassName?: string;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.history"></a>
 
@@ -1867,6 +2218,8 @@ focusedClassName?: string;
 history?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.linenumberformatter"></a>
 
 #### CypherEditorProps.lineNumberFormatter property
@@ -1876,6 +2229,8 @@ history?: boolean;
 ```typescript
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.linenumbers"></a>
 
@@ -1887,6 +2242,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 lineNumbers?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.linewrapping"></a>
 
 #### CypherEditorProps.lineWrapping property
@@ -1897,6 +2254,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -1906,6 +2265,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.onautocompletechanged"></a>
 
@@ -1921,6 +2282,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -1930,6 +2293,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.onfocuschanged"></a>
 
@@ -1941,6 +2306,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -1950,6 +2317,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.onlinenumberclick"></a>
 
@@ -1961,6 +2330,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -1970,6 +2341,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.onscrollchanged"></a>
 
@@ -1981,6 +2354,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -1990,6 +2365,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: ChangeSet) => void;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.parseonsetvalue"></a>
 
@@ -2001,6 +2378,8 @@ onValueChanged?: (value: string, changes: ChangeSet) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -2010,6 +2389,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.position"></a>
 
@@ -2021,6 +2402,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -2030,6 +2413,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.readonlycursor"></a>
 
@@ -2041,6 +2426,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror-cypher.cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -2050,6 +2437,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="react-codemirror-cypher.cyphereditorprops.value"></a>
 
@@ -2065,11 +2454,15 @@ value?: string;
 
 ### react-codemirror5-cypher package
 
+<br>
+
 #### Classes:
 
 |  Class |
 |  --- |
 |  [CypherEditor](#react-codemirror5-cypher.cyphereditor) |
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditor"></a>
 
@@ -2082,11 +2475,15 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 ```
 <b>Extends:</b> React.Component&lt;[CypherEditorProps](#react-codemirror5-cypher.cyphereditorprops)<!-- -->, any&gt;
 
+<br>
+
 #### Interfaces:
 
 |  Interface |
 |  --- |
 |  [CypherEditorProps](#react-codemirror5-cypher.cyphereditorprops) |
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops"></a>
 
@@ -2097,6 +2494,8 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 ```typescript
 export interface CypherEditorProps 
 ```
+
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Description |
@@ -2131,6 +2530,8 @@ export interface CypherEditorProps
 |  [theme?](#react-codemirror5-cypher.cyphereditorprops.theme) | [Theme](#cypher-codemirror-base.theme) | <i>(Optional)</i> |
 |  [value?](#react-codemirror5-cypher.cyphereditorprops.value) | string | <i>(Optional)</i> |
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -2140,6 +2541,8 @@ export interface CypherEditorProps
 ```typescript
 autocomplete?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.autocompletecloseonblur"></a>
 
@@ -2151,6 +2554,8 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.autocompleteopen"></a>
 
 #### CypherEditorProps.autocompleteOpen property
@@ -2160,6 +2565,8 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.autocompleteschema"></a>
 
@@ -2171,6 +2578,8 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.autocompletetriggerstrings"></a>
 
 #### CypherEditorProps.autocompleteTriggerStrings property
@@ -2180,6 +2589,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.autofocus"></a>
 
@@ -2191,6 +2602,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.autofocusprops"></a>
 
 #### CypherEditorProps.autofocusProps property
@@ -2200,6 +2613,8 @@ autofocus?: boolean;
 ```typescript
 autofocusProps?: AutofocusProp[];
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.classname"></a>
 
@@ -2211,6 +2626,8 @@ autofocusProps?: AutofocusProp[];
 className?: string;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.focusedclassname"></a>
 
 #### CypherEditorProps.focusedClassName property
@@ -2220,6 +2637,8 @@ className?: string;
 ```typescript
 focusedClassName?: string;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.history"></a>
 
@@ -2231,6 +2650,8 @@ focusedClassName?: string;
 history?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.linenumberformatter"></a>
 
 #### CypherEditorProps.lineNumberFormatter property
@@ -2240,6 +2661,8 @@ history?: boolean;
 ```typescript
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.linenumbers"></a>
 
@@ -2251,6 +2674,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 lineNumbers?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.linewrapping"></a>
 
 #### CypherEditorProps.lineWrapping property
@@ -2261,6 +2686,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -2270,6 +2697,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.onautocompletechanged"></a>
 
@@ -2285,6 +2714,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -2294,6 +2725,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.onfocuschanged"></a>
 
@@ -2305,6 +2738,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -2314,6 +2749,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.onlinenumberclick"></a>
 
@@ -2325,6 +2762,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -2334,6 +2773,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.onscrollchanged"></a>
 
@@ -2345,6 +2786,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -2354,6 +2797,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: EditorChange) => void;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.parseonsetvalue"></a>
 
@@ -2365,6 +2810,8 @@ onValueChanged?: (value: string, changes: EditorChange) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -2374,6 +2821,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.position"></a>
 
@@ -2385,6 +2834,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -2394,6 +2845,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.readonlycursor"></a>
 
@@ -2405,6 +2858,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="react-codemirror5-cypher.cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -2414,6 +2869,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="react-codemirror5-cypher.cyphereditorprops.value"></a>
 
@@ -2429,11 +2886,15 @@ value?: string;
 
 ### svelte-codemirror-cypher package
 
+<br>
+
 #### Classes:
 
 |  Class | Description |
 |  --- | --- |
 |  [CypherEditor](#svelte-codemirror-cypher.cyphereditor) | Cypher Editor Svelte Component |
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditor"></a>
 
@@ -2452,11 +2913,15 @@ export default class CypherEditor extends SvelteComponentTyped<
 ```
 <b>Extends:</b> SvelteComponentTyped&lt; [CypherEditorProps](#svelte-codemirror-cypher.cyphereditorprops)<!-- -->, {}, {} &gt;
 
+<br>
+
 #### Interfaces:
 
 |  Interface | Description |
 |  --- | --- |
 |  [CypherEditorProps](#svelte-codemirror-cypher.cyphereditorprops) | Docs for CypherEditorProps. |
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops"></a>
 
@@ -2478,6 +2943,7 @@ const props = { autocomplete: false };
 <CypherEditor {...props} />
 ```
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Default | Description |
@@ -2512,6 +2978,8 @@ const props = { autocomplete: false };
 |  [theme?](#svelte-codemirror-cypher.cyphereditorprops.theme) | [Theme](#cypher-codemirror-base.theme) |  | <i>(Optional)</i> |
 |  [value?](#svelte-codemirror-cypher.cyphereditorprops.value) | string |  | <i>(Optional)</i> |
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -2526,6 +2994,8 @@ autocomplete?: boolean;
 <b>Default Value:</b>
 
 `true`
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.autocompletecloseonblur"></a>
 
@@ -2542,6 +3012,8 @@ autocompleteCloseOnBlur?: boolean;
 
 `true`
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.autocompleteopen"></a>
 
 #### CypherEditorProps.autocompleteOpen property
@@ -2556,6 +3028,8 @@ autocompleteOpen?: boolean;
 <b>Default Value:</b>
 
 `false`
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.autocompleteschema"></a>
 
@@ -2572,6 +3046,8 @@ autocompleteSchema?: EditorSupportSchema;
 
 `undefined`
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings"></a>
 
 #### CypherEditorProps.autocompleteTriggerStrings property
@@ -2581,6 +3057,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.autofocus"></a>
 
@@ -2592,6 +3070,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.autofocusprops"></a>
 
 #### CypherEditorProps.autofocusProps property
@@ -2601,6 +3081,8 @@ autofocus?: boolean;
 ```typescript
 autofocusProps?: AutofocusProp[];
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.classname"></a>
 
@@ -2612,6 +3094,8 @@ autofocusProps?: AutofocusProp[];
 className?: string;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.focusedclassname"></a>
 
 #### CypherEditorProps.focusedClassName property
@@ -2621,6 +3105,8 @@ className?: string;
 ```typescript
 focusedClassName?: string;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.history"></a>
 
@@ -2632,6 +3118,8 @@ focusedClassName?: string;
 history?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.linenumberformatter"></a>
 
 #### CypherEditorProps.lineNumberFormatter property
@@ -2641,6 +3129,8 @@ history?: boolean;
 ```typescript
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.linenumbers"></a>
 
@@ -2652,6 +3142,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 lineNumbers?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.linewrapping"></a>
 
 #### CypherEditorProps.lineWrapping property
@@ -2662,6 +3154,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -2671,6 +3165,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.onautocompletechanged"></a>
 
@@ -2686,6 +3182,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -2695,6 +3193,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.onfocuschanged"></a>
 
@@ -2706,6 +3206,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -2715,6 +3217,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.onlinenumberclick"></a>
 
@@ -2726,6 +3230,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -2735,6 +3241,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.onscrollchanged"></a>
 
@@ -2746,6 +3254,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -2755,6 +3265,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: ChangeSet) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.parseonsetvalue"></a>
 
@@ -2766,6 +3278,8 @@ onValueChanged?: (value: string, changes: ChangeSet) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -2775,6 +3289,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.position"></a>
 
@@ -2786,6 +3302,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -2795,6 +3313,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.readonlycursor"></a>
 
@@ -2806,6 +3326,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror-cypher.cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -2815,6 +3337,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="svelte-codemirror-cypher.cyphereditorprops.value"></a>
 
@@ -2830,11 +3354,15 @@ value?: string;
 
 ### svelte-codemirror5-cypher package
 
+<br>
+
 #### Classes:
 
 |  Class | Description |
 |  --- | --- |
 |  [CypherEditor](#svelte-codemirror5-cypher.cyphereditor) | Cypher Editor Svelte Component |
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditor"></a>
 
@@ -2853,11 +3381,15 @@ export default class CypherEditor extends SvelteComponentTyped<
 ```
 <b>Extends:</b> SvelteComponentTyped&lt; [CypherEditorProps](#svelte-codemirror5-cypher.cyphereditorprops)<!-- -->, {}, {} &gt;
 
+<br>
+
 #### Interfaces:
 
 |  Interface | Description |
 |  --- | --- |
 |  [CypherEditorProps](#svelte-codemirror5-cypher.cyphereditorprops) | Docs for CypherEditorProps. |
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops"></a>
 
@@ -2879,6 +3411,7 @@ const props = { autocomplete: false };
 <CypherEditor {...props} />
 ```
 
+<br>
 <b>Properties:</b>
 
 |  Property | Type | Default | Description |
@@ -2913,6 +3446,8 @@ const props = { autocomplete: false };
 |  [theme?](#svelte-codemirror5-cypher.cyphereditorprops.theme) | [Theme](#cypher-codemirror-base.theme) |  | <i>(Optional)</i> |
 |  [value?](#svelte-codemirror5-cypher.cyphereditorprops.value) | string |  | <i>(Optional)</i> |
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -2928,6 +3463,8 @@ autocomplete?: boolean;
 
 `true`
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autocompletecloseonblur"></a>
 
 #### CypherEditorProps.autocompleteCloseOnBlur property
@@ -2937,6 +3474,8 @@ autocomplete?: boolean;
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autocompleteopen"></a>
 
@@ -2948,6 +3487,8 @@ autocompleteCloseOnBlur?: boolean;
 autocompleteOpen?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autocompleteschema"></a>
 
 #### CypherEditorProps.autocompleteSchema property
@@ -2957,6 +3498,8 @@ autocompleteOpen?: boolean;
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autocompletetriggerstrings"></a>
 
@@ -2968,6 +3511,8 @@ autocompleteSchema?: EditorSupportSchema;
 autocompleteTriggerStrings?: string[];
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autofocus"></a>
 
 #### CypherEditorProps.autofocus property
@@ -2977,6 +3522,8 @@ autocompleteTriggerStrings?: string[];
 ```typescript
 autofocus?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.autofocusprops"></a>
 
@@ -2988,6 +3535,8 @@ autofocus?: boolean;
 autofocusProps?: AutofocusProp[];
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.classname"></a>
 
 #### CypherEditorProps.className property
@@ -2997,6 +3546,8 @@ autofocusProps?: AutofocusProp[];
 ```typescript
 className?: string;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.focusedclassname"></a>
 
@@ -3008,6 +3559,8 @@ className?: string;
 focusedClassName?: string;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.history"></a>
 
 #### CypherEditorProps.history property
@@ -3017,6 +3570,8 @@ focusedClassName?: string;
 ```typescript
 history?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.linenumberformatter"></a>
 
@@ -3028,6 +3583,8 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.linenumbers"></a>
 
 #### CypherEditorProps.lineNumbers property
@@ -3037,6 +3594,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.linewrapping"></a>
 
@@ -3048,6 +3607,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -3057,6 +3618,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onautocompletechanged"></a>
 
@@ -3072,6 +3635,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -3081,6 +3646,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onfocuschanged"></a>
 
@@ -3092,6 +3659,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -3101,6 +3670,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onlinenumberclick"></a>
 
@@ -3112,6 +3683,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -3121,6 +3694,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onscrollchanged"></a>
 
@@ -3132,6 +3707,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -3141,6 +3718,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: EditorChange) => void;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.parseonsetvalue"></a>
 
@@ -3152,6 +3731,8 @@ onValueChanged?: (value: string, changes: EditorChange) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -3161,6 +3742,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.position"></a>
 
@@ -3172,6 +3755,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -3181,6 +3766,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.readonlycursor"></a>
 
@@ -3192,6 +3779,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="svelte-codemirror5-cypher.cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -3201,6 +3790,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="svelte-codemirror5-cypher.cyphereditorprops.value"></a>
 

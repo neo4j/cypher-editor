@@ -14,6 +14,8 @@ export interface EditorSupportSchema
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
@@ -26,6 +28,8 @@ export interface EditorSupportSchema
 |  [propertyKeys?](#propertykeys) | string\[\] | <i>(Optional)</i> |
 |  [relationshipTypes?](#relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 
+<br>
+
 <a name="consolecommands"></a>
 
 ### EditorSupportSchema.consoleCommands property
@@ -36,6 +40,8 @@ export interface EditorSupportSchema
 consoleCommands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="functions"></a>
 
 ### EditorSupportSchema.functions property
@@ -45,6 +51,8 @@ consoleCommands?: ConsoleCommand[];
 ```typescript
 functions?: FunctionSchema[];
 ```
+
+<br>
 
 <a name="labels"></a>
 
@@ -58,6 +66,8 @@ The list of labels in the graph database
 labels?: string[];
 ```
 
+<br>
+
 <a name="parameters"></a>
 
 ### EditorSupportSchema.parameters property
@@ -67,6 +77,8 @@ labels?: string[];
 ```typescript
 parameters?: string[];
 ```
+
+<br>
 
 <a name="procedures"></a>
 
@@ -78,6 +90,8 @@ parameters?: string[];
 procedures?: ProcedureSchema[];
 ```
 
+<br>
+
 <a name="propertykeys"></a>
 
 ### EditorSupportSchema.propertyKeys property
@@ -87,6 +101,8 @@ procedures?: ProcedureSchema[];
 ```typescript
 propertyKeys?: string[];
 ```
+
+<br>
 
 <a name="relationshiptypes"></a>
 

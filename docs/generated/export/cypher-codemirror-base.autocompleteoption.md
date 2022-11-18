@@ -12,6 +12,8 @@ export interface AutocompleteOption
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
@@ -19,6 +21,8 @@ export interface AutocompleteOption
 |  [detail?](#detail) | string | <i>(Optional)</i> |
 |  [label](#label) | string |  |
 |  [type?](#type) | string | <i>(Optional)</i> |
+
+<br>
 
 <a name="detail"></a>
 
@@ -30,6 +34,8 @@ export interface AutocompleteOption
 detail?: string;
 ```
 
+<br>
+
 <a name="label"></a>
 
 ### AutocompleteOption.label property
@@ -39,6 +45,8 @@ detail?: string;
 ```typescript
 label: string;
 ```
+
+<br>
 
 <a name="type"></a>
 

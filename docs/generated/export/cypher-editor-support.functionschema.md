@@ -12,12 +12,16 @@ export interface FunctionSchema
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
 |  --- | --- |
 |  [name](#name) | string |
 |  [signature](#signature) | string |
+
+<br>
 
 <a name="name"></a>
 
@@ -28,6 +32,8 @@ export interface FunctionSchema
 ```typescript
 name: string;
 ```
+
+<br>
 
 <a name="signature"></a>
 

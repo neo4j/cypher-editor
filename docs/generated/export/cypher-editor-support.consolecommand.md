@@ -12,6 +12,8 @@ export interface ConsoleCommand
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
@@ -19,6 +21,8 @@ export interface ConsoleCommand
 |  [commands?](#commands) | [ConsoleCommand](./cypher-editor-support.consolecommand.md)<!-- -->\[\] | <i>(Optional)</i> |
 |  [description?](#description) | string | <i>(Optional)</i> |
 |  [name](#name) | string |  |
+
+<br>
 
 <a name="commands"></a>
 
@@ -30,6 +34,8 @@ export interface ConsoleCommand
 commands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="description"></a>
 
 ### ConsoleCommand.description property
@@ -39,6 +45,8 @@ commands?: ConsoleCommand[];
 ```typescript
 description?: string;
 ```
+
+<br>
 
 <a name="name"></a>
 

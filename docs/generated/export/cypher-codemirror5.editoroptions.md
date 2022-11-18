@@ -13,11 +13,15 @@ export interface EditorOptions extends BaseEditorOptions
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [codemirrorOptions?](#codemirroroptions) | any | <i>(Optional)</i> |
+
+<br>
 
 <a name="codemirroroptions"></a>
 

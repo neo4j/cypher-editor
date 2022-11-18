@@ -4,7 +4,7 @@
 
 ## EditorOptions interface
 
-This is the EditorOptions
+These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function
 
 <b>Signature:</b>
 

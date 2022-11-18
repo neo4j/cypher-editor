@@ -2,17 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [createCypherEditor](./cypher-codemirror.createcyphereditor.md)
 
-## createCypherEditor type
+## createCypherEditor() function
 
 This is the createCypherEditor function
 
 <b>Signature:</b>
 
 ```typescript
-export type createCypherEditor = (
-  parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions
-) => EditorApi;
+export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions): EditorApi;
 ```
-<b>References:</b> [EditorOptions](./cypher-codemirror.editoroptions.md)<!-- -->, [EditorApi](./cypher-codemirror.editorapi.md)
+
+### Parameters:
+
+|  Parameter | Type |
+|  --- | --- |
+|  parentDOMElement | Element \| DocumentFragment |
+|  options | [EditorOptions](./cypher-codemirror.editoroptions.md) |
+
+<b>Returns:</b>
+
+[EditorApi](./cypher-codemirror.editorapi.md)
 

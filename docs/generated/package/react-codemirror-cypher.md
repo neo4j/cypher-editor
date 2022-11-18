@@ -6,11 +6,15 @@
 
 ---
 
+<br>
+
 ### Classes:
 
 |  Class |
 |  --- |
 |  [CypherEditor](#cyphereditor) |
+
+<br>
 
 <a name="cyphereditor"></a>
 
@@ -25,11 +29,15 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 
 ---
 
+<br>
+
 ### Interfaces:
 
 |  Interface |
 |  --- |
 |  [CypherEditorProps](#cyphereditorprops) |
+
+<br>
 
 <a name="cyphereditorprops"></a>
 
@@ -40,6 +48,8 @@ export default class CypherEditor extends React.Component<CypherEditorProps, any
 ```typescript
 export interface CypherEditorProps 
 ```
+
+<br>
 
 #### Properties:
 
@@ -75,6 +85,8 @@ export interface CypherEditorProps
 |  [theme?](#cyphereditorprops.theme) | [Theme](./cypher-codemirror-base.md#theme) | <i>(Optional)</i> |
 |  [value?](#cyphereditorprops.value) | string | <i>(Optional)</i> |
 
+<br>
+
 <a name="cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -84,6 +96,8 @@ export interface CypherEditorProps
 ```typescript
 autocomplete?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.autocompletecloseonblur"></a>
 
@@ -95,6 +109,8 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.autocompleteopen"></a>
 
 #### CypherEditorProps.autocompleteOpen property
@@ -104,6 +120,8 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.autocompleteschema"></a>
 
@@ -115,6 +133,8 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
+<br>
+
 <a name="cyphereditorprops.autocompletetriggerstrings"></a>
 
 #### CypherEditorProps.autocompleteTriggerStrings property
@@ -124,6 +144,8 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+<br>
 
 <a name="cyphereditorprops.autofocus"></a>
 
@@ -135,6 +157,8 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.autofocusprops"></a>
 
 #### CypherEditorProps.autofocusProps property
@@ -144,6 +168,8 @@ autofocus?: boolean;
 ```typescript
 autofocusProps?: AutofocusProp[];
 ```
+
+<br>
 
 <a name="cyphereditorprops.classname"></a>
 
@@ -155,6 +181,8 @@ autofocusProps?: AutofocusProp[];
 className?: string;
 ```
 
+<br>
+
 <a name="cyphereditorprops.focusedclassname"></a>
 
 #### CypherEditorProps.focusedClassName property
@@ -164,6 +192,8 @@ className?: string;
 ```typescript
 focusedClassName?: string;
 ```
+
+<br>
 
 <a name="cyphereditorprops.history"></a>
 
@@ -175,6 +205,8 @@ focusedClassName?: string;
 history?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.linenumberformatter"></a>
 
 #### CypherEditorProps.lineNumberFormatter property
@@ -184,6 +216,8 @@ history?: boolean;
 ```typescript
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
+
+<br>
 
 <a name="cyphereditorprops.linenumbers"></a>
 
@@ -195,6 +229,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 lineNumbers?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.linewrapping"></a>
 
 #### CypherEditorProps.lineWrapping property
@@ -205,6 +241,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -214,6 +252,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onautocompletechanged"></a>
 
@@ -229,6 +269,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -238,6 +280,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onfocuschanged"></a>
 
@@ -249,6 +293,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -258,6 +304,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onlinenumberclick"></a>
 
@@ -269,6 +317,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -278,6 +328,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onscrollchanged"></a>
 
@@ -289,6 +341,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -298,6 +352,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: ChangeSet) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.parseonsetvalue"></a>
 
@@ -309,6 +365,8 @@ onValueChanged?: (value: string, changes: ChangeSet) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -318,6 +376,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="cyphereditorprops.position"></a>
 
@@ -329,6 +389,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -338,6 +400,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.readonlycursor"></a>
 
@@ -349,6 +413,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -358,6 +424,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="cyphereditorprops.value"></a>
 

@@ -12,6 +12,8 @@ export interface ScrollInfo
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
@@ -23,6 +25,8 @@ export interface ScrollInfo
 |  [scrollTop](#scrolltop) | number |
 |  [scrollWidth](#scrollwidth) | number |
 
+<br>
+
 <a name="clientheight"></a>
 
 ### ScrollInfo.clientHeight property
@@ -32,6 +36,8 @@ export interface ScrollInfo
 ```typescript
 clientHeight: number;
 ```
+
+<br>
 
 <a name="clientwidth"></a>
 
@@ -43,6 +49,8 @@ clientHeight: number;
 clientWidth: number;
 ```
 
+<br>
+
 <a name="scrollheight"></a>
 
 ### ScrollInfo.scrollHeight property
@@ -52,6 +60,8 @@ clientWidth: number;
 ```typescript
 scrollHeight: number;
 ```
+
+<br>
 
 <a name="scrollleft"></a>
 
@@ -63,6 +73,8 @@ scrollHeight: number;
 scrollLeft: number;
 ```
 
+<br>
+
 <a name="scrolltop"></a>
 
 ### ScrollInfo.scrollTop property
@@ -72,6 +84,8 @@ scrollLeft: number;
 ```typescript
 scrollTop: number;
 ```
+
+<br>
 
 <a name="scrollwidth"></a>
 

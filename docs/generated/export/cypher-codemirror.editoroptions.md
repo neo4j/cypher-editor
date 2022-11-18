@@ -4,7 +4,7 @@
 
 ## EditorOptions interface
 
-This is the EditorOptions
+These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function
 
 <b>Signature:</b>
 
@@ -15,12 +15,16 @@ export interface EditorOptions extends BaseEditorOptions
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [postExtensions?](#postextensions) | Extension\[\] | <i>(Optional)</i> |
 |  [preExtensions?](#preextensions) | Extension\[\] | <i>(Optional)</i> |
+
+<br>
 
 <a name="postextensions"></a>
 
@@ -31,6 +35,8 @@ export interface EditorOptions extends BaseEditorOptions
 ```typescript
 postExtensions?: Extension[];
 ```
+
+<br>
 
 <a name="preextensions"></a>
 

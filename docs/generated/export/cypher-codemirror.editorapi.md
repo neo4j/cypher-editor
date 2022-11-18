@@ -4,7 +4,7 @@
 
 ## EditorApi interface
 
-This is the EditorApi
+This is the EditorApi which wraps all of the interaction with the cypher editor
 
 <b>Signature:</b>
 
@@ -16,6 +16,8 @@ export interface EditorApi
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Description |
@@ -25,6 +27,8 @@ export interface EditorApi
 |  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
 |  [setPostExtensions](#setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
 |  [setPreExtensions](#setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
+
+<br>
 
 <a name="codemirror"></a>
 
@@ -36,6 +40,8 @@ export interface EditorApi
 codemirror: EditorView;
 ```
 
+<br>
+
 <a name="offvaluechanged"></a>
 
 ### EditorApi.offValueChanged property
@@ -45,6 +51,8 @@ codemirror: EditorView;
 ```typescript
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
+
+<br>
 
 <a name="onvaluechanged"></a>
 
@@ -58,6 +66,8 @@ ON VALUE CHANGED
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
 
+<br>
+
 <a name="setpostextensions"></a>
 
 ### EditorApi.setPostExtensions property
@@ -67,6 +77,8 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 ```typescript
 setPostExtensions: (preExtensions: Extension[]) => void;
 ```
+
+<br>
 
 <a name="setpreextensions"></a>
 

@@ -23,6 +23,8 @@ const props = { autocomplete: false };
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type | Default | Description |
@@ -57,6 +59,8 @@ const props = { autocomplete: false };
 |  [theme?](#theme) | [Theme](./cypher-codemirror-base.theme.md) |  | <i>(Optional)</i> |
 |  [value?](#value) | string |  | <i>(Optional)</i> |
 
+<br>
+
 <a name="autocomplete"></a>
 
 ### CypherEditorProps.autocomplete property
@@ -73,6 +77,8 @@ autocomplete?: boolean;
 
 `true`
 
+<br>
+
 <a name="autocompletecloseonblur"></a>
 
 ### CypherEditorProps.autocompleteCloseOnBlur property
@@ -82,6 +88,8 @@ autocomplete?: boolean;
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
+<br>
 
 <a name="autocompleteopen"></a>
 
@@ -93,6 +101,8 @@ autocompleteCloseOnBlur?: boolean;
 autocompleteOpen?: boolean;
 ```
 
+<br>
+
 <a name="autocompleteschema"></a>
 
 ### CypherEditorProps.autocompleteSchema property
@@ -102,6 +112,8 @@ autocompleteOpen?: boolean;
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
+<br>
 
 <a name="autocompletetriggerstrings"></a>
 
@@ -113,6 +125,8 @@ autocompleteSchema?: EditorSupportSchema;
 autocompleteTriggerStrings?: string[];
 ```
 
+<br>
+
 <a name="autofocus"></a>
 
 ### CypherEditorProps.autofocus property
@@ -122,6 +136,8 @@ autocompleteTriggerStrings?: string[];
 ```typescript
 autofocus?: boolean;
 ```
+
+<br>
 
 <a name="autofocusprops"></a>
 
@@ -133,6 +149,8 @@ autofocus?: boolean;
 autofocusProps?: AutofocusProp[];
 ```
 
+<br>
+
 <a name="classname"></a>
 
 ### CypherEditorProps.className property
@@ -142,6 +160,8 @@ autofocusProps?: AutofocusProp[];
 ```typescript
 className?: string;
 ```
+
+<br>
 
 <a name="focusedclassname"></a>
 
@@ -153,6 +173,8 @@ className?: string;
 focusedClassName?: string;
 ```
 
+<br>
+
 <a name="history"></a>
 
 ### CypherEditorProps.history property
@@ -162,6 +184,8 @@ focusedClassName?: string;
 ```typescript
 history?: boolean;
 ```
+
+<br>
 
 <a name="linenumberformatter"></a>
 
@@ -173,6 +197,8 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
+<br>
+
 <a name="linenumbers"></a>
 
 ### CypherEditorProps.lineNumbers property
@@ -182,6 +208,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
+
+<br>
 
 <a name="linewrapping"></a>
 
@@ -193,6 +221,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="lint"></a>
 
 ### CypherEditorProps.lint property
@@ -202,6 +232,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="onautocompletechanged"></a>
 
@@ -217,6 +249,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="oneditorcreated"></a>
 
 ### CypherEditorProps.onEditorCreated property
@@ -226,6 +260,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="onfocuschanged"></a>
 
@@ -237,6 +273,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="onkeydown"></a>
 
 ### CypherEditorProps.onKeyDown property
@@ -246,6 +284,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="onlinenumberclick"></a>
 
@@ -257,6 +297,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="onpositionchanged"></a>
 
 ### CypherEditorProps.onPositionChanged property
@@ -266,6 +308,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="onscrollchanged"></a>
 
@@ -277,6 +321,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="onvaluechanged"></a>
 
 ### CypherEditorProps.onValueChanged property
@@ -286,6 +332,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: EditorChange) => void;
 ```
+
+<br>
 
 <a name="parseonsetvalue"></a>
 
@@ -297,6 +345,8 @@ onValueChanged?: (value: string, changes: EditorChange) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="placeholder"></a>
 
 ### CypherEditorProps.placeholder property
@@ -306,6 +356,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="position"></a>
 
@@ -317,6 +369,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="readonly"></a>
 
 ### CypherEditorProps.readOnly property
@@ -326,6 +380,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="readonlycursor"></a>
 
@@ -337,6 +393,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="theme"></a>
 
 ### CypherEditorProps.theme property
@@ -346,6 +404,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="value"></a>
 

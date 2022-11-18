@@ -12,11 +12,15 @@ export class CypherEditorSupport
 
 ---
 
+<br>
+
 ### Constructors:
 
 |  Constructor | Description |
 |  --- | --- |
 |  [(constructor)(input)](#(constructor)) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+
+<br>
 
 <a name="(constructor)"></a>
 
@@ -38,6 +42,8 @@ constructor(input: string);
 
 ---
 
+<br>
+
 ### Methods:
 
 |  Method |
@@ -45,6 +51,8 @@ constructor(input: string);
 |  [getCompletion(line, column, doFilter)](#getcompletion) |
 |  [setSchema(schema)](#setschema) |
 |  [update(input)](#update) |
+
+<br>
 
 <a name="getcompletion"></a>
 
@@ -76,6 +84,8 @@ getCompletion(
 
 { from: [EditorSupportPosition](./cypher-editor-support.editorsupportposition.md)<!-- -->; to: [EditorSupportPosition](./cypher-editor-support.editorsupportposition.md)<!-- -->; items: [EditorSupportCompletionItem](./cypher-editor-support.editorsupportcompletionitem.md)<!-- -->\[\]; }
 
+<br>
+
 <a name="setschema"></a>
 
 ### CypherEditorSupport.setSchema() method
@@ -95,6 +105,8 @@ setSchema(schema: EditorSupportSchema): void;
 <b>Returns:</b>
 
 void
+
+<br>
 
 <a name="update"></a>
 

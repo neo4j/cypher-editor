@@ -6,11 +6,15 @@
 
 ---
 
+<br>
+
 ### Classes:
 
 |  Class | Description |
 |  --- | --- |
 |  [CypherEditor](#cyphereditor) | Cypher Editor Svelte Component |
+
+<br>
 
 <a name="cyphereditor"></a>
 
@@ -31,11 +35,15 @@ export default class CypherEditor extends SvelteComponentTyped<
 
 ---
 
+<br>
+
 ### Interfaces:
 
 |  Interface | Description |
 |  --- | --- |
 |  [CypherEditorProps](#cyphereditorprops) | Docs for CypherEditorProps. |
+
+<br>
 
 <a name="cyphereditorprops"></a>
 
@@ -57,6 +65,8 @@ Here's some example code using the props:
 const props = { autocomplete: false };
 <CypherEditor {...props} />
 ```
+
+<br>
 
 #### Properties:
 
@@ -92,6 +102,8 @@ const props = { autocomplete: false };
 |  [theme?](#cyphereditorprops.theme) | [Theme](./cypher-codemirror-base.md#theme) |  | <i>(Optional)</i> |
 |  [value?](#cyphereditorprops.value) | string |  | <i>(Optional)</i> |
 
+<br>
+
 <a name="cyphereditorprops.autocomplete"></a>
 
 #### CypherEditorProps.autocomplete property
@@ -107,6 +119,8 @@ autocomplete?: boolean;
 
 `true`
 
+<br>
+
 <a name="cyphereditorprops.autocompletecloseonblur"></a>
 
 #### CypherEditorProps.autocompleteCloseOnBlur property
@@ -116,6 +130,8 @@ autocomplete?: boolean;
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.autocompleteopen"></a>
 
@@ -127,6 +143,8 @@ autocompleteCloseOnBlur?: boolean;
 autocompleteOpen?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.autocompleteschema"></a>
 
 #### CypherEditorProps.autocompleteSchema property
@@ -136,6 +154,8 @@ autocompleteOpen?: boolean;
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
+<br>
 
 <a name="cyphereditorprops.autocompletetriggerstrings"></a>
 
@@ -147,6 +167,8 @@ autocompleteSchema?: EditorSupportSchema;
 autocompleteTriggerStrings?: string[];
 ```
 
+<br>
+
 <a name="cyphereditorprops.autofocus"></a>
 
 #### CypherEditorProps.autofocus property
@@ -156,6 +178,8 @@ autocompleteTriggerStrings?: string[];
 ```typescript
 autofocus?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.autofocusprops"></a>
 
@@ -167,6 +191,8 @@ autofocus?: boolean;
 autofocusProps?: AutofocusProp[];
 ```
 
+<br>
+
 <a name="cyphereditorprops.classname"></a>
 
 #### CypherEditorProps.className property
@@ -176,6 +202,8 @@ autofocusProps?: AutofocusProp[];
 ```typescript
 className?: string;
 ```
+
+<br>
 
 <a name="cyphereditorprops.focusedclassname"></a>
 
@@ -187,6 +215,8 @@ className?: string;
 focusedClassName?: string;
 ```
 
+<br>
+
 <a name="cyphereditorprops.history"></a>
 
 #### CypherEditorProps.history property
@@ -196,6 +226,8 @@ focusedClassName?: string;
 ```typescript
 history?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.linenumberformatter"></a>
 
@@ -207,6 +239,8 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
+<br>
+
 <a name="cyphereditorprops.linenumbers"></a>
 
 #### CypherEditorProps.lineNumbers property
@@ -216,6 +250,8 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.linewrapping"></a>
 
@@ -227,6 +263,8 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.lint"></a>
 
 #### CypherEditorProps.lint property
@@ -236,6 +274,8 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onautocompletechanged"></a>
 
@@ -251,6 +291,8 @@ onAutocompleteChanged?: (
   ) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.oneditorcreated"></a>
 
 #### CypherEditorProps.onEditorCreated property
@@ -260,6 +302,8 @@ onAutocompleteChanged?: (
 ```typescript
 onEditorCreated?: (editor: EditorApi) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onfocuschanged"></a>
 
@@ -271,6 +315,8 @@ onEditorCreated?: (editor: EditorApi) => void;
 onFocusChanged?: (focused: boolean) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onkeydown"></a>
 
 #### CypherEditorProps.onKeyDown property
@@ -280,6 +326,8 @@ onFocusChanged?: (focused: boolean) => void;
 ```typescript
 onKeyDown?: (event: KeyboardEvent) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onlinenumberclick"></a>
 
@@ -291,6 +339,8 @@ onKeyDown?: (event: KeyboardEvent) => void;
 onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onpositionchanged"></a>
 
 #### CypherEditorProps.onPositionChanged property
@@ -300,6 +350,8 @@ onLineNumberClick?: (lineNumber: number, event: Event) => void;
 ```typescript
 onPositionChanged?: (position: PositionObject) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.onscrollchanged"></a>
 
@@ -311,6 +363,8 @@ onPositionChanged?: (position: PositionObject) => void;
 onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```
 
+<br>
+
 <a name="cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -320,6 +374,8 @@ onScrollChanged?: (scrollInfo: ScrollInfo) => void;
 ```typescript
 onValueChanged?: (value: string, changes: EditorChange) => void;
 ```
+
+<br>
 
 <a name="cyphereditorprops.parseonsetvalue"></a>
 
@@ -331,6 +387,8 @@ onValueChanged?: (value: string, changes: EditorChange) => void;
 parseOnSetValue?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.placeholder"></a>
 
 #### CypherEditorProps.placeholder property
@@ -340,6 +398,8 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
+
+<br>
 
 <a name="cyphereditorprops.position"></a>
 
@@ -351,6 +411,8 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
+<br>
+
 <a name="cyphereditorprops.readonly"></a>
 
 #### CypherEditorProps.readOnly property
@@ -360,6 +422,8 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
+
+<br>
 
 <a name="cyphereditorprops.readonlycursor"></a>
 
@@ -371,6 +435,8 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
+<br>
+
 <a name="cyphereditorprops.theme"></a>
 
 #### CypherEditorProps.theme property
@@ -380,6 +446,8 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
+
+<br>
 
 <a name="cyphereditorprops.value"></a>
 

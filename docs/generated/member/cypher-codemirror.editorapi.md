@@ -4,7 +4,7 @@
 
 ## EditorApi interface
 
-This is the EditorApi
+This is the EditorApi which wraps all of the interaction with the cypher editor
 
 <b>Signature:</b>
 

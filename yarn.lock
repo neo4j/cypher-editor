@@ -2883,21 +2883,21 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-api-docdown@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/api-docdown/-/api-docdown-1.0.1.tgz#d27ca95377343038cc17ba66cbffd77f6c04a274"
-  integrity sha512-g/sj2aNSBRRO9eANt5vslTZqYFM+BZwZHa8GOpY2bECaZ/CXM2KEwbw6buE7zrsDopzkaRL+YqcAUzYMAza0qw==
+api-docdown@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/api-docdown/-/api-docdown-1.0.2.tgz#36721c5edc169e217ad74ffd4bc011ebadb41d37"
+  integrity sha512-B74GDILAMal8YJlGeO2aHAcZvQZkYo3VsW5Hd2LbGhNxG1qkE/USX7aPmH2EGwSE6c8elBx6CjXGgZ9xrpZq3g==
   dependencies:
     "@microsoft/api-documenter" "^7.19.24"
     "@microsoft/api-extractor" "^7.33.6"
-    api-markdown-documenter "^1.0.1"
+    api-markdown-documenter "^1.0.2"
     glob "^8.0.3"
     micromatch "^4.0.5"
 
-api-markdown-documenter@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/api-markdown-documenter/-/api-markdown-documenter-1.0.1.tgz#09e9da5b393d3542109aa0d9a4a7fc46d23feae1"
-  integrity sha512-P9L9thAZ6XGx+oHjr4f1ogRcuQa7vXcOW6X2xsynNzoim63dHXkiozoeyK1pQh4YQPhBBR9/VNUbQqz0vnxRNg==
+api-markdown-documenter@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/api-markdown-documenter/-/api-markdown-documenter-1.0.2.tgz#54822cd380a961eb8c5d56484eab766482e938d7"
+  integrity sha512-5IsCEOzfqXuHPC8ZU8W9Xr1l6nmy6FH9yasoTE7SUUpLRKtIdArDfsTnpdCz87/eif1fsGS5+J03xb3hVUP8AA==
   dependencies:
     "@microsoft/api-extractor-model" "^7.25.2"
     "@microsoft/tsdoc" "^0.14.2"

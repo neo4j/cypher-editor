@@ -12,6 +12,8 @@ export interface ProcedureSchema
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
@@ -19,6 +21,8 @@ export interface ProcedureSchema
 |  [name](#name) | string |
 |  [returnItems](#returnitems) | [FunctionSchema](./cypher-editor-support.functionschema.md)<!-- -->\[\] |
 |  [signature](#signature) | string |
+
+<br>
 
 <a name="name"></a>
 
@@ -30,6 +34,8 @@ export interface ProcedureSchema
 name: string;
 ```
 
+<br>
+
 <a name="returnitems"></a>
 
 ### ProcedureSchema.returnItems property
@@ -39,6 +45,8 @@ name: string;
 ```typescript
 returnItems: FunctionSchema[];
 ```
+
+<br>
 
 <a name="signature"></a>
 

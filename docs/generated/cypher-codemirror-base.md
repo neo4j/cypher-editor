@@ -4,7 +4,7 @@
 
 ## cypher-codemirror-base package
 
-<br>
+---
 
 ### Interfaces:
 
@@ -14,8 +14,6 @@
 |  [BaseEditorApi](#baseeditorapi) |
 |  [BaseEditorOptions](#baseeditoroptions) |
 |  [ScrollInfo](#scrollinfo) |
-
-<br>
 
 <a name="autocompleteoption"></a>
 
@@ -27,8 +25,6 @@
 export interface AutocompleteOption 
 ```
 
-<br>
-
 #### Properties:
 
 |  Property | Type | Description |
@@ -36,8 +32,6 @@ export interface AutocompleteOption
 |  [detail?](#autocompleteoption.detail) | string | <i>(Optional)</i> |
 |  [label](#autocompleteoption.label) | string |  |
 |  [type?](#autocompleteoption.type) | string | <i>(Optional)</i> |
-
-<br>
 
 <a name="autocompleteoption.detail"></a>
 
@@ -49,8 +43,6 @@ export interface AutocompleteOption
 detail?: string;
 ```
 
-<br>
-
 <a name="autocompleteoption.label"></a>
 
 #### AutocompleteOption.label property
@@ -60,8 +52,6 @@ detail?: string;
 ```typescript
 label: string;
 ```
-
-<br>
 
 <a name="autocompleteoption.type"></a>
 
@@ -73,8 +63,6 @@ label: string;
 type?: string;
 ```
 
-<br>
-
 <a name="baseeditorapi"></a>
 
 ### BaseEditorApi interface
@@ -84,8 +72,6 @@ type?: string;
 ```typescript
 export interface BaseEditorApi 
 ```
-
-<br>
 
 #### Properties:
 
@@ -130,8 +116,6 @@ export interface BaseEditorApi
 |  [setTheme](#baseeditorapi.settheme) | (theme: [Theme](#theme)<!-- -->) =&gt; void |
 |  [setValue](#baseeditorapi.setvalue) | (value: string, parseOnSetValue?: boolean) =&gt; void |
 
-<br>
-
 <a name="baseeditorapi.clearhistory"></a>
 
 #### BaseEditorApi.clearHistory property
@@ -141,8 +125,6 @@ export interface BaseEditorApi
 ```typescript
 clearHistory: () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.destroy"></a>
 
@@ -154,8 +136,6 @@ clearHistory: () => void;
 destroy: () => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.editorsupport"></a>
 
 #### BaseEditorApi.editorSupport property
@@ -165,8 +145,6 @@ destroy: () => void;
 ```typescript
 editorSupport: CypherEditorSupport;
 ```
-
-<br>
 
 <a name="baseeditorapi.focus"></a>
 
@@ -178,8 +156,6 @@ editorSupport: CypherEditorSupport;
 focus: () => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.getlinecount"></a>
 
 #### BaseEditorApi.getLineCount property
@@ -189,8 +165,6 @@ focus: () => void;
 ```typescript
 getLineCount: () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.getposition"></a>
 
@@ -202,8 +176,6 @@ getLineCount: () => void;
 getPosition: () => PositionObject;
 ```
 
-<br>
-
 <a name="baseeditorapi.getpositionforvalue"></a>
 
 #### BaseEditorApi.getPositionForValue property
@@ -213,8 +185,6 @@ getPosition: () => PositionObject;
 ```typescript
 getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
 ```
-
-<br>
 
 <a name="baseeditorapi.offautocompletechanged"></a>
 
@@ -226,8 +196,6 @@ getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
 offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.offfocuschanged"></a>
 
 #### BaseEditorApi.offFocusChanged property
@@ -237,8 +205,6 @@ offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
 ```typescript
 offFocusChanged: (listener: FocusChangedListener) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.offkeydown"></a>
 
@@ -250,8 +216,6 @@ offFocusChanged: (listener: FocusChangedListener) => void;
 offKeyDown: (listener: KeyDownListener) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.offlinenumberclick"></a>
 
 #### BaseEditorApi.offLineNumberClick property
@@ -261,8 +225,6 @@ offKeyDown: (listener: KeyDownListener) => void;
 ```typescript
 offLineNumberClick: (listener: LineNumberClickListener) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.offpositionchanged"></a>
 
@@ -274,8 +236,6 @@ offLineNumberClick: (listener: LineNumberClickListener) => void;
 offPositionChanged: (listener: PositionChangedListener) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.offscrollchanged"></a>
 
 #### BaseEditorApi.offScrollChanged property
@@ -285,8 +245,6 @@ offPositionChanged: (listener: PositionChangedListener) => void;
 ```typescript
 offScrollChanged: (listener: ScrollChangedListener) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.offvaluechanged"></a>
 
@@ -298,8 +256,6 @@ offScrollChanged: (listener: ScrollChangedListener) => void;
 offValueChanged: (listener: ValueChangedListener) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.onautocompletechanged"></a>
 
 #### BaseEditorApi.onAutocompleteChanged property
@@ -309,8 +265,6 @@ offValueChanged: (listener: ValueChangedListener) => void;
 ```typescript
 onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.onfocuschanged"></a>
 
@@ -322,8 +276,6 @@ onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
 onFocusChanged: (listener: FocusChangedListener) => () => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.onkeydown"></a>
 
 #### BaseEditorApi.onKeyDown property
@@ -333,8 +285,6 @@ onFocusChanged: (listener: FocusChangedListener) => () => void;
 ```typescript
 onKeyDown: (listener: KeyDownListener) => () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.onlinenumberclick"></a>
 
@@ -346,8 +296,6 @@ onKeyDown: (listener: KeyDownListener) => () => void;
 onLineNumberClick: (listener: LineNumberClickListener) => () => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.onpositionchanged"></a>
 
 #### BaseEditorApi.onPositionChanged property
@@ -357,8 +305,6 @@ onLineNumberClick: (listener: LineNumberClickListener) => () => void;
 ```typescript
 onPositionChanged: (listener: PositionChangedListener) => () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.onscrollchanged"></a>
 
@@ -370,8 +316,6 @@ onPositionChanged: (listener: PositionChangedListener) => () => void;
 onScrollChanged: (listener: ScrollChangedListener) => () => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.onvaluechanged"></a>
 
 #### BaseEditorApi.onValueChanged property
@@ -381,8 +325,6 @@ onScrollChanged: (listener: ScrollChangedListener) => () => void;
 ```typescript
 onValueChanged: (listener: ValueChangedListener) => () => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.selectautocompleteoption"></a>
 
@@ -394,8 +336,6 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setautocomplete"></a>
 
 #### BaseEditorApi.setAutocomplete property
@@ -405,8 +345,6 @@ selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
 ```typescript
 setAutocomplete: (autocomplete: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setautocompletecloseonblur"></a>
 
@@ -418,8 +356,6 @@ setAutocomplete: (autocomplete: boolean) => void;
 setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setautocompleteopen"></a>
 
 #### BaseEditorApi.setAutocompleteOpen property
@@ -429,8 +365,6 @@ setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
 ```typescript
 setAutocompleteOpen: (autocompleteOpen: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setautocompleteschema"></a>
 
@@ -442,8 +376,6 @@ setAutocompleteOpen: (autocompleteOpen: boolean) => void;
 setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setautocompletetriggerstrings"></a>
 
 #### BaseEditorApi.setAutocompleteTriggerStrings property
@@ -454,8 +386,6 @@ setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
 setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.sethistory"></a>
 
 #### BaseEditorApi.setHistory property
@@ -465,8 +395,6 @@ setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
 ```typescript
 setHistory: (history: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setlinenumberformatter"></a>
 
@@ -480,8 +408,6 @@ setLineNumberFormatter: (
   ) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setlinenumbers"></a>
 
 #### BaseEditorApi.setLineNumbers property
@@ -491,8 +417,6 @@ setLineNumberFormatter: (
 ```typescript
 setLineNumbers: (lineNumbers: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setlinewrapping"></a>
 
@@ -504,8 +428,6 @@ setLineNumbers: (lineNumbers: boolean) => void;
 setLineWrapping: (lineWrapping: boolean) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setlint"></a>
 
 #### BaseEditorApi.setLint property
@@ -515,8 +437,6 @@ setLineWrapping: (lineWrapping: boolean) => void;
 ```typescript
 setLint: (lint: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setplaceholder"></a>
 
@@ -528,8 +448,6 @@ setLint: (lint: boolean) => void;
 setPlaceholder: (placeholder: string | undefined) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setposition"></a>
 
 #### BaseEditorApi.setPosition property
@@ -539,8 +457,6 @@ setPlaceholder: (placeholder: string | undefined) => void;
 ```typescript
 setPosition: (position: PositionAny) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.setreadonly"></a>
 
@@ -552,8 +468,6 @@ setPosition: (position: PositionAny) => void;
 setReadOnly: (readOnly: boolean) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setreadonlycursor"></a>
 
 #### BaseEditorApi.setReadOnlyCursor property
@@ -563,8 +477,6 @@ setReadOnly: (readOnly: boolean) => void;
 ```typescript
 setReadOnlyCursor: (readOnlyCursor: boolean) => void;
 ```
-
-<br>
 
 <a name="baseeditorapi.settheme"></a>
 
@@ -576,8 +488,6 @@ setReadOnlyCursor: (readOnlyCursor: boolean) => void;
 setTheme: (theme: Theme) => void;
 ```
 
-<br>
-
 <a name="baseeditorapi.setvalue"></a>
 
 #### BaseEditorApi.setValue property
@@ -588,8 +498,6 @@ setTheme: (theme: Theme) => void;
 setValue: (value: string, parseOnSetValue?: boolean) => void;
 ```
 
-<br>
-
 <a name="baseeditoroptions"></a>
 
 ### BaseEditorOptions interface
@@ -599,8 +507,6 @@ setValue: (value: string, parseOnSetValue?: boolean) => void;
 ```typescript
 export interface BaseEditorOptions 
 ```
-
-<br>
 
 #### Properties:
 
@@ -625,8 +531,6 @@ export interface BaseEditorOptions
 |  [theme?](#baseeditoroptions.theme) | [Theme](#theme) | <i>(Optional)</i> |
 |  [value?](#baseeditoroptions.value) | string | <i>(Optional)</i> |
 
-<br>
-
 <a name="baseeditoroptions.autocomplete"></a>
 
 #### BaseEditorOptions.autocomplete property
@@ -636,8 +540,6 @@ export interface BaseEditorOptions
 ```typescript
 autocomplete?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.autocompletecloseonblur"></a>
 
@@ -649,8 +551,6 @@ autocomplete?: boolean;
 autocompleteCloseOnBlur?: boolean;
 ```
 
-<br>
-
 <a name="baseeditoroptions.autocompleteopen"></a>
 
 #### BaseEditorOptions.autocompleteOpen property
@@ -660,8 +560,6 @@ autocompleteCloseOnBlur?: boolean;
 ```typescript
 autocompleteOpen?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.autocompleteschema"></a>
 
@@ -673,8 +571,6 @@ autocompleteOpen?: boolean;
 autocompleteSchema?: EditorSupportSchema;
 ```
 
-<br>
-
 <a name="baseeditoroptions.autocompletetriggerstrings"></a>
 
 #### BaseEditorOptions.autocompleteTriggerStrings property
@@ -684,8 +580,6 @@ autocompleteSchema?: EditorSupportSchema;
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
-
-<br>
 
 <a name="baseeditoroptions.autofocus"></a>
 
@@ -697,8 +591,6 @@ autocompleteTriggerStrings?: string[];
 autofocus?: boolean;
 ```
 
-<br>
-
 <a name="baseeditoroptions.history"></a>
 
 #### BaseEditorOptions.history property
@@ -708,8 +600,6 @@ autofocus?: boolean;
 ```typescript
 history?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.linenumberformatter"></a>
 
@@ -721,8 +611,6 @@ history?: boolean;
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
 
-<br>
-
 <a name="baseeditoroptions.linenumbers"></a>
 
 #### BaseEditorOptions.lineNumbers property
@@ -732,8 +620,6 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```typescript
 lineNumbers?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.linewrapping"></a>
 
@@ -745,8 +631,6 @@ lineNumbers?: boolean;
 lineWrapping?: boolean;
 ```
 
-<br>
-
 <a name="baseeditoroptions.lint"></a>
 
 #### BaseEditorOptions.lint property
@@ -756,8 +640,6 @@ lineWrapping?: boolean;
 ```typescript
 lint?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.parseonsetvalue"></a>
 
@@ -769,8 +651,6 @@ lint?: boolean;
 parseOnSetValue?: boolean;
 ```
 
-<br>
-
 <a name="baseeditoroptions.placeholder"></a>
 
 #### BaseEditorOptions.placeholder property
@@ -780,8 +660,6 @@ parseOnSetValue?: boolean;
 ```typescript
 placeholder?: string;
 ```
-
-<br>
 
 <a name="baseeditoroptions.position"></a>
 
@@ -793,8 +671,6 @@ placeholder?: string;
 position?: PositionAny;
 ```
 
-<br>
-
 <a name="baseeditoroptions.readonly"></a>
 
 #### BaseEditorOptions.readOnly property
@@ -804,8 +680,6 @@ position?: PositionAny;
 ```typescript
 readOnly?: boolean;
 ```
-
-<br>
 
 <a name="baseeditoroptions.readonlycursor"></a>
 
@@ -817,8 +691,6 @@ readOnly?: boolean;
 readOnlyCursor?: boolean;
 ```
 
-<br>
-
 <a name="baseeditoroptions.theme"></a>
 
 #### BaseEditorOptions.theme property
@@ -828,8 +700,6 @@ readOnlyCursor?: boolean;
 ```typescript
 theme?: Theme;
 ```
-
-<br>
 
 <a name="baseeditoroptions.value"></a>
 
@@ -841,8 +711,6 @@ theme?: Theme;
 value?: string;
 ```
 
-<br>
-
 <a name="scrollinfo"></a>
 
 ### ScrollInfo interface
@@ -852,8 +720,6 @@ value?: string;
 ```typescript
 export interface ScrollInfo 
 ```
-
-<br>
 
 #### Properties:
 
@@ -866,8 +732,6 @@ export interface ScrollInfo
 |  [scrollTop](#scrollinfo.scrolltop) | number |
 |  [scrollWidth](#scrollinfo.scrollwidth) | number |
 
-<br>
-
 <a name="scrollinfo.clientheight"></a>
 
 #### ScrollInfo.clientHeight property
@@ -877,8 +741,6 @@ export interface ScrollInfo
 ```typescript
 clientHeight: number;
 ```
-
-<br>
 
 <a name="scrollinfo.clientwidth"></a>
 
@@ -890,8 +752,6 @@ clientHeight: number;
 clientWidth: number;
 ```
 
-<br>
-
 <a name="scrollinfo.scrollheight"></a>
 
 #### ScrollInfo.scrollHeight property
@@ -901,8 +761,6 @@ clientWidth: number;
 ```typescript
 scrollHeight: number;
 ```
-
-<br>
 
 <a name="scrollinfo.scrollleft"></a>
 
@@ -914,8 +772,6 @@ scrollHeight: number;
 scrollLeft: number;
 ```
 
-<br>
-
 <a name="scrollinfo.scrolltop"></a>
 
 #### ScrollInfo.scrollTop property
@@ -925,8 +781,6 @@ scrollLeft: number;
 ```typescript
 scrollTop: number;
 ```
-
-<br>
 
 <a name="scrollinfo.scrollwidth"></a>
 
@@ -938,7 +792,7 @@ scrollTop: number;
 scrollWidth: number;
 ```
 
-<br>
+---
 
 ### Type Aliases:
 
@@ -957,8 +811,6 @@ scrollWidth: number;
 |  [Theme](#theme) |
 |  [ValueChangedListener](#valuechangedlistener) |
 
-<br>
-
 <a name="autocompletechangedlistener"></a>
 
 ### AutocompleteChangedListener type
@@ -974,8 +826,6 @@ export type AutocompleteChangedListener = (
 ```
 <b>References:</b> [AutocompleteOption](#autocompleteoption)
 
-<br>
-
 <a name="autofocusprop"></a>
 
 ### AutofocusProp type
@@ -985,8 +835,6 @@ export type AutocompleteChangedListener = (
 ```typescript
 export type AutofocusProp = "position" | "readOnly" | "value";
 ```
-
-<br>
 
 <a name="focuschangedlistener"></a>
 
@@ -998,8 +846,6 @@ export type AutofocusProp = "position" | "readOnly" | "value";
 export type FocusChangedListener = (focused: boolean) => void;
 ```
 
-<br>
-
 <a name="keydownlistener"></a>
 
 ### KeyDownListener type
@@ -1009,8 +855,6 @@ export type FocusChangedListener = (focused: boolean) => void;
 ```typescript
 export type KeyDownListener = (event: KeyboardEvent) => void;
 ```
-
-<br>
 
 <a name="linenumberclicklistener"></a>
 
@@ -1025,8 +869,6 @@ export type LineNumberClickListener = (
 ) => void;
 ```
 
-<br>
-
 <a name="partialpositionobject"></a>
 
 ### PartialPositionObject type
@@ -1040,8 +882,6 @@ export type PartialPositionObject = {
 };
 ```
 
-<br>
-
 <a name="positionany"></a>
 
 ### PositionAny type
@@ -1053,8 +893,6 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 ```
 <b>References:</b> [PositionObject](#positionobject)<!-- -->, [PartialPositionObject](#partialpositionobject)
 
-<br>
-
 <a name="positionchangedlistener"></a>
 
 ### PositionChangedListener type
@@ -1065,8 +903,6 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 export type PositionChangedListener = (position: PositionObject) => void;
 ```
 <b>References:</b> [PositionObject](#positionobject)
-
-<br>
 
 <a name="positionobject"></a>
 
@@ -1082,8 +918,6 @@ export type PositionObject = {
 };
 ```
 
-<br>
-
 <a name="scrollchangedlistener"></a>
 
 ### ScrollChangedListener type
@@ -1095,8 +929,6 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 ```
 <b>References:</b> [ScrollInfo](#scrollinfo)
 
-<br>
-
 <a name="theme"></a>
 
 ### Theme type
@@ -1107,8 +939,6 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 export type Theme = "light" | "dark";
 ```
 
-<br>
-
 <a name="valuechangedlistener"></a>
 
 ### ValueChangedListener type
@@ -1118,3 +948,6 @@ export type Theme = "light" | "dark";
 ```typescript
 export type ValueChangedListener = (value: string, changes: any) => void;
 ```
+
+---
+

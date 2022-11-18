@@ -14,6 +14,8 @@ export interface EditorSupportCompletionItem
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
@@ -22,6 +24,8 @@ export interface EditorSupportCompletionItem
 |  [postfix](#postfix) | null |
 |  [type](#type) | string |
 |  [view](#view) | string |
+
+<br>
 
 <a name="content"></a>
 
@@ -33,6 +37,8 @@ export interface EditorSupportCompletionItem
 content: string;
 ```
 
+<br>
+
 <a name="postfix"></a>
 
 ### EditorSupportCompletionItem.postfix property
@@ -43,6 +49,8 @@ content: string;
 postfix: null;
 ```
 
+<br>
+
 <a name="type"></a>
 
 ### EditorSupportCompletionItem.type property
@@ -52,6 +60,8 @@ postfix: null;
 ```typescript
 type: string;
 ```
+
+<br>
 
 <a name="view"></a>
 

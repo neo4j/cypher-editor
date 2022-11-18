@@ -4,11 +4,15 @@
 
 ## cypher-editor-support package
 
+<br>
+
 ### Classes:
 
 |  Class |
 |  --- |
 |  [CypherEditorSupport](#cyphereditorsupport) |
+
+<br>
 
 <a name="cyphereditorsupport"></a>
 
@@ -20,11 +24,15 @@
 export class CypherEditorSupport 
 ```
 
+<br>
+
 #### Constructors:
 
 |  Constructor | Description |
 |  --- | --- |
 |  [(constructor)(input)](#cyphereditorsupport.(constructor)) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+
+<br>
 
 <a name="cyphereditorsupport.(constructor)"></a>
 
@@ -43,6 +51,8 @@ constructor(input: string);
 |  --- | --- |
 |  input | string |
 
+<br>
+
 #### Methods:
 
 |  Method |
@@ -50,6 +60,8 @@ constructor(input: string);
 |  [getCompletion(line, column, doFilter)](#cyphereditorsupport.getcompletion) |
 |  [setSchema(schema)](#cyphereditorsupport.setschema) |
 |  [update(input)](#cyphereditorsupport.update) |
+
+<br>
 
 <a name="cyphereditorsupport.getcompletion"></a>
 
@@ -80,6 +92,8 @@ getCompletion(
 
 { from: [EditorSupportPosition](#editorsupportposition)<!-- -->; to: [EditorSupportPosition](#editorsupportposition)<!-- -->; items: [EditorSupportCompletionItem](#editorsupportcompletionitem)<!-- -->\[\]; }
 
+<br>
+
 <a name="cyphereditorsupport.setschema"></a>
 
 #### CypherEditorSupport.setSchema() method
@@ -98,6 +112,8 @@ setSchema(schema: EditorSupportSchema): void;
 <b>Returns:</b>
 
 void
+
+<br>
 
 <a name="cyphereditorsupport.update"></a>
 
@@ -118,6 +134,8 @@ update(input: string): void;
 
 void
 
+<br>
+
 ### Interfaces:
 
 |  Interface | Description |
@@ -129,6 +147,8 @@ void
 |  [FunctionSchema](#functionschema) |  |
 |  [ProcedureSchema](#procedureschema) |  |
 
+<br>
+
 <a name="consolecommand"></a>
 
 ### ConsoleCommand interface
@@ -139,6 +159,8 @@ void
 export interface ConsoleCommand 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type | Description |
@@ -146,6 +168,8 @@ export interface ConsoleCommand
 |  [commands?](#consolecommand.commands) | [ConsoleCommand](./cypher-editor-support.md#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
 |  [description?](#consolecommand.description) | string | <i>(Optional)</i> |
 |  [name](#consolecommand.name) | string |  |
+
+<br>
 
 <a name="consolecommand.commands"></a>
 
@@ -157,6 +181,8 @@ export interface ConsoleCommand
 commands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="consolecommand.description"></a>
 
 #### ConsoleCommand.description property
@@ -167,6 +193,8 @@ commands?: ConsoleCommand[];
 description?: string;
 ```
 
+<br>
+
 <a name="consolecommand.name"></a>
 
 #### ConsoleCommand.name property
@@ -176,6 +204,8 @@ description?: string;
 ```typescript
 name: string;
 ```
+
+<br>
 
 <a name="editorsupportcompletionitem"></a>
 
@@ -189,6 +219,8 @@ EditorSupportCompletionItem
 export interface EditorSupportCompletionItem 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type |
@@ -197,6 +229,8 @@ export interface EditorSupportCompletionItem
 |  [postfix](#editorsupportcompletionitem.postfix) | null |
 |  [type](#editorsupportcompletionitem.type) | string |
 |  [view](#editorsupportcompletionitem.view) | string |
+
+<br>
 
 <a name="editorsupportcompletionitem.content"></a>
 
@@ -208,6 +242,8 @@ export interface EditorSupportCompletionItem
 content: string;
 ```
 
+<br>
+
 <a name="editorsupportcompletionitem.postfix"></a>
 
 #### EditorSupportCompletionItem.postfix property
@@ -217,6 +253,8 @@ content: string;
 ```typescript
 postfix: null;
 ```
+
+<br>
 
 <a name="editorsupportcompletionitem.type"></a>
 
@@ -228,6 +266,8 @@ postfix: null;
 type: string;
 ```
 
+<br>
+
 <a name="editorsupportcompletionitem.view"></a>
 
 #### EditorSupportCompletionItem.view property
@@ -237,6 +277,8 @@ type: string;
 ```typescript
 view: string;
 ```
+
+<br>
 
 <a name="editorsupportposition"></a>
 
@@ -250,12 +292,16 @@ EditorSupportPosition
 export interface EditorSupportPosition 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type |
 |  --- | --- |
 |  [column](#editorsupportposition.column) | number |
 |  [line](#editorsupportposition.line) | number |
+
+<br>
 
 <a name="editorsupportposition.column"></a>
 
@@ -267,6 +313,8 @@ export interface EditorSupportPosition
 column: number;
 ```
 
+<br>
+
 <a name="editorsupportposition.line"></a>
 
 #### EditorSupportPosition.line property
@@ -276,6 +324,8 @@ column: number;
 ```typescript
 line: number;
 ```
+
+<br>
 
 <a name="editorsupportschema"></a>
 
@@ -289,6 +339,8 @@ Editor Support Autocomplete Schema
 export interface EditorSupportSchema 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type | Description |
@@ -301,6 +353,8 @@ export interface EditorSupportSchema
 |  [propertyKeys?](#editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> |
 |  [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 
+<br>
+
 <a name="editorsupportschema.consolecommands"></a>
 
 #### EditorSupportSchema.consoleCommands property
@@ -311,6 +365,8 @@ export interface EditorSupportSchema
 consoleCommands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="editorsupportschema.functions"></a>
 
 #### EditorSupportSchema.functions property
@@ -320,6 +376,8 @@ consoleCommands?: ConsoleCommand[];
 ```typescript
 functions?: FunctionSchema[];
 ```
+
+<br>
 
 <a name="editorsupportschema.labels"></a>
 
@@ -333,6 +391,8 @@ The list of labels in the graph database
 labels?: string[];
 ```
 
+<br>
+
 <a name="editorsupportschema.parameters"></a>
 
 #### EditorSupportSchema.parameters property
@@ -342,6 +402,8 @@ labels?: string[];
 ```typescript
 parameters?: string[];
 ```
+
+<br>
 
 <a name="editorsupportschema.procedures"></a>
 
@@ -353,6 +415,8 @@ parameters?: string[];
 procedures?: ProcedureSchema[];
 ```
 
+<br>
+
 <a name="editorsupportschema.propertykeys"></a>
 
 #### EditorSupportSchema.propertyKeys property
@@ -362,6 +426,8 @@ procedures?: ProcedureSchema[];
 ```typescript
 propertyKeys?: string[];
 ```
+
+<br>
 
 <a name="editorsupportschema.relationshiptypes"></a>
 
@@ -375,6 +441,8 @@ The list of relationship types in the graph database
 relationshipTypes?: string[];
 ```
 
+<br>
+
 <a name="functionschema"></a>
 
 ### FunctionSchema interface
@@ -385,12 +453,16 @@ relationshipTypes?: string[];
 export interface FunctionSchema 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type |
 |  --- | --- |
 |  [name](#functionschema.name) | string |
 |  [signature](#functionschema.signature) | string |
+
+<br>
 
 <a name="functionschema.name"></a>
 
@@ -402,6 +474,8 @@ export interface FunctionSchema
 name: string;
 ```
 
+<br>
+
 <a name="functionschema.signature"></a>
 
 #### FunctionSchema.signature property
@@ -411,6 +485,8 @@ name: string;
 ```typescript
 signature: string;
 ```
+
+<br>
 
 <a name="procedureschema"></a>
 
@@ -422,6 +498,8 @@ signature: string;
 export interface ProcedureSchema 
 ```
 
+<br>
+
 #### Properties:
 
 |  Property | Type |
@@ -429,6 +507,8 @@ export interface ProcedureSchema
 |  [name](#procedureschema.name) | string |
 |  [returnItems](#procedureschema.returnitems) | [FunctionSchema](#functionschema)<!-- -->\[\] |
 |  [signature](#procedureschema.signature) | string |
+
+<br>
 
 <a name="procedureschema.name"></a>
 
@@ -440,6 +520,8 @@ export interface ProcedureSchema
 name: string;
 ```
 
+<br>
+
 <a name="procedureschema.returnitems"></a>
 
 #### ProcedureSchema.returnItems property
@@ -449,6 +531,8 @@ name: string;
 ```typescript
 returnItems: FunctionSchema[];
 ```
+
+<br>
 
 <a name="procedureschema.signature"></a>
 

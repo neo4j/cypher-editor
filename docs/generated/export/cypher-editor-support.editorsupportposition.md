@@ -14,12 +14,16 @@ export interface EditorSupportPosition
 
 ---
 
+<br>
+
 ### Properties:
 
 |  Property | Type |
 |  --- | --- |
 |  [column](#column) | number |
 |  [line](#line) | number |
+
+<br>
 
 <a name="column"></a>
 
@@ -30,6 +34,8 @@ export interface EditorSupportPosition
 ```typescript
 column: number;
 ```
+
+<br>
 
 <a name="line"></a>
 

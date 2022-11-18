@@ -4,7 +4,7 @@
 
 ## ValueChangedListener type
 
-This is the ValueChangedListener
+This listener is fired when the value of the cypher editor is changed
 
 <b>Signature:</b>
 
