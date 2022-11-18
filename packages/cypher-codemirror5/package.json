@@ -11,7 +11,7 @@
   "license": "GPL-3.0",
   "main": "./lib/index.js",
   "module": "./es/index.js",
-  "types": "src/index.d.ts",
+  "types": "src/cypher-codemirror5.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
@@ -26,6 +26,7 @@
     "clean:build": "rimraf lib && rimraf es"
   },
   "files": [
+    "src/*.d.ts",
     "css/",
     "es/",
     "lib/",
