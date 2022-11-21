@@ -2,41 +2,15 @@
 import type { SvelteComponentTyped } from "svelte";
 import type { ChangeSet, Extension } from "@codemirror/state";
 import type { EditorSupportSchema } from "cypher-editor-support";
-// import type { EditorApi as BaseEditorApi } from "cypher-codemirror";
-import type { EditorApi } from "cypher-codemirror";
 import type {
+  EditorApi,
   ScrollInfo,
   PositionObject,
   PositionAny,
   Theme,
   AutocompleteOption,
-  AutofocusProp
-} from "cypher-codemirror-base";
-
-/**
- * AutocompleteSchema docs
- */
-// export type AutocompleteSchema = EditorSupportSchema;
-//  export interface AutocompleteSchema extends EditorSupportSchema {};
-
- /**
-  * EditorApi docs
-  */
-// export type EditorApi = BaseEditorApi;
-//  export interface EditorApi extends BaseEditorApi {};
-
-// /**
-//  * @property schema {@link cypher-editor-support.EditorSupportSchema }
-//  * @property foo string
-//  */
-// export interface MyFooType {
-//   schema?: EditorSupportSchema;
-//   foo?: string;
-// };
-// // export type MyFooType = {
-// //   /** that comment is ignored */
-// //   schema:? string;
-// // };
+  AutofocusProp,
+} from "cypher-codemirror";
 
 /**
  * Docs for CypherEditorProps.

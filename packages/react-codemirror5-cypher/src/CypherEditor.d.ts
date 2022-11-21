@@ -1,15 +1,15 @@
 import * as React from "react";
 import type { EditorChange } from "codemirror";
 import type { EditorSupportSchema } from "cypher-editor-support";
-import type { EditorApi } from "cypher-codemirror5";
 import type {
+  EditorApi,
   ScrollInfo,
   PositionObject,
   PositionAny,
   Theme,
   AutocompleteOption,
-  AutofocusProp
-} from "cypher-codemirror-base";
+  AutofocusProp,
+} from "cypher-codemirror5";
 
 export interface CypherEditorProps {
   autocomplete?: boolean;
