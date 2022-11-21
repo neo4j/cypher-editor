@@ -2,12 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)
 
-## ScrollChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
-```
-<b>References:</b> [ScrollInfo](./cypher-codemirror.scrollinfo.md)
+## ScrollChangedListener call signature
 

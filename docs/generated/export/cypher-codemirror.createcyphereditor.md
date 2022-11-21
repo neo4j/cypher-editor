@@ -4,23 +4,27 @@
 
 ## createCypherEditor() function
 
-This is the createCypherEditor function
+This function creates a codemirror cypher editor instance
 
 <b>Signature:</b>
 
 ```typescript
-export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;
 ```
 
 ### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  parentDOMElement | Element \| DocumentFragment |
-|  options | [EditorOptions](./cypher-codemirror.editoroptions.md) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parentDOMElement | Element \| DocumentFragment | the parent dom element to attach the editor to |
+|  options | [EditorOptions](./cypher-codemirror.editoroptions.md) | the options for the created editor |
 
 <b>Returns:</b>
 
 [EditorApi](./cypher-codemirror.editorapi.md)
+
+An editor api that wraps the created editor instance
 

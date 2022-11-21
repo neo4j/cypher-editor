@@ -2,10 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)
 
-## FocusChangedListener type
+## FocusChangedListener call signature
 
-<b>Signature:</b>
-
-```typescript
-export type FocusChangedListener = (focused: boolean) => void;
-```

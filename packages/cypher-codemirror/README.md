@@ -8,7 +8,10 @@ This package exports those extensions, and provides a convenience method to crea
 // import { EditorView } from 'codemirror';
 // import { CypherEditorSupport } from 'cypher-editor-support';
 
-const createCypherEditor = (parentDOMElement, { text = 'initial text here', extensions = undefined } = {}) => {
+const createCypherEditor = (
+  parentDOMElement,
+  { text = "initial text here", extensions = undefined } = {}
+) => {
   // create editor & editorSupport using given extensions, or default extensions if undefined
   const editor = new EditorView({
     parentDOMElement,

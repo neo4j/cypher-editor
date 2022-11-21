@@ -2,12 +2,7 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)
 
-## ValueChangedListener type
+## ValueChangedListener call signature
 
 This listener is fired when the value of the cypher editor is changed
 
-<b>Signature:</b>
-
-```typescript
-export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
-```

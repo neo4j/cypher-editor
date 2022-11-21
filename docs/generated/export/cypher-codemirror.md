@@ -8,7 +8,19 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [createCypherEditor(parentDOMElement, options)](./cypher-codemirror.createcyphereditor.md) | This is the createCypherEditor function |
+|  [createCypherEditor(parentDOMElement, options)](./cypher-codemirror.createcyphereditor.md) | This function creates a codemirror cypher editor instance |
+
+### Call Signatures:
+
+|  Call Signature | Description |
+|  --- | --- |
+|  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |  |
+|  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |  |
+|  [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  |
+|  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  |
+|  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |  |
+|  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |  |
+|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This listener is fired when the value of the cypher editor is changed |
 
 ### Interfaces:
 
@@ -21,18 +33,11 @@
 
 ### Type Aliases:
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |  |
-|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) |  |
-|  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |  |
-|  [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  |
-|  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  |
-|  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) |  |
-|  [PositionAny](./cypher-codemirror.positionany.md) |  |
-|  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |  |
-|  [PositionObject](./cypher-codemirror.positionobject.md) |  |
-|  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |  |
-|  [Theme](./cypher-codemirror.theme.md) |  |
-|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This listener is fired when the value of the cypher editor is changed |
+|  Type Alias |
+|  --- |
+|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) |
+|  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) |
+|  [PositionAny](./cypher-codemirror.positionany.md) |
+|  [PositionObject](./cypher-codemirror.positionobject.md) |
+|  [Theme](./cypher-codemirror.theme.md) |
 

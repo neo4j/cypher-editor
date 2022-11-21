@@ -9,7 +9,7 @@ import type {
   PositionAny,
   Theme,
   AutocompleteOption,
-  AutofocusProp,
+  AutofocusProp
 } from "cypher-codemirror5";
 
 /**
@@ -24,7 +24,7 @@ import type {
 
 /**
  * Docs for CypherEditorProps.
- * 
+ *
  * @example
  * Here's some example code using the props:
  *
@@ -34,11 +34,11 @@ import type {
  * ```
  */
 export interface CypherEditorProps {
-/**
- * Whether autocomplete is enabled.
- *
- * @defaultValue `true`
- */
+  /**
+   * Whether autocomplete is enabled.
+   *
+   * @defaultValue `true`
+   */
   autocomplete?: boolean;
   autocompleteCloseOnBlur?: boolean;
   autocompleteOpen?: boolean;

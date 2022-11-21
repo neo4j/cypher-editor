@@ -37,13 +37,13 @@ export interface ProcedureSchema {
  * Editor Support Autocomplete Schema
  */
 export interface EditorSupportSchema {
-/**
- * The list of labels in the graph database
- */
+  /**
+   * The list of labels in the graph database
+   */
   labels?: string[];
-/**
- * The list of relationship types in the graph database
- */
+  /**
+   * The list of relationship types in the graph database
+   */
   relationshipTypes?: string[];
   propertyKeys?: string[];
   functions?: FunctionSchema[];

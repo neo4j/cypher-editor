@@ -2,12 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)
 
-## PositionChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type PositionChangedListener = (position: PositionObject) => void;
-```
-<b>References:</b> [PositionObject](./cypher-codemirror.positionobject.md)
+## PositionChangedListener call signature
 

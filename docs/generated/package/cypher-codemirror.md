@@ -12,7 +12,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [createCypherEditor(parentDOMElement, options)](#createcyphereditor) | This is the createCypherEditor function |
+|  [createCypherEditor(parentDOMElement, options)](#createcyphereditor) | This function creates a codemirror cypher editor instance |
 
 <br>
 
@@ -20,25 +20,212 @@
 
 ### createCypherEditor() function
 
-This is the createCypherEditor function
+This function creates a codemirror cypher editor instance
 
 <b>Signature:</b>
 
 ```typescript
-export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;
 ```
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  parentDOMElement | Element \| DocumentFragment |
-|  options | [EditorOptions](#editoroptions) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parentDOMElement | Element \| DocumentFragment | the parent dom element to attach the editor to |
+|  options | [EditorOptions](#editoroptions) | the options for the created editor |
 
 <b>Returns:</b>
 
 [EditorApi](#editorapi)
+
+An editor api that wraps the created editor instance
+
+---
+
+<br>
+
+### Call Signatures:
+
+|  Call Signature | Description |
+|  --- | --- |
+|  [AutocompleteChangedListener](#autocompletechangedlistener) |  |
+|  [FocusChangedListener](#focuschangedlistener) |  |
+|  [KeyDownListener](#keydownlistener) |  |
+|  [LineNumberClickListener](#linenumberclicklistener) |  |
+|  [PositionChangedListener](#positionchangedlistener) |  |
+|  [ScrollChangedListener](#scrollchangedlistener) |  |
+|  [ValueChangedListener](#valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
+
+<br>
+
+<a name="autocompletechangedlistener"></a>
+
+### AutocompleteChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface AutocompleteChangedListener {
+  (open: boolean, from?: number, options?: AutocompleteOption[]): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  open | boolean |  |
+|  from | number | <i>(Optional)</i> |
+|  options | [AutocompleteOption](#autocompleteoption)<!-- -->\[\] | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="focuschangedlistener"></a>
+
+### FocusChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface FocusChangedListener {
+  (focused: boolean): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  focused | boolean |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="keydownlistener"></a>
+
+### KeyDownListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface KeyDownListener {
+  (event: KeyboardEvent): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  event | KeyboardEvent |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="linenumberclicklistener"></a>
+
+### LineNumberClickListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface LineNumberClickListener {
+  (lineNumber: number, event: Event): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  lineNumber | number |
+|  event | Event |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="positionchangedlistener"></a>
+
+### PositionChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface PositionChangedListener {
+  (position: PositionObject): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  position | [PositionObject](#positionobject) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="scrollchangedlistener"></a>
+
+### ScrollChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface ScrollChangedListener {
+  (scrollInfo: ScrollInfo): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  scrollInfo | [ScrollInfo](#scrollinfo) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="valuechangedlistener"></a>
+
+### ValueChangedListener call signature
+
+This listener is fired when the value of the cypher editor is changed
+
+<b>Signature:</b>
+
+```typescript
+export interface ValueChangedListener {
+  (value: string, changes: ChangeSet): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  value | string | the new cypher query text value |
+|  changes | ChangeSet | the codemirror 6 ChangeSet object representing what changed |
+
+<b>Returns:</b>
+
+void
 
 ---
 
@@ -1051,37 +1238,13 @@ scrollWidth: number;
 
 ### Type Aliases:
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [AutocompleteChangedListener](#autocompletechangedlistener) |  |
-|  [AutofocusProp](#autofocusprop) |  |
-|  [FocusChangedListener](#focuschangedlistener) |  |
-|  [KeyDownListener](#keydownlistener) |  |
-|  [LineNumberClickListener](#linenumberclicklistener) |  |
-|  [PartialPositionObject](#partialpositionobject) |  |
-|  [PositionAny](#positionany) |  |
-|  [PositionChangedListener](#positionchangedlistener) |  |
-|  [PositionObject](#positionobject) |  |
-|  [ScrollChangedListener](#scrollchangedlistener) |  |
-|  [Theme](#theme) |  |
-|  [ValueChangedListener](#valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
-
-<br>
-
-<a name="autocompletechangedlistener"></a>
-
-### AutocompleteChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type AutocompleteChangedListener = (
-  open: boolean,
-  from?: number,
-  options?: AutocompleteOption[]
-) => void;
-```
-<b>References:</b> [AutocompleteOption](#autocompleteoption)
+|  Type Alias |
+|  --- |
+|  [AutofocusProp](#autofocusprop) |
+|  [PartialPositionObject](#partialpositionobject) |
+|  [PositionAny](#positionany) |
+|  [PositionObject](#positionobject) |
+|  [Theme](#theme) |
 
 <br>
 
@@ -1093,45 +1256,6 @@ export type AutocompleteChangedListener = (
 
 ```typescript
 export type AutofocusProp = "position" | "readOnly" | "value";
-```
-
-<br>
-
-<a name="focuschangedlistener"></a>
-
-### FocusChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type FocusChangedListener = (focused: boolean) => void;
-```
-
-<br>
-
-<a name="keydownlistener"></a>
-
-### KeyDownListener type
-
-<b>Signature:</b>
-
-```typescript
-export type KeyDownListener = (event: KeyboardEvent) => void;
-```
-
-<br>
-
-<a name="linenumberclicklistener"></a>
-
-### LineNumberClickListener type
-
-<b>Signature:</b>
-
-```typescript
-export type LineNumberClickListener = (
-  lineNumber: number,
-  event: Event
-) => void;
 ```
 
 <br>
@@ -1164,19 +1288,6 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 
 <br>
 
-<a name="positionchangedlistener"></a>
-
-### PositionChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type PositionChangedListener = (position: PositionObject) => void;
-```
-<b>References:</b> [PositionObject](#positionobject)
-
-<br>
-
 <a name="positionobject"></a>
 
 ### PositionObject type
@@ -1193,19 +1304,6 @@ export type PositionObject = {
 
 <br>
 
-<a name="scrollchangedlistener"></a>
-
-### ScrollChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
-```
-<b>References:</b> [ScrollInfo](#scrollinfo)
-
-<br>
-
 <a name="theme"></a>
 
 ### Theme type
@@ -1214,20 +1312,6 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 
 ```typescript
 export type Theme = "light" | "dark";
-```
-
-<br>
-
-<a name="valuechangedlistener"></a>
-
-### ValueChangedListener type
-
-This listener is fired when the value of the cypher editor is changed
-
-<b>Signature:</b>
-
-```typescript
-export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 ```
 
 ---

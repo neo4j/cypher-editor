@@ -8,9 +8,9 @@
 
 ### Functions:
 
-|  Function |
-|  --- |
-|  [createCypherEditor2(parentDOMElement, options)](#createcyphereditor2) |
+| Function                                                               |
+| ---------------------------------------------------------------------- |
+| [createCypherEditor2(parentDOMElement, options)](#createcyphereditor2) |
 
 <a name="createcyphereditor2"></a>
 
@@ -19,16 +19,18 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createCypherEditor2(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor2(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;
 ```
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  parentDOMElement | Element \| DocumentFragment |
-|  options | [EditorOptions](#editoroptions) |
+| Parameter        | Type                            |
+| ---------------- | ------------------------------- |
+| parentDOMElement | Element \| DocumentFragment     |
+| options          | [EditorOptions](#editoroptions) |
 
 <b>Returns:</b>
 
@@ -38,10 +40,10 @@ export declare function createCypherEditor2(parentDOMElement: Element | Document
 
 ### Interfaces:
 
-|  Interface | Description |
-|  --- | --- |
-|  [EditorApi](#editorapi) | This is the EditorApi which wraps all of the interaction with the cypher editor |
-|  [EditorOptions](#editoroptions) | These are the options for the [createCypherEditor](#createcyphereditor) function |
+| Interface                       | Description                                                                      |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| [EditorApi](#editorapi)         | This is the EditorApi which wraps all of the interaction with the cypher editor  |
+| [EditorOptions](#editoroptions) | These are the options for the [createCypherEditor](#createcyphereditor) function |
 
 <a name="editorapi"></a>
 
@@ -53,19 +55,20 @@ This is the EditorApi which wraps all of the interaction with the cypher editor
 
 ```typescript
 export interface EditorApi
-  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged"> 
+  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged">
 ```
+
 <b>Extends:</b> Omit&lt;[BaseEditorApi](./cypher-codemirror-base.md#baseeditorapi)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
 #### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [codemirror](#editorapi.codemirror) | EditorView |  |
-|  [offValueChanged](#editorapi.offvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; void |  |
-|  [onValueChanged](#editorapi.onvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
-|  [setPostExtensions](#editorapi.setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
-|  [setPreExtensions](#editorapi.setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
+| Property                                          | Type                                                                                  | Description      |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------- |
+| [codemirror](#editorapi.codemirror)               | EditorView                                                                            |                  |
+| [offValueChanged](#editorapi.offvaluechanged)     | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; void          |                  |
+| [onValueChanged](#editorapi.onvaluechanged)       | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
+| [setPostExtensions](#editorapi.setpostextensions) | (preExtensions: Extension\[\]) =&gt; void                                             |                  |
+| [setPreExtensions](#editorapi.setpreextensions)   | (preExtensions: Extension\[\]) =&gt; void                                             |                  |
 
 <a name="editorapi.codemirror"></a>
 
@@ -128,16 +131,17 @@ These are the options for the [createCypherEditor](#createcyphereditor) function
 <b>Signature:</b>
 
 ```typescript
-export interface EditorOptions extends BaseEditorOptions 
+export interface EditorOptions extends BaseEditorOptions
 ```
+
 <b>Extends:</b> [BaseEditorOptions](./cypher-codemirror-base.md#baseeditoroptions)
 
 #### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [postExtensions?](#editoroptions.postextensions) | Extension\[\] | <i>(Optional)</i> |
-|  [preExtensions?](#editoroptions.preextensions) | Extension\[\] | <i>(Optional)</i> |
+| Property                                         | Type          | Description       |
+| ------------------------------------------------ | ------------- | ----------------- |
+| [postExtensions?](#editoroptions.postextensions) | Extension\[\] | <i>(Optional)</i> |
+| [preExtensions?](#editoroptions.preextensions)   | Extension\[\] | <i>(Optional)</i> |
 
 <a name="editoroptions.postextensions"></a>
 
@@ -163,10 +167,10 @@ preExtensions?: Extension[];
 
 ### Type Aliases:
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [createCypherEditor](#createcyphereditor) | This is the createCypherEditor function |
-|  [ValueChangedListener](#valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
+| Type Alias                                    | Description                                                           |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| [createCypherEditor](#createcyphereditor)     | This is the createCypherEditor function                               |
+| [ValueChangedListener](#valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
 
 <a name="createcyphereditor"></a>
 
@@ -182,6 +186,7 @@ export type createCypherEditor = (
   options: EditorOptions
 ) => EditorApi;
 ```
+
 <b>References:</b> [EditorOptions](#editoroptions)<!-- -->, [EditorApi](#editorapi)
 
 <a name="valuechangedlistener"></a>
@@ -197,4 +202,3 @@ export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 ```
 
 ---
-

@@ -8,9 +8,9 @@
 
 ### Classes:
 
-|  Class | Description |
-|  --- | --- |
-|  [CypherEditor](#cyphereditor) | Cypher Editor Svelte Component |
+| Class                         | Description                    |
+| ----------------------------- | ------------------------------ |
+| [CypherEditor](#cyphereditor) | Cypher Editor Svelte Component |
 
 <a name="cyphereditor"></a>
 
@@ -25,17 +25,18 @@ export default class CypherEditor extends SvelteComponentTyped<
   CypherEditorProps,
   {},
   {}
-> 
+>
 ```
+
 <b>Extends:</b> SvelteComponentTyped&lt; [CypherEditorProps](#cyphereditorprops)<!-- -->, {}, {} &gt;
 
 ---
 
 ### Interfaces:
 
-|  Interface | Description |
-|  --- | --- |
-|  [CypherEditorProps](#cyphereditorprops) | Docs for CypherEditorProps. |
+| Interface                               | Description                 |
+| --------------------------------------- | --------------------------- |
+| [CypherEditorProps](#cyphereditorprops) | Docs for CypherEditorProps. |
 
 <a name="cyphereditorprops"></a>
 
@@ -46,7 +47,7 @@ Docs for CypherEditorProps.
 <b>Signature:</b>
 
 ```typescript
-export interface CypherEditorProps 
+export interface CypherEditorProps
 ```
 
 #### Example:
@@ -55,42 +56,42 @@ Here's some example code using the props:
 
 ```ts
 const props = { autocomplete: false };
-<CypherEditor {...props} />
+<CypherEditor {...props} />;
 ```
 
 #### Properties:
 
-|  Property | Type | Default | Description |
-|  --- | --- | --- | --- |
-|  [autocomplete?](#cyphereditorprops.autocomplete) | boolean | <code>true</code> | <i>(Optional)</i> Whether autocomplete is enabled. |
-|  [autocompleteCloseOnBlur?](#cyphereditorprops.autocompletecloseonblur) | boolean | <code>true</code> | <i>(Optional)</i> Whether autocomplete is closed when the editor loses focus. |
-|  [autocompleteOpen?](#cyphereditorprops.autocompleteopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete window is open. Changing this can be used to manually control the autocomplete open state. |
-|  [autocompleteSchema?](#cyphereditorprops.autocompleteschema) | [EditorSupportSchema](./cypher-editor-support.md#editorsupportschema) | <code>undefined</code> | <i>(Optional)</i> The autocomplete schema to use when showing autocomplete suggestions. |
-|  [autocompleteTriggerStrings?](#cyphereditorprops.autocompletetriggerstrings) | string\[\] |  | <i>(Optional)</i> |
-|  [autofocus?](#cyphereditorprops.autofocus) | boolean |  | <i>(Optional)</i> |
-|  [autofocusProps?](#cyphereditorprops.autofocusprops) | [AutofocusProp](./cypher-codemirror-base.md#autofocusprop)<!-- -->\[\] |  | <i>(Optional)</i> |
-|  [className?](#cyphereditorprops.classname) | string |  | <i>(Optional)</i> |
-|  [focusedClassName?](#cyphereditorprops.focusedclassname) | string |  | <i>(Optional)</i> |
-|  [history?](#cyphereditorprops.history) | boolean |  | <i>(Optional)</i> |
-|  [lineNumberFormatter?](#cyphereditorprops.linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string |  | <i>(Optional)</i> |
-|  [lineNumbers?](#cyphereditorprops.linenumbers) | boolean |  | <i>(Optional)</i> |
-|  [lineWrapping?](#cyphereditorprops.linewrapping) | boolean |  | <i>(Optional)</i> |
-|  [lint?](#cyphereditorprops.lint) | boolean |  | <i>(Optional)</i> |
-|  [onAutocompleteChanged?](#cyphereditorprops.onautocompletechanged) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror-base.md#autocompleteoption)<!-- -->\[\] ) =&gt; void |  | <i>(Optional)</i> |
-|  [onEditorCreated?](#cyphereditorprops.oneditorcreated) | (editor: [EditorApi](./cypher-codemirror.md#editorapi)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onFocusChanged?](#cyphereditorprops.onfocuschanged) | (focused: boolean) =&gt; void |  | <i>(Optional)</i> |
-|  [onKeyDown?](#cyphereditorprops.onkeydown) | (event: KeyboardEvent) =&gt; void |  | <i>(Optional)</i> |
-|  [onLineNumberClick?](#cyphereditorprops.onlinenumberclick) | (lineNumber: number, event: Event) =&gt; void |  | <i>(Optional)</i> |
-|  [onPositionChanged?](#cyphereditorprops.onpositionchanged) | (position: [PositionObject](./cypher-codemirror-base.md#positionobject)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onScrollChanged?](#cyphereditorprops.onscrollchanged) | (scrollInfo: [ScrollInfo](./cypher-codemirror-base.md#scrollinfo)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onValueChanged?](#cyphereditorprops.onvaluechanged) | (value: string, changes: ChangeSet) =&gt; void |  | <i>(Optional)</i> |
-|  [parseOnSetValue?](#cyphereditorprops.parseonsetvalue) | boolean |  | <i>(Optional)</i> |
-|  [placeholder?](#cyphereditorprops.placeholder) | string |  | <i>(Optional)</i> |
-|  [position?](#cyphereditorprops.position) | [PositionAny](./cypher-codemirror-base.md#positionany) |  | <i>(Optional)</i> |
-|  [readOnly?](#cyphereditorprops.readonly) | boolean |  | <i>(Optional)</i> |
-|  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean |  | <i>(Optional)</i> |
-|  [theme?](#cyphereditorprops.theme) | [Theme](./cypher-codemirror-base.md#theme) |  | <i>(Optional)</i> |
-|  [value?](#cyphereditorprops.value) | string |  | <i>(Optional)</i> |
+| Property                                                                     | Type                                                                                                                                  | Default                | Description                                                                                                                           |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| [autocomplete?](#cyphereditorprops.autocomplete)                             | boolean                                                                                                                               | <code>true</code>      | <i>(Optional)</i> Whether autocomplete is enabled.                                                                                    |
+| [autocompleteCloseOnBlur?](#cyphereditorprops.autocompletecloseonblur)       | boolean                                                                                                                               | <code>true</code>      | <i>(Optional)</i> Whether autocomplete is closed when the editor loses focus.                                                         |
+| [autocompleteOpen?](#cyphereditorprops.autocompleteopen)                     | boolean                                                                                                                               | <code>false</code>     | <i>(Optional)</i> Whether the autocomplete window is open. Changing this can be used to manually control the autocomplete open state. |
+| [autocompleteSchema?](#cyphereditorprops.autocompleteschema)                 | [EditorSupportSchema](./cypher-editor-support.md#editorsupportschema)                                                                 | <code>undefined</code> | <i>(Optional)</i> The autocomplete schema to use when showing autocomplete suggestions.                                               |
+| [autocompleteTriggerStrings?](#cyphereditorprops.autocompletetriggerstrings) | string\[\]                                                                                                                            |                        | <i>(Optional)</i>                                                                                                                     |
+| [autofocus?](#cyphereditorprops.autofocus)                                   | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [autofocusProps?](#cyphereditorprops.autofocusprops)                         | [AutofocusProp](./cypher-codemirror-base.md#autofocusprop)<!-- -->\[\]                                                                |                        | <i>(Optional)</i>                                                                                                                     |
+| [className?](#cyphereditorprops.classname)                                   | string                                                                                                                                |                        | <i>(Optional)</i>                                                                                                                     |
+| [focusedClassName?](#cyphereditorprops.focusedclassname)                     | string                                                                                                                                |                        | <i>(Optional)</i>                                                                                                                     |
+| [history?](#cyphereditorprops.history)                                       | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [lineNumberFormatter?](#cyphereditorprops.linenumberformatter)               | (lineNumber: number, lineCount: number) =&gt; string                                                                                  |                        | <i>(Optional)</i>                                                                                                                     |
+| [lineNumbers?](#cyphereditorprops.linenumbers)                               | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [lineWrapping?](#cyphereditorprops.linewrapping)                             | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [lint?](#cyphereditorprops.lint)                                             | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [onAutocompleteChanged?](#cyphereditorprops.onautocompletechanged)           | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror-base.md#autocompleteoption)<!-- -->\[\] ) =&gt; void |                        | <i>(Optional)</i>                                                                                                                     |
+| [onEditorCreated?](#cyphereditorprops.oneditorcreated)                       | (editor: [EditorApi](./cypher-codemirror.md#editorapi)<!-- -->) =&gt; void                                                            |                        | <i>(Optional)</i>                                                                                                                     |
+| [onFocusChanged?](#cyphereditorprops.onfocuschanged)                         | (focused: boolean) =&gt; void                                                                                                         |                        | <i>(Optional)</i>                                                                                                                     |
+| [onKeyDown?](#cyphereditorprops.onkeydown)                                   | (event: KeyboardEvent) =&gt; void                                                                                                     |                        | <i>(Optional)</i>                                                                                                                     |
+| [onLineNumberClick?](#cyphereditorprops.onlinenumberclick)                   | (lineNumber: number, event: Event) =&gt; void                                                                                         |                        | <i>(Optional)</i>                                                                                                                     |
+| [onPositionChanged?](#cyphereditorprops.onpositionchanged)                   | (position: [PositionObject](./cypher-codemirror-base.md#positionobject)<!-- -->) =&gt; void                                           |                        | <i>(Optional)</i>                                                                                                                     |
+| [onScrollChanged?](#cyphereditorprops.onscrollchanged)                       | (scrollInfo: [ScrollInfo](./cypher-codemirror-base.md#scrollinfo)<!-- -->) =&gt; void                                                 |                        | <i>(Optional)</i>                                                                                                                     |
+| [onValueChanged?](#cyphereditorprops.onvaluechanged)                         | (value: string, changes: ChangeSet) =&gt; void                                                                                        |                        | <i>(Optional)</i>                                                                                                                     |
+| [parseOnSetValue?](#cyphereditorprops.parseonsetvalue)                       | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [placeholder?](#cyphereditorprops.placeholder)                               | string                                                                                                                                |                        | <i>(Optional)</i>                                                                                                                     |
+| [position?](#cyphereditorprops.position)                                     | [PositionAny](./cypher-codemirror-base.md#positionany)                                                                                |                        | <i>(Optional)</i>                                                                                                                     |
+| [readOnly?](#cyphereditorprops.readonly)                                     | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [readOnlyCursor?](#cyphereditorprops.readonlycursor)                         | boolean                                                                                                                               |                        | <i>(Optional)</i>                                                                                                                     |
+| [theme?](#cyphereditorprops.theme)                                           | [Theme](./cypher-codemirror-base.md#theme)                                                                                            |                        | <i>(Optional)</i>                                                                                                                     |
+| [value?](#cyphereditorprops.value)                                           | string                                                                                                                                |                        | <i>(Optional)</i>                                                                                                                     |
 
 <a name="cyphereditorprops.autocomplete"></a>
 
@@ -103,6 +104,7 @@ Whether autocomplete is enabled.
 ```typescript
 autocomplete?: boolean;
 ```
+
 <b>Default Value:</b>
 
 `true`
@@ -118,6 +120,7 @@ Whether autocomplete is closed when the editor loses focus.
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
 <b>Default Value:</b>
 
 `true`
@@ -133,6 +136,7 @@ Whether the autocomplete window is open. Changing this can be used to manually c
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
 <b>Default Value:</b>
 
 `false`
@@ -148,6 +152,7 @@ The autocomplete schema to use when showing autocomplete suggestions.
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
 <b>Default Value:</b>
 
 `undefined`
@@ -407,4 +412,3 @@ value?: string;
 ```
 
 ---
-

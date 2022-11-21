@@ -173,39 +173,102 @@
       "preserveMemberOrder": false,
       "members": [
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type AutocompleteChangedListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(\n  open: boolean,\n  from?: number,\n  options?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "AutocompleteOption",
-              "canonicalReference": "cypher-codemirror!AutocompleteOption:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "[]\n) => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface AutocompleteChangedListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "AutocompleteChangedListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(open: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", from?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AutocompleteOption",
+                  "canonicalReference": "cypher-codemirror!AutocompleteOption:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "open",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "from",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 7
+                  },
+                  "isOptional": true
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -335,11 +398,11 @@
         {
           "kind": "Function",
           "canonicalReference": "cypher-codemirror!createCypherEditor:function(1)",
-          "docComment": "/**\n * This is the createCypherEditor function\n */\n",
+          "docComment": "/**\n * This function creates a codemirror cypher editor instance\n *\n * @param parentDOMElement - the parent dom element to attach the editor to\n *\n * @param options - the options for the created editor\n *\n * @returns An editor api that wraps the created editor instance\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare function createCypherEditor(parentDOMElement: "
+              "text": "export declare function createCypherEditor(\n  parentDOMElement: "
             },
             {
               "kind": "Reference",
@@ -366,7 +429,7 @@
             },
             {
               "kind": "Content",
-              "text": "): "
+              "text": "\n): "
             },
             {
               "kind": "Reference",
@@ -677,7 +740,7 @@
                 {
                   "kind": "Reference",
                   "text": "AutocompleteChangedListener",
-                  "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -713,7 +776,7 @@
                 {
                   "kind": "Reference",
                   "text": "FocusChangedListener",
-                  "canonicalReference": "cypher-codemirror!FocusChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!FocusChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -749,7 +812,7 @@
                 {
                   "kind": "Reference",
                   "text": "KeyDownListener",
-                  "canonicalReference": "cypher-codemirror!KeyDownListener:type"
+                  "canonicalReference": "cypher-codemirror!KeyDownListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -785,7 +848,7 @@
                 {
                   "kind": "Reference",
                   "text": "LineNumberClickListener",
-                  "canonicalReference": "cypher-codemirror!LineNumberClickListener:type"
+                  "canonicalReference": "cypher-codemirror!LineNumberClickListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -821,7 +884,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionChangedListener",
-                  "canonicalReference": "cypher-codemirror!PositionChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!PositionChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -857,7 +920,7 @@
                 {
                   "kind": "Reference",
                   "text": "ScrollChangedListener",
-                  "canonicalReference": "cypher-codemirror!ScrollChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!ScrollChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -893,7 +956,7 @@
                 {
                   "kind": "Reference",
                   "text": "ValueChangedListener",
-                  "canonicalReference": "cypher-codemirror!ValueChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!ValueChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -929,7 +992,7 @@
                 {
                   "kind": "Reference",
                   "text": "AutocompleteChangedListener",
-                  "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -965,7 +1028,7 @@
                 {
                   "kind": "Reference",
                   "text": "FocusChangedListener",
-                  "canonicalReference": "cypher-codemirror!FocusChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!FocusChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -1001,7 +1064,7 @@
                 {
                   "kind": "Reference",
                   "text": "KeyDownListener",
-                  "canonicalReference": "cypher-codemirror!KeyDownListener:type"
+                  "canonicalReference": "cypher-codemirror!KeyDownListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -1037,7 +1100,7 @@
                 {
                   "kind": "Reference",
                   "text": "LineNumberClickListener",
-                  "canonicalReference": "cypher-codemirror!LineNumberClickListener:type"
+                  "canonicalReference": "cypher-codemirror!LineNumberClickListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -1073,7 +1136,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionChangedListener",
-                  "canonicalReference": "cypher-codemirror!PositionChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!PositionChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -1109,7 +1172,7 @@
                 {
                   "kind": "Reference",
                   "text": "ScrollChangedListener",
-                  "canonicalReference": "cypher-codemirror!ScrollChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!ScrollChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -1145,7 +1208,7 @@
                 {
                   "kind": "Reference",
                   "text": "ValueChangedListener",
-                  "canonicalReference": "cypher-codemirror!ValueChangedListener:type"
+                  "canonicalReference": "cypher-codemirror!ValueChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -2298,100 +2361,205 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!FocusChangedListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!FocusChangedListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type FocusChangedListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(focused: boolean) => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface FocusChangedListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "FocusChangedListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!FocusChangedListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(focused: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "focused",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!KeyDownListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!KeyDownListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type KeyDownListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(event: "
-            },
-            {
-              "kind": "Reference",
-              "text": "KeyboardEvent",
-              "canonicalReference": "!KeyboardEvent:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ") => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface KeyDownListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "KeyDownListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!KeyDownListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(event: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "KeyboardEvent",
+                  "canonicalReference": "!KeyboardEvent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "event",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!LineNumberClickListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!LineNumberClickListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type LineNumberClickListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(\n  lineNumber: number,\n  event: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Event",
-              "canonicalReference": "!Event:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "\n) => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface LineNumberClickListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "LineNumberClickListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!LineNumberClickListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(lineNumber: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", event: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Event",
+                  "canonicalReference": "!Event:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "lineNumber",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "event",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "TypeAlias",
@@ -2460,39 +2628,66 @@
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!PositionChangedListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!PositionChangedListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type PositionChangedListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(position: "
-            },
-            {
-              "kind": "Reference",
-              "text": "PositionObject",
-              "canonicalReference": "cypher-codemirror!PositionObject:type"
-            },
-            {
-              "kind": "Content",
-              "text": ") => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface PositionChangedListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "PositionChangedListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!PositionChangedListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(position: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PositionObject",
+                  "canonicalReference": "cypher-codemirror!PositionObject:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "position",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "TypeAlias",
@@ -2521,39 +2716,66 @@
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!ScrollChangedListener:type",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!ScrollChangedListener:interface",
           "docComment": "",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type ScrollChangedListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(scrollInfo: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ScrollInfo",
-              "canonicalReference": "cypher-codemirror!ScrollInfo:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ") => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface ScrollChangedListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "ScrollChangedListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!ScrollChangedListener:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(scrollInfo: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ScrollInfo",
+                  "canonicalReference": "cypher-codemirror!ScrollInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "scrollInfo",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -2762,39 +2984,82 @@
           }
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!ValueChangedListener:type",
-          "docComment": "/**\n * This listener is fired when the value of the cypher editor is changed\n *\n * @param value - the new cypher query text value\n *\n * @param changes - the codemirror 6 ChangeSet object representing what changed\n */\n",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!ValueChangedListener:interface",
+          "docComment": "/**\n * This listener is fired when the value of the cypher editor is changed\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type ValueChangedListener = "
-            },
-            {
-              "kind": "Content",
-              "text": "(value: string, changes: "
-            },
-            {
-              "kind": "Reference",
-              "text": "ChangeSet",
-              "canonicalReference": "@codemirror/state!ChangeSet:class"
-            },
-            {
-              "kind": "Content",
-              "text": ") => void"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface ValueChangedListener "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "ValueChangedListener",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "cypher-codemirror!ValueChangedListener:call(1)",
+              "docComment": "/**\n * @param value - the new cypher query text value\n *\n * @param changes - the codemirror 6 ChangeSet object representing what changed\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", changes: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ChangeSet",
+                  "canonicalReference": "@codemirror/state!ChangeSet:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "value",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "changes",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         }
       ]
     }

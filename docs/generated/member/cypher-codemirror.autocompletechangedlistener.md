@@ -2,16 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)
 
-## AutocompleteChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type AutocompleteChangedListener = (
-  open: boolean,
-  from?: number,
-  options?: AutocompleteOption[]
-) => void;
-```
-<b>References:</b> [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)
+## AutocompleteChangedListener call signature
 

@@ -2,13 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)
 
-## LineNumberClickListener type
+## LineNumberClickListener call signature
 
-<b>Signature:</b>
-
-```typescript
-export type LineNumberClickListener = (
-  lineNumber: number,
-  event: Event
-) => void;
-```

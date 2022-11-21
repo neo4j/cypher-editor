@@ -12,7 +12,6 @@ import type { EditorView } from "@codemirror/view";
  * @packageDocumentation
  */
 
-
 import type {
   EditorSupportSchema,
   CypherEditorSupport
@@ -50,25 +49,40 @@ export interface ScrollInfo {
   scrollWidth: number;
 }
 
-export type AutocompleteChangedListener = (
-  open: boolean,
-  from?: number,
-  options?: AutocompleteOption[]
-) => void;
-export type PositionChangedListener = (position: PositionObject) => void;
-export type FocusChangedListener = (focused: boolean) => void;
-export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
+export interface AutocompleteChangedListener {
+  (open: boolean, from?: number, options?: AutocompleteOption[]): void;
+}
+
+export interface PositionChangedListener {
+  (position: PositionObject): void;
+}
+
+export interface FocusChangedListener {
+  (focused: boolean): void;
+}
+
+export interface ScrollChangedListener {
+  (scrollInfo: ScrollInfo): void;
+}
+
 /**
  * This listener is fired when the value of the cypher editor is changed
- * @param value - the new cypher query text value
- * @param changes - the codemirror 6 ChangeSet object representing what changed 
  */
-export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
-export type KeyDownListener = (event: KeyboardEvent) => void;
-export type LineNumberClickListener = (
-  lineNumber: number,
-  event: Event
-) => void;
+export interface ValueChangedListener {
+  /**
+   * @param value - the new cypher query text value
+   * @param changes - the codemirror 6 ChangeSet object representing what changed
+   */
+  (value: string, changes: ChangeSet): void;
+}
+
+export interface KeyDownListener {
+  (event: KeyboardEvent): void;
+}
+
+export interface LineNumberClickListener {
+  (lineNumber: number, event: Event): void;
+}
 
 /**
  * This is the EditorApi which wraps all of the interaction with the cypher editor
@@ -150,7 +164,12 @@ export interface EditorOptions {
 }
 
 /**
- * This is the createCypherEditor function
+ * This function creates a codemirror cypher editor instance
+ * @param parentDOMElement - the parent dom element to attach the editor to
+ * @param options - the options for the created editor
+ * @returns An editor api that wraps the created editor instance
  */
-export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;

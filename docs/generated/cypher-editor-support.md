@@ -8,9 +8,9 @@
 
 ### Classes:
 
-|  Class |
-|  --- |
-|  [CypherEditorSupport](#cyphereditorsupport) |
+| Class                                       |
+| ------------------------------------------- |
+| [CypherEditorSupport](#cyphereditorsupport) |
 
 <a name="cyphereditorsupport"></a>
 
@@ -19,14 +19,14 @@
 <b>Signature:</b>
 
 ```typescript
-export class CypherEditorSupport 
+export class CypherEditorSupport
 ```
 
 #### Constructors:
 
-|  Constructor | Description |
-|  --- | --- |
-|  [(constructor)(input)](#cyphereditorsupport.(constructor)) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+| Constructor                                                  | Description                                                             |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| [(constructor)(input)](<#cyphereditorsupport.(constructor)>) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
 
 <a name="cyphereditorsupport.(constructor)"></a>
 
@@ -39,19 +39,20 @@ Constructs a new instance of the `CypherEditorSupport` class
 ```typescript
 constructor(input: string);
 ```
+
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  input | string |
+| Parameter | Type   |
+| --------- | ------ |
+| input     | string |
 
 #### Methods:
 
-|  Method |
-|  --- |
-|  [getCompletion(line, column, doFilter)](#cyphereditorsupport.getcompletion) |
-|  [setSchema(schema)](#cyphereditorsupport.setschema) |
-|  [update(input)](#cyphereditorsupport.update) |
+| Method                                                                      |
+| --------------------------------------------------------------------------- |
+| [getCompletion(line, column, doFilter)](#cyphereditorsupport.getcompletion) |
+| [setSchema(schema)](#cyphereditorsupport.setschema)                         |
+| [update(input)](#cyphereditorsupport.update)                                |
 
 <a name="cyphereditorsupport.getcompletion"></a>
 
@@ -70,13 +71,14 @@ getCompletion(
     items: EditorSupportCompletionItem[];
   };
 ```
+
 <b>Parameters:</b>
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  line | number |  |
-|  column | number |  |
-|  doFilter | boolean | <i>(Optional)</i> |
+| Parameter | Type    | Description       |
+| --------- | ------- | ----------------- |
+| line      | number  |                   |
+| column    | number  |                   |
+| doFilter  | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -91,11 +93,12 @@ getCompletion(
 ```typescript
 setSchema(schema: EditorSupportSchema): void;
 ```
+
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  schema | [EditorSupportSchema](#editorsupportschema) |
+| Parameter | Type                                        |
+| --------- | ------------------------------------------- |
+| schema    | [EditorSupportSchema](#editorsupportschema) |
 
 <b>Returns:</b>
 
@@ -110,11 +113,12 @@ void
 ```typescript
 update(input: string): void;
 ```
+
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  input | string |
+| Parameter | Type   |
+| --------- | ------ |
+| input     | string |
 
 <b>Returns:</b>
 
@@ -124,14 +128,14 @@ void
 
 ### Interfaces:
 
-|  Interface | Description |
-|  --- | --- |
-|  [ConsoleCommand](#consolecommand) |  |
-|  [EditorSupportCompletionItem](#editorsupportcompletionitem) | EditorSupportCompletionItem |
-|  [EditorSupportPosition](#editorsupportposition) | EditorSupportPosition |
-|  [EditorSupportSchema](#editorsupportschema) | Editor Support Autocomplete Schema |
-|  [FunctionSchema](#functionschema) |  |
-|  [ProcedureSchema](#procedureschema) |  |
+| Interface                                                   | Description                        |
+| ----------------------------------------------------------- | ---------------------------------- |
+| [ConsoleCommand](#consolecommand)                           |                                    |
+| [EditorSupportCompletionItem](#editorsupportcompletionitem) | EditorSupportCompletionItem        |
+| [EditorSupportPosition](#editorsupportposition)             | EditorSupportPosition              |
+| [EditorSupportSchema](#editorsupportschema)                 | Editor Support Autocomplete Schema |
+| [FunctionSchema](#functionschema)                           |                                    |
+| [ProcedureSchema](#procedureschema)                         |                                    |
 
 <a name="consolecommand"></a>
 
@@ -140,16 +144,16 @@ void
 <b>Signature:</b>
 
 ```typescript
-export interface ConsoleCommand 
+export interface ConsoleCommand
 ```
 
 #### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [commands?](#consolecommand.commands) | [ConsoleCommand](./cypher-editor-support.md#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
-|  [description?](#consolecommand.description) | string | <i>(Optional)</i> |
-|  [name](#consolecommand.name) | string |  |
+| Property                                    | Type                                                                    | Description       |
+| ------------------------------------------- | ----------------------------------------------------------------------- | ----------------- |
+| [commands?](#consolecommand.commands)       | [ConsoleCommand](./cypher-editor-support.md#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
+| [description?](#consolecommand.description) | string                                                                  | <i>(Optional)</i> |
+| [name](#consolecommand.name)                | string                                                                  |                   |
 
 <a name="consolecommand.commands"></a>
 
@@ -190,17 +194,17 @@ EditorSupportCompletionItem
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportCompletionItem 
+export interface EditorSupportCompletionItem
 ```
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [content](#editorsupportcompletionitem.content) | string |
-|  [postfix](#editorsupportcompletionitem.postfix) | null |
-|  [type](#editorsupportcompletionitem.type) | string |
-|  [view](#editorsupportcompletionitem.view) | string |
+| Property                                        | Type   |
+| ----------------------------------------------- | ------ |
+| [content](#editorsupportcompletionitem.content) | string |
+| [postfix](#editorsupportcompletionitem.postfix) | null   |
+| [type](#editorsupportcompletionitem.type)       | string |
+| [view](#editorsupportcompletionitem.view)       | string |
 
 <a name="editorsupportcompletionitem.content"></a>
 
@@ -251,15 +255,15 @@ EditorSupportPosition
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportPosition 
+export interface EditorSupportPosition
 ```
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [column](#editorsupportposition.column) | number |
-|  [line](#editorsupportposition.line) | number |
+| Property                                | Type   |
+| --------------------------------------- | ------ |
+| [column](#editorsupportposition.column) | number |
+| [line](#editorsupportposition.line)     | number |
 
 <a name="editorsupportposition.column"></a>
 
@@ -290,20 +294,20 @@ Editor Support Autocomplete Schema
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportSchema 
+export interface EditorSupportSchema
 ```
 
 #### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [consoleCommands?](#editorsupportschema.consolecommands) | [ConsoleCommand](#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
-|  [functions?](#editorsupportschema.functions) | [FunctionSchema](#functionschema)<!-- -->\[\] | <i>(Optional)</i> |
-|  [labels?](#editorsupportschema.labels) | string\[\] | <i>(Optional)</i> The list of labels in the graph database |
-|  [parameters?](#editorsupportschema.parameters) | string\[\] | <i>(Optional)</i> |
-|  [procedures?](#editorsupportschema.procedures) | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i> |
-|  [propertyKeys?](#editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> |
-|  [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
+| Property                                                     | Type                                            | Description                                                            |
+| ------------------------------------------------------------ | ----------------------------------------------- | ---------------------------------------------------------------------- |
+| [consoleCommands?](#editorsupportschema.consolecommands)     | [ConsoleCommand](#consolecommand)<!-- -->\[\]   | <i>(Optional)</i>                                                      |
+| [functions?](#editorsupportschema.functions)                 | [FunctionSchema](#functionschema)<!-- -->\[\]   | <i>(Optional)</i>                                                      |
+| [labels?](#editorsupportschema.labels)                       | string\[\]                                      | <i>(Optional)</i> The list of labels in the graph database             |
+| [parameters?](#editorsupportschema.parameters)               | string\[\]                                      | <i>(Optional)</i>                                                      |
+| [procedures?](#editorsupportschema.procedures)               | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i>                                                      |
+| [propertyKeys?](#editorsupportschema.propertykeys)           | string\[\]                                      | <i>(Optional)</i>                                                      |
+| [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\]                                      | <i>(Optional)</i> The list of relationship types in the graph database |
 
 <a name="editorsupportschema.consolecommands"></a>
 
@@ -386,15 +390,15 @@ relationshipTypes?: string[];
 <b>Signature:</b>
 
 ```typescript
-export interface FunctionSchema 
+export interface FunctionSchema
 ```
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [name](#functionschema.name) | string |
-|  [signature](#functionschema.signature) | string |
+| Property                               | Type   |
+| -------------------------------------- | ------ |
+| [name](#functionschema.name)           | string |
+| [signature](#functionschema.signature) | string |
 
 <a name="functionschema.name"></a>
 
@@ -423,16 +427,16 @@ signature: string;
 <b>Signature:</b>
 
 ```typescript
-export interface ProcedureSchema 
+export interface ProcedureSchema
 ```
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [name](#procedureschema.name) | string |
-|  [returnItems](#procedureschema.returnitems) | [FunctionSchema](#functionschema)<!-- -->\[\] |
-|  [signature](#procedureschema.signature) | string |
+| Property                                    | Type                                          |
+| ------------------------------------------- | --------------------------------------------- |
+| [name](#procedureschema.name)               | string                                        |
+| [returnItems](#procedureschema.returnitems) | [FunctionSchema](#functionschema)<!-- -->\[\] |
+| [signature](#procedureschema.signature)     | string                                        |
 
 <a name="procedureschema.name"></a>
 
@@ -465,4 +469,3 @@ signature: string;
 ```
 
 ---
-

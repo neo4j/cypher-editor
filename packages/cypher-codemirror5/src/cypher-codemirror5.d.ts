@@ -48,9 +48,12 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 /**
  * This listener is fired when the value of the cypher editor is changed
  * @param value - the new cypher query text value
- * @param changes - the codemirror 5 EditorChange object representing what changed 
+ * @param changes - the codemirror 5 EditorChange object representing what changed
  */
-export type ValueChangedListener = (value: string, changes: EditorChange) => void;
+export type ValueChangedListener = (
+  value: string,
+  changes: EditorChange
+) => void;
 export type KeyDownListener = (event: KeyboardEvent) => void;
 export type LineNumberClickListener = (
   lineNumber: number,
@@ -135,5 +138,7 @@ export interface EditorOptions {
 /**
  * This is the createCypherEditor function
  */
- export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;

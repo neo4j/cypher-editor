@@ -9,12 +9,12 @@ import type {
   PositionAny,
   Theme,
   AutocompleteOption,
-  AutofocusProp,
+  AutofocusProp
 } from "cypher-codemirror";
 
 /**
  * Docs for CypherEditorProps.
- * 
+ *
  * @example
  * Here's some example code using the props:
  *
@@ -24,39 +24,30 @@ import type {
  * ```
  */
 export interface CypherEditorProps {
-/**
- * Whether autocomplete is enabled.
- *
- * @defaultValue `true`
- */
+  /**
+   * Whether autocomplete is enabled.
+   *
+   * @defaultValue `true`
+   */
   autocomplete?: boolean;
-/**
- * Whether autocomplete is closed when the editor loses focus.
- *
- * @defaultValue `true`
- */
+  /**
+   * Whether autocomplete is closed when the editor loses focus.
+   *
+   * @defaultValue `true`
+   */
   autocompleteCloseOnBlur?: boolean;
-/**
- * Whether the autocomplete window is open.
- * Changing this can be used to manually control the autocomplete open state.
- *
- * @defaultValue `false`
- */
+  /**
+   * Whether the autocomplete window is open.
+   * Changing this can be used to manually control the autocomplete open state.
+   *
+   * @defaultValue `false`
+   */
   autocompleteOpen?: boolean;
-// /**
-//  * The autocomplete schema to use when showing autocomplete suggestions.
-//  * 
-//  * {@link cypher-editor-support.EditorSupportSchema } SCHEMA
-//  * 
-//  * @typeParam {@link cypher-editor-support.EditorSupportSchema }
-//  * 
-//  * @defaultValue `undefined`
-//  */
-/**
- * The autocomplete schema to use when showing autocomplete suggestions.
- * 
- * @defaultValue `undefined`
- */
+  /**
+   * The autocomplete schema to use when showing autocomplete suggestions.
+   *
+   * @defaultValue `undefined`
+   */
   autocompleteSchema?: EditorSupportSchema;
   autocompleteTriggerStrings?: string[];
   autofocusProps?: AutofocusProp[];
@@ -92,7 +83,7 @@ export interface CypherEditorProps {
   // TODO - add these props
   // preExtensions?: Extension[],
   // postExtensions?: Extension[]
-};
+}
 
 /**
  * Cypher Editor Svelte Component
@@ -101,4 +92,4 @@ export default class CypherEditor extends SvelteComponentTyped<
   CypherEditorProps,
   {},
   {}
-> {};
+> {}

@@ -8,10 +8,10 @@
 
 ### Interfaces:
 
-|  Interface |
-|  --- |
-|  [EditorApi](#editorapi) |
-|  [EditorOptions](#editoroptions) |
+| Interface                       |
+| ------------------------------- |
+| [EditorApi](#editorapi)         |
+| [EditorOptions](#editoroptions) |
 
 <a name="editorapi"></a>
 
@@ -21,17 +21,18 @@
 
 ```typescript
 export interface EditorApi
-  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged"> 
+  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged">
 ```
+
 <b>Extends:</b> Omit&lt;[BaseEditorApi](./cypher-codemirror-base.md#baseeditorapi)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [codemirror](#editorapi.codemirror) | Editor |
-|  [offValueChanged](#editorapi.offvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; void |
-|  [onValueChanged](#editorapi.onvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; () =&gt; void |
+| Property                                      | Type                                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [codemirror](#editorapi.codemirror)           | Editor                                                                                |
+| [offValueChanged](#editorapi.offvaluechanged) | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; void          |
+| [onValueChanged](#editorapi.onvaluechanged)   | (listener: [ValueChangedListener](#valuechangedlistener)<!-- -->) =&gt; () =&gt; void |
 
 <a name="editorapi.codemirror"></a>
 
@@ -70,15 +71,16 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 <b>Signature:</b>
 
 ```typescript
-export interface EditorOptions extends BaseEditorOptions 
+export interface EditorOptions extends BaseEditorOptions
 ```
+
 <b>Extends:</b> [BaseEditorOptions](./cypher-codemirror-base.md#baseeditoroptions)
 
 #### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [codemirrorOptions?](#editoroptions.codemirroroptions) | any | <i>(Optional)</i> |
+| Property                                               | Type | Description       |
+| ------------------------------------------------------ | ---- | ----------------- |
+| [codemirrorOptions?](#editoroptions.codemirroroptions) | any  | <i>(Optional)</i> |
 
 <a name="editoroptions.codemirroroptions"></a>
 
@@ -94,10 +96,10 @@ codemirrorOptions?: any;
 
 ### Type Aliases:
 
-|  Type Alias |
-|  --- |
-|  [createCypherEditor](#createcyphereditor) |
-|  [ValueChangedListener](#valuechangedlistener) |
+| Type Alias                                    |
+| --------------------------------------------- |
+| [createCypherEditor](#createcyphereditor)     |
+| [ValueChangedListener](#valuechangedlistener) |
 
 <a name="createcyphereditor"></a>
 
@@ -111,6 +113,7 @@ export type createCypherEditor = (
   options: EditorOptions
 ) => EditorApi;
 ```
+
 <b>References:</b> [EditorOptions](#editoroptions)<!-- -->, [EditorApi](#editorapi)
 
 <a name="valuechangedlistener"></a>
@@ -127,4 +130,3 @@ export type ValueChangedListener = (
 ```
 
 ---
-

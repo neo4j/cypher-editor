@@ -7,9 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-export default class CypherEditor extends React.Component<CypherEditorProps, any> 
+export default class CypherEditor extends React.Component<
+  CypherEditorProps,
+  any
+> 
 ```
-<b>Extends:</b> React.Component&lt;[CypherEditorProps](./react-codemirror-cypher.cyphereditorprops.md)<!-- -->, any&gt;
+<b>Extends:</b> React.Component&lt; [CypherEditorProps](./react-codemirror-cypher.cyphereditorprops.md)<!-- -->, any &gt;
 
 ---
 

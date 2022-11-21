@@ -25,7 +25,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [createCypherEditor(parentDOMElement, options)](#cypher-codemirror.createcyphereditor) | This is the createCypherEditor function |
+|  [createCypherEditor(parentDOMElement, options)](#cypher-codemirror.createcyphereditor) | This function creates a codemirror cypher editor instance |
 
 <br>
 
@@ -33,24 +33,209 @@
 
 #### createCypherEditor() function
 
-This is the createCypherEditor function
+This function creates a codemirror cypher editor instance
 
 <b>Signature:</b>
 
 ```typescript
-export declare function createCypherEditor(parentDOMElement: Element | DocumentFragment,
-  options: EditorOptions): EditorApi;
+export declare function createCypherEditor(
+  parentDOMElement: Element | DocumentFragment,
+  options: EditorOptions
+): EditorApi;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parentDOMElement | Element \| DocumentFragment | the parent dom element to attach the editor to |
+|  options | [EditorOptions](#cypher-codemirror.editoroptions) | the options for the created editor |
+
+<b>Returns:</b>
+
+[EditorApi](#cypher-codemirror.editorapi)
+
+An editor api that wraps the created editor instance
+
+<br>
+
+#### Call Signatures:
+
+|  Call Signature | Description |
+|  --- | --- |
+|  [AutocompleteChangedListener](#cypher-codemirror.autocompletechangedlistener) |  |
+|  [FocusChangedListener](#cypher-codemirror.focuschangedlistener) |  |
+|  [KeyDownListener](#cypher-codemirror.keydownlistener) |  |
+|  [LineNumberClickListener](#cypher-codemirror.linenumberclicklistener) |  |
+|  [PositionChangedListener](#cypher-codemirror.positionchangedlistener) |  |
+|  [ScrollChangedListener](#cypher-codemirror.scrollchangedlistener) |  |
+|  [ValueChangedListener](#cypher-codemirror.valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
+
+<br>
+
+<a name="cypher-codemirror.autocompletechangedlistener"></a>
+
+#### AutocompleteChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface AutocompleteChangedListener {
+  (open: boolean, from?: number, options?: AutocompleteOption[]): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  open | boolean |  |
+|  from | number | <i>(Optional)</i> |
+|  options | [AutocompleteOption](#cypher-codemirror.autocompleteoption)<!-- -->\[\] | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="cypher-codemirror.focuschangedlistener"></a>
+
+#### FocusChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface FocusChangedListener {
+  (focused: boolean): void;
+}
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type |
 |  --- | --- |
-|  parentDOMElement | Element \| DocumentFragment |
-|  options | [EditorOptions](#cypher-codemirror.editoroptions) |
+|  focused | boolean |
 
 <b>Returns:</b>
 
-[EditorApi](#cypher-codemirror.editorapi)
+void
+
+<br>
+
+<a name="cypher-codemirror.keydownlistener"></a>
+
+#### KeyDownListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface KeyDownListener {
+  (event: KeyboardEvent): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  event | KeyboardEvent |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="cypher-codemirror.linenumberclicklistener"></a>
+
+#### LineNumberClickListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface LineNumberClickListener {
+  (lineNumber: number, event: Event): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  lineNumber | number |
+|  event | Event |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="cypher-codemirror.positionchangedlistener"></a>
+
+#### PositionChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface PositionChangedListener {
+  (position: PositionObject): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  position | [PositionObject](#cypher-codemirror.positionobject) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="cypher-codemirror.scrollchangedlistener"></a>
+
+#### ScrollChangedListener call signature
+
+<b>Signature:</b>
+
+```typescript
+export interface ScrollChangedListener {
+  (scrollInfo: ScrollInfo): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  scrollInfo | [ScrollInfo](#cypher-codemirror.scrollinfo) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="cypher-codemirror.valuechangedlistener"></a>
+
+#### ValueChangedListener call signature
+
+This listener is fired when the value of the cypher editor is changed
+
+<b>Signature:</b>
+
+```typescript
+export interface ValueChangedListener {
+  (value: string, changes: ChangeSet): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  value | string | the new cypher query text value |
+|  changes | ChangeSet | the codemirror 6 ChangeSet object representing what changed |
+
+<b>Returns:</b>
+
+void
 
 <br>
 
@@ -1055,37 +1240,13 @@ scrollWidth: number;
 
 #### Type Aliases:
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [AutocompleteChangedListener](#cypher-codemirror.autocompletechangedlistener) |  |
-|  [AutofocusProp](#cypher-codemirror.autofocusprop) |  |
-|  [FocusChangedListener](#cypher-codemirror.focuschangedlistener) |  |
-|  [KeyDownListener](#cypher-codemirror.keydownlistener) |  |
-|  [LineNumberClickListener](#cypher-codemirror.linenumberclicklistener) |  |
-|  [PartialPositionObject](#cypher-codemirror.partialpositionobject) |  |
-|  [PositionAny](#cypher-codemirror.positionany) |  |
-|  [PositionChangedListener](#cypher-codemirror.positionchangedlistener) |  |
-|  [PositionObject](#cypher-codemirror.positionobject) |  |
-|  [ScrollChangedListener](#cypher-codemirror.scrollchangedlistener) |  |
-|  [Theme](#cypher-codemirror.theme) |  |
-|  [ValueChangedListener](#cypher-codemirror.valuechangedlistener) | This listener is fired when the value of the cypher editor is changed |
-
-<br>
-
-<a name="cypher-codemirror.autocompletechangedlistener"></a>
-
-#### AutocompleteChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type AutocompleteChangedListener = (
-  open: boolean,
-  from?: number,
-  options?: AutocompleteOption[]
-) => void;
-```
-<b>References:</b> [AutocompleteOption](#cypher-codemirror.autocompleteoption)
+|  Type Alias |
+|  --- |
+|  [AutofocusProp](#cypher-codemirror.autofocusprop) |
+|  [PartialPositionObject](#cypher-codemirror.partialpositionobject) |
+|  [PositionAny](#cypher-codemirror.positionany) |
+|  [PositionObject](#cypher-codemirror.positionobject) |
+|  [Theme](#cypher-codemirror.theme) |
 
 <br>
 
@@ -1097,45 +1258,6 @@ export type AutocompleteChangedListener = (
 
 ```typescript
 export type AutofocusProp = "position" | "readOnly" | "value";
-```
-
-<br>
-
-<a name="cypher-codemirror.focuschangedlistener"></a>
-
-#### FocusChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type FocusChangedListener = (focused: boolean) => void;
-```
-
-<br>
-
-<a name="cypher-codemirror.keydownlistener"></a>
-
-#### KeyDownListener type
-
-<b>Signature:</b>
-
-```typescript
-export type KeyDownListener = (event: KeyboardEvent) => void;
-```
-
-<br>
-
-<a name="cypher-codemirror.linenumberclicklistener"></a>
-
-#### LineNumberClickListener type
-
-<b>Signature:</b>
-
-```typescript
-export type LineNumberClickListener = (
-  lineNumber: number,
-  event: Event
-) => void;
 ```
 
 <br>
@@ -1168,19 +1290,6 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 
 <br>
 
-<a name="cypher-codemirror.positionchangedlistener"></a>
-
-#### PositionChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type PositionChangedListener = (position: PositionObject) => void;
-```
-<b>References:</b> [PositionObject](#cypher-codemirror.positionobject)
-
-<br>
-
 <a name="cypher-codemirror.positionobject"></a>
 
 #### PositionObject type
@@ -1197,19 +1306,6 @@ export type PositionObject = {
 
 <br>
 
-<a name="cypher-codemirror.scrollchangedlistener"></a>
-
-#### ScrollChangedListener type
-
-<b>Signature:</b>
-
-```typescript
-export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
-```
-<b>References:</b> [ScrollInfo](#cypher-codemirror.scrollinfo)
-
-<br>
-
 <a name="cypher-codemirror.theme"></a>
 
 #### Theme type
@@ -1218,20 +1314,6 @@ export type ScrollChangedListener = (scrollInfo: ScrollInfo) => void;
 
 ```typescript
 export type Theme = "light" | "dark";
-```
-
-<br>
-
-<a name="cypher-codemirror.valuechangedlistener"></a>
-
-#### ValueChangedListener type
-
-This listener is fired when the value of the cypher editor is changed
-
-<b>Signature:</b>
-
-```typescript
-export type ValueChangedListener = (value: string, changes: ChangeSet) => void;
 ```
 
 <a name="cypher-editor-support"></a>
@@ -1791,9 +1873,12 @@ signature: string;
 <b>Signature:</b>
 
 ```typescript
-export default class CypherEditor extends React.Component<CypherEditorProps, any> 
+export default class CypherEditor extends React.Component<
+  CypherEditorProps,
+  any
+> 
 ```
-<b>Extends:</b> React.Component&lt;[CypherEditorProps](#react-codemirror-cypher.cyphereditorprops)<!-- -->, any&gt;
+<b>Extends:</b> React.Component&lt; [CypherEditorProps](#react-codemirror-cypher.cyphereditorprops)<!-- -->, any &gt;
 
 <br>
 

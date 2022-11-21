@@ -188,7 +188,7 @@
             },
             {
               "kind": "Content",
-              "text": "<"
+              "text": "<\n  "
             },
             {
               "kind": "Reference",
@@ -197,7 +197,7 @@
             },
             {
               "kind": "Content",
-              "text": ", any>"
+              "text": ",\n  any\n>"
             },
             {
               "kind": "Content",

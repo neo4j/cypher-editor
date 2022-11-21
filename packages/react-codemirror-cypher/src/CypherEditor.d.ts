@@ -8,7 +8,7 @@ import type {
   PositionAny,
   Theme,
   AutocompleteOption,
-  AutofocusProp,
+  AutofocusProp
 } from "cypher-codemirror";
 
 export interface CypherEditorProps {
@@ -52,4 +52,7 @@ export interface CypherEditorProps {
   // postExtensions?: Extension[]
 }
 
-export default class CypherEditor extends React.Component<CypherEditorProps, any> {}
+export default class CypherEditor extends React.Component<
+  CypherEditorProps,
+  any
+> {}

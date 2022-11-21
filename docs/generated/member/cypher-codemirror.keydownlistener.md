@@ -2,10 +2,5 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [KeyDownListener](./cypher-codemirror.keydownlistener.md)
 
-## KeyDownListener type
+## KeyDownListener call signature
 
-<b>Signature:</b>
-
-```typescript
-export type KeyDownListener = (event: KeyboardEvent) => void;
-```
