@@ -4,8 +4,15 @@
 
 ## EditorOptions.position property
 
+The initial editor cursor position
+
 <b>Signature:</b>
 
 ```typescript
 position?: PositionAny;
 ```
+
+## Default Value
+
+undefined
+

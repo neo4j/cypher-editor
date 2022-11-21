@@ -4,8 +4,15 @@
 
 ## EditorOptions.autocompleteTriggerStrings property
 
+The keys that when typed will automatically open the autocomplete menu
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+## Default Value
+
+\[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\]
+

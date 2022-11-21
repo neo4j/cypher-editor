@@ -4,6 +4,8 @@
 
 ## ScrollInfo.scrollTop property
 
+The scrollTop position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript

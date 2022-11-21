@@ -4,8 +4,15 @@
 
 ## EditorOptions.postExtensions property
 
+The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.
+
 <b>Signature:</b>
 
 ```typescript
 postExtensions?: Extension[];
 ```
+
+## Default Value
+
+undefined
+

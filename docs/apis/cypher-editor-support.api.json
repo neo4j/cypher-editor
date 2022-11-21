@@ -173,6 +173,32 @@
       "preserveMemberOrder": false,
       "members": [
         {
+          "kind": "TypeAlias",
+          "canonicalReference": "cypher-editor-support!CompletionType:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export type CompletionType =\n  "
+            },
+            {
+              "kind": "Content",
+              "text": "| \"keyword\"\n  | \"label\"\n  | \"variable\"\n  | \"parameter\"\n  | \"propertyKey\"\n  | \"relationshipType\"\n  | \"function\"\n  | \"procedure\"\n  | \"consoleCommand\"\n  | \"consoleCommandSubcommand\"\n  | \"procedureOutput\"\n  | \"noop\""
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
+          "releaseTag": "Public",
+          "name": "CompletionType",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!ConsoleCommand:interface",
           "docComment": "",

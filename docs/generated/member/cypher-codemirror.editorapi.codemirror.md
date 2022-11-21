@@ -4,6 +4,8 @@
 
 ## EditorApi.codemirror property
 
+The codemirror 6 view instance representing the cypher editor
+
 <b>Signature:</b>
 
 ```typescript

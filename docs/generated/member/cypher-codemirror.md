@@ -14,30 +14,30 @@
 
 |  Call Signature | Description |
 |  --- | --- |
-|  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |  |
-|  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |  |
+|  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) | Listener for editor autocomplete changes |
+|  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) | Listener for editor focus changes |
 |  [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  |
 |  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  |
-|  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |  |
-|  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |  |
-|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This listener is fired when the value of the cypher editor is changed |
+|  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) | Listener for editor cursor position changes |
+|  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) | Listener for editor scroll position changes |
+|  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | Listener for editor value changes |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [AutocompleteOption](./cypher-codemirror.autocompleteoption.md) |  |
+|  [AutocompleteOption](./cypher-codemirror.autocompleteoption.md) | Information about an autocomplete option that was suggested to the user |
 |  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi which wraps all of the interaction with the cypher editor |
 |  [EditorOptions](./cypher-codemirror.editoroptions.md) | These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function |
-|  [ScrollInfo](./cypher-codemirror.scrollinfo.md) |  |
+|  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) | Partial editor cursor position with line &amp; column only |
+|  [PositionObject](./cypher-codemirror.positionobject.md) | Full editor cursor position with line, column &amp; position |
+|  [ScrollInfo](./cypher-codemirror.scrollinfo.md) | Information about the editor scroll position |
 
 ## Type Aliases
 
-|  Type Alias |
-|  --- |
-|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) |
-|  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) |
-|  [PositionAny](./cypher-codemirror.positionany.md) |
-|  [PositionObject](./cypher-codemirror.positionobject.md) |
-|  [Theme](./cypher-codemirror.theme.md) |
+|  Type Alias | Description |
+|  --- | --- |
+|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) | The prop keys that can be used with autofocusProps // TODO check if this is implemented yet |
+|  [PositionAny](./cypher-codemirror.positionany.md) | Any supported editor cursor position |
+|  [Theme](./cypher-codemirror.theme.md) | The current editor theme |
 

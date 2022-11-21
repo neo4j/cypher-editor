@@ -4,6 +4,8 @@
 
 ## EditorApi.offValueChanged property
 
+remove an event listener for editor value changes
+
 <b>Signature:</b>
 
 ```typescript

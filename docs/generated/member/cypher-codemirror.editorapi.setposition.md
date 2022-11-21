@@ -4,6 +4,8 @@
 
 ## EditorApi.setPosition property
 
+Set the current editor cursor position
+
 <b>Signature:</b>
 
 ```typescript

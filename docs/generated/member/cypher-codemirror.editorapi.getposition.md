@@ -4,6 +4,8 @@
 
 ## EditorApi.getPosition property
 
+Get the current editor cursor position
+
 <b>Signature:</b>
 
 ```typescript

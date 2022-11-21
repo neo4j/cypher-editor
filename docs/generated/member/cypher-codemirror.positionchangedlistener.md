@@ -4,3 +4,5 @@
 
 ## PositionChangedListener call signature
 
+Listener for editor cursor position changes
+

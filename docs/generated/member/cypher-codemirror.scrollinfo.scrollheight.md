@@ -4,6 +4,8 @@
 
 ## ScrollInfo.scrollHeight property
 
+The scrollHeight position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript

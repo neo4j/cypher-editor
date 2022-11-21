@@ -18,55 +18,57 @@ export interface EditorApi
 
 ### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [clearHistory](#clearhistory) | () =&gt; void |
-|  [codemirror](#codemirror) | EditorView |
-|  [destroy](#destroy) | () =&gt; void |
-|  [editorSupport](#editorsupport) | [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) |
-|  [focus](#focus) | () =&gt; void |
-|  [getLineCount](#getlinecount) | () =&gt; void |
-|  [getPosition](#getposition) | () =&gt; [PositionObject](./cypher-codemirror.positionobject.md) |
-|  [getPositionForValue](#getpositionforvalue) | (positionValue: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; [PositionObject](./cypher-codemirror.positionobject.md) \| null |
-|  [offAutocompleteChanged](#offautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; void |
-|  [offFocusChanged](#offfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; void |
-|  [offKeyDown](#offkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; void |
-|  [offLineNumberClick](#offlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; void |
-|  [offPositionChanged](#offpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; void |
-|  [offScrollChanged](#offscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; void |
-|  [offValueChanged](#offvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void |
-|  [onAutocompleteChanged](#onautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onFocusChanged](#onfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onKeyDown](#onkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onLineNumberClick](#onlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onPositionChanged](#onpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onScrollChanged](#onscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
-|  [selectAutocompleteOption](#selectautocompleteoption) | (autocompleteOptionIndex: number) =&gt; void |
-|  [setAutocomplete](#setautocomplete) | (autocomplete: boolean) =&gt; void |
-|  [setAutocompleteCloseOnBlur](#setautocompletecloseonblur) | (autocompleteCloseOnBlur: boolean) =&gt; void |
-|  [setAutocompleteOpen](#setautocompleteopen) | (autocompleteOpen: boolean) =&gt; void |
-|  [setAutocompleteSchema](#setautocompleteschema) | (autocompleteSchema: [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md)<!-- -->) =&gt; void |
-|  [setAutocompleteTriggerStrings](#setautocompletetriggerstrings) | (autocompleteTriggerStrings: string\[\]) =&gt; void |
-|  [setHistory](#sethistory) | (history: boolean) =&gt; void |
-|  [setLineNumberFormatter](#setlinenumberformatter) | ( lineNumberFormatter: (lineNumber: number, lineCount: number) =&gt; string ) =&gt; void |
-|  [setLineNumbers](#setlinenumbers) | (lineNumbers: boolean) =&gt; void |
-|  [setLineWrapping](#setlinewrapping) | (lineWrapping: boolean) =&gt; void |
-|  [setLint](#setlint) | (lint: boolean) =&gt; void |
-|  [setPlaceholder](#setplaceholder) | (placeholder: string \| undefined) =&gt; void |
-|  [setPosition](#setposition) | (position: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; void |
-|  [setPostExtensions](#setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |
-|  [setPreExtensions](#setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |
-|  [setReadOnly](#setreadonly) | (readOnly: boolean) =&gt; void |
-|  [setReadOnlyCursor](#setreadonlycursor) | (readOnlyCursor: boolean) =&gt; void |
-|  [setTheme](#settheme) | (theme: [Theme](./cypher-codemirror.theme.md)<!-- -->) =&gt; void |
-|  [setValue](#setvalue) | (value: string, parseOnSetValue?: boolean) =&gt; void |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [clearHistory](#clearhistory) | () =&gt; void | Clears the undo/redo history of the editor |
+|  [codemirror](#codemirror) | EditorView | The codemirror 6 view instance representing the cypher editor |
+|  [destroy](#destroy) | () =&gt; void | Cleanup function that can be used to safely dispose of the editor |
+|  [editorSupport](#editorsupport) | [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) | The editor support instance used internally by the editor |
+|  [focus](#focus) | () =&gt; void | Brings the browser focus to the editor |
+|  [getLineCount](#getlinecount) | () =&gt; number | Get the number of lines in the current editor value |
+|  [getPosition](#getposition) | () =&gt; [PositionObject](./cypher-codemirror.positionobject.md) | Get the current editor cursor position |
+|  [getPositionForValue](#getpositionforvalue) | (positionValue: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; [PositionObject](./cypher-codemirror.positionobject.md) \| null | Get a full position object for any supported position value or null if position value is invalid |
+|  [offAutocompleteChanged](#offautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor autocomplete changes |
+|  [offFocusChanged](#offfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor focus changes |
+|  [offKeyDown](#offkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; void | remove an event listener for editor key down events |
+|  [offLineNumberClick](#offlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; void | remove an event listener for editor line number click events |
+|  [offPositionChanged](#offpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor curosor position changes |
+|  [offScrollChanged](#offscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor scroll position changes |
+|  [offValueChanged](#offvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor value changes |
+|  [onAutocompleteChanged](#onautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor autocomplete changes |
+|  [onFocusChanged](#onfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor focus changes |
+|  [onKeyDown](#onkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor key down events |
+|  [onLineNumberClick](#onlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor line number click events |
+|  [onPositionChanged](#onpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor cursor position changes |
+|  [onScrollChanged](#onscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor scroll position changes |
+|  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor value changes |
+|  [selectAutocompleteOption](#selectautocompleteoption) | (autocompleteOptionIndex: number) =&gt; void | Select the autocomplete option with the given index, causing it to be applied to the editor value |
+|  [setAutocomplete](#setautocomplete) | (autocomplete: boolean) =&gt; void | Set whether or not the autocomplete feature is enabled |
+|  [setAutocompleteCloseOnBlur](#setautocompletecloseonblur) | (autocompleteCloseOnBlur: boolean) =&gt; void | Set whether or not the autocomplete auto closes whenever the editor loses focus |
+|  [setAutocompleteOpen](#setautocompleteopen) | (autocompleteOpen: boolean) =&gt; void | Set whether or not the autocomplete menu is shown to the user |
+|  [setAutocompleteSchema](#setautocompleteschema) | (autocompleteSchema: [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md)<!-- -->) =&gt; void | Set the schema - TODO need better docs here and probably rename this |
+|  [setAutocompleteTriggerStrings](#setautocompletetriggerstrings) | (autocompleteTriggerStrings: string\[\]) =&gt; void | Set the keys that when typed will automatically open the autocomplete menu |
+|  [setHistory](#sethistory) | (history: boolean) =&gt; void | Set whether or not the editor maintains an undo/redo history |
+|  [setLineNumberFormatter](#setlinenumberformatter) | ( lineNumberFormatter: (lineNumber: number, lineCount: number) =&gt; string ) =&gt; void | Set the formatter for the line numbers of the editor |
+|  [setLineNumbers](#setlinenumbers) | (lineNumbers: boolean) =&gt; void | Set whether or not line numbers are shown to the left of the editor ui |
+|  [setLineWrapping](#setlinewrapping) | (lineWrapping: boolean) =&gt; void | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
+|  [setLint](#setlint) | (lint: boolean) =&gt; void | Set whether or not the editor should display lint errors to the user |
+|  [setPlaceholder](#setplaceholder) | (placeholder: string \| undefined) =&gt; void | Set the text to be shown to the user when the editor value is empty |
+|  [setPosition](#setposition) | (position: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; void | Set the current editor cursor position |
+|  [setPostExtensions](#setpostextensions) | (preExtensions: Extension\[\]) =&gt; void | set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions |
+|  [setPreExtensions](#setpreextensions) | (preExtensions: Extension\[\]) =&gt; void | set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
+|  [setReadOnly](#setreadonly) | (readOnly: boolean) =&gt; void | Set whether the editor is read only or the user can edit the editor's value |
+|  [setReadOnlyCursor](#setreadonlycursor) | (readOnlyCursor: boolean) =&gt; void | Set whether to show the cursor when the editor readOnly is true |
+|  [setTheme](#settheme) | (theme: [Theme](./cypher-codemirror.theme.md)<!-- -->) =&gt; void | Set whether to use the light or dark theme for the editor |
+|  [setValue](#setvalue) | (value: string, parseOnSetValue?: boolean) =&gt; void | Set the editor value |
 
 <br>
 
 <a name="clearhistory"></a>
 
 ### EditorApi.clearHistory property
+
+Clears the undo/redo history of the editor
 
 <b>Signature:</b>
 
@@ -80,6 +82,8 @@ clearHistory: () => void;
 
 ### EditorApi.codemirror property
 
+The codemirror 6 view instance representing the cypher editor
+
 <b>Signature:</b>
 
 ```typescript
@@ -91,6 +95,8 @@ codemirror: EditorView;
 <a name="destroy"></a>
 
 ### EditorApi.destroy property
+
+Cleanup function that can be used to safely dispose of the editor
 
 <b>Signature:</b>
 
@@ -104,6 +110,8 @@ destroy: () => void;
 
 ### EditorApi.editorSupport property
 
+The editor support instance used internally by the editor
+
 <b>Signature:</b>
 
 ```typescript
@@ -115,6 +123,8 @@ editorSupport: CypherEditorSupport;
 <a name="focus"></a>
 
 ### EditorApi.focus property
+
+Brings the browser focus to the editor
 
 <b>Signature:</b>
 
@@ -128,10 +138,12 @@ focus: () => void;
 
 ### EditorApi.getLineCount property
 
+Get the number of lines in the current editor value
+
 <b>Signature:</b>
 
 ```typescript
-getLineCount: () => void;
+getLineCount: () => number;
 ```
 
 <br>
@@ -139,6 +151,8 @@ getLineCount: () => void;
 <a name="getposition"></a>
 
 ### EditorApi.getPosition property
+
+Get the current editor cursor position
 
 <b>Signature:</b>
 
@@ -152,6 +166,8 @@ getPosition: () => PositionObject;
 
 ### EditorApi.getPositionForValue property
 
+Get a full position object for any supported position value or null if position value is invalid
+
 <b>Signature:</b>
 
 ```typescript
@@ -163,6 +179,8 @@ getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
 <a name="offautocompletechanged"></a>
 
 ### EditorApi.offAutocompleteChanged property
+
+remove an event listener for editor autocomplete changes
 
 <b>Signature:</b>
 
@@ -176,6 +194,8 @@ offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
 
 ### EditorApi.offFocusChanged property
 
+remove an event listener for editor focus changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -187,6 +207,8 @@ offFocusChanged: (listener: FocusChangedListener) => void;
 <a name="offkeydown"></a>
 
 ### EditorApi.offKeyDown property
+
+remove an event listener for editor key down events
 
 <b>Signature:</b>
 
@@ -200,6 +222,8 @@ offKeyDown: (listener: KeyDownListener) => void;
 
 ### EditorApi.offLineNumberClick property
 
+remove an event listener for editor line number click events
+
 <b>Signature:</b>
 
 ```typescript
@@ -211,6 +235,8 @@ offLineNumberClick: (listener: LineNumberClickListener) => void;
 <a name="offpositionchanged"></a>
 
 ### EditorApi.offPositionChanged property
+
+remove an event listener for editor curosor position changes
 
 <b>Signature:</b>
 
@@ -224,6 +250,8 @@ offPositionChanged: (listener: PositionChangedListener) => void;
 
 ### EditorApi.offScrollChanged property
 
+remove an event listener for editor scroll position changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -235,6 +263,8 @@ offScrollChanged: (listener: ScrollChangedListener) => void;
 <a name="offvaluechanged"></a>
 
 ### EditorApi.offValueChanged property
+
+remove an event listener for editor value changes
 
 <b>Signature:</b>
 
@@ -248,6 +278,8 @@ offValueChanged: (listener: ValueChangedListener) => void;
 
 ### EditorApi.onAutocompleteChanged property
 
+Add an event listener for editor autocomplete changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -259,6 +291,8 @@ onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
 <a name="onfocuschanged"></a>
 
 ### EditorApi.onFocusChanged property
+
+Add an event listener for editor focus changes
 
 <b>Signature:</b>
 
@@ -272,6 +306,8 @@ onFocusChanged: (listener: FocusChangedListener) => () => void;
 
 ### EditorApi.onKeyDown property
 
+Add an event listener for editor key down events
+
 <b>Signature:</b>
 
 ```typescript
@@ -283,6 +319,8 @@ onKeyDown: (listener: KeyDownListener) => () => void;
 <a name="onlinenumberclick"></a>
 
 ### EditorApi.onLineNumberClick property
+
+Add an event listener for editor line number click events
 
 <b>Signature:</b>
 
@@ -296,6 +334,8 @@ onLineNumberClick: (listener: LineNumberClickListener) => () => void;
 
 ### EditorApi.onPositionChanged property
 
+Add an event listener for editor cursor position changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -307,6 +347,8 @@ onPositionChanged: (listener: PositionChangedListener) => () => void;
 <a name="onscrollchanged"></a>
 
 ### EditorApi.onScrollChanged property
+
+Add an event listener for editor scroll position changes
 
 <b>Signature:</b>
 
@@ -320,6 +362,8 @@ onScrollChanged: (listener: ScrollChangedListener) => () => void;
 
 ### EditorApi.onValueChanged property
 
+Add an event listener for editor value changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -331,6 +375,8 @@ onValueChanged: (listener: ValueChangedListener) => () => void;
 <a name="selectautocompleteoption"></a>
 
 ### EditorApi.selectAutocompleteOption property
+
+Select the autocomplete option with the given index, causing it to be applied to the editor value
 
 <b>Signature:</b>
 
@@ -344,6 +390,8 @@ selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
 
 ### EditorApi.setAutocomplete property
 
+Set whether or not the autocomplete feature is enabled
+
 <b>Signature:</b>
 
 ```typescript
@@ -355,6 +403,8 @@ setAutocomplete: (autocomplete: boolean) => void;
 <a name="setautocompletecloseonblur"></a>
 
 ### EditorApi.setAutocompleteCloseOnBlur property
+
+Set whether or not the autocomplete auto closes whenever the editor loses focus
 
 <b>Signature:</b>
 
@@ -368,6 +418,8 @@ setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
 
 ### EditorApi.setAutocompleteOpen property
 
+Set whether or not the autocomplete menu is shown to the user
+
 <b>Signature:</b>
 
 ```typescript
@@ -379,6 +431,8 @@ setAutocompleteOpen: (autocompleteOpen: boolean) => void;
 <a name="setautocompleteschema"></a>
 
 ### EditorApi.setAutocompleteSchema property
+
+Set the schema - TODO need better docs here and probably rename this
 
 <b>Signature:</b>
 
@@ -392,6 +446,8 @@ setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
 
 ### EditorApi.setAutocompleteTriggerStrings property
 
+Set the keys that when typed will automatically open the autocomplete menu
+
 <b>Signature:</b>
 
 ```typescript
@@ -404,6 +460,8 @@ setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
 
 ### EditorApi.setHistory property
 
+Set whether or not the editor maintains an undo/redo history
+
 <b>Signature:</b>
 
 ```typescript
@@ -415,6 +473,8 @@ setHistory: (history: boolean) => void;
 <a name="setlinenumberformatter"></a>
 
 ### EditorApi.setLineNumberFormatter property
+
+Set the formatter for the line numbers of the editor
 
 <b>Signature:</b>
 
@@ -430,6 +490,8 @@ setLineNumberFormatter: (
 
 ### EditorApi.setLineNumbers property
 
+Set whether or not line numbers are shown to the left of the editor ui
+
 <b>Signature:</b>
 
 ```typescript
@@ -441,6 +503,8 @@ setLineNumbers: (lineNumbers: boolean) => void;
 <a name="setlinewrapping"></a>
 
 ### EditorApi.setLineWrapping property
+
+Set whether or not the editor wraps lines vs using a horizontal scrollbar
 
 <b>Signature:</b>
 
@@ -454,6 +518,8 @@ setLineWrapping: (lineWrapping: boolean) => void;
 
 ### EditorApi.setLint property
 
+Set whether or not the editor should display lint errors to the user
+
 <b>Signature:</b>
 
 ```typescript
@@ -465,6 +531,8 @@ setLint: (lint: boolean) => void;
 <a name="setplaceholder"></a>
 
 ### EditorApi.setPlaceholder property
+
+Set the text to be shown to the user when the editor value is empty
 
 <b>Signature:</b>
 
@@ -478,6 +546,8 @@ setPlaceholder: (placeholder: string | undefined) => void;
 
 ### EditorApi.setPosition property
 
+Set the current editor cursor position
+
 <b>Signature:</b>
 
 ```typescript
@@ -489,6 +559,8 @@ setPosition: (position: PositionAny) => void;
 <a name="setpostextensions"></a>
 
 ### EditorApi.setPostExtensions property
+
+set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
 
 <b>Signature:</b>
 
@@ -502,6 +574,8 @@ setPostExtensions: (preExtensions: Extension[]) => void;
 
 ### EditorApi.setPreExtensions property
 
+set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
+
 <b>Signature:</b>
 
 ```typescript
@@ -513,6 +587,8 @@ setPreExtensions: (preExtensions: Extension[]) => void;
 <a name="setreadonly"></a>
 
 ### EditorApi.setReadOnly property
+
+Set whether the editor is read only or the user can edit the editor's value
 
 <b>Signature:</b>
 
@@ -526,6 +602,8 @@ setReadOnly: (readOnly: boolean) => void;
 
 ### EditorApi.setReadOnlyCursor property
 
+Set whether to show the cursor when the editor readOnly is true
+
 <b>Signature:</b>
 
 ```typescript
@@ -538,6 +616,8 @@ setReadOnlyCursor: (readOnlyCursor: boolean) => void;
 
 ### EditorApi.setTheme property
 
+Set whether to use the light or dark theme for the editor
+
 <b>Signature:</b>
 
 ```typescript
@@ -549,6 +629,8 @@ setTheme: (theme: Theme) => void;
 <a name="setvalue"></a>
 
 ### EditorApi.setValue property
+
+Set the editor value
 
 <b>Signature:</b>
 

@@ -4,3 +4,5 @@
 
 ## FocusChangedListener call signature
 
+Listener for editor focus changes
+

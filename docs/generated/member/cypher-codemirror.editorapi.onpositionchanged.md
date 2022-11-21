@@ -4,6 +4,8 @@
 
 ## EditorApi.onPositionChanged property
 
+Add an event listener for editor cursor position changes
+
 <b>Signature:</b>
 
 ```typescript

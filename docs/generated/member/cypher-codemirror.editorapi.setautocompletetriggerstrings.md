@@ -4,6 +4,8 @@
 
 ## EditorApi.setAutocompleteTriggerStrings property
 
+Set the keys that when typed will automatically open the autocomplete menu
+
 <b>Signature:</b>
 
 ```typescript

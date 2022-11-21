@@ -12,9 +12,9 @@ export interface ScrollChangedListener {
 
 ## Parameters
 
-|  Parameter | Type |
-|  --- | --- |
-|  scrollInfo | [ScrollInfo](./cypher-codemirror.scrollinfo.md) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  scrollInfo | [ScrollInfo](./cypher-codemirror.scrollinfo.md) | the new editor scroll position info |
 
 <b>Returns:</b>
 

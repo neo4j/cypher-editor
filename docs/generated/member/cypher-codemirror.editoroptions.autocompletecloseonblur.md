@@ -4,8 +4,15 @@
 
 ## EditorOptions.autocompleteCloseOnBlur property
 
+Whether the autocomplete auto closes whenever the editor loses focus
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
+## Default Value
+
+true
+

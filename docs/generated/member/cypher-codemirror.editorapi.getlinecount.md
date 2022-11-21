@@ -4,8 +4,10 @@
 
 ## EditorApi.getLineCount property
 
+Get the number of lines in the current editor value
+
 <b>Signature:</b>
 
 ```typescript
-getLineCount: () => void;
+getLineCount: () => number;
 ```

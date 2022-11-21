@@ -4,6 +4,8 @@
 
 ## EditorApi.setAutocompleteOpen property
 
+Set whether or not the autocomplete menu is shown to the user
+
 <b>Signature:</b>
 
 ```typescript

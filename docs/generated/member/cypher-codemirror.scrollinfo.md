@@ -4,6 +4,8 @@
 
 ## ScrollInfo interface
 
+Information about the editor scroll position
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,12 +14,12 @@ export interface ScrollInfo
 
 ## Properties
 
-|  Property | Type |
-|  --- | --- |
-|  [clientHeight](./cypher-codemirror.scrollinfo.clientheight.md) | number |
-|  [clientWidth](./cypher-codemirror.scrollinfo.clientwidth.md) | number |
-|  [scrollHeight](./cypher-codemirror.scrollinfo.scrollheight.md) | number |
-|  [scrollLeft](./cypher-codemirror.scrollinfo.scrollleft.md) | number |
-|  [scrollTop](./cypher-codemirror.scrollinfo.scrolltop.md) | number |
-|  [scrollWidth](./cypher-codemirror.scrollinfo.scrollwidth.md) | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [clientHeight](./cypher-codemirror.scrollinfo.clientheight.md) | number | The clientHeight position of the editor scroll dom element |
+|  [clientWidth](./cypher-codemirror.scrollinfo.clientwidth.md) | number | The clientWidth position of the editor scroll dom element |
+|  [scrollHeight](./cypher-codemirror.scrollinfo.scrollheight.md) | number | The scrollHeight position of the editor scroll dom element |
+|  [scrollLeft](./cypher-codemirror.scrollinfo.scrollleft.md) | number | The scrollLeft position of the editor scroll dom element |
+|  [scrollTop](./cypher-codemirror.scrollinfo.scrolltop.md) | number | The scrollTop position of the editor scroll dom element |
+|  [scrollWidth](./cypher-codemirror.scrollinfo.scrollwidth.md) | number | The scrollWidth position of the editor scroll dom element |
 

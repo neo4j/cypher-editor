@@ -175,7 +175,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:interface",
-          "docComment": "",
+          "docComment": "/**\n * Listener for editor autocomplete changes\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -190,7 +190,7 @@
             {
               "kind": "CallSignature",
               "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:call(1)",
-              "docComment": "",
+              "docComment": "/**\n * @param open - whether the autocomplete menu is open or not\n *\n * @param from - the start cursor position for the suggested options\n *\n * @param options - the list of autocomplete options being suggested to the user\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -273,7 +273,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!AutocompleteOption:interface",
-          "docComment": "",
+          "docComment": "/**\n * Information about an autocomplete option that was suggested to the user\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -288,7 +288,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!AutocompleteOption#detail:member",
-              "docComment": "",
+              "docComment": "/**\n * More detailed information about the autocomplete option\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -315,7 +315,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!AutocompleteOption#label:member",
-              "docComment": "",
+              "docComment": "/**\n * The label of the autocomplete option in the list of options\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -342,15 +342,16 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!AutocompleteOption#type:member",
-              "docComment": "",
+              "docComment": "/**\n * The type of the autocomplete option\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "type?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "CompletionType",
+                  "canonicalReference": "cypher-editor-support!CompletionType:type"
                 },
                 {
                   "kind": "Content",
@@ -372,7 +373,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "cypher-codemirror!AutofocusProp:type",
-          "docComment": "",
+          "docComment": "/**\n * The prop keys that can be used with autofocusProps // TODO check if this is implemented yet\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -486,7 +487,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#clearHistory:member",
-              "docComment": "",
+              "docComment": "/**\n * Clears the undo/redo history of the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -513,7 +514,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#codemirror:member",
-              "docComment": "",
+              "docComment": "/**\n * The codemirror 6 view instance representing the cypher editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -541,7 +542,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#destroy:member",
-              "docComment": "",
+              "docComment": "/**\n * Cleanup function that can be used to safely dispose of the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -568,7 +569,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#editorSupport:member",
-              "docComment": "",
+              "docComment": "/**\n * The editor support instance used internally by the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -596,7 +597,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#focus:member",
-              "docComment": "",
+              "docComment": "/**\n * Brings the browser focus to the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -623,7 +624,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#getLineCount:member",
-              "docComment": "",
+              "docComment": "/**\n * Get the number of lines in the current editor value\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -631,7 +632,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "() => void"
+                  "text": "() => number"
                 },
                 {
                   "kind": "Content",
@@ -650,7 +651,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#getPosition:member",
-              "docComment": "",
+              "docComment": "/**\n * Get the current editor cursor position\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -663,7 +664,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror!PositionObject:type"
+                  "canonicalReference": "cypher-codemirror!PositionObject:interface"
                 },
                 {
                   "kind": "Content",
@@ -682,7 +683,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#getPositionForValue:member",
-              "docComment": "",
+              "docComment": "/**\n * Get a full position object for any supported position value or null if position value is invalid\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -704,7 +705,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror!PositionObject:type"
+                  "canonicalReference": "cypher-codemirror!PositionObject:interface"
                 },
                 {
                   "kind": "Content",
@@ -727,7 +728,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offAutocompleteChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor autocomplete changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -763,7 +764,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offFocusChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor focus changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -799,7 +800,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offKeyDown:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor key down events\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -835,7 +836,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offLineNumberClick:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor line number click events\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -871,7 +872,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offPositionChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor curosor position changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -907,7 +908,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offScrollChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor scroll position changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -943,7 +944,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#offValueChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * remove an event listener for editor value changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -979,7 +980,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onAutocompleteChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor autocomplete changes\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1015,7 +1016,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onFocusChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor focus changes\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1051,7 +1052,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onKeyDown:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor key down events\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1087,7 +1088,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onLineNumberClick:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor line number click events\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1123,7 +1124,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onPositionChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor cursor position changes\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1159,7 +1160,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onScrollChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor scroll position changes\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1195,7 +1196,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#onValueChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * Add an event listener for editor value changes\n *\n * @returns A cleanup function that when called removes the listener\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1231,7 +1232,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#selectAutocompleteOption:member",
-              "docComment": "",
+              "docComment": "/**\n * Select the autocomplete option with the given index, causing it to be applied to the editor value\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1258,7 +1259,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setAutocomplete:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the autocomplete feature is enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1285,7 +1286,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setAutocompleteCloseOnBlur:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the autocomplete auto closes whenever the editor loses focus\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1312,7 +1313,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setAutocompleteOpen:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the autocomplete menu is shown to the user\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1339,7 +1340,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setAutocompleteSchema:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the schema - TODO need better docs here and probably rename this\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1375,7 +1376,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setAutocompleteTriggerStrings:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the keys that when typed will automatically open the autocomplete menu\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1402,7 +1403,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setHistory:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the editor maintains an undo/redo history\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1429,7 +1430,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setLineNumberFormatter:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the formatter for the line numbers of the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1456,7 +1457,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setLineNumbers:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not line numbers are shown to the left of the editor ui\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1483,7 +1484,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setLineWrapping:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the editor wraps lines vs using a horizontal scrollbar\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1510,7 +1511,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setLint:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether or not the editor should display lint errors to the user\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1537,7 +1538,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setPlaceholder:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the text to be shown to the user when the editor value is empty\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1564,7 +1565,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setPosition:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the current editor cursor position\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1600,7 +1601,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setPostExtensions:member",
-              "docComment": "",
+              "docComment": "/**\n * set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1636,7 +1637,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setPreExtensions:member",
-              "docComment": "",
+              "docComment": "/**\n * set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1672,7 +1673,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setReadOnly:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether the editor is read only or the user can edit the editor's value\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1699,7 +1700,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setReadOnlyCursor:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether to show the cursor when the editor readOnly is true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1726,7 +1727,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setTheme:member",
-              "docComment": "",
+              "docComment": "/**\n * Set whether to use the light or dark theme for the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1762,7 +1763,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorApi#setValue:member",
-              "docComment": "",
+              "docComment": "/**\n * Set the editor value\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1807,7 +1808,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autocomplete:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete feature is enabled\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1834,7 +1835,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autocompleteCloseOnBlur:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete auto closes whenever the editor loses focus\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1861,7 +1862,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autocompleteOpen:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete menu is initially shown to the user\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1888,7 +1889,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autocompleteSchema:member",
-              "docComment": "",
+              "docComment": "/**\n * The schema - TODO need better docs here and probably rename this\n *\n * @defaultValue\n *\n * undefined\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1916,7 +1917,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autocompleteTriggerStrings:member",
-              "docComment": "",
+              "docComment": "/**\n * The keys that when typed will automatically open the autocomplete menu\n *\n * @defaultValue\n *\n * [\".\",\":\",\"[]\",\"()\",\"{}\",\"[\",\"(\",\"{\",\"$\"]\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1943,7 +1944,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#autofocus:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor should be auto focused on first creation\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1970,7 +1971,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#history:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor maintains an undo/redo history\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1997,7 +1998,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#lineNumberFormatter:member",
-              "docComment": "",
+              "docComment": "/**\n * The formatter for the line numbers of the editor\n *\n * @defaultValue\n *\n * (line, lineCount) => lineCount === 1 ? \"$\" : line + \"\";\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2024,7 +2025,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#lineNumbers:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether line numbers are shown to the left of the editor ui\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2051,7 +2052,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#lineWrapping:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor wraps lines vs using a horizontal scrollbar\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2078,7 +2079,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#lint:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor should display lint errors to the user\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2105,7 +2106,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#parseOnSetValue:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to run the cypher language parser immediately after every call to set the value\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2132,7 +2133,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#placeholder:member",
-              "docComment": "",
+              "docComment": "/**\n * The text to be shown to the user when the editor value is empty\n *\n * @defaultValue\n *\n * undefined\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2159,7 +2160,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#position:member",
-              "docComment": "",
+              "docComment": "/**\n * The initial editor cursor position\n *\n * @defaultValue\n *\n * undefined\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2187,7 +2188,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#postExtensions:member",
-              "docComment": "",
+              "docComment": "/**\n * The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.\n *\n * @defaultValue\n *\n * undefined\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2219,7 +2220,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#preExtensions:member",
-              "docComment": "",
+              "docComment": "/**\n * The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.\n *\n * @defaultValue\n *\n * undefined\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2251,7 +2252,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#readOnly:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor is read only or the user can edit the editor's value\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2278,7 +2279,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#readOnlyCursor:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to show the cursor when the editor readOnly is true\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2305,7 +2306,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#theme:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to use the light or dark theme for the editor\n *\n * @defaultValue\n *\n * \"light\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2333,7 +2334,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!EditorOptions#value:member",
-              "docComment": "",
+              "docComment": "/**\n * The initial editor value\n *\n * @defaultValue\n *\n * \"\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2363,7 +2364,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!FocusChangedListener:interface",
-          "docComment": "",
+          "docComment": "/**\n * Listener for editor focus changes\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2378,7 +2379,7 @@
             {
               "kind": "CallSignature",
               "canonicalReference": "cypher-codemirror!FocusChangedListener:call(1)",
-              "docComment": "",
+              "docComment": "/**\n * @param focused - whether the editor was focused or not\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2562,35 +2563,81 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!PartialPositionObject:type",
-          "docComment": "",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!PartialPositionObject:interface",
+          "docComment": "/**\n * Partial editor cursor position with line & column only\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type PartialPositionObject = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n  line: number;\n  column: number;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface PartialPositionObject "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "PartialPositionObject",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "cypher-codemirror!PartialPositionObject#column:member",
+              "docComment": "/**\n * The 1 based column number of the cursor position\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "column: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "column",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "cypher-codemirror!PartialPositionObject#line:member",
+              "docComment": "/**\n * The 1 based line number of the cursor position\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "line: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "line",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "TypeAlias",
           "canonicalReference": "cypher-codemirror!PositionAny:type",
-          "docComment": "",
+          "docComment": "/**\n * Any supported editor cursor position\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2599,7 +2646,7 @@
             {
               "kind": "Reference",
               "text": "PositionObject",
-              "canonicalReference": "cypher-codemirror!PositionObject:type"
+              "canonicalReference": "cypher-codemirror!PositionObject:interface"
             },
             {
               "kind": "Content",
@@ -2608,7 +2655,7 @@
             {
               "kind": "Reference",
               "text": "PartialPositionObject",
-              "canonicalReference": "cypher-codemirror!PartialPositionObject:type"
+              "canonicalReference": "cypher-codemirror!PartialPositionObject:interface"
             },
             {
               "kind": "Content",
@@ -2630,7 +2677,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!PositionChangedListener:interface",
-          "docComment": "",
+          "docComment": "/**\n * Listener for editor cursor position changes\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2645,7 +2692,7 @@
             {
               "kind": "CallSignature",
               "canonicalReference": "cypher-codemirror!PositionChangedListener:call(1)",
-              "docComment": "",
+              "docComment": "/**\n * @param position - the new editor cursor position\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2654,7 +2701,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror!PositionObject:type"
+                  "canonicalReference": "cypher-codemirror!PositionObject:interface"
                 },
                 {
                   "kind": "Content",
@@ -2690,35 +2737,108 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "cypher-codemirror!PositionObject:type",
-          "docComment": "",
+          "kind": "Interface",
+          "canonicalReference": "cypher-codemirror!PositionObject:interface",
+          "docComment": "/**\n * Full editor cursor position with line, column & position\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export type PositionObject = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n  line: number;\n  column: number;\n  position: number;\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "export interface PositionObject "
             }
           ],
           "fileUrlPath": "src/cypher-codemirror.d.ts",
           "releaseTag": "Public",
           "name": "PositionObject",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
+          "preserveMemberOrder": false,
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "cypher-codemirror!PositionObject#column:member",
+              "docComment": "/**\n * The 1 based column number of the cursor position\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "column: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "column",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "cypher-codemirror!PositionObject#line:member",
+              "docComment": "/**\n * The 1 based line number of the cursor position\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "line: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "line",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "cypher-codemirror!PositionObject#position:member",
+              "docComment": "/**\n * The 0 based absolute position number of the cursor position\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "position: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "position",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!ScrollChangedListener:interface",
-          "docComment": "",
+          "docComment": "/**\n * Listener for editor scroll position changes\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2733,7 +2853,7 @@
             {
               "kind": "CallSignature",
               "canonicalReference": "cypher-codemirror!ScrollChangedListener:call(1)",
-              "docComment": "",
+              "docComment": "/**\n * @param scrollInfo - the new editor scroll position info\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2780,7 +2900,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!ScrollInfo:interface",
-          "docComment": "",
+          "docComment": "/**\n * Information about the editor scroll position\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2795,7 +2915,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#clientHeight:member",
-              "docComment": "",
+              "docComment": "/**\n * The clientHeight position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2822,7 +2942,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#clientWidth:member",
-              "docComment": "",
+              "docComment": "/**\n * The clientWidth position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2849,7 +2969,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#scrollHeight:member",
-              "docComment": "",
+              "docComment": "/**\n * The scrollHeight position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2876,7 +2996,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#scrollLeft:member",
-              "docComment": "",
+              "docComment": "/**\n * The scrollLeft position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2903,7 +3023,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#scrollTop:member",
-              "docComment": "",
+              "docComment": "/**\n * The scrollTop position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2930,7 +3050,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-codemirror!ScrollInfo#scrollWidth:member",
-              "docComment": "",
+              "docComment": "/**\n * The scrollWidth position of the editor scroll dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2960,7 +3080,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "cypher-codemirror!Theme:type",
-          "docComment": "",
+          "docComment": "/**\n * The current editor theme\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2986,7 +3106,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-codemirror!ValueChangedListener:interface",
-          "docComment": "/**\n * This listener is fired when the value of the cypher editor is changed\n */\n",
+          "docComment": "/**\n * Listener for editor value changes\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

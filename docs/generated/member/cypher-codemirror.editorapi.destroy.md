@@ -4,6 +4,8 @@
 
 ## EditorApi.destroy property
 
+Cleanup function that can be used to safely dispose of the editor
+
 <b>Signature:</b>
 
 ```typescript

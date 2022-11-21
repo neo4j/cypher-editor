@@ -4,3 +4,5 @@
 
 ## ScrollChangedListener call signature
 
+Listener for editor scroll position changes
+

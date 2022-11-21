@@ -4,6 +4,8 @@
 
 ## EditorApi.offFocusChanged property
 
+remove an event listener for editor focus changes
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,5 +4,5 @@
 
 ## ValueChangedListener call signature
 
-This listener is fired when the value of the cypher editor is changed
+Listener for editor value changes
 

@@ -4,6 +4,8 @@
 
 ## PositionAny type
 
+Any supported editor cursor position
+
 <b>Signature:</b>
 
 ```typescript

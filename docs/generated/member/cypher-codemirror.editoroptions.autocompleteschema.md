@@ -4,8 +4,15 @@
 
 ## EditorOptions.autocompleteSchema property
 
+The schema - TODO need better docs here and probably rename this
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
+## Default Value
+
+undefined
+

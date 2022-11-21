@@ -4,6 +4,8 @@
 
 ## EditorApi.onKeyDown property
 
+Add an event listener for editor key down events
+
 <b>Signature:</b>
 
 ```typescript

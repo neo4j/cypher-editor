@@ -4,6 +4,8 @@
 
 ## EditorApi.setAutocomplete property
 
+Set whether or not the autocomplete feature is enabled
+
 <b>Signature:</b>
 
 ```typescript

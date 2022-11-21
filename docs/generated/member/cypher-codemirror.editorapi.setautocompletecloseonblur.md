@@ -4,6 +4,8 @@
 
 ## EditorApi.setAutocompleteCloseOnBlur property
 
+Set whether or not the autocomplete auto closes whenever the editor loses focus
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,3 +4,5 @@
 
 ## AutocompleteChangedListener call signature
 
+Listener for editor autocomplete changes
+

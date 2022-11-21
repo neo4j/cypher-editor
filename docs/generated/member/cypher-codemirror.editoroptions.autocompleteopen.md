@@ -4,8 +4,15 @@
 
 ## EditorOptions.autocompleteOpen property
 
+Whether the autocomplete menu is initially shown to the user
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+## Default Value
+
+false
+

@@ -4,6 +4,8 @@
 
 ## EditorApi.offAutocompleteChanged property
 
+remove an event listener for editor autocomplete changes
+
 <b>Signature:</b>
 
 ```typescript

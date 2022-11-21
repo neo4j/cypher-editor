@@ -2,14 +2,69 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [PositionObject](./cypher-codemirror.positionobject.md)
 
-## PositionObject type
+## PositionObject interface
+
+Full editor cursor position with line, column &amp; position
 
 <b>Signature:</b>
 
 ```typescript
-export type PositionObject = {
-  line: number;
-  column: number;
-  position: number;
-};
+export interface PositionObject 
 ```
+
+---
+
+<br>
+
+### Properties:
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](#column) | number | The 1 based column number of the cursor position |
+|  [line](#line) | number | The 1 based line number of the cursor position |
+|  [position](#position) | number | The 0 based absolute position number of the cursor position |
+
+<br>
+
+<a name="column"></a>
+
+### PositionObject.column property
+
+The 1 based column number of the cursor position
+
+<b>Signature:</b>
+
+```typescript
+column: number;
+```
+
+<br>
+
+<a name="line"></a>
+
+### PositionObject.line property
+
+The 1 based line number of the cursor position
+
+<b>Signature:</b>
+
+```typescript
+line: number;
+```
+
+<br>
+
+<a name="position"></a>
+
+### PositionObject.position property
+
+The 0 based absolute position number of the cursor position
+
+<b>Signature:</b>
+
+```typescript
+position: number;
+```
+
+---
+

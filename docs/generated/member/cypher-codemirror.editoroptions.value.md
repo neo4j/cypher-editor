@@ -4,8 +4,15 @@
 
 ## EditorOptions.value property
 
+The initial editor value
+
 <b>Signature:</b>
 
 ```typescript
 value?: string;
 ```
+
+## Default Value
+
+""
+

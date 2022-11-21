@@ -4,6 +4,8 @@
 
 ## EditorApi.editorSupport property
 
+The editor support instance used internally by the editor
+
 <b>Signature:</b>
 
 ```typescript

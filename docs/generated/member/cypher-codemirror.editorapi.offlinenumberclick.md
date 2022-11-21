@@ -4,6 +4,8 @@
 
 ## EditorApi.offLineNumberClick property
 
+remove an event listener for editor line number click events
+
 <b>Signature:</b>
 
 ```typescript

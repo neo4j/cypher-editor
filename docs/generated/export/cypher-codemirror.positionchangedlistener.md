@@ -4,6 +4,8 @@
 
 ## PositionChangedListener call signature
 
+Listener for editor cursor position changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ export interface PositionChangedListener {
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  position | [PositionObject](./cypher-codemirror.positionobject.md) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  position | [PositionObject](./cypher-codemirror.positionobject.md) | the new editor cursor position |
 
 <b>Returns:</b>
 

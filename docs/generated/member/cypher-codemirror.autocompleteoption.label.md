@@ -4,6 +4,8 @@
 
 ## AutocompleteOption.label property
 
+The label of the autocomplete option in the list of options
+
 <b>Signature:</b>
 
 ```typescript

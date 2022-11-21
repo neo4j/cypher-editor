@@ -4,6 +4,8 @@
 
 ## EditorApi.onFocusChanged property
 
+Add an event listener for editor focus changes
+
 <b>Signature:</b>
 
 ```typescript

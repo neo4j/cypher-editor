@@ -4,6 +4,8 @@
 
 ## EditorApi.offScrollChanged property
 
+remove an event listener for editor scroll position changes
+
 <b>Signature:</b>
 
 ```typescript

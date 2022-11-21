@@ -4,6 +4,8 @@
 
 ## AutocompleteOption interface
 
+Information about an autocomplete option that was suggested to the user
+
 <b>Signature:</b>
 
 ```typescript
@@ -18,15 +20,17 @@ export interface AutocompleteOption
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [detail?](#detail) | string | <i>(Optional)</i> |
-|  [label](#label) | string |  |
-|  [type?](#type) | string | <i>(Optional)</i> |
+|  [detail?](#detail) | string | <i>(Optional)</i> More detailed information about the autocomplete option |
+|  [label](#label) | string | The label of the autocomplete option in the list of options |
+|  [type?](#type) | [CompletionType](./cypher-editor-support.completiontype.md) | <i>(Optional)</i> The type of the autocomplete option |
 
 <br>
 
 <a name="detail"></a>
 
 ### AutocompleteOption.detail property
+
+More detailed information about the autocomplete option
 
 <b>Signature:</b>
 
@@ -40,6 +44,8 @@ detail?: string;
 
 ### AutocompleteOption.label property
 
+The label of the autocomplete option in the list of options
+
 <b>Signature:</b>
 
 ```typescript
@@ -52,10 +58,12 @@ label: string;
 
 ### AutocompleteOption.type property
 
+The type of the autocomplete option
+
 <b>Signature:</b>
 
 ```typescript
-type?: string;
+type?: CompletionType;
 ```
 
 ---

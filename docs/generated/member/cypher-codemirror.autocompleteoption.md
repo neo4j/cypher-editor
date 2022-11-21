@@ -4,6 +4,8 @@
 
 ## AutocompleteOption interface
 
+Information about an autocomplete option that was suggested to the user
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ export interface AutocompleteOption
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [detail?](./cypher-codemirror.autocompleteoption.detail.md) | string | <i>(Optional)</i> |
-|  [label](./cypher-codemirror.autocompleteoption.label.md) | string |  |
-|  [type?](./cypher-codemirror.autocompleteoption.type.md) | string | <i>(Optional)</i> |
+|  [detail?](./cypher-codemirror.autocompleteoption.detail.md) | string | <i>(Optional)</i> More detailed information about the autocomplete option |
+|  [label](./cypher-codemirror.autocompleteoption.label.md) | string | The label of the autocomplete option in the list of options |
+|  [type?](./cypher-codemirror.autocompleteoption.type.md) | [CompletionType](./cypher-editor-support.completiontype.md) | <i>(Optional)</i> The type of the autocomplete option |
 

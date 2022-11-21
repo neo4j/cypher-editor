@@ -4,6 +4,8 @@
 
 ## EditorApi.offPositionChanged property
 
+remove an event listener for editor curosor position changes
+
 <b>Signature:</b>
 
 ```typescript

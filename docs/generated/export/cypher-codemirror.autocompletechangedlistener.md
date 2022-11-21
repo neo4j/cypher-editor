@@ -4,6 +4,8 @@
 
 ## AutocompleteChangedListener call signature
 
+Listener for editor autocomplete changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -16,9 +18,9 @@ export interface AutocompleteChangedListener {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  open | boolean |  |
-|  from | number | <i>(Optional)</i> |
-|  options | [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] | <i>(Optional)</i> |
+|  open | boolean | whether the autocomplete menu is open or not |
+|  from | number | <i>(Optional)</i> the start cursor position for the suggested options |
+|  options | [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] | <i>(Optional)</i> the list of autocomplete options being suggested to the user |
 
 <b>Returns:</b>
 

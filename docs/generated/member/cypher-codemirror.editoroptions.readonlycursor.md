@@ -4,8 +4,15 @@
 
 ## EditorOptions.readOnlyCursor property
 
+Whether to show the cursor when the editor readOnly is true
+
 <b>Signature:</b>
 
 ```typescript
 readOnlyCursor?: boolean;
 ```
+
+## Default Value
+
+false
+

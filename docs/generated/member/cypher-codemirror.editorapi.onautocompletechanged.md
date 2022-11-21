@@ -4,6 +4,8 @@
 
 ## EditorApi.onAutocompleteChanged property
 
+Add an event listener for editor autocomplete changes
+
 <b>Signature:</b>
 
 ```typescript

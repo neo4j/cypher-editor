@@ -4,8 +4,10 @@
 
 ## AutocompleteOption.type property
 
+The type of the autocomplete option
+
 <b>Signature:</b>
 
 ```typescript
-type?: string;
+type?: CompletionType;
 ```

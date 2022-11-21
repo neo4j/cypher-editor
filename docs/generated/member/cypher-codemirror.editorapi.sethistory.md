@@ -4,6 +4,8 @@
 
 ## EditorApi.setHistory property
 
+Set whether or not the editor maintains an undo/redo history
+
 <b>Signature:</b>
 
 ```typescript

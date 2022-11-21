@@ -4,6 +4,8 @@
 
 ## ScrollInfo interface
 
+Information about the editor scroll position
+
 <b>Signature:</b>
 
 ```typescript
@@ -16,20 +18,22 @@ export interface ScrollInfo
 
 ### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [clientHeight](#clientheight) | number |
-|  [clientWidth](#clientwidth) | number |
-|  [scrollHeight](#scrollheight) | number |
-|  [scrollLeft](#scrollleft) | number |
-|  [scrollTop](#scrolltop) | number |
-|  [scrollWidth](#scrollwidth) | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [clientHeight](#clientheight) | number | The clientHeight position of the editor scroll dom element |
+|  [clientWidth](#clientwidth) | number | The clientWidth position of the editor scroll dom element |
+|  [scrollHeight](#scrollheight) | number | The scrollHeight position of the editor scroll dom element |
+|  [scrollLeft](#scrollleft) | number | The scrollLeft position of the editor scroll dom element |
+|  [scrollTop](#scrolltop) | number | The scrollTop position of the editor scroll dom element |
+|  [scrollWidth](#scrollwidth) | number | The scrollWidth position of the editor scroll dom element |
 
 <br>
 
 <a name="clientheight"></a>
 
 ### ScrollInfo.clientHeight property
+
+The clientHeight position of the editor scroll dom element
 
 <b>Signature:</b>
 
@@ -43,6 +47,8 @@ clientHeight: number;
 
 ### ScrollInfo.clientWidth property
 
+The clientWidth position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript
@@ -54,6 +60,8 @@ clientWidth: number;
 <a name="scrollheight"></a>
 
 ### ScrollInfo.scrollHeight property
+
+The scrollHeight position of the editor scroll dom element
 
 <b>Signature:</b>
 
@@ -67,6 +75,8 @@ scrollHeight: number;
 
 ### ScrollInfo.scrollLeft property
 
+The scrollLeft position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript
@@ -79,6 +89,8 @@ scrollLeft: number;
 
 ### ScrollInfo.scrollTop property
 
+The scrollTop position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript
@@ -90,6 +102,8 @@ scrollTop: number;
 <a name="scrollwidth"></a>
 
 ### ScrollInfo.scrollWidth property
+
+The scrollWidth position of the editor scroll dom element
 
 <b>Signature:</b>
 

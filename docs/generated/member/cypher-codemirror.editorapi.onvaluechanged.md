@@ -4,6 +4,8 @@
 
 ## EditorApi.onValueChanged property
 
+Add an event listener for editor value changes
+
 <b>Signature:</b>
 
 ```typescript

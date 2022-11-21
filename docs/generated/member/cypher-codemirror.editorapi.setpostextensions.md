@@ -4,6 +4,8 @@
 
 ## EditorApi.setPostExtensions property
 
+set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
+
 <b>Signature:</b>
 
 ```typescript

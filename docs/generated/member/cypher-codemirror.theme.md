@@ -4,6 +4,8 @@
 
 ## Theme type
 
+The current editor theme
+
 <b>Signature:</b>
 
 ```typescript

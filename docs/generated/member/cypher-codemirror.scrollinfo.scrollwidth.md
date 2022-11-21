@@ -4,6 +4,8 @@
 
 ## ScrollInfo.scrollWidth property
 
+The scrollWidth position of the editor scroll dom element
+
 <b>Signature:</b>
 
 ```typescript

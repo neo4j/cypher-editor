@@ -2,13 +2,20 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [PartialPositionObject](./cypher-codemirror.partialpositionobject.md)
 
-## PartialPositionObject type
+## PartialPositionObject interface
+
+Partial editor cursor position with line &amp; column only
 
 <b>Signature:</b>
 
 ```typescript
-export type PartialPositionObject = {
-  line: number;
-  column: number;
-};
+export interface PartialPositionObject 
 ```
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](./cypher-codemirror.partialpositionobject.column.md) | number | The 1 based column number of the cursor position |
+|  [line](./cypher-codemirror.partialpositionobject.line.md) | number | The 1 based line number of the cursor position |
+

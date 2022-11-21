@@ -4,6 +4,8 @@
 
 ## EditorApi.setLineNumbers property
 
+Set whether or not line numbers are shown to the left of the editor ui
+
 <b>Signature:</b>
 
 ```typescript

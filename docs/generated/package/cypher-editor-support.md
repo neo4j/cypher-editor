@@ -550,3 +550,37 @@ signature: string;
 
 ---
 
+<br>
+
+### Type Aliases:
+
+|  Type Alias |
+|  --- |
+|  [CompletionType](#completiontype) |
+
+<br>
+
+<a name="completiontype"></a>
+
+### CompletionType type
+
+<b>Signature:</b>
+
+```typescript
+export type CompletionType =
+  | "keyword"
+  | "label"
+  | "variable"
+  | "parameter"
+  | "propertyKey"
+  | "relationshipType"
+  | "function"
+  | "procedure"
+  | "consoleCommand"
+  | "consoleCommandSubcommand"
+  | "procedureOutput"
+  | "noop";
+```
+
+---
+

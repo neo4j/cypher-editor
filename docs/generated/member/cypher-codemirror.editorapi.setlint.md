@@ -4,6 +4,8 @@
 
 ## EditorApi.setLint property
 
+Set whether or not the editor should display lint errors to the user
+
 <b>Signature:</b>
 
 ```typescript

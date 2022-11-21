@@ -4,6 +4,8 @@
 
 ## EditorApi.setReadOnly property
 
+Set whether the editor is read only or the user can edit the editor's value
+
 <b>Signature:</b>
 
 ```typescript

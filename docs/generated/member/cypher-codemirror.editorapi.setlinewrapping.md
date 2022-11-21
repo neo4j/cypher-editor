@@ -4,6 +4,8 @@
 
 ## EditorApi.setLineWrapping property
 
+Set whether or not the editor wraps lines vs using a horizontal scrollbar
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## EditorApi.setValue property
 
+Set the editor value
+
 <b>Signature:</b>
 
 ```typescript

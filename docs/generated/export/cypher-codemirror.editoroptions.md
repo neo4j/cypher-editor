@@ -18,28 +18,28 @@ export interface EditorOptions
 
 ### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [autocomplete?](#autocomplete) | boolean | <i>(Optional)</i> |
-|  [autocompleteCloseOnBlur?](#autocompletecloseonblur) | boolean | <i>(Optional)</i> |
-|  [autocompleteOpen?](#autocompleteopen) | boolean | <i>(Optional)</i> |
-|  [autocompleteSchema?](#autocompleteschema) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
-|  [autocompleteTriggerStrings?](#autocompletetriggerstrings) | string\[\] | <i>(Optional)</i> |
-|  [autofocus?](#autofocus) | boolean | <i>(Optional)</i> |
-|  [history?](#history) | boolean | <i>(Optional)</i> |
-|  [lineNumberFormatter?](#linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string | <i>(Optional)</i> |
-|  [lineNumbers?](#linenumbers) | boolean | <i>(Optional)</i> |
-|  [lineWrapping?](#linewrapping) | boolean | <i>(Optional)</i> |
-|  [lint?](#lint) | boolean | <i>(Optional)</i> |
-|  [parseOnSetValue?](#parseonsetvalue) | boolean | <i>(Optional)</i> |
-|  [placeholder?](#placeholder) | string | <i>(Optional)</i> |
-|  [position?](#position) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
-|  [postExtensions?](#postextensions) | Extension\[\] | <i>(Optional)</i> |
-|  [preExtensions?](#preextensions) | Extension\[\] | <i>(Optional)</i> |
-|  [readOnly?](#readonly) | boolean | <i>(Optional)</i> |
-|  [readOnlyCursor?](#readonlycursor) | boolean | <i>(Optional)</i> |
-|  [theme?](#theme) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
-|  [value?](#value) | string | <i>(Optional)</i> |
+|  Property | Type | Default | Description |
+|  --- | --- | --- | --- |
+|  [autocomplete?](#autocomplete) | boolean | true | <i>(Optional)</i> Whether the autocomplete feature is enabled |
+|  [autocompleteCloseOnBlur?](#autocompletecloseonblur) | boolean | true | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
+|  [autocompleteOpen?](#autocompleteopen) | boolean | false | <i>(Optional)</i> Whether the autocomplete menu is initially shown to the user |
+|  [autocompleteSchema?](#autocompleteschema) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | undefined | <i>(Optional)</i> The schema - TODO need better docs here and probably rename this |
+|  [autocompleteTriggerStrings?](#autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
+|  [autofocus?](#autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
+|  [history?](#history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [lineNumberFormatter?](#linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumbers?](#linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
+|  [lineWrapping?](#linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
+|  [lint?](#lint) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
+|  [parseOnSetValue?](#parseonsetvalue) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
+|  [placeholder?](#placeholder) | string | undefined | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
+|  [position?](#position) | [PositionAny](./cypher-codemirror.positionany.md) | undefined | <i>(Optional)</i> The initial editor cursor position |
+|  [postExtensions?](#postextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor after the cypher language support extensions. |
+|  [preExtensions?](#preextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
+|  [readOnly?](#readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
+|  [readOnlyCursor?](#readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
+|  [theme?](#theme) | [Theme](./cypher-codemirror.theme.md) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
+|  [value?](#value) | string | "" | <i>(Optional)</i> The initial editor value |
 
 <br>
 
@@ -47,11 +47,17 @@ export interface EditorOptions
 
 ### EditorOptions.autocomplete property
 
+Whether the autocomplete feature is enabled
+
 <b>Signature:</b>
 
 ```typescript
 autocomplete?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -59,11 +65,17 @@ autocomplete?: boolean;
 
 ### EditorOptions.autocompleteCloseOnBlur property
 
+Whether the autocomplete auto closes whenever the editor loses focus
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteCloseOnBlur?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -71,11 +83,17 @@ autocompleteCloseOnBlur?: boolean;
 
 ### EditorOptions.autocompleteOpen property
 
+Whether the autocomplete menu is initially shown to the user
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+#### Default Value:
+
+false
 
 <br>
 
@@ -83,11 +101,17 @@ autocompleteOpen?: boolean;
 
 ### EditorOptions.autocompleteSchema property
 
+The schema - TODO need better docs here and probably rename this
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
+
+#### Default Value:
+
+undefined
 
 <br>
 
@@ -95,11 +119,17 @@ autocompleteSchema?: EditorSupportSchema;
 
 ### EditorOptions.autocompleteTriggerStrings property
 
+The keys that when typed will automatically open the autocomplete menu
+
 <b>Signature:</b>
 
 ```typescript
 autocompleteTriggerStrings?: string[];
 ```
+
+#### Default Value:
+
+\[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\]
 
 <br>
 
@@ -107,11 +137,17 @@ autocompleteTriggerStrings?: string[];
 
 ### EditorOptions.autofocus property
 
+Whether the editor should be auto focused on first creation
+
 <b>Signature:</b>
 
 ```typescript
 autofocus?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -119,11 +155,17 @@ autofocus?: boolean;
 
 ### EditorOptions.history property
 
+Whether the editor maintains an undo/redo history
+
 <b>Signature:</b>
 
 ```typescript
 history?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -131,11 +173,17 @@ history?: boolean;
 
 ### EditorOptions.lineNumberFormatter property
 
+The formatter for the line numbers of the editor
+
 <b>Signature:</b>
 
 ```typescript
 lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 ```
+
+#### Default Value:
+
+(line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + "";
 
 <br>
 
@@ -143,11 +191,17 @@ lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
 
 ### EditorOptions.lineNumbers property
 
+Whether line numbers are shown to the left of the editor ui
+
 <b>Signature:</b>
 
 ```typescript
 lineNumbers?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -155,11 +209,17 @@ lineNumbers?: boolean;
 
 ### EditorOptions.lineWrapping property
 
+Whether the editor wraps lines vs using a horizontal scrollbar
+
 <b>Signature:</b>
 
 ```typescript
 lineWrapping?: boolean;
 ```
+
+#### Default Value:
+
+false
 
 <br>
 
@@ -167,11 +227,17 @@ lineWrapping?: boolean;
 
 ### EditorOptions.lint property
 
+Whether the editor should display lint errors to the user
+
 <b>Signature:</b>
 
 ```typescript
 lint?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -179,11 +245,17 @@ lint?: boolean;
 
 ### EditorOptions.parseOnSetValue property
 
+Whether to run the cypher language parser immediately after every call to set the value
+
 <b>Signature:</b>
 
 ```typescript
 parseOnSetValue?: boolean;
 ```
+
+#### Default Value:
+
+true
 
 <br>
 
@@ -191,11 +263,17 @@ parseOnSetValue?: boolean;
 
 ### EditorOptions.placeholder property
 
+The text to be shown to the user when the editor value is empty
+
 <b>Signature:</b>
 
 ```typescript
 placeholder?: string;
 ```
+
+#### Default Value:
+
+undefined
 
 <br>
 
@@ -203,11 +281,17 @@ placeholder?: string;
 
 ### EditorOptions.position property
 
+The initial editor cursor position
+
 <b>Signature:</b>
 
 ```typescript
 position?: PositionAny;
 ```
+
+#### Default Value:
+
+undefined
 
 <br>
 
@@ -215,11 +299,17 @@ position?: PositionAny;
 
 ### EditorOptions.postExtensions property
 
+The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.
+
 <b>Signature:</b>
 
 ```typescript
 postExtensions?: Extension[];
 ```
+
+#### Default Value:
+
+undefined
 
 <br>
 
@@ -227,11 +317,17 @@ postExtensions?: Extension[];
 
 ### EditorOptions.preExtensions property
 
+The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.
+
 <b>Signature:</b>
 
 ```typescript
 preExtensions?: Extension[];
 ```
+
+#### Default Value:
+
+undefined
 
 <br>
 
@@ -239,11 +335,17 @@ preExtensions?: Extension[];
 
 ### EditorOptions.readOnly property
 
+Whether the editor is read only or the user can edit the editor's value
+
 <b>Signature:</b>
 
 ```typescript
 readOnly?: boolean;
 ```
+
+#### Default Value:
+
+false
 
 <br>
 
@@ -251,11 +353,17 @@ readOnly?: boolean;
 
 ### EditorOptions.readOnlyCursor property
 
+Whether to show the cursor when the editor readOnly is true
+
 <b>Signature:</b>
 
 ```typescript
 readOnlyCursor?: boolean;
 ```
+
+#### Default Value:
+
+false
 
 <br>
 
@@ -263,11 +371,17 @@ readOnlyCursor?: boolean;
 
 ### EditorOptions.theme property
 
+Whether to use the light or dark theme for the editor
+
 <b>Signature:</b>
 
 ```typescript
 theme?: Theme;
 ```
+
+#### Default Value:
+
+"light"
 
 <br>
 
@@ -275,11 +389,17 @@ theme?: Theme;
 
 ### EditorOptions.value property
 
+The initial editor value
+
 <b>Signature:</b>
 
 ```typescript
 value?: string;
 ```
+
+#### Default Value:
+
+""
 
 ---
 

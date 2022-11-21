@@ -4,6 +4,8 @@
 
 ## EditorApi.offKeyDown property
 
+remove an event listener for editor key down events
+
 <b>Signature:</b>
 
 ```typescript

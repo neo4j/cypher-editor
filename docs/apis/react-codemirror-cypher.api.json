@@ -801,7 +801,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror!PositionObject:type"
+                  "canonicalReference": "cypher-codemirror!PositionObject:interface"
                 },
                 {
                   "kind": "Content",

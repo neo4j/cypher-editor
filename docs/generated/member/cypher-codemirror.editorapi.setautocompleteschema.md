@@ -4,6 +4,8 @@
 
 ## EditorApi.setAutocompleteSchema property
 
+Set the schema - TODO need better docs here and probably rename this
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## EditorApi.selectAutocompleteOption property
 
+Select the autocomplete option with the given index, causing it to be applied to the editor value
+
 <b>Signature:</b>
 
 ```typescript

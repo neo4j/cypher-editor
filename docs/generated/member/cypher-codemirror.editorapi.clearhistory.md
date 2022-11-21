@@ -4,6 +4,8 @@
 
 ## EditorApi.clearHistory property
 
+Clears the undo/redo history of the editor
+
 <b>Signature:</b>
 
 ```typescript

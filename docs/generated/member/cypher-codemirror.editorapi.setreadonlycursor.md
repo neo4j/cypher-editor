@@ -4,6 +4,8 @@
 
 ## EditorApi.setReadOnlyCursor property
 
+Set whether to show the cursor when the editor readOnly is true
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,8 +4,15 @@
 
 ## EditorOptions.lint property
 
+Whether the editor should display lint errors to the user
+
 <b>Signature:</b>
 
 ```typescript
 lint?: boolean;
 ```
+
+## Default Value
+
+true
+

@@ -4,6 +4,8 @@
 
 ## EditorApi.onScrollChanged property
 
+Add an event listener for editor scroll position changes
+
 <b>Signature:</b>
 
 ```typescript

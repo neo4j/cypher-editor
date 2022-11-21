@@ -4,6 +4,8 @@
 
 ## EditorApi.setLineNumberFormatter property
 
+Set the formatter for the line numbers of the editor
+
 <b>Signature:</b>
 
 ```typescript

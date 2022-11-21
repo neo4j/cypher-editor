@@ -4,6 +4,8 @@
 
 ## EditorApi.getPositionForValue property
 
+Get a full position object for any supported position value or null if position value is invalid
+
 <b>Signature:</b>
 
 ```typescript

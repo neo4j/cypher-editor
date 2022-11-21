@@ -4,6 +4,8 @@
 
 ## EditorApi.setTheme property
 
+Set whether to use the light or dark theme for the editor
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## AutocompleteOption.detail property
 
+More detailed information about the autocomplete option
+
 <b>Signature:</b>
 
 ```typescript

@@ -14,26 +14,26 @@ export interface EditorOptions
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [autocomplete?](./cypher-codemirror.editoroptions.autocomplete.md) | boolean | <i>(Optional)</i> |
-|  [autocompleteCloseOnBlur?](./cypher-codemirror.editoroptions.autocompletecloseonblur.md) | boolean | <i>(Optional)</i> |
-|  [autocompleteOpen?](./cypher-codemirror.editoroptions.autocompleteopen.md) | boolean | <i>(Optional)</i> |
-|  [autocompleteSchema?](./cypher-codemirror.editoroptions.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
-|  [autocompleteTriggerStrings?](./cypher-codemirror.editoroptions.autocompletetriggerstrings.md) | string\[\] | <i>(Optional)</i> |
-|  [autofocus?](./cypher-codemirror.editoroptions.autofocus.md) | boolean | <i>(Optional)</i> |
-|  [history?](./cypher-codemirror.editoroptions.history.md) | boolean | <i>(Optional)</i> |
-|  [lineNumberFormatter?](./cypher-codemirror.editoroptions.linenumberformatter.md) | (lineNumber: number, lineCount: number) =&gt; string | <i>(Optional)</i> |
-|  [lineNumbers?](./cypher-codemirror.editoroptions.linenumbers.md) | boolean | <i>(Optional)</i> |
-|  [lineWrapping?](./cypher-codemirror.editoroptions.linewrapping.md) | boolean | <i>(Optional)</i> |
-|  [lint?](./cypher-codemirror.editoroptions.lint.md) | boolean | <i>(Optional)</i> |
-|  [parseOnSetValue?](./cypher-codemirror.editoroptions.parseonsetvalue.md) | boolean | <i>(Optional)</i> |
-|  [placeholder?](./cypher-codemirror.editoroptions.placeholder.md) | string | <i>(Optional)</i> |
-|  [position?](./cypher-codemirror.editoroptions.position.md) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
-|  [postExtensions?](./cypher-codemirror.editoroptions.postextensions.md) | Extension\[\] | <i>(Optional)</i> |
-|  [preExtensions?](./cypher-codemirror.editoroptions.preextensions.md) | Extension\[\] | <i>(Optional)</i> |
-|  [readOnly?](./cypher-codemirror.editoroptions.readonly.md) | boolean | <i>(Optional)</i> |
-|  [readOnlyCursor?](./cypher-codemirror.editoroptions.readonlycursor.md) | boolean | <i>(Optional)</i> |
-|  [theme?](./cypher-codemirror.editoroptions.theme.md) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
-|  [value?](./cypher-codemirror.editoroptions.value.md) | string | <i>(Optional)</i> |
+|  Property | Type | Default | Description |
+|  --- | --- | --- | --- |
+|  [autocomplete?](./cypher-codemirror.editoroptions.autocomplete.md) | boolean | true | <i>(Optional)</i> Whether the autocomplete feature is enabled |
+|  [autocompleteCloseOnBlur?](./cypher-codemirror.editoroptions.autocompletecloseonblur.md) | boolean | true | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
+|  [autocompleteOpen?](./cypher-codemirror.editoroptions.autocompleteopen.md) | boolean | false | <i>(Optional)</i> Whether the autocomplete menu is initially shown to the user |
+|  [autocompleteSchema?](./cypher-codemirror.editoroptions.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | undefined | <i>(Optional)</i> The schema - TODO need better docs here and probably rename this |
+|  [autocompleteTriggerStrings?](./cypher-codemirror.editoroptions.autocompletetriggerstrings.md) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
+|  [autofocus?](./cypher-codemirror.editoroptions.autofocus.md) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
+|  [history?](./cypher-codemirror.editoroptions.history.md) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [lineNumberFormatter?](./cypher-codemirror.editoroptions.linenumberformatter.md) | (lineNumber: number, lineCount: number) =&gt; string | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumbers?](./cypher-codemirror.editoroptions.linenumbers.md) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
+|  [lineWrapping?](./cypher-codemirror.editoroptions.linewrapping.md) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
+|  [lint?](./cypher-codemirror.editoroptions.lint.md) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
+|  [parseOnSetValue?](./cypher-codemirror.editoroptions.parseonsetvalue.md) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
+|  [placeholder?](./cypher-codemirror.editoroptions.placeholder.md) | string | undefined | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
+|  [position?](./cypher-codemirror.editoroptions.position.md) | [PositionAny](./cypher-codemirror.positionany.md) | undefined | <i>(Optional)</i> The initial editor cursor position |
+|  [postExtensions?](./cypher-codemirror.editoroptions.postextensions.md) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor after the cypher language support extensions. |
+|  [preExtensions?](./cypher-codemirror.editoroptions.preextensions.md) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
+|  [readOnly?](./cypher-codemirror.editoroptions.readonly.md) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
+|  [readOnlyCursor?](./cypher-codemirror.editoroptions.readonlycursor.md) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
+|  [theme?](./cypher-codemirror.editoroptions.theme.md) | [Theme](./cypher-codemirror.theme.md) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
+|  [value?](./cypher-codemirror.editoroptions.value.md) | string | "" | <i>(Optional)</i> The initial editor value |
 

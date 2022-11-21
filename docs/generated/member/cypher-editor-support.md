@@ -21,3 +21,9 @@
 |  [FunctionSchema](./cypher-editor-support.functionschema.md) |  |
 |  [ProcedureSchema](./cypher-editor-support.procedureschema.md) |  |
 
+## Type Aliases
+
+|  Type Alias |
+|  --- |
+|  [CompletionType](./cypher-editor-support.completiontype.md) |
+

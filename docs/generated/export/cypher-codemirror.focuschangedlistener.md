@@ -4,6 +4,8 @@
 
 ## FocusChangedListener call signature
 
+Listener for editor focus changes
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ export interface FocusChangedListener {
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  focused | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  focused | boolean | whether the editor was focused or not |
 
 <b>Returns:</b>
 

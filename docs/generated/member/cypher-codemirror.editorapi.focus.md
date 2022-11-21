@@ -4,6 +4,8 @@
 
 ## EditorApi.focus property
 
+Brings the browser focus to the editor
+
 <b>Signature:</b>
 
 ```typescript
