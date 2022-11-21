@@ -23,8 +23,8 @@ export const defaultAutocompleteTriggerStrings = [
 
 export const defaultOptions = {
   autocomplete: true,
-  autocompleteOpen: false,
   autocompleteCloseOnBlur: true,
+  autocompleteOpen: false,
   autocompleteSchema: undefined,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true,
@@ -34,12 +34,12 @@ export const defaultOptions = {
   lineNumbers: true,
   lineWrapping: false,
   lint: true,
+  parseOnSetValue: true,
   placeholder: undefined,
   position: undefined,
   readOnly: false,
   readOnlyCursor: false,
   theme: THEME_LIGHT,
-  parseOnSetValue: true,
   value: ""
 };
 
