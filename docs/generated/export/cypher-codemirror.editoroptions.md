@@ -9,9 +9,8 @@ These are the options for the [createCypherEditor](./cypher-codemirror.createcyp
 <b>Signature:</b>
 
 ```typescript
-export interface EditorOptions extends BaseEditorOptions 
+export interface EditorOptions 
 ```
-<b>Extends:</b> [BaseEditorOptions](./cypher-codemirror-base.baseeditoroptions.md)
 
 ---
 
@@ -21,8 +20,194 @@ export interface EditorOptions extends BaseEditorOptions
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [autocomplete?](#autocomplete) | boolean | <i>(Optional)</i> |
+|  [autocompleteCloseOnBlur?](#autocompletecloseonblur) | boolean | <i>(Optional)</i> |
+|  [autocompleteOpen?](#autocompleteopen) | boolean | <i>(Optional)</i> |
+|  [autocompleteSchema?](#autocompleteschema) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
+|  [autocompleteTriggerStrings?](#autocompletetriggerstrings) | string\[\] | <i>(Optional)</i> |
+|  [autofocus?](#autofocus) | boolean | <i>(Optional)</i> |
+|  [history?](#history) | boolean | <i>(Optional)</i> |
+|  [lineNumberFormatter?](#linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string | <i>(Optional)</i> |
+|  [lineNumbers?](#linenumbers) | boolean | <i>(Optional)</i> |
+|  [lineWrapping?](#linewrapping) | boolean | <i>(Optional)</i> |
+|  [lint?](#lint) | boolean | <i>(Optional)</i> |
+|  [parseOnSetValue?](#parseonsetvalue) | boolean | <i>(Optional)</i> |
+|  [placeholder?](#placeholder) | string | <i>(Optional)</i> |
+|  [position?](#position) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
 |  [postExtensions?](#postextensions) | Extension\[\] | <i>(Optional)</i> |
 |  [preExtensions?](#preextensions) | Extension\[\] | <i>(Optional)</i> |
+|  [readOnly?](#readonly) | boolean | <i>(Optional)</i> |
+|  [readOnlyCursor?](#readonlycursor) | boolean | <i>(Optional)</i> |
+|  [theme?](#theme) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
+|  [value?](#value) | string | <i>(Optional)</i> |
+
+<br>
+
+<a name="autocomplete"></a>
+
+### EditorOptions.autocomplete property
+
+<b>Signature:</b>
+
+```typescript
+autocomplete?: boolean;
+```
+
+<br>
+
+<a name="autocompletecloseonblur"></a>
+
+### EditorOptions.autocompleteCloseOnBlur property
+
+<b>Signature:</b>
+
+```typescript
+autocompleteCloseOnBlur?: boolean;
+```
+
+<br>
+
+<a name="autocompleteopen"></a>
+
+### EditorOptions.autocompleteOpen property
+
+<b>Signature:</b>
+
+```typescript
+autocompleteOpen?: boolean;
+```
+
+<br>
+
+<a name="autocompleteschema"></a>
+
+### EditorOptions.autocompleteSchema property
+
+<b>Signature:</b>
+
+```typescript
+autocompleteSchema?: EditorSupportSchema;
+```
+
+<br>
+
+<a name="autocompletetriggerstrings"></a>
+
+### EditorOptions.autocompleteTriggerStrings property
+
+<b>Signature:</b>
+
+```typescript
+autocompleteTriggerStrings?: string[];
+```
+
+<br>
+
+<a name="autofocus"></a>
+
+### EditorOptions.autofocus property
+
+<b>Signature:</b>
+
+```typescript
+autofocus?: boolean;
+```
+
+<br>
+
+<a name="history"></a>
+
+### EditorOptions.history property
+
+<b>Signature:</b>
+
+```typescript
+history?: boolean;
+```
+
+<br>
+
+<a name="linenumberformatter"></a>
+
+### EditorOptions.lineNumberFormatter property
+
+<b>Signature:</b>
+
+```typescript
+lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
+```
+
+<br>
+
+<a name="linenumbers"></a>
+
+### EditorOptions.lineNumbers property
+
+<b>Signature:</b>
+
+```typescript
+lineNumbers?: boolean;
+```
+
+<br>
+
+<a name="linewrapping"></a>
+
+### EditorOptions.lineWrapping property
+
+<b>Signature:</b>
+
+```typescript
+lineWrapping?: boolean;
+```
+
+<br>
+
+<a name="lint"></a>
+
+### EditorOptions.lint property
+
+<b>Signature:</b>
+
+```typescript
+lint?: boolean;
+```
+
+<br>
+
+<a name="parseonsetvalue"></a>
+
+### EditorOptions.parseOnSetValue property
+
+<b>Signature:</b>
+
+```typescript
+parseOnSetValue?: boolean;
+```
+
+<br>
+
+<a name="placeholder"></a>
+
+### EditorOptions.placeholder property
+
+<b>Signature:</b>
+
+```typescript
+placeholder?: string;
+```
+
+<br>
+
+<a name="position"></a>
+
+### EditorOptions.position property
+
+<b>Signature:</b>
+
+```typescript
+position?: PositionAny;
+```
 
 <br>
 
@@ -46,6 +231,54 @@ postExtensions?: Extension[];
 
 ```typescript
 preExtensions?: Extension[];
+```
+
+<br>
+
+<a name="readonly"></a>
+
+### EditorOptions.readOnly property
+
+<b>Signature:</b>
+
+```typescript
+readOnly?: boolean;
+```
+
+<br>
+
+<a name="readonlycursor"></a>
+
+### EditorOptions.readOnlyCursor property
+
+<b>Signature:</b>
+
+```typescript
+readOnlyCursor?: boolean;
+```
+
+<br>
+
+<a name="theme"></a>
+
+### EditorOptions.theme property
+
+<b>Signature:</b>
+
+```typescript
+theme?: Theme;
+```
+
+<br>
+
+<a name="value"></a>
+
+### EditorOptions.value property
+
+<b>Signature:</b>
+
+```typescript
+value?: string;
 ```
 
 ---

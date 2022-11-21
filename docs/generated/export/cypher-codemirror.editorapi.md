@@ -9,10 +9,8 @@ This is the EditorApi which wraps all of the interaction with the cypher editor
 <b>Signature:</b>
 
 ```typescript
-export interface EditorApi
-  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged"> 
+export interface EditorApi 
 ```
-<b>Extends:</b> Omit&lt;[BaseEditorApi](./cypher-codemirror-base.baseeditorapi.md)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
 ---
 
@@ -20,13 +18,61 @@ export interface EditorApi
 
 ### Properties:
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [codemirror](#codemirror) | EditorView |  |
-|  [offValueChanged](#offvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void |  |
-|  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
-|  [setPostExtensions](#setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
-|  [setPreExtensions](#setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |  |
+|  Property | Type |
+|  --- | --- |
+|  [clearHistory](#clearhistory) | () =&gt; void |
+|  [codemirror](#codemirror) | EditorView |
+|  [destroy](#destroy) | () =&gt; void |
+|  [editorSupport](#editorsupport) | [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) |
+|  [focus](#focus) | () =&gt; void |
+|  [getLineCount](#getlinecount) | () =&gt; void |
+|  [getPosition](#getposition) | () =&gt; [PositionObject](./cypher-codemirror.positionobject.md) |
+|  [getPositionForValue](#getpositionforvalue) | (positionValue: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; [PositionObject](./cypher-codemirror.positionobject.md) \| null |
+|  [offAutocompleteChanged](#offautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; void |
+|  [offFocusChanged](#offfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; void |
+|  [offKeyDown](#offkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; void |
+|  [offLineNumberClick](#offlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; void |
+|  [offPositionChanged](#offpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; void |
+|  [offScrollChanged](#offscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; void |
+|  [offValueChanged](#offvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void |
+|  [onAutocompleteChanged](#onautocompletechanged) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onFocusChanged](#onfocuschanged) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onKeyDown](#onkeydown) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onLineNumberClick](#onlinenumberclick) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onPositionChanged](#onpositionchanged) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onScrollChanged](#onscrollchanged) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onValueChanged](#onvaluechanged) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [selectAutocompleteOption](#selectautocompleteoption) | (autocompleteOptionIndex: number) =&gt; void |
+|  [setAutocomplete](#setautocomplete) | (autocomplete: boolean) =&gt; void |
+|  [setAutocompleteCloseOnBlur](#setautocompletecloseonblur) | (autocompleteCloseOnBlur: boolean) =&gt; void |
+|  [setAutocompleteOpen](#setautocompleteopen) | (autocompleteOpen: boolean) =&gt; void |
+|  [setAutocompleteSchema](#setautocompleteschema) | (autocompleteSchema: [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md)<!-- -->) =&gt; void |
+|  [setAutocompleteTriggerStrings](#setautocompletetriggerstrings) | (autocompleteTriggerStrings: string\[\]) =&gt; void |
+|  [setHistory](#sethistory) | (history: boolean) =&gt; void |
+|  [setLineNumberFormatter](#setlinenumberformatter) | ( lineNumberFormatter: (lineNumber: number, lineCount: number) =&gt; string ) =&gt; void |
+|  [setLineNumbers](#setlinenumbers) | (lineNumbers: boolean) =&gt; void |
+|  [setLineWrapping](#setlinewrapping) | (lineWrapping: boolean) =&gt; void |
+|  [setLint](#setlint) | (lint: boolean) =&gt; void |
+|  [setPlaceholder](#setplaceholder) | (placeholder: string \| undefined) =&gt; void |
+|  [setPosition](#setposition) | (position: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; void |
+|  [setPostExtensions](#setpostextensions) | (preExtensions: Extension\[\]) =&gt; void |
+|  [setPreExtensions](#setpreextensions) | (preExtensions: Extension\[\]) =&gt; void |
+|  [setReadOnly](#setreadonly) | (readOnly: boolean) =&gt; void |
+|  [setReadOnlyCursor](#setreadonlycursor) | (readOnlyCursor: boolean) =&gt; void |
+|  [setTheme](#settheme) | (theme: [Theme](./cypher-codemirror.theme.md)<!-- -->) =&gt; void |
+|  [setValue](#setvalue) | (value: string, parseOnSetValue?: boolean) =&gt; void |
+
+<br>
+
+<a name="clearhistory"></a>
+
+### EditorApi.clearHistory property
+
+<b>Signature:</b>
+
+```typescript
+clearHistory: () => void;
+```
 
 <br>
 
@@ -38,6 +84,150 @@ export interface EditorApi
 
 ```typescript
 codemirror: EditorView;
+```
+
+<br>
+
+<a name="destroy"></a>
+
+### EditorApi.destroy property
+
+<b>Signature:</b>
+
+```typescript
+destroy: () => void;
+```
+
+<br>
+
+<a name="editorsupport"></a>
+
+### EditorApi.editorSupport property
+
+<b>Signature:</b>
+
+```typescript
+editorSupport: CypherEditorSupport;
+```
+
+<br>
+
+<a name="focus"></a>
+
+### EditorApi.focus property
+
+<b>Signature:</b>
+
+```typescript
+focus: () => void;
+```
+
+<br>
+
+<a name="getlinecount"></a>
+
+### EditorApi.getLineCount property
+
+<b>Signature:</b>
+
+```typescript
+getLineCount: () => void;
+```
+
+<br>
+
+<a name="getposition"></a>
+
+### EditorApi.getPosition property
+
+<b>Signature:</b>
+
+```typescript
+getPosition: () => PositionObject;
+```
+
+<br>
+
+<a name="getpositionforvalue"></a>
+
+### EditorApi.getPositionForValue property
+
+<b>Signature:</b>
+
+```typescript
+getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
+```
+
+<br>
+
+<a name="offautocompletechanged"></a>
+
+### EditorApi.offAutocompleteChanged property
+
+<b>Signature:</b>
+
+```typescript
+offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
+```
+
+<br>
+
+<a name="offfocuschanged"></a>
+
+### EditorApi.offFocusChanged property
+
+<b>Signature:</b>
+
+```typescript
+offFocusChanged: (listener: FocusChangedListener) => void;
+```
+
+<br>
+
+<a name="offkeydown"></a>
+
+### EditorApi.offKeyDown property
+
+<b>Signature:</b>
+
+```typescript
+offKeyDown: (listener: KeyDownListener) => void;
+```
+
+<br>
+
+<a name="offlinenumberclick"></a>
+
+### EditorApi.offLineNumberClick property
+
+<b>Signature:</b>
+
+```typescript
+offLineNumberClick: (listener: LineNumberClickListener) => void;
+```
+
+<br>
+
+<a name="offpositionchanged"></a>
+
+### EditorApi.offPositionChanged property
+
+<b>Signature:</b>
+
+```typescript
+offPositionChanged: (listener: PositionChangedListener) => void;
+```
+
+<br>
+
+<a name="offscrollchanged"></a>
+
+### EditorApi.offScrollChanged property
+
+<b>Signature:</b>
+
+```typescript
+offScrollChanged: (listener: ScrollChangedListener) => void;
 ```
 
 <br>
@@ -54,16 +244,244 @@ offValueChanged: (listener: ValueChangedListener) => void;
 
 <br>
 
+<a name="onautocompletechanged"></a>
+
+### EditorApi.onAutocompleteChanged property
+
+<b>Signature:</b>
+
+```typescript
+onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
+```
+
+<br>
+
+<a name="onfocuschanged"></a>
+
+### EditorApi.onFocusChanged property
+
+<b>Signature:</b>
+
+```typescript
+onFocusChanged: (listener: FocusChangedListener) => () => void;
+```
+
+<br>
+
+<a name="onkeydown"></a>
+
+### EditorApi.onKeyDown property
+
+<b>Signature:</b>
+
+```typescript
+onKeyDown: (listener: KeyDownListener) => () => void;
+```
+
+<br>
+
+<a name="onlinenumberclick"></a>
+
+### EditorApi.onLineNumberClick property
+
+<b>Signature:</b>
+
+```typescript
+onLineNumberClick: (listener: LineNumberClickListener) => () => void;
+```
+
+<br>
+
+<a name="onpositionchanged"></a>
+
+### EditorApi.onPositionChanged property
+
+<b>Signature:</b>
+
+```typescript
+onPositionChanged: (listener: PositionChangedListener) => () => void;
+```
+
+<br>
+
+<a name="onscrollchanged"></a>
+
+### EditorApi.onScrollChanged property
+
+<b>Signature:</b>
+
+```typescript
+onScrollChanged: (listener: ScrollChangedListener) => () => void;
+```
+
+<br>
+
 <a name="onvaluechanged"></a>
 
 ### EditorApi.onValueChanged property
-
-ON VALUE CHANGED
 
 <b>Signature:</b>
 
 ```typescript
 onValueChanged: (listener: ValueChangedListener) => () => void;
+```
+
+<br>
+
+<a name="selectautocompleteoption"></a>
+
+### EditorApi.selectAutocompleteOption property
+
+<b>Signature:</b>
+
+```typescript
+selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
+```
+
+<br>
+
+<a name="setautocomplete"></a>
+
+### EditorApi.setAutocomplete property
+
+<b>Signature:</b>
+
+```typescript
+setAutocomplete: (autocomplete: boolean) => void;
+```
+
+<br>
+
+<a name="setautocompletecloseonblur"></a>
+
+### EditorApi.setAutocompleteCloseOnBlur property
+
+<b>Signature:</b>
+
+```typescript
+setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
+```
+
+<br>
+
+<a name="setautocompleteopen"></a>
+
+### EditorApi.setAutocompleteOpen property
+
+<b>Signature:</b>
+
+```typescript
+setAutocompleteOpen: (autocompleteOpen: boolean) => void;
+```
+
+<br>
+
+<a name="setautocompleteschema"></a>
+
+### EditorApi.setAutocompleteSchema property
+
+<b>Signature:</b>
+
+```typescript
+setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
+```
+
+<br>
+
+<a name="setautocompletetriggerstrings"></a>
+
+### EditorApi.setAutocompleteTriggerStrings property
+
+<b>Signature:</b>
+
+```typescript
+setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
+```
+
+<br>
+
+<a name="sethistory"></a>
+
+### EditorApi.setHistory property
+
+<b>Signature:</b>
+
+```typescript
+setHistory: (history: boolean) => void;
+```
+
+<br>
+
+<a name="setlinenumberformatter"></a>
+
+### EditorApi.setLineNumberFormatter property
+
+<b>Signature:</b>
+
+```typescript
+setLineNumberFormatter: (
+    lineNumberFormatter: (lineNumber: number, lineCount: number) => string
+  ) => void;
+```
+
+<br>
+
+<a name="setlinenumbers"></a>
+
+### EditorApi.setLineNumbers property
+
+<b>Signature:</b>
+
+```typescript
+setLineNumbers: (lineNumbers: boolean) => void;
+```
+
+<br>
+
+<a name="setlinewrapping"></a>
+
+### EditorApi.setLineWrapping property
+
+<b>Signature:</b>
+
+```typescript
+setLineWrapping: (lineWrapping: boolean) => void;
+```
+
+<br>
+
+<a name="setlint"></a>
+
+### EditorApi.setLint property
+
+<b>Signature:</b>
+
+```typescript
+setLint: (lint: boolean) => void;
+```
+
+<br>
+
+<a name="setplaceholder"></a>
+
+### EditorApi.setPlaceholder property
+
+<b>Signature:</b>
+
+```typescript
+setPlaceholder: (placeholder: string | undefined) => void;
+```
+
+<br>
+
+<a name="setposition"></a>
+
+### EditorApi.setPosition property
+
+<b>Signature:</b>
+
+```typescript
+setPosition: (position: PositionAny) => void;
 ```
 
 <br>
@@ -88,6 +506,54 @@ setPostExtensions: (preExtensions: Extension[]) => void;
 
 ```typescript
 setPreExtensions: (preExtensions: Extension[]) => void;
+```
+
+<br>
+
+<a name="setreadonly"></a>
+
+### EditorApi.setReadOnly property
+
+<b>Signature:</b>
+
+```typescript
+setReadOnly: (readOnly: boolean) => void;
+```
+
+<br>
+
+<a name="setreadonlycursor"></a>
+
+### EditorApi.setReadOnlyCursor property
+
+<b>Signature:</b>
+
+```typescript
+setReadOnlyCursor: (readOnlyCursor: boolean) => void;
+```
+
+<br>
+
+<a name="settheme"></a>
+
+### EditorApi.setTheme property
+
+<b>Signature:</b>
+
+```typescript
+setTheme: (theme: Theme) => void;
+```
+
+<br>
+
+<a name="setvalue"></a>
+
+### EditorApi.setValue property
+
+<b>Signature:</b>
+
+```typescript
+setValue: (value: string, parseOnSetValue?: boolean) => void;
 ```
 
 ---

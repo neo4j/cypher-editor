@@ -405,7 +405,7 @@
                 {
                   "kind": "Reference",
                   "text": "AutofocusProp",
-                  "canonicalReference": "cypher-codemirror-base!AutofocusProp:type"
+                  "canonicalReference": "cypher-codemirror!AutofocusProp:type"
                 },
                 {
                   "kind": "Content",
@@ -630,7 +630,7 @@
                 {
                   "kind": "Reference",
                   "text": "AutocompleteOption",
-                  "canonicalReference": "cypher-codemirror-base!AutocompleteOption:interface"
+                  "canonicalReference": "cypher-codemirror!AutocompleteOption:interface"
                 },
                 {
                   "kind": "Content",
@@ -801,7 +801,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror-base!PositionObject:type"
+                  "canonicalReference": "cypher-codemirror!PositionObject:type"
                 },
                 {
                   "kind": "Content",
@@ -837,7 +837,7 @@
                 {
                   "kind": "Reference",
                   "text": "ScrollInfo",
-                  "canonicalReference": "cypher-codemirror-base!ScrollInfo:interface"
+                  "canonicalReference": "cypher-codemirror!ScrollInfo:interface"
                 },
                 {
                   "kind": "Content",
@@ -959,7 +959,7 @@
                 {
                   "kind": "Reference",
                   "text": "PositionAny",
-                  "canonicalReference": "cypher-codemirror-base!PositionAny:type"
+                  "canonicalReference": "cypher-codemirror!PositionAny:type"
                 },
                 {
                   "kind": "Content",
@@ -1041,7 +1041,7 @@
                 {
                   "kind": "Reference",
                   "text": "Theme",
-                  "canonicalReference": "cypher-codemirror-base!Theme:type"
+                  "canonicalReference": "cypher-codemirror!Theme:type"
                 },
                 {
                   "kind": "Content",

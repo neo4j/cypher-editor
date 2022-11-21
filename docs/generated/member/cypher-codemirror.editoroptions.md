@@ -9,14 +9,31 @@ These are the options for the [createCypherEditor](./cypher-codemirror.createcyp
 <b>Signature:</b>
 
 ```typescript
-export interface EditorOptions extends BaseEditorOptions 
+export interface EditorOptions 
 ```
-<b>Extends:</b> [BaseEditorOptions](./cypher-codemirror-base.baseeditoroptions.md)
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [autocomplete?](./cypher-codemirror.editoroptions.autocomplete.md) | boolean | <i>(Optional)</i> |
+|  [autocompleteCloseOnBlur?](./cypher-codemirror.editoroptions.autocompletecloseonblur.md) | boolean | <i>(Optional)</i> |
+|  [autocompleteOpen?](./cypher-codemirror.editoroptions.autocompleteopen.md) | boolean | <i>(Optional)</i> |
+|  [autocompleteSchema?](./cypher-codemirror.editoroptions.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
+|  [autocompleteTriggerStrings?](./cypher-codemirror.editoroptions.autocompletetriggerstrings.md) | string\[\] | <i>(Optional)</i> |
+|  [autofocus?](./cypher-codemirror.editoroptions.autofocus.md) | boolean | <i>(Optional)</i> |
+|  [history?](./cypher-codemirror.editoroptions.history.md) | boolean | <i>(Optional)</i> |
+|  [lineNumberFormatter?](./cypher-codemirror.editoroptions.linenumberformatter.md) | (lineNumber: number, lineCount: number) =&gt; string | <i>(Optional)</i> |
+|  [lineNumbers?](./cypher-codemirror.editoroptions.linenumbers.md) | boolean | <i>(Optional)</i> |
+|  [lineWrapping?](./cypher-codemirror.editoroptions.linewrapping.md) | boolean | <i>(Optional)</i> |
+|  [lint?](./cypher-codemirror.editoroptions.lint.md) | boolean | <i>(Optional)</i> |
+|  [parseOnSetValue?](./cypher-codemirror.editoroptions.parseonsetvalue.md) | boolean | <i>(Optional)</i> |
+|  [placeholder?](./cypher-codemirror.editoroptions.placeholder.md) | string | <i>(Optional)</i> |
+|  [position?](./cypher-codemirror.editoroptions.position.md) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
 |  [postExtensions?](./cypher-codemirror.editoroptions.postextensions.md) | Extension\[\] | <i>(Optional)</i> |
 |  [preExtensions?](./cypher-codemirror.editoroptions.preextensions.md) | Extension\[\] | <i>(Optional)</i> |
+|  [readOnly?](./cypher-codemirror.editoroptions.readonly.md) | boolean | <i>(Optional)</i> |
+|  [readOnlyCursor?](./cypher-codemirror.editoroptions.readonlycursor.md) | boolean | <i>(Optional)</i> |
+|  [theme?](./cypher-codemirror.editoroptions.theme.md) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
+|  [value?](./cypher-codemirror.editoroptions.value.md) | string | <i>(Optional)</i> |
 

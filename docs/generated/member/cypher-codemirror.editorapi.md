@@ -9,18 +9,52 @@ This is the EditorApi which wraps all of the interaction with the cypher editor
 <b>Signature:</b>
 
 ```typescript
-export interface EditorApi
-  extends Omit<BaseEditorApi, "onValueChanged" | "offValueChanged"> 
+export interface EditorApi 
 ```
-<b>Extends:</b> Omit&lt;[BaseEditorApi](./cypher-codemirror-base.baseeditorapi.md)<!-- -->, "onValueChanged" \| "offValueChanged"&gt;
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [codemirror](./cypher-codemirror.editorapi.codemirror.md) | EditorView |  |
-|  [offValueChanged](./cypher-codemirror.editorapi.offvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void |  |
-|  [onValueChanged](./cypher-codemirror.editorapi.onvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void | ON VALUE CHANGED |
-|  [setPostExtensions](./cypher-codemirror.editorapi.setpostextensions.md) | (preExtensions: Extension\[\]) =&gt; void |  |
-|  [setPreExtensions](./cypher-codemirror.editorapi.setpreextensions.md) | (preExtensions: Extension\[\]) =&gt; void |  |
+|  Property | Type |
+|  --- | --- |
+|  [clearHistory](./cypher-codemirror.editorapi.clearhistory.md) | () =&gt; void |
+|  [codemirror](./cypher-codemirror.editorapi.codemirror.md) | EditorView |
+|  [destroy](./cypher-codemirror.editorapi.destroy.md) | () =&gt; void |
+|  [editorSupport](./cypher-codemirror.editorapi.editorsupport.md) | [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) |
+|  [focus](./cypher-codemirror.editorapi.focus.md) | () =&gt; void |
+|  [getLineCount](./cypher-codemirror.editorapi.getlinecount.md) | () =&gt; void |
+|  [getPosition](./cypher-codemirror.editorapi.getposition.md) | () =&gt; [PositionObject](./cypher-codemirror.positionobject.md) |
+|  [getPositionForValue](./cypher-codemirror.editorapi.getpositionforvalue.md) | (positionValue: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; [PositionObject](./cypher-codemirror.positionobject.md) \| null |
+|  [offAutocompleteChanged](./cypher-codemirror.editorapi.offautocompletechanged.md) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; void |
+|  [offFocusChanged](./cypher-codemirror.editorapi.offfocuschanged.md) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; void |
+|  [offKeyDown](./cypher-codemirror.editorapi.offkeydown.md) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; void |
+|  [offLineNumberClick](./cypher-codemirror.editorapi.offlinenumberclick.md) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; void |
+|  [offPositionChanged](./cypher-codemirror.editorapi.offpositionchanged.md) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; void |
+|  [offScrollChanged](./cypher-codemirror.editorapi.offscrollchanged.md) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; void |
+|  [offValueChanged](./cypher-codemirror.editorapi.offvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void |
+|  [onAutocompleteChanged](./cypher-codemirror.editorapi.onautocompletechanged.md) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onFocusChanged](./cypher-codemirror.editorapi.onfocuschanged.md) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onKeyDown](./cypher-codemirror.editorapi.onkeydown.md) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onLineNumberClick](./cypher-codemirror.editorapi.onlinenumberclick.md) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onPositionChanged](./cypher-codemirror.editorapi.onpositionchanged.md) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onScrollChanged](./cypher-codemirror.editorapi.onscrollchanged.md) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [onValueChanged](./cypher-codemirror.editorapi.onvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void |
+|  [selectAutocompleteOption](./cypher-codemirror.editorapi.selectautocompleteoption.md) | (autocompleteOptionIndex: number) =&gt; void |
+|  [setAutocomplete](./cypher-codemirror.editorapi.setautocomplete.md) | (autocomplete: boolean) =&gt; void |
+|  [setAutocompleteCloseOnBlur](./cypher-codemirror.editorapi.setautocompletecloseonblur.md) | (autocompleteCloseOnBlur: boolean) =&gt; void |
+|  [setAutocompleteOpen](./cypher-codemirror.editorapi.setautocompleteopen.md) | (autocompleteOpen: boolean) =&gt; void |
+|  [setAutocompleteSchema](./cypher-codemirror.editorapi.setautocompleteschema.md) | (autocompleteSchema: [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md)<!-- -->) =&gt; void |
+|  [setAutocompleteTriggerStrings](./cypher-codemirror.editorapi.setautocompletetriggerstrings.md) | (autocompleteTriggerStrings: string\[\]) =&gt; void |
+|  [setHistory](./cypher-codemirror.editorapi.sethistory.md) | (history: boolean) =&gt; void |
+|  [setLineNumberFormatter](./cypher-codemirror.editorapi.setlinenumberformatter.md) | ( lineNumberFormatter: (lineNumber: number, lineCount: number) =&gt; string ) =&gt; void |
+|  [setLineNumbers](./cypher-codemirror.editorapi.setlinenumbers.md) | (lineNumbers: boolean) =&gt; void |
+|  [setLineWrapping](./cypher-codemirror.editorapi.setlinewrapping.md) | (lineWrapping: boolean) =&gt; void |
+|  [setLint](./cypher-codemirror.editorapi.setlint.md) | (lint: boolean) =&gt; void |
+|  [setPlaceholder](./cypher-codemirror.editorapi.setplaceholder.md) | (placeholder: string \| undefined) =&gt; void |
+|  [setPosition](./cypher-codemirror.editorapi.setposition.md) | (position: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; void |
+|  [setPostExtensions](./cypher-codemirror.editorapi.setpostextensions.md) | (preExtensions: Extension\[\]) =&gt; void |
+|  [setPreExtensions](./cypher-codemirror.editorapi.setpreextensions.md) | (preExtensions: Extension\[\]) =&gt; void |
+|  [setReadOnly](./cypher-codemirror.editorapi.setreadonly.md) | (readOnly: boolean) =&gt; void |
+|  [setReadOnlyCursor](./cypher-codemirror.editorapi.setreadonlycursor.md) | (readOnlyCursor: boolean) =&gt; void |
+|  [setTheme](./cypher-codemirror.editorapi.settheme.md) | (theme: [Theme](./cypher-codemirror.theme.md)<!-- -->) =&gt; void |
+|  [setValue](./cypher-codemirror.editorapi.setvalue.md) | (value: string, parseOnSetValue?: boolean) =&gt; void |
 

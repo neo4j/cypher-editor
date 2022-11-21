@@ -14,12 +14,25 @@
 
 |  Interface | Description |
 |  --- | --- |
+|  [AutocompleteOption](./cypher-codemirror.autocompleteoption.md) |  |
 |  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi which wraps all of the interaction with the cypher editor |
 |  [EditorOptions](./cypher-codemirror.editoroptions.md) | These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function |
+|  [ScrollInfo](./cypher-codemirror.scrollinfo.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |  |
+|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) |  |
+|  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |  |
+|  [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  |
+|  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  |
+|  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) |  |
+|  [PositionAny](./cypher-codemirror.positionany.md) |  |
+|  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |  |
+|  [PositionObject](./cypher-codemirror.positionobject.md) |  |
+|  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |  |
+|  [Theme](./cypher-codemirror.theme.md) |  |
 |  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | This listener is fired when the value of the cypher editor is changed |
 

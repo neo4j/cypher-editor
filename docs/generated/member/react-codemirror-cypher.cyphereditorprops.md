@@ -20,7 +20,7 @@ export interface CypherEditorProps
 |  [autocompleteSchema?](./react-codemirror-cypher.cyphereditorprops.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
 |  [autocompleteTriggerStrings?](./react-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings.md) | string\[\] | <i>(Optional)</i> |
 |  [autofocus?](./react-codemirror-cypher.cyphereditorprops.autofocus.md) | boolean | <i>(Optional)</i> |
-|  [autofocusProps?](./react-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror-base.autofocusprop.md)<!-- -->\[\] | <i>(Optional)</i> |
+|  [autofocusProps?](./react-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror.autofocusprop.md)<!-- -->\[\] | <i>(Optional)</i> |
 |  [className?](./react-codemirror-cypher.cyphereditorprops.classname.md) | string | <i>(Optional)</i> |
 |  [focusedClassName?](./react-codemirror-cypher.cyphereditorprops.focusedclassname.md) | string | <i>(Optional)</i> |
 |  [history?](./react-codemirror-cypher.cyphereditorprops.history.md) | boolean | <i>(Optional)</i> |
@@ -28,19 +28,19 @@ export interface CypherEditorProps
 |  [lineNumbers?](./react-codemirror-cypher.cyphereditorprops.linenumbers.md) | boolean | <i>(Optional)</i> |
 |  [lineWrapping?](./react-codemirror-cypher.cyphereditorprops.linewrapping.md) | boolean | <i>(Optional)</i> |
 |  [lint?](./react-codemirror-cypher.cyphereditorprops.lint.md) | boolean | <i>(Optional)</i> |
-|  [onAutocompleteChanged?](./react-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror-base.autocompleteoption.md)<!-- -->\[\] ) =&gt; void | <i>(Optional)</i> |
+|  [onAutocompleteChanged?](./react-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] ) =&gt; void | <i>(Optional)</i> |
 |  [onEditorCreated?](./react-codemirror-cypher.cyphereditorprops.oneditorcreated.md) | (editor: [EditorApi](./cypher-codemirror.editorapi.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
 |  [onFocusChanged?](./react-codemirror-cypher.cyphereditorprops.onfocuschanged.md) | (focused: boolean) =&gt; void | <i>(Optional)</i> |
 |  [onKeyDown?](./react-codemirror-cypher.cyphereditorprops.onkeydown.md) | (event: KeyboardEvent) =&gt; void | <i>(Optional)</i> |
 |  [onLineNumberClick?](./react-codemirror-cypher.cyphereditorprops.onlinenumberclick.md) | (lineNumber: number, event: Event) =&gt; void | <i>(Optional)</i> |
-|  [onPositionChanged?](./react-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | (position: [PositionObject](./cypher-codemirror-base.positionobject.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
-|  [onScrollChanged?](./react-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | (scrollInfo: [ScrollInfo](./cypher-codemirror-base.scrollinfo.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
+|  [onPositionChanged?](./react-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | (position: [PositionObject](./cypher-codemirror.positionobject.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
+|  [onScrollChanged?](./react-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | (scrollInfo: [ScrollInfo](./cypher-codemirror.scrollinfo.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
 |  [onValueChanged?](./react-codemirror-cypher.cyphereditorprops.onvaluechanged.md) | (value: string, changes: ChangeSet) =&gt; void | <i>(Optional)</i> |
 |  [parseOnSetValue?](./react-codemirror-cypher.cyphereditorprops.parseonsetvalue.md) | boolean | <i>(Optional)</i> |
 |  [placeholder?](./react-codemirror-cypher.cyphereditorprops.placeholder.md) | string | <i>(Optional)</i> |
-|  [position?](./react-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror-base.positionany.md) | <i>(Optional)</i> |
+|  [position?](./react-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
 |  [readOnly?](./react-codemirror-cypher.cyphereditorprops.readonly.md) | boolean | <i>(Optional)</i> |
 |  [readOnlyCursor?](./react-codemirror-cypher.cyphereditorprops.readonlycursor.md) | boolean | <i>(Optional)</i> |
-|  [theme?](./react-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror-base.theme.md) | <i>(Optional)</i> |
+|  [theme?](./react-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
 |  [value?](./react-codemirror-cypher.cyphereditorprops.value.md) | string | <i>(Optional)</i> |
 

@@ -31,7 +31,7 @@ const props = { autocomplete: false };
 |  [autocompleteSchema?](./svelte-codemirror-cypher.cyphereditorprops.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <code>undefined</code> | <i>(Optional)</i> The autocomplete schema to use when showing autocomplete suggestions. |
 |  [autocompleteTriggerStrings?](./svelte-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings.md) | string\[\] |  | <i>(Optional)</i> |
 |  [autofocus?](./svelte-codemirror-cypher.cyphereditorprops.autofocus.md) | boolean |  | <i>(Optional)</i> |
-|  [autofocusProps?](./svelte-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror-base.autofocusprop.md)<!-- -->\[\] |  | <i>(Optional)</i> |
+|  [autofocusProps?](./svelte-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror.autofocusprop.md)<!-- -->\[\] |  | <i>(Optional)</i> |
 |  [className?](./svelte-codemirror-cypher.cyphereditorprops.classname.md) | string |  | <i>(Optional)</i> |
 |  [focusedClassName?](./svelte-codemirror-cypher.cyphereditorprops.focusedclassname.md) | string |  | <i>(Optional)</i> |
 |  [history?](./svelte-codemirror-cypher.cyphereditorprops.history.md) | boolean |  | <i>(Optional)</i> |
@@ -39,19 +39,19 @@ const props = { autocomplete: false };
 |  [lineNumbers?](./svelte-codemirror-cypher.cyphereditorprops.linenumbers.md) | boolean |  | <i>(Optional)</i> |
 |  [lineWrapping?](./svelte-codemirror-cypher.cyphereditorprops.linewrapping.md) | boolean |  | <i>(Optional)</i> |
 |  [lint?](./svelte-codemirror-cypher.cyphereditorprops.lint.md) | boolean |  | <i>(Optional)</i> |
-|  [onAutocompleteChanged?](./svelte-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror-base.autocompleteoption.md)<!-- -->\[\] ) =&gt; void |  | <i>(Optional)</i> |
+|  [onAutocompleteChanged?](./svelte-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] ) =&gt; void |  | <i>(Optional)</i> |
 |  [onEditorCreated?](./svelte-codemirror-cypher.cyphereditorprops.oneditorcreated.md) | (editor: [EditorApi](./cypher-codemirror.editorapi.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
 |  [onFocusChanged?](./svelte-codemirror-cypher.cyphereditorprops.onfocuschanged.md) | (focused: boolean) =&gt; void |  | <i>(Optional)</i> |
 |  [onKeyDown?](./svelte-codemirror-cypher.cyphereditorprops.onkeydown.md) | (event: KeyboardEvent) =&gt; void |  | <i>(Optional)</i> |
 |  [onLineNumberClick?](./svelte-codemirror-cypher.cyphereditorprops.onlinenumberclick.md) | (lineNumber: number, event: Event) =&gt; void |  | <i>(Optional)</i> |
-|  [onPositionChanged?](./svelte-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | (position: [PositionObject](./cypher-codemirror-base.positionobject.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onScrollChanged?](./svelte-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | (scrollInfo: [ScrollInfo](./cypher-codemirror-base.scrollinfo.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
+|  [onPositionChanged?](./svelte-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | (position: [PositionObject](./cypher-codemirror.positionobject.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
+|  [onScrollChanged?](./svelte-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | (scrollInfo: [ScrollInfo](./cypher-codemirror.scrollinfo.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
 |  [onValueChanged?](./svelte-codemirror-cypher.cyphereditorprops.onvaluechanged.md) | (value: string, changes: ChangeSet) =&gt; void |  | <i>(Optional)</i> |
 |  [parseOnSetValue?](./svelte-codemirror-cypher.cyphereditorprops.parseonsetvalue.md) | boolean |  | <i>(Optional)</i> |
 |  [placeholder?](./svelte-codemirror-cypher.cyphereditorprops.placeholder.md) | string |  | <i>(Optional)</i> |
-|  [position?](./svelte-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror-base.positionany.md) |  | <i>(Optional)</i> |
+|  [position?](./svelte-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror.positionany.md) |  | <i>(Optional)</i> |
 |  [readOnly?](./svelte-codemirror-cypher.cyphereditorprops.readonly.md) | boolean |  | <i>(Optional)</i> |
 |  [readOnlyCursor?](./svelte-codemirror-cypher.cyphereditorprops.readonlycursor.md) | boolean |  | <i>(Optional)</i> |
-|  [theme?](./svelte-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror-base.theme.md) |  | <i>(Optional)</i> |
+|  [theme?](./svelte-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror.theme.md) |  | <i>(Optional)</i> |
 |  [value?](./svelte-codemirror-cypher.cyphereditorprops.value.md) | string |  | <i>(Optional)</i> |
 

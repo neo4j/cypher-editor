@@ -182,7 +182,7 @@
               "text": "export interface ConsoleCommand "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "ConsoleCommand",
           "preserveMemberOrder": false,
@@ -286,7 +286,7 @@
               "text": "export class CypherEditorSupport "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "CypherEditorSupport",
           "preserveMemberOrder": false,
@@ -537,7 +537,7 @@
               "text": "export interface EditorSupportCompletionItem "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "EditorSupportCompletionItem",
           "preserveMemberOrder": false,
@@ -663,7 +663,7 @@
               "text": "export interface EditorSupportPosition "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "EditorSupportPosition",
           "preserveMemberOrder": false,
@@ -735,7 +735,7 @@
               "text": "export interface EditorSupportSchema "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "EditorSupportSchema",
           "preserveMemberOrder": false,
@@ -957,7 +957,7 @@
               "text": "export interface FunctionSchema "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "FunctionSchema",
           "preserveMemberOrder": false,
@@ -1029,7 +1029,7 @@
               "text": "export interface ProcedureSchema "
             }
           ],
-          "fileUrlPath": "src/index.d.ts",
+          "fileUrlPath": "src/cypher-editor-support.d.ts",
           "releaseTag": "Public",
           "name": "ProcedureSchema",
           "preserveMemberOrder": false,

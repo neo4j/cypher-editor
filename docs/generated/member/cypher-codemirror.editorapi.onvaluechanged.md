@@ -4,8 +4,6 @@
 
 ## EditorApi.onValueChanged property
 
-ON VALUE CHANGED
-
 <b>Signature:</b>
 
 ```typescript

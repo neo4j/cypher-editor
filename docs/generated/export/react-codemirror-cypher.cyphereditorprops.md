@@ -24,7 +24,7 @@ export interface CypherEditorProps
 |  [autocompleteSchema?](#autocompleteschema) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <i>(Optional)</i> |
 |  [autocompleteTriggerStrings?](#autocompletetriggerstrings) | string\[\] | <i>(Optional)</i> |
 |  [autofocus?](#autofocus) | boolean | <i>(Optional)</i> |
-|  [autofocusProps?](#autofocusprops) | [AutofocusProp](./cypher-codemirror-base.autofocusprop.md)<!-- -->\[\] | <i>(Optional)</i> |
+|  [autofocusProps?](#autofocusprops) | [AutofocusProp](./cypher-codemirror.autofocusprop.md)<!-- -->\[\] | <i>(Optional)</i> |
 |  [className?](#classname) | string | <i>(Optional)</i> |
 |  [focusedClassName?](#focusedclassname) | string | <i>(Optional)</i> |
 |  [history?](#history) | boolean | <i>(Optional)</i> |
@@ -32,20 +32,20 @@ export interface CypherEditorProps
 |  [lineNumbers?](#linenumbers) | boolean | <i>(Optional)</i> |
 |  [lineWrapping?](#linewrapping) | boolean | <i>(Optional)</i> |
 |  [lint?](#lint) | boolean | <i>(Optional)</i> |
-|  [onAutocompleteChanged?](#onautocompletechanged) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror-base.autocompleteoption.md)<!-- -->\[\] ) =&gt; void | <i>(Optional)</i> |
+|  [onAutocompleteChanged?](#onautocompletechanged) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] ) =&gt; void | <i>(Optional)</i> |
 |  [onEditorCreated?](#oneditorcreated) | (editor: [EditorApi](./cypher-codemirror.editorapi.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
 |  [onFocusChanged?](#onfocuschanged) | (focused: boolean) =&gt; void | <i>(Optional)</i> |
 |  [onKeyDown?](#onkeydown) | (event: KeyboardEvent) =&gt; void | <i>(Optional)</i> |
 |  [onLineNumberClick?](#onlinenumberclick) | (lineNumber: number, event: Event) =&gt; void | <i>(Optional)</i> |
-|  [onPositionChanged?](#onpositionchanged) | (position: [PositionObject](./cypher-codemirror-base.positionobject.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
-|  [onScrollChanged?](#onscrollchanged) | (scrollInfo: [ScrollInfo](./cypher-codemirror-base.scrollinfo.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
+|  [onPositionChanged?](#onpositionchanged) | (position: [PositionObject](./cypher-codemirror.positionobject.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
+|  [onScrollChanged?](#onscrollchanged) | (scrollInfo: [ScrollInfo](./cypher-codemirror.scrollinfo.md)<!-- -->) =&gt; void | <i>(Optional)</i> |
 |  [onValueChanged?](#onvaluechanged) | (value: string, changes: ChangeSet) =&gt; void | <i>(Optional)</i> |
 |  [parseOnSetValue?](#parseonsetvalue) | boolean | <i>(Optional)</i> |
 |  [placeholder?](#placeholder) | string | <i>(Optional)</i> |
-|  [position?](#position) | [PositionAny](./cypher-codemirror-base.positionany.md) | <i>(Optional)</i> |
+|  [position?](#position) | [PositionAny](./cypher-codemirror.positionany.md) | <i>(Optional)</i> |
 |  [readOnly?](#readonly) | boolean | <i>(Optional)</i> |
 |  [readOnlyCursor?](#readonlycursor) | boolean | <i>(Optional)</i> |
-|  [theme?](#theme) | [Theme](./cypher-codemirror-base.theme.md) | <i>(Optional)</i> |
+|  [theme?](#theme) | [Theme](./cypher-codemirror.theme.md) | <i>(Optional)</i> |
 |  [value?](#value) | string | <i>(Optional)</i> |
 
 <br>
