@@ -66,3 +66,17 @@ export class CypherEditorSupport {
   setSchema(schema: EditorSupportSchema): void;
   update(input: string): void;
 }
+
+export type CompletionType =
+  | "keyword"
+  | "label"
+  | "variable"
+  | "parameter"
+  | "propertyKey"
+  | "relationshipType"
+  | "function"
+  | "procedure"
+  | "consoleCommand"
+  | "consoleCommandSubcommand"
+  | "procedureOutput"
+  | "noop";
