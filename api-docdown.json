@@ -20,5 +20,5 @@
   },
 
   "includePackageNames": [],
-  "excludePackageNames": ["cypher-antlr4*", "cypher-extract-statements", "demo-*"]
+  "excludePackageNames": ["cypher-antlr4*", "cypher-extract-statements", "demo-*", "*-base", "*codemirror5*"]
 }
