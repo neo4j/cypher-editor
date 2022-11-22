@@ -4,7 +4,7 @@
 
 ## CypherEditorProps.autocompleteSchema property
 
-The autocomplete schema to use when showing autocomplete suggestions.
+The schema to use when showing autocomplete suggestions (and syntax highlighting)
 
 <b>Signature:</b>
 

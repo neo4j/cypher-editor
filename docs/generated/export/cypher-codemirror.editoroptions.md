@@ -27,7 +27,7 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](#autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
-|  [lineNumberFormatter?](#linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumberFormatter?](#linenumberformatter) | [LineNumberFormatter](./cypher-codemirror.linenumberformatter.md) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
 |  [lint?](#lint) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
@@ -178,7 +178,7 @@ The formatter for the line numbers of the editor
 <b>Signature:</b>
 
 ```typescript
-lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
+lineNumberFormatter?: LineNumberFormatter;
 ```
 
 #### Default Value:

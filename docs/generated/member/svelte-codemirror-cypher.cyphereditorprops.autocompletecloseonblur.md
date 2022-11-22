@@ -4,7 +4,7 @@
 
 ## CypherEditorProps.autocompleteCloseOnBlur property
 
-Whether autocomplete is closed when the editor loses focus.
+Whether the autocomplete auto closes whenever the editor loses focus
 
 <b>Signature:</b>
 

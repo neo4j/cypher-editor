@@ -23,7 +23,7 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](./cypher-codemirror.editoroptions.autocompletetriggerstrings.md) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](./cypher-codemirror.editoroptions.autofocus.md) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](./cypher-codemirror.editoroptions.history.md) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
-|  [lineNumberFormatter?](./cypher-codemirror.editoroptions.linenumberformatter.md) | (lineNumber: number, lineCount: number) =&gt; string | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumberFormatter?](./cypher-codemirror.editoroptions.linenumberformatter.md) | [LineNumberFormatter](./cypher-codemirror.linenumberformatter.md) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](./cypher-codemirror.editoroptions.linenumbers.md) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](./cypher-codemirror.editoroptions.linewrapping.md) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
 |  [lint?](./cypher-codemirror.editoroptions.lint.md) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |

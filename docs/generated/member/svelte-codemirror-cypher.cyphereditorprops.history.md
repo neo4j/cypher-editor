@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.history property
 
+Whether the editor maintains an undo/redo history
+
 <b>Signature:</b>
 
 ```typescript
 history?: boolean;
 ```
+
+## Default Value
+
+true
+

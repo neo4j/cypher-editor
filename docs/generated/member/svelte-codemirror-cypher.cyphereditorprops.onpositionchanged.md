@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onPositionChanged property
 
+A listener for when the editor cursor position changes
+
 <b>Signature:</b>
 
 ```typescript
-onPositionChanged?: (position: PositionObject) => void;
+onPositionChanged?: PositionChangedListener;
 ```

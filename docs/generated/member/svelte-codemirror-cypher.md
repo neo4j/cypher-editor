@@ -14,5 +14,5 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [CypherEditorProps](./svelte-codemirror-cypher.cyphereditorprops.md) | Docs for CypherEditorProps. |
+|  [CypherEditorProps](./svelte-codemirror-cypher.cyphereditorprops.md) | Interface for Svelte Cypher Editor component props |
 

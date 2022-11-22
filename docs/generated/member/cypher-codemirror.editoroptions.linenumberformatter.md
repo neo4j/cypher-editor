@@ -9,7 +9,7 @@ The formatter for the line numbers of the editor
 <b>Signature:</b>
 
 ```typescript
-lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
+lineNumberFormatter?: LineNumberFormatter;
 ```
 
 ## Default Value

@@ -4,7 +4,7 @@
 
 ## CypherEditorProps interface
 
-Docs for CypherEditorProps.
+Interface for Svelte Cypher Editor component props
 
 <b>Signature:</b>
 
@@ -12,46 +12,37 @@ Docs for CypherEditorProps.
 export interface CypherEditorProps 
 ```
 
-## Example
-
-Here's some example code using the props:
-
-```ts
-const props = { autocomplete: false };
-<CypherEditor {...props} />
-```
-
 ## Properties
 
 |  Property | Type | Default | Description |
 |  --- | --- | --- | --- |
-|  [autocomplete?](./svelte-codemirror-cypher.cyphereditorprops.autocomplete.md) | boolean | <code>true</code> | <i>(Optional)</i> Whether autocomplete is enabled. |
-|  [autocompleteCloseOnBlur?](./svelte-codemirror-cypher.cyphereditorprops.autocompletecloseonblur.md) | boolean | <code>true</code> | <i>(Optional)</i> Whether autocomplete is closed when the editor loses focus. |
-|  [autocompleteOpen?](./svelte-codemirror-cypher.cyphereditorprops.autocompleteopen.md) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete window is open. Changing this can be used to manually control the autocomplete open state. |
-|  [autocompleteSchema?](./svelte-codemirror-cypher.cyphereditorprops.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <code>undefined</code> | <i>(Optional)</i> The autocomplete schema to use when showing autocomplete suggestions. |
-|  [autocompleteTriggerStrings?](./svelte-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings.md) | string\[\] |  | <i>(Optional)</i> |
-|  [autofocus?](./svelte-codemirror-cypher.cyphereditorprops.autofocus.md) | boolean |  | <i>(Optional)</i> |
-|  [autofocusProps?](./svelte-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror.autofocusprop.md)<!-- -->\[\] |  | <i>(Optional)</i> |
-|  [className?](./svelte-codemirror-cypher.cyphereditorprops.classname.md) | string |  | <i>(Optional)</i> |
-|  [focusedClassName?](./svelte-codemirror-cypher.cyphereditorprops.focusedclassname.md) | string |  | <i>(Optional)</i> |
-|  [history?](./svelte-codemirror-cypher.cyphereditorprops.history.md) | boolean |  | <i>(Optional)</i> |
-|  [lineNumberFormatter?](./svelte-codemirror-cypher.cyphereditorprops.linenumberformatter.md) | (lineNumber: number, lineCount: number) =&gt; string |  | <i>(Optional)</i> |
-|  [lineNumbers?](./svelte-codemirror-cypher.cyphereditorprops.linenumbers.md) | boolean |  | <i>(Optional)</i> |
-|  [lineWrapping?](./svelte-codemirror-cypher.cyphereditorprops.linewrapping.md) | boolean |  | <i>(Optional)</i> |
-|  [lint?](./svelte-codemirror-cypher.cyphereditorprops.lint.md) | boolean |  | <i>(Optional)</i> |
-|  [onAutocompleteChanged?](./svelte-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | ( open: boolean, from: number, options: [AutocompleteOption](./cypher-codemirror.autocompleteoption.md)<!-- -->\[\] ) =&gt; void |  | <i>(Optional)</i> |
-|  [onEditorCreated?](./svelte-codemirror-cypher.cyphereditorprops.oneditorcreated.md) | (editor: [EditorApi](./cypher-codemirror.editorapi.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onFocusChanged?](./svelte-codemirror-cypher.cyphereditorprops.onfocuschanged.md) | (focused: boolean) =&gt; void |  | <i>(Optional)</i> |
-|  [onKeyDown?](./svelte-codemirror-cypher.cyphereditorprops.onkeydown.md) | (event: KeyboardEvent) =&gt; void |  | <i>(Optional)</i> |
-|  [onLineNumberClick?](./svelte-codemirror-cypher.cyphereditorprops.onlinenumberclick.md) | (lineNumber: number, event: Event) =&gt; void |  | <i>(Optional)</i> |
-|  [onPositionChanged?](./svelte-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | (position: [PositionObject](./cypher-codemirror.positionobject.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onScrollChanged?](./svelte-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | (scrollInfo: [ScrollInfo](./cypher-codemirror.scrollinfo.md)<!-- -->) =&gt; void |  | <i>(Optional)</i> |
-|  [onValueChanged?](./svelte-codemirror-cypher.cyphereditorprops.onvaluechanged.md) | (value: string, changes: ChangeSet) =&gt; void |  | <i>(Optional)</i> |
-|  [parseOnSetValue?](./svelte-codemirror-cypher.cyphereditorprops.parseonsetvalue.md) | boolean |  | <i>(Optional)</i> |
-|  [placeholder?](./svelte-codemirror-cypher.cyphereditorprops.placeholder.md) | string |  | <i>(Optional)</i> |
-|  [position?](./svelte-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror.positionany.md) |  | <i>(Optional)</i> |
-|  [readOnly?](./svelte-codemirror-cypher.cyphereditorprops.readonly.md) | boolean |  | <i>(Optional)</i> |
-|  [readOnlyCursor?](./svelte-codemirror-cypher.cyphereditorprops.readonlycursor.md) | boolean |  | <i>(Optional)</i> |
-|  [theme?](./svelte-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror.theme.md) |  | <i>(Optional)</i> |
-|  [value?](./svelte-codemirror-cypher.cyphereditorprops.value.md) | string |  | <i>(Optional)</i> |
+|  [autocomplete?](./svelte-codemirror-cypher.cyphereditorprops.autocomplete.md) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete feature is enabled |
+|  [autocompleteCloseOnBlur?](./svelte-codemirror-cypher.cyphereditorprops.autocompletecloseonblur.md) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
+|  [autocompleteOpen?](./svelte-codemirror-cypher.cyphereditorprops.autocompleteopen.md) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete window is open |
+|  [autocompleteSchema?](./svelte-codemirror-cypher.cyphereditorprops.autocompleteschema.md) | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | <code>undefined</code> | <i>(Optional)</i> The schema to use when showing autocomplete suggestions (and syntax highlighting) |
+|  [autocompleteTriggerStrings?](./svelte-codemirror-cypher.cyphereditorprops.autocompletetriggerstrings.md) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
+|  [autofocus?](./svelte-codemirror-cypher.cyphereditorprops.autofocus.md) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
+|  [autofocusProps?](./svelte-codemirror-cypher.cyphereditorprops.autofocusprops.md) | [AutofocusProp](./cypher-codemirror.autofocusprop.md)<!-- -->\[\] | \["position", "readOnly", "value"\] | <i>(Optional)</i> setting any of these props will trigger the editor gaining focus |
+|  [className?](./svelte-codemirror-cypher.cyphereditorprops.classname.md) | string | undefined | <i>(Optional)</i> A css class name to be added to the root editor dom element |
+|  [focusedClassName?](./svelte-codemirror-cypher.cyphereditorprops.focusedclassname.md) | string | undefined | <i>(Optional)</i> A css class name to be added to the root editor dom element when it is focused |
+|  [history?](./svelte-codemirror-cypher.cyphereditorprops.history.md) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [lineNumberFormatter?](./svelte-codemirror-cypher.cyphereditorprops.linenumberformatter.md) | [LineNumberFormatter](./cypher-codemirror.linenumberformatter.md) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumbers?](./svelte-codemirror-cypher.cyphereditorprops.linenumbers.md) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
+|  [lineWrapping?](./svelte-codemirror-cypher.cyphereditorprops.linewrapping.md) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
+|  [lint?](./svelte-codemirror-cypher.cyphereditorprops.lint.md) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
+|  [onAutocompleteChanged?](./svelte-codemirror-cypher.cyphereditorprops.onautocompletechanged.md) | [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |  | <i>(Optional)</i> A listener for when the editor autocompletion state changes |
+|  [onEditorCreated?](./svelte-codemirror-cypher.cyphereditorprops.oneditorcreated.md) | [EditorCreatedListener](./cypher-codemirror.editorcreatedlistener.md) |  | <i>(Optional)</i> A listener for when the editor api gets created |
+|  [onFocusChanged?](./svelte-codemirror-cypher.cyphereditorprops.onfocuschanged.md) | [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |  | <i>(Optional)</i> A listener for when the editor focus changes |
+|  [onKeyDown?](./svelte-codemirror-cypher.cyphereditorprops.onkeydown.md) | [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  | <i>(Optional)</i> A listener for when the user presses a key down in the editor |
+|  [onLineNumberClick?](./svelte-codemirror-cypher.cyphereditorprops.onlinenumberclick.md) | [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  | <i>(Optional)</i> A listener for when the user clicks an editor line number |
+|  [onPositionChanged?](./svelte-codemirror-cypher.cyphereditorprops.onpositionchanged.md) | [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |  | <i>(Optional)</i> A listener for when the editor cursor position changes |
+|  [onScrollChanged?](./svelte-codemirror-cypher.cyphereditorprops.onscrollchanged.md) | [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |  | <i>(Optional)</i> A listener for when the editor scroll position changes |
+|  [onValueChanged?](./svelte-codemirror-cypher.cyphereditorprops.onvaluechanged.md) | [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) |  | <i>(Optional)</i> A listener for when the editor value changes |
+|  [parseOnSetValue?](./svelte-codemirror-cypher.cyphereditorprops.parseonsetvalue.md) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
+|  [placeholder?](./svelte-codemirror-cypher.cyphereditorprops.placeholder.md) | string | undefined | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
+|  [position?](./svelte-codemirror-cypher.cyphereditorprops.position.md) | [PositionAny](./cypher-codemirror.positionany.md) | undefined | <i>(Optional)</i> The editor cursor position |
+|  [readOnly?](./svelte-codemirror-cypher.cyphereditorprops.readonly.md) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
+|  [readOnlyCursor?](./svelte-codemirror-cypher.cyphereditorprops.readonlycursor.md) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
+|  [theme?](./svelte-codemirror-cypher.cyphereditorprops.theme.md) | [Theme](./cypher-codemirror.theme.md) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
+|  [value?](./svelte-codemirror-cypher.cyphereditorprops.value.md) | string | "" | <i>(Optional)</i> The editor text value |
 

@@ -4,7 +4,7 @@
 
 ## CypherEditorProps.autocomplete property
 
-Whether autocomplete is enabled.
+Whether the autocomplete feature is enabled
 
 <b>Signature:</b>
 

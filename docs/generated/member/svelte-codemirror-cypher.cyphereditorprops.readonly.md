@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.readOnly property
 
+Whether the editor is read only or the user can edit the editor's value
+
 <b>Signature:</b>
 
 ```typescript
 readOnly?: boolean;
 ```
+
+## Default Value
+
+false
+

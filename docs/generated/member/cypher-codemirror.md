@@ -15,9 +15,11 @@
 |  Call Signature | Description |
 |  --- | --- |
 |  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) | Listener for editor autocomplete changes |
+|  [EditorCreatedListener](./cypher-codemirror.editorcreatedlistener.md) | Listener for editor creation |
 |  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) | Listener for editor focus changes |
 |  [KeyDownListener](./cypher-codemirror.keydownlistener.md) | Listener for editor key down events |
 |  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) | Listener for editor line number click events |
+|  [LineNumberFormatter](./cypher-codemirror.linenumberformatter.md) | Formats a line number for display beside the editor text |
 |  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) | Listener for editor cursor position changes |
 |  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) | Listener for editor scroll position changes |
 |  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | Listener for editor value changes |

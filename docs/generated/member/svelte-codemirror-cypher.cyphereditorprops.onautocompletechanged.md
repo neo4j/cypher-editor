@@ -4,12 +4,10 @@
 
 ## CypherEditorProps.onAutocompleteChanged property
 
+A listener for when the editor autocompletion state changes
+
 <b>Signature:</b>
 
 ```typescript
-onAutocompleteChanged?: (
-    open: boolean,
-    from: number,
-    options: AutocompleteOption[]
-  ) => void;
+onAutocompleteChanged?: AutocompleteChangedListener;
 ```

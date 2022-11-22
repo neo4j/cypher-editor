@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.value property
 
+The editor text value
+
 <b>Signature:</b>
 
 ```typescript
 value?: string;
 ```
+
+## Default Value
+
+""
+

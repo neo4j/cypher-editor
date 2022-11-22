@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.position property
 
+The editor cursor position
+
 <b>Signature:</b>
 
 ```typescript
 position?: PositionAny;
 ```
+
+## Default Value
+
+undefined
+

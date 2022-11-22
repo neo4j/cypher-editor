@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.lineWrapping property
 
+Whether the editor wraps lines vs using a horizontal scrollbar
+
 <b>Signature:</b>
 
 ```typescript
 lineWrapping?: boolean;
 ```
+
+## Default Value
+
+false
+

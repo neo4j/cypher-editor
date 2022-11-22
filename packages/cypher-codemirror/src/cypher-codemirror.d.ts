@@ -115,6 +115,16 @@ export interface ScrollInfo {
 }
 
 /**
+ * Listener for editor creation
+ */
+export interface EditorCreatedListener {
+  /**
+   * @param editor - The created editor api instance
+   */
+  (editor: EditorApi): void;
+}
+
+/**
  * Listener for editor autocomplete changes
  */
 export interface AutocompleteChangedListener {
@@ -186,6 +196,17 @@ export interface LineNumberClickListener {
    * @param event - the native event
    */
   (lineNumber: number, event: Event): void;
+}
+
+/**
+ * Formats a line number for display beside the editor text
+ */
+export interface LineNumberFormatter {
+  /**
+   * @param lineNumber - the current line number
+   * @param lineCount - the number of lines in the editor text
+   */
+  (lineNumber: number, lineCount: number): string;
 }
 
 /**
@@ -436,7 +457,7 @@ export interface EditorOptions {
    *
    * @defaultValue (line, lineCount) => lineCount === 1 ? "$" : line + "";
    */
-  lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
+  lineNumberFormatter?: LineNumberFormatter;
   /**
    * Whether line numbers are shown to the left of the editor ui
    *

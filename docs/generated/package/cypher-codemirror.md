@@ -53,9 +53,11 @@ An editor api that wraps the created editor instance
 |  Call Signature | Description |
 |  --- | --- |
 |  [AutocompleteChangedListener](#autocompletechangedlistener) | Listener for editor autocomplete changes |
+|  [EditorCreatedListener](#editorcreatedlistener) | Listener for editor creation |
 |  [FocusChangedListener](#focuschangedlistener) | Listener for editor focus changes |
 |  [KeyDownListener](#keydownlistener) | Listener for editor key down events |
 |  [LineNumberClickListener](#linenumberclicklistener) | Listener for editor line number click events |
+|  [LineNumberFormatter](#linenumberformatter) | Formats a line number for display beside the editor text |
 |  [PositionChangedListener](#positionchangedlistener) | Listener for editor cursor position changes |
 |  [ScrollChangedListener](#scrollchangedlistener) | Listener for editor scroll position changes |
 |  [ValueChangedListener](#valuechangedlistener) | Listener for editor value changes |
@@ -82,6 +84,31 @@ export interface AutocompleteChangedListener {
 |  open | boolean | whether the autocomplete menu is open or not |
 |  from | number | <i>(Optional)</i> the start cursor position for the suggested options |
 |  options | [AutocompleteOption](#autocompleteoption)<!-- -->\[\] | <i>(Optional)</i> the list of autocomplete options being suggested to the user |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorcreatedlistener"></a>
+
+### EditorCreatedListener call signature
+
+Listener for editor creation
+
+<b>Signature:</b>
+
+```typescript
+export interface EditorCreatedListener {
+  (editor: EditorApi): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  editor | [EditorApi](#editorapi) | The created editor api instance |
 
 <b>Returns:</b>
 
@@ -162,6 +189,32 @@ export interface LineNumberClickListener {
 <b>Returns:</b>
 
 void
+
+<br>
+
+<a name="linenumberformatter"></a>
+
+### LineNumberFormatter call signature
+
+Formats a line number for display beside the editor text
+
+<b>Signature:</b>
+
+```typescript
+export interface LineNumberFormatter {
+  (lineNumber: number, lineCount: number): string;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lineNumber | number | the current line number |
+|  lineCount | number | the number of lines in the editor text |
+
+<b>Returns:</b>
+
+string
 
 <br>
 
@@ -1332,7 +1385,7 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
-|  [lineNumberFormatter?](#editoroptions.linenumberformatter) | (lineNumber: number, lineCount: number) =&gt; string | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
+|  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#editoroptions.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#editoroptions.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
 |  [lint?](#editoroptions.lint) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
@@ -1476,7 +1529,7 @@ The formatter for the line numbers of the editor
 <b>Signature:</b>
 
 ```typescript
-lineNumberFormatter?: (lineNumber: number, lineCount: number) => string;
+lineNumberFormatter?: LineNumberFormatter;
 ```
 <b>Default Value:</b>
 

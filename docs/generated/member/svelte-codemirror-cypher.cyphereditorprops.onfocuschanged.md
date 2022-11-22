@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onFocusChanged property
 
+A listener for when the editor focus changes
+
 <b>Signature:</b>
 
 ```typescript
-onFocusChanged?: (focused: boolean) => void;
+onFocusChanged?: FocusChangedListener;
 ```

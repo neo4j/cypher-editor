@@ -4,13 +4,17 @@
 
 ## CypherEditorProps.autocompleteOpen property
 
-Whether the autocomplete window is open. Changing this can be used to manually control the autocomplete open state.
+Whether the autocomplete window is open
 
 <b>Signature:</b>
 
 ```typescript
 autocompleteOpen?: boolean;
 ```
+
+## Remarks
+
+Changing this can be used to manually control the autocomplete open state
 
 ## Default Value
 
