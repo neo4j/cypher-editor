@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onScrollChanged property
 
+A listener for when the editor scroll position changes
+
 <b>Signature:</b>
 
 ```typescript
-onScrollChanged?: (scrollInfo: ScrollInfo) => void;
+onScrollChanged?: ScrollChangedListener;
 ```

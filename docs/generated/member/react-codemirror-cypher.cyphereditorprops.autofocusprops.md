@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.autofocusProps property
 
+setting any of these props will trigger the editor gaining focus
+
 <b>Signature:</b>
 
 ```typescript
 autofocusProps?: AutofocusProp[];
 ```
+
+## Default Value
+
+\["position", "readOnly", "value"\]
+

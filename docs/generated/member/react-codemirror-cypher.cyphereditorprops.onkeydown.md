@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onKeyDown property
 
+A listener for when the user presses a key down in the editor
+
 <b>Signature:</b>
 
 ```typescript
-onKeyDown?: (event: KeyboardEvent) => void;
+onKeyDown?: KeyDownListener;
 ```

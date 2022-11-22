@@ -4,6 +4,8 @@
 
 ## CypherEditor class
 
+Cypher Editor React Component
+
 <b>Signature:</b>
 
 ```typescript

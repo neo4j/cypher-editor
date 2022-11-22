@@ -11,8 +11,3 @@ A css class name to be added to the root editor dom element
 ```typescript
 className?: string;
 ```
-
-## Default Value
-
-undefined
-

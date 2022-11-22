@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onValueChanged property
 
+A listener for when the editor value changes
+
 <b>Signature:</b>
 
 ```typescript
-onValueChanged?: (value: string, changes: ChangeSet) => void;
+onValueChanged?: ValueChangedListener;
 ```

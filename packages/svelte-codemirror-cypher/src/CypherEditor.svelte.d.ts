@@ -45,8 +45,6 @@ export interface CypherEditorProps {
   autocompleteOpen?: boolean;
   /**
    * The schema to use when showing autocomplete suggestions (and syntax highlighting)
-   *
-   * @defaultValue `undefined`
    */
   autocompleteSchema?: EditorSupportSchema;
   /**
@@ -105,14 +103,10 @@ export interface CypherEditorProps {
   parseOnSetValue?: boolean;
   /**
    * The text to be shown to the user when the editor value is empty
-   *
-   * @defaultValue undefined
    */
   placeholder?: string;
   /**
    * The editor cursor position
-   *
-   * @defaultValue undefined
    */
   position?: PositionAny;
   /**
@@ -141,14 +135,10 @@ export interface CypherEditorProps {
   value?: string;
   /**
    * A css class name to be added to the root editor dom element
-   *
-   * @defaultValue undefined
    */
   className?: string;
   /**
    * A css class name to be added to the root editor dom element when it is focused
-   *
-   * @defaultValue undefined
    */
   focusedClassName?: string;
   

@@ -4,15 +4,30 @@
 
 ## react-codemirror-cypher package
 
+This package exports a React Cypher Editor component
+
+### Remarks:
+
+The props for this component are defined by the [CypherEditorProps](./react-codemirror-cypher.cyphereditorprops.md) interface
+
+### Example:
+
+Here's some example code using the props:
+
+```ts
+const props = { autocomplete: false };
+<CypherEditor {...props} />
+```
+
 ### Classes:
 
-|  Class |
-|  --- |
-|  [CypherEditor](./react-codemirror-cypher.cyphereditor.md) |
+|  Class | Description |
+|  --- | --- |
+|  [CypherEditor](./react-codemirror-cypher.cyphereditor.md) | Cypher Editor React Component |
 
 ### Interfaces:
 
-|  Interface |
-|  --- |
-|  [CypherEditorProps](./react-codemirror-cypher.cyphereditorprops.md) |
+|  Interface | Description |
+|  --- | --- |
+|  [CypherEditorProps](./react-codemirror-cypher.cyphereditorprops.md) | Interface for React Cypher Editor component props |
 

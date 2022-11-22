@@ -162,7 +162,7 @@
   },
   "kind": "Package",
   "canonicalReference": "react-codemirror-cypher!",
-  "docComment": "",
+  "docComment": "/**\n * This package exports a React Cypher Editor component\n *\n * @remarks\n *\n * The props for this component are defined by the {@link react-codemirror-cypher#CypherEditorProps | CypherEditorProps} interface\n *\n * @example\n *\n * Here's some example code using the props:\n * ```ts\n * const props = { autocomplete: false };\n * <CypherEditor {...props} />\n * ```\n *\n * @packageDocumentation\n */\n",
   "name": "react-codemirror-cypher",
   "preserveMemberOrder": false,
   "members": [
@@ -175,7 +175,7 @@
         {
           "kind": "Class",
           "canonicalReference": "react-codemirror-cypher!CypherEditor:class",
-          "docComment": "",
+          "docComment": "/**\n * Cypher Editor React Component\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -218,7 +218,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "react-codemirror-cypher!CypherEditorProps:interface",
-          "docComment": "",
+          "docComment": "/**\n * Interface for React Cypher Editor component props\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -233,7 +233,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autocomplete:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete feature is enabled\n *\n * @defaultValue\n *\n * `true`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -260,7 +260,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autocompleteCloseOnBlur:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete auto closes whenever the editor loses focus\n *\n * @defaultValue\n *\n * `true`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -287,7 +287,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autocompleteOpen:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the autocomplete window is open\n *\n * @remarks\n *\n * Changing this can be used to manually control the autocomplete open state\n *\n * @defaultValue\n *\n * `false`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -314,7 +314,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autocompleteSchema:member",
-              "docComment": "",
+              "docComment": "/**\n * The schema to use when showing autocomplete suggestions (and syntax highlighting)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -342,7 +342,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autocompleteTriggerStrings:member",
-              "docComment": "",
+              "docComment": "/**\n * The keys that when typed will automatically open the autocomplete menu\n *\n * @defaultValue\n *\n * [\".\",\":\",\"[]\",\"()\",\"{}\",\"[\",\"(\",\"{\",\"$\"]\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -369,7 +369,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autofocus:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor should be auto focused on first creation\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -396,7 +396,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#autofocusProps:member",
-              "docComment": "",
+              "docComment": "/**\n * setting any of these props will trigger the editor gaining focus\n *\n * @defaultValue\n *\n * [\"position\", \"readOnly\", \"value\"]\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -428,7 +428,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#className:member",
-              "docComment": "",
+              "docComment": "/**\n * A css class name to be added to the root editor dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -455,7 +455,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#focusedClassName:member",
-              "docComment": "",
+              "docComment": "/**\n * A css class name to be added to the root editor dom element when it is focused\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -482,7 +482,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#history:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor maintains an undo/redo history\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -509,15 +509,16 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#lineNumberFormatter:member",
-              "docComment": "",
+              "docComment": "/**\n * The formatter for the line numbers of the editor\n *\n * @defaultValue\n *\n * (line, lineCount) => lineCount === 1 ? \"$\" : line + \"\";\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "lineNumberFormatter?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(lineNumber: number, lineCount: number) => string"
+                  "kind": "Reference",
+                  "text": "LineNumberFormatter",
+                  "canonicalReference": "cypher-codemirror!LineNumberFormatter:interface"
                 },
                 {
                   "kind": "Content",
@@ -536,7 +537,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#lineNumbers:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether line numbers are shown to the left of the editor ui\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -563,7 +564,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#lineWrapping:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor wraps lines vs using a horizontal scrollbar\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -590,7 +591,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#lint:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor should display lint errors to the user\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -617,24 +618,16 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onAutocompleteChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor autocompletion state changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onAutocompleteChanged?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(\n    open: boolean,\n    from: number,\n    options: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "AutocompleteOption",
-                  "canonicalReference": "cypher-codemirror!AutocompleteOption:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]\n  ) => void"
+                  "text": "AutocompleteChangedListener",
+                  "canonicalReference": "cypher-codemirror!AutocompleteChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -647,30 +640,22 @@
               "name": "onAutocompleteChanged",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onEditorCreated:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor api gets created\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onEditorCreated?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(editor: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "EditorApi",
-                  "canonicalReference": "cypher-codemirror!EditorApi:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "EditorCreatedListener",
+                  "canonicalReference": "cypher-codemirror!EditorCreatedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -683,21 +668,22 @@
               "name": "onEditorCreated",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onFocusChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor focus changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onFocusChanged?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(focused: boolean) => void"
+                  "kind": "Reference",
+                  "text": "FocusChangedListener",
+                  "canonicalReference": "cypher-codemirror!FocusChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -716,24 +702,16 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onKeyDown:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the user presses a key down in the editor\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onKeyDown?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(event: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "KeyboardEvent",
-                  "canonicalReference": "!KeyboardEvent:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "KeyDownListener",
+                  "canonicalReference": "cypher-codemirror!KeyDownListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -746,30 +724,22 @@
               "name": "onKeyDown",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onLineNumberClick:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the user clicks an editor line number\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onLineNumberClick?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(lineNumber: number, event: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "Event",
-                  "canonicalReference": "!Event:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "LineNumberClickListener",
+                  "canonicalReference": "cypher-codemirror!LineNumberClickListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -782,30 +752,22 @@
               "name": "onLineNumberClick",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onPositionChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor cursor position changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onPositionChanged?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(position: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "PositionObject",
-                  "canonicalReference": "cypher-codemirror!PositionObject:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "PositionChangedListener",
+                  "canonicalReference": "cypher-codemirror!PositionChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -818,30 +780,22 @@
               "name": "onPositionChanged",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onScrollChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor scroll position changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onScrollChanged?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(scrollInfo: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "ScrollInfo",
-                  "canonicalReference": "cypher-codemirror!ScrollInfo:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "ScrollChangedListener",
+                  "canonicalReference": "cypher-codemirror!ScrollChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -854,30 +808,22 @@
               "name": "onScrollChanged",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#onValueChanged:member",
-              "docComment": "",
+              "docComment": "/**\n * A listener for when the editor value changes\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "onValueChanged?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "(value: string, changes: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "ChangeSet",
-                  "canonicalReference": "@codemirror/state!ChangeSet:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ") => void"
+                  "text": "ValueChangedListener",
+                  "canonicalReference": "cypher-codemirror!ValueChangedListener:interface"
                 },
                 {
                   "kind": "Content",
@@ -890,13 +836,13 @@
               "name": "onValueChanged",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#parseOnSetValue:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to run the cypher language parser immediately after every call to set the value\n *\n * @defaultValue\n *\n * true\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -923,7 +869,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#placeholder:member",
-              "docComment": "",
+              "docComment": "/**\n * The text to be shown to the user when the editor value is empty\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -950,7 +896,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#position:member",
-              "docComment": "",
+              "docComment": "/**\n * The editor cursor position\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -978,7 +924,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#readOnly:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether the editor is read only or the user can edit the editor's value\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1005,7 +951,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#readOnlyCursor:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to show the cursor when the editor readOnly is true\n *\n * @defaultValue\n *\n * false\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1032,7 +978,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#theme:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether to use the light or dark theme for the editor\n *\n * @defaultValue\n *\n * \"light\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1060,7 +1006,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "react-codemirror-cypher!CypherEditorProps#value:member",
-              "docComment": "",
+              "docComment": "/**\n * The editor text value\n *\n * @defaultValue\n *\n * \"\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

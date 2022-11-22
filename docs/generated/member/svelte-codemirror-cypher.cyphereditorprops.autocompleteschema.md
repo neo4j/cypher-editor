@@ -11,8 +11,3 @@ The schema to use when showing autocomplete suggestions (and syntax highlighting
 ```typescript
 autocompleteSchema?: EditorSupportSchema;
 ```
-
-## Default Value
-
-`undefined`
-

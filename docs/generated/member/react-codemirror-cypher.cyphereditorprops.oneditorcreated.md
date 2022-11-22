@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onEditorCreated property
 
+A listener for when the editor api gets created
+
 <b>Signature:</b>
 
 ```typescript
-onEditorCreated?: (editor: EditorApi) => void;
+onEditorCreated?: EditorCreatedListener;
 ```

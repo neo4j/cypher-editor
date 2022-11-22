@@ -162,7 +162,7 @@
   },
   "kind": "Package",
   "canonicalReference": "cypher-editor-support!",
-  "docComment": "",
+  "docComment": "/**\n * Cypher language support package using an antlr4 grammar\n *\n * @remarks\n *\n * This package provides cypher query parsing using an antlr4 grammar.\n *\n * It is mostly unchanged from the original implementation.\n *\n * It provides capabilities for cypher query syntax highlighting and and autocompletion suggestions.\n *\n * @packageDocumentation\n */\n",
   "name": "cypher-editor-support",
   "preserveMemberOrder": false,
   "members": [

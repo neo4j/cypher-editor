@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.theme property
 
+Whether to use the light or dark theme for the editor
+
 <b>Signature:</b>
 
 ```typescript
 theme?: Theme;
 ```
+
+## Default Value
+
+"light"
+

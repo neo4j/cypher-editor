@@ -4,8 +4,10 @@
 
 ## CypherEditorProps.onLineNumberClick property
 
+A listener for when the user clicks an editor line number
+
 <b>Signature:</b>
 
 ```typescript
-onLineNumberClick?: (lineNumber: number, event: Event) => void;
+onLineNumberClick?: LineNumberClickListener;
 ```

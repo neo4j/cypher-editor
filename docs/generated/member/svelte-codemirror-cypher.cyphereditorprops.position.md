@@ -11,8 +11,3 @@ The editor cursor position
 ```typescript
 position?: PositionAny;
 ```
-
-## Default Value
-
-undefined
-

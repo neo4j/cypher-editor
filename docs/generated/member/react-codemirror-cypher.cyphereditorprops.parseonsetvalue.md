@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.parseOnSetValue property
 
+Whether to run the cypher language parser immediately after every call to set the value
+
 <b>Signature:</b>
 
 ```typescript
 parseOnSetValue?: boolean;
 ```
+
+## Default Value
+
+true
+

@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.lineNumbers property
 
+Whether line numbers are shown to the left of the editor ui
+
 <b>Signature:</b>
 
 ```typescript
 lineNumbers?: boolean;
 ```
+
+## Default Value
+
+true
+

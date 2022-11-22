@@ -4,6 +4,8 @@
 
 ## CypherEditorProps.className property
 
+A css class name to be added to the root editor dom element
+
 <b>Signature:</b>
 
 ```typescript

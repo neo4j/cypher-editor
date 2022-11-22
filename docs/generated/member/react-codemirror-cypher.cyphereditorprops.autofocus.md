@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.autofocus property
 
+Whether the editor should be auto focused on first creation
+
 <b>Signature:</b>
 
 ```typescript
 autofocus?: boolean;
 ```
+
+## Default Value
+
+true
+

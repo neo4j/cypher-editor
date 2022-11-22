@@ -11,8 +11,3 @@ The text to be shown to the user when the editor value is empty
 ```typescript
 placeholder?: string;
 ```
-
-## Default Value
-
-undefined
-

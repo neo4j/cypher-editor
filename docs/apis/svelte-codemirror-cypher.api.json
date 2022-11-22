@@ -314,7 +314,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "svelte-codemirror-cypher!CypherEditorProps#autocompleteSchema:member",
-              "docComment": "/**\n * The schema to use when showing autocomplete suggestions (and syntax highlighting)\n *\n * @defaultValue\n *\n * `undefined`\n */\n",
+              "docComment": "/**\n * The schema to use when showing autocomplete suggestions (and syntax highlighting)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -428,7 +428,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "svelte-codemirror-cypher!CypherEditorProps#className:member",
-              "docComment": "/**\n * A css class name to be added to the root editor dom element\n *\n * @defaultValue\n *\n * undefined\n */\n",
+              "docComment": "/**\n * A css class name to be added to the root editor dom element\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -455,7 +455,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "svelte-codemirror-cypher!CypherEditorProps#focusedClassName:member",
-              "docComment": "/**\n * A css class name to be added to the root editor dom element when it is focused\n *\n * @defaultValue\n *\n * undefined\n */\n",
+              "docComment": "/**\n * A css class name to be added to the root editor dom element when it is focused\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -869,7 +869,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "svelte-codemirror-cypher!CypherEditorProps#placeholder:member",
-              "docComment": "/**\n * The text to be shown to the user when the editor value is empty\n *\n * @defaultValue\n *\n * undefined\n */\n",
+              "docComment": "/**\n * The text to be shown to the user when the editor value is empty\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -896,7 +896,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "svelte-codemirror-cypher!CypherEditorProps#position:member",
-              "docComment": "/**\n * The editor cursor position\n *\n * @defaultValue\n *\n * undefined\n */\n",
+              "docComment": "/**\n * The editor cursor position\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

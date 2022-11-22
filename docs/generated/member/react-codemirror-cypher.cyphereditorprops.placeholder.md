@@ -4,6 +4,8 @@
 
 ## CypherEditorProps.placeholder property
 
+The text to be shown to the user when the editor value is empty
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,8 +4,15 @@
 
 ## CypherEditorProps.autocomplete property
 
+Whether the autocomplete feature is enabled
+
 <b>Signature:</b>
 
 ```typescript
 autocomplete?: boolean;
 ```
+
+## Default Value
+
+`true`
+

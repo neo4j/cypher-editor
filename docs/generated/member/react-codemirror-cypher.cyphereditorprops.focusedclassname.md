@@ -4,6 +4,8 @@
 
 ## CypherEditorProps.focusedClassName property
 
+A css class name to be added to the root editor dom element when it is focused
+
 <b>Signature:</b>
 
 ```typescript
