@@ -373,7 +373,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "cypher-codemirror!AutofocusProp:type",
-          "docComment": "/**\n * The prop keys that can be used with autofocusProps // TODO check if this is implemented yet\n */\n",
+          "docComment": "/**\n * The prop keys that can be used with autofocusProps\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

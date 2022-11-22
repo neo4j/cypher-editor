@@ -4,7 +4,7 @@
 
 ## AutofocusProp type
 
-The prop keys that can be used with autofocusProps // TODO check if this is implemented yet
+The prop keys that can be used with autofocusProps
 
 <b>Signature:</b>
 

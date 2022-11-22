@@ -1979,7 +1979,7 @@ scrollWidth: number;
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [AutofocusProp](#cypher-codemirror.autofocusprop) | The prop keys that can be used with autofocusProps // TODO check if this is implemented yet |
+|  [AutofocusProp](#cypher-codemirror.autofocusprop) | The prop keys that can be used with autofocusProps |
 |  [PositionAny](#cypher-codemirror.positionany) | Any supported editor cursor position |
 |  [Theme](#cypher-codemirror.theme) | The current editor theme |
 
@@ -1989,7 +1989,7 @@ scrollWidth: number;
 
 #### AutofocusProp type
 
-The prop keys that can be used with autofocusProps // TODO check if this is implemented yet
+The prop keys that can be used with autofocusProps
 
 <b>Signature:</b>
 

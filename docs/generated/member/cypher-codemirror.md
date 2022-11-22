@@ -45,7 +45,7 @@ This package provides a factory function for constructing an [EditorApi](./cyphe
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) | The prop keys that can be used with autofocusProps // TODO check if this is implemented yet |
+|  [AutofocusProp](./cypher-codemirror.autofocusprop.md) | The prop keys that can be used with autofocusProps |
 |  [PositionAny](./cypher-codemirror.positionany.md) | Any supported editor cursor position |
 |  [Theme](./cypher-codemirror.theme.md) | The current editor theme |
 

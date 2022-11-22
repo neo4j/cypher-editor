@@ -63,7 +63,6 @@ export type Theme = "light" | "dark";
 
 /**
  * The prop keys that can be used with autofocusProps
- * // TODO check if this is implemented yet
  */
 export type AutofocusProp = "position" | "readOnly" | "value";
 

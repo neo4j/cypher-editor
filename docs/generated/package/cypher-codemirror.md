@@ -1981,7 +1981,7 @@ scrollWidth: number;
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [AutofocusProp](#autofocusprop) | The prop keys that can be used with autofocusProps // TODO check if this is implemented yet |
+|  [AutofocusProp](#autofocusprop) | The prop keys that can be used with autofocusProps |
 |  [PositionAny](#positionany) | Any supported editor cursor position |
 |  [Theme](#theme) | The current editor theme |
 
@@ -1991,7 +1991,7 @@ scrollWidth: number;
 
 ### AutofocusProp type
 
-The prop keys that can be used with autofocusProps // TODO check if this is implemented yet
+The prop keys that can be used with autofocusProps
 
 <b>Signature:</b>
 
