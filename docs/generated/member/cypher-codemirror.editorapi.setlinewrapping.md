@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setLineWrapping](./cypher-codemirror.editorapi.setlinewrapping.md)
 
-## EditorApi.setLineWrapping property
+## EditorApi.setLineWrapping() method
 
 Set whether or not the editor wraps lines vs using a horizontal scrollbar
 
 <b>Signature:</b>
 
 ```typescript
-setLineWrapping: (lineWrapping: boolean) => void;
+setLineWrapping(lineWrapping: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  lineWrapping | boolean |
+
+<b>Returns:</b>
+
+void
+

@@ -4,7 +4,7 @@
 
 ## EditorApi interface
 
-This is the EditorApi which wraps all of the interaction with the cypher editor
+This is the EditorApi interface which wraps all of the interaction with the cypher editor
 
 <b>Signature:</b>
 
@@ -12,49 +12,58 @@ This is the EditorApi which wraps all of the interaction with the cypher editor
 export interface EditorApi 
 ```
 
+## Remarks
+
+An instance of this interface is returned by the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function
+
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [clearHistory](./cypher-codemirror.editorapi.clearhistory.md) | () =&gt; void | Clears the undo/redo history of the editor |
 |  [codemirror](./cypher-codemirror.editorapi.codemirror.md) | EditorView | The codemirror 6 view instance representing the cypher editor |
-|  [destroy](./cypher-codemirror.editorapi.destroy.md) | () =&gt; void | Cleanup function that can be used to safely dispose of the editor |
 |  [editorSupport](./cypher-codemirror.editorapi.editorsupport.md) | [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) | The editor support instance used internally by the editor |
-|  [focus](./cypher-codemirror.editorapi.focus.md) | () =&gt; void | Brings the browser focus to the editor |
-|  [getLineCount](./cypher-codemirror.editorapi.getlinecount.md) | () =&gt; number | Get the number of lines in the current editor value |
-|  [getPosition](./cypher-codemirror.editorapi.getposition.md) | () =&gt; [PositionObject](./cypher-codemirror.positionobject.md) | Get the current editor cursor position |
-|  [getPositionForValue](./cypher-codemirror.editorapi.getpositionforvalue.md) | (positionValue: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; [PositionObject](./cypher-codemirror.positionobject.md) \| null | Get a full position object for any supported position value or null if position value is invalid |
-|  [offAutocompleteChanged](./cypher-codemirror.editorapi.offautocompletechanged.md) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor autocomplete changes |
-|  [offFocusChanged](./cypher-codemirror.editorapi.offfocuschanged.md) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor focus changes |
-|  [offKeyDown](./cypher-codemirror.editorapi.offkeydown.md) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; void | remove an event listener for editor key down events |
-|  [offLineNumberClick](./cypher-codemirror.editorapi.offlinenumberclick.md) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; void | remove an event listener for editor line number click events |
-|  [offPositionChanged](./cypher-codemirror.editorapi.offpositionchanged.md) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor curosor position changes |
-|  [offScrollChanged](./cypher-codemirror.editorapi.offscrollchanged.md) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor scroll position changes |
-|  [offValueChanged](./cypher-codemirror.editorapi.offvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; void | remove an event listener for editor value changes |
-|  [onAutocompleteChanged](./cypher-codemirror.editorapi.onautocompletechanged.md) | (listener: [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor autocomplete changes |
-|  [onFocusChanged](./cypher-codemirror.editorapi.onfocuschanged.md) | (listener: [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor focus changes |
-|  [onKeyDown](./cypher-codemirror.editorapi.onkeydown.md) | (listener: [KeyDownListener](./cypher-codemirror.keydownlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor key down events |
-|  [onLineNumberClick](./cypher-codemirror.editorapi.onlinenumberclick.md) | (listener: [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor line number click events |
-|  [onPositionChanged](./cypher-codemirror.editorapi.onpositionchanged.md) | (listener: [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor cursor position changes |
-|  [onScrollChanged](./cypher-codemirror.editorapi.onscrollchanged.md) | (listener: [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor scroll position changes |
-|  [onValueChanged](./cypher-codemirror.editorapi.onvaluechanged.md) | (listener: [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md)<!-- -->) =&gt; () =&gt; void | Add an event listener for editor value changes |
-|  [selectAutocompleteOption](./cypher-codemirror.editorapi.selectautocompleteoption.md) | (autocompleteOptionIndex: number) =&gt; void | Select the autocomplete option with the given index, causing it to be applied to the editor value |
-|  [setAutocomplete](./cypher-codemirror.editorapi.setautocomplete.md) | (autocomplete: boolean) =&gt; void | Set whether or not the autocomplete feature is enabled |
-|  [setAutocompleteCloseOnBlur](./cypher-codemirror.editorapi.setautocompletecloseonblur.md) | (autocompleteCloseOnBlur: boolean) =&gt; void | Set whether or not the autocomplete auto closes whenever the editor loses focus |
-|  [setAutocompleteOpen](./cypher-codemirror.editorapi.setautocompleteopen.md) | (autocompleteOpen: boolean) =&gt; void | Set whether or not the autocomplete menu is shown to the user |
-|  [setAutocompleteSchema](./cypher-codemirror.editorapi.setautocompleteschema.md) | (autocompleteSchema: [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md)<!-- -->) =&gt; void | Set the schema - TODO need better docs here and probably rename this |
-|  [setAutocompleteTriggerStrings](./cypher-codemirror.editorapi.setautocompletetriggerstrings.md) | (autocompleteTriggerStrings: string\[\]) =&gt; void | Set the keys that when typed will automatically open the autocomplete menu |
-|  [setHistory](./cypher-codemirror.editorapi.sethistory.md) | (history: boolean) =&gt; void | Set whether or not the editor maintains an undo/redo history |
-|  [setLineNumberFormatter](./cypher-codemirror.editorapi.setlinenumberformatter.md) | ( lineNumberFormatter: (lineNumber: number, lineCount: number) =&gt; string ) =&gt; void | Set the formatter for the line numbers of the editor |
-|  [setLineNumbers](./cypher-codemirror.editorapi.setlinenumbers.md) | (lineNumbers: boolean) =&gt; void | Set whether or not line numbers are shown to the left of the editor ui |
-|  [setLineWrapping](./cypher-codemirror.editorapi.setlinewrapping.md) | (lineWrapping: boolean) =&gt; void | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
-|  [setLint](./cypher-codemirror.editorapi.setlint.md) | (lint: boolean) =&gt; void | Set whether or not the editor should display lint errors to the user |
-|  [setPlaceholder](./cypher-codemirror.editorapi.setplaceholder.md) | (placeholder: string \| undefined) =&gt; void | Set the text to be shown to the user when the editor value is empty |
-|  [setPosition](./cypher-codemirror.editorapi.setposition.md) | (position: [PositionAny](./cypher-codemirror.positionany.md)<!-- -->) =&gt; void | Set the current editor cursor position |
-|  [setPostExtensions](./cypher-codemirror.editorapi.setpostextensions.md) | (preExtensions: Extension\[\]) =&gt; void | set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions |
-|  [setPreExtensions](./cypher-codemirror.editorapi.setpreextensions.md) | (preExtensions: Extension\[\]) =&gt; void | set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
-|  [setReadOnly](./cypher-codemirror.editorapi.setreadonly.md) | (readOnly: boolean) =&gt; void | Set whether the editor is read only or the user can edit the editor's value |
-|  [setReadOnlyCursor](./cypher-codemirror.editorapi.setreadonlycursor.md) | (readOnlyCursor: boolean) =&gt; void | Set whether to show the cursor when the editor readOnly is true |
-|  [setTheme](./cypher-codemirror.editorapi.settheme.md) | (theme: [Theme](./cypher-codemirror.theme.md)<!-- -->) =&gt; void | Set whether to use the light or dark theme for the editor |
-|  [setValue](./cypher-codemirror.editorapi.setvalue.md) | (value: string, parseOnSetValue?: boolean) =&gt; void | Set the editor value |
+
+## Methods
+
+|  Method | Description |
+|  --- | --- |
+|  [clearHistory()](./cypher-codemirror.editorapi.clearhistory.md) | Clears the undo/redo history of the editor |
+|  [destroy()](./cypher-codemirror.editorapi.destroy.md) | Cleanup function that can be used to safely dispose of the editor |
+|  [focus()](./cypher-codemirror.editorapi.focus.md) | Brings the browser focus to the editor |
+|  [getLineCount()](./cypher-codemirror.editorapi.getlinecount.md) | Get the number of lines in the current editor value |
+|  [getPosition()](./cypher-codemirror.editorapi.getposition.md) | Get the current editor cursor position |
+|  [getPositionForValue(positionValue)](./cypher-codemirror.editorapi.getpositionforvalue.md) | Get a full position object for any supported position value or null if position value is invalid |
+|  [offAutocompleteChanged(listener)](./cypher-codemirror.editorapi.offautocompletechanged.md) | remove an event listener for editor autocomplete changes |
+|  [offFocusChanged(listener)](./cypher-codemirror.editorapi.offfocuschanged.md) | remove an event listener for editor focus changes |
+|  [offKeyDown(listener)](./cypher-codemirror.editorapi.offkeydown.md) | remove an event listener for editor key down events |
+|  [offLineNumberClick(listener)](./cypher-codemirror.editorapi.offlinenumberclick.md) | remove an event listener for editor line number click events |
+|  [offPositionChanged(listener)](./cypher-codemirror.editorapi.offpositionchanged.md) | remove an event listener for editor curosor position changes |
+|  [offScrollChanged(listener)](./cypher-codemirror.editorapi.offscrollchanged.md) | remove an event listener for editor scroll position changes |
+|  [offValueChanged(listener)](./cypher-codemirror.editorapi.offvaluechanged.md) | remove an event listener for editor value changes |
+|  [onAutocompleteChanged(listener)](./cypher-codemirror.editorapi.onautocompletechanged.md) | Add an event listener for editor autocomplete changes |
+|  [onFocusChanged(listener)](./cypher-codemirror.editorapi.onfocuschanged.md) | Add an event listener for editor focus changes |
+|  [onKeyDown(listener)](./cypher-codemirror.editorapi.onkeydown.md) | Add an event listener for editor key down events |
+|  [onLineNumberClick(listener)](./cypher-codemirror.editorapi.onlinenumberclick.md) | Add an event listener for editor line number click events |
+|  [onPositionChanged(listener)](./cypher-codemirror.editorapi.onpositionchanged.md) | Add an event listener for editor cursor position changes |
+|  [onScrollChanged(listener)](./cypher-codemirror.editorapi.onscrollchanged.md) | Add an event listener for editor scroll position changes |
+|  [onValueChanged(listener)](./cypher-codemirror.editorapi.onvaluechanged.md) | Add an event listener for editor value changes |
+|  [selectAutocompleteOption(autocompleteOptionIndex)](./cypher-codemirror.editorapi.selectautocompleteoption.md) | Select the autocomplete option with the given index, causing it to be applied to the editor value |
+|  [setAutocomplete(autocomplete)](./cypher-codemirror.editorapi.setautocomplete.md) | Set whether or not the autocomplete feature is enabled |
+|  [setAutocompleteCloseOnBlur(autocompleteCloseOnBlur)](./cypher-codemirror.editorapi.setautocompletecloseonblur.md) | Set whether or not the autocomplete auto closes whenever the editor loses focus |
+|  [setAutocompleteOpen(autocompleteOpen)](./cypher-codemirror.editorapi.setautocompleteopen.md) | Set whether or not the autocomplete menu is shown to the user |
+|  [setAutocompleteSchema(autocompleteSchema)](./cypher-codemirror.editorapi.setautocompleteschema.md) | Set the schema - TODO need better docs here and probably rename this |
+|  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](./cypher-codemirror.editorapi.setautocompletetriggerstrings.md) | Set the keys that when typed will automatically open the autocomplete menu |
+|  [setHistory(history)](./cypher-codemirror.editorapi.sethistory.md) | Set whether or not the editor maintains an undo/redo history |
+|  [setLineNumberFormatter(lineNumberFormatter)](./cypher-codemirror.editorapi.setlinenumberformatter.md) | Set the formatter for the line numbers of the editor |
+|  [setLineNumbers(lineNumbers)](./cypher-codemirror.editorapi.setlinenumbers.md) | Set whether or not line numbers are shown to the left of the editor ui |
+|  [setLineWrapping(lineWrapping)](./cypher-codemirror.editorapi.setlinewrapping.md) | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
+|  [setLint(lint)](./cypher-codemirror.editorapi.setlint.md) | Set whether or not the editor should display lint errors to the user |
+|  [setPlaceholder(placeholder)](./cypher-codemirror.editorapi.setplaceholder.md) | Set the text to be shown to the user when the editor value is empty |
+|  [setPosition(position)](./cypher-codemirror.editorapi.setposition.md) | Set the current editor cursor position |
+|  [setPostExtensions(preExtensions)](./cypher-codemirror.editorapi.setpostextensions.md) | set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions |
+|  [setPreExtensions(preExtensions)](./cypher-codemirror.editorapi.setpreextensions.md) | set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
+|  [setReadOnly(readOnly)](./cypher-codemirror.editorapi.setreadonly.md) | Set whether the editor is read only or the user can edit the editor's value |
+|  [setReadOnlyCursor(readOnlyCursor)](./cypher-codemirror.editorapi.setreadonlycursor.md) | Set whether to show the cursor when the editor readOnly is true |
+|  [setTheme(theme)](./cypher-codemirror.editorapi.settheme.md) | Set whether to use the light or dark theme for the editor |
+|  [setValue(value, parseOnSetValue)](./cypher-codemirror.editorapi.setvalue.md) | Set the editor value |
 

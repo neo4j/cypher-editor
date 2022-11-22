@@ -2,12 +2,16 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [destroy](./cypher-codemirror.editorapi.destroy.md)
 
-## EditorApi.destroy property
+## EditorApi.destroy() method
 
 Cleanup function that can be used to safely dispose of the editor
 
 <b>Signature:</b>
 
 ```typescript
-destroy: () => void;
+destroy(): void;
 ```
+<b>Returns:</b>
+
+void
+

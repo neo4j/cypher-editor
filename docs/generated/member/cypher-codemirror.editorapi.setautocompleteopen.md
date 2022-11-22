@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setAutocompleteOpen](./cypher-codemirror.editorapi.setautocompleteopen.md)
 
-## EditorApi.setAutocompleteOpen property
+## EditorApi.setAutocompleteOpen() method
 
 Set whether or not the autocomplete menu is shown to the user
 
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteOpen: (autocompleteOpen: boolean) => void;
+setAutocompleteOpen(autocompleteOpen: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocompleteOpen | boolean |
+
+<b>Returns:</b>
+
+void
+

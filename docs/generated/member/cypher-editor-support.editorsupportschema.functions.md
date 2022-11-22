@@ -4,6 +4,8 @@
 
 ## EditorSupportSchema.functions property
 
+The list of functions provided the graph database
+
 <b>Signature:</b>
 
 ```typescript

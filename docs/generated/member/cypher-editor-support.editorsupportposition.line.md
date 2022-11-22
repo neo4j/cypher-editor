@@ -4,6 +4,8 @@
 
 ## EditorSupportPosition.line property
 
+The 1 based line number The 0 based column number
+
 <b>Signature:</b>
 
 ```typescript

@@ -2,12 +2,16 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [clearHistory](./cypher-codemirror.editorapi.clearhistory.md)
 
-## EditorApi.clearHistory property
+## EditorApi.clearHistory() method
 
 Clears the undo/redo history of the editor
 
 <b>Signature:</b>
 
 ```typescript
-clearHistory: () => void;
+clearHistory(): void;
 ```
+<b>Returns:</b>
+
+void
+

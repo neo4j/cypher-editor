@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setAutocompleteTriggerStrings](./cypher-codemirror.editorapi.setautocompletetriggerstrings.md)
 
-## EditorApi.setAutocompleteTriggerStrings property
+## EditorApi.setAutocompleteTriggerStrings() method
 
 Set the keys that when typed will automatically open the autocomplete menu
 
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
+setAutocompleteTriggerStrings(autocompleteTriggerStrings: string[]): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocompleteTriggerStrings | string\[\] |
+
+<b>Returns:</b>
+
+void
+

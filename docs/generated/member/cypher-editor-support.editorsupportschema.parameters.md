@@ -4,6 +4,8 @@
 
 ## EditorSupportSchema.parameters property
 
+The list of parameters
+
 <b>Signature:</b>
 
 ```typescript

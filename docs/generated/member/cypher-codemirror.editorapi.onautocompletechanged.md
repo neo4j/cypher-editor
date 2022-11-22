@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onAutocompleteChanged](./cypher-codemirror.editorapi.onautocompletechanged.md)
 
-## EditorApi.onAutocompleteChanged property
+## EditorApi.onAutocompleteChanged() method
 
 Add an event listener for editor autocomplete changes
 
 <b>Signature:</b>
 
 ```typescript
-onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
+onAutocompleteChanged(listener: AutocompleteChangedListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

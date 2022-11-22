@@ -4,6 +4,8 @@
 
 ## EditorSupportSchema.propertyKeys property
 
+The list of property keys in the graph database
+
 <b>Signature:</b>
 
 ```typescript

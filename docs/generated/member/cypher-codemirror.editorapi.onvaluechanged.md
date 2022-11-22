@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onValueChanged](./cypher-codemirror.editorapi.onvaluechanged.md)
 
-## EditorApi.onValueChanged property
+## EditorApi.onValueChanged() method
 
 Add an event listener for editor value changes
 
 <b>Signature:</b>
 
 ```typescript
-onValueChanged: (listener: ValueChangedListener) => () => void;
+onValueChanged(listener: ValueChangedListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

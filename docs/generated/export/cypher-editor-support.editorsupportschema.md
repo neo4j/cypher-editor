@@ -4,7 +4,7 @@
 
 ## EditorSupportSchema interface
 
-Editor Support Autocomplete Schema
+The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting.
 
 <b>Signature:</b>
 
@@ -20,12 +20,12 @@ export interface EditorSupportSchema
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [consoleCommands?](#consolecommands) | [ConsoleCommand](./cypher-editor-support.consolecommand.md)<!-- -->\[\] | <i>(Optional)</i> |
-|  [functions?](#functions) | [FunctionSchema](./cypher-editor-support.functionschema.md)<!-- -->\[\] | <i>(Optional)</i> |
+|  [consoleCommands?](#consolecommands) | [ConsoleCommand](./cypher-editor-support.consolecommand.md)<!-- -->\[\] | <i>(Optional)</i> The list of console commands |
+|  [functions?](#functions) | [FunctionSchema](./cypher-editor-support.functionschema.md)<!-- -->\[\] | <i>(Optional)</i> The list of functions provided the graph database |
 |  [labels?](#labels) | string\[\] | <i>(Optional)</i> The list of labels in the graph database |
-|  [parameters?](#parameters) | string\[\] | <i>(Optional)</i> |
-|  [procedures?](#procedures) | [ProcedureSchema](./cypher-editor-support.procedureschema.md)<!-- -->\[\] | <i>(Optional)</i> |
-|  [propertyKeys?](#propertykeys) | string\[\] | <i>(Optional)</i> |
+|  [parameters?](#parameters) | string\[\] | <i>(Optional)</i> The list of parameters |
+|  [procedures?](#procedures) | [ProcedureSchema](./cypher-editor-support.procedureschema.md)<!-- -->\[\] | <i>(Optional)</i> The list of procedures provided the graph database |
+|  [propertyKeys?](#propertykeys) | string\[\] | <i>(Optional)</i> The list of property keys in the graph database |
 |  [relationshipTypes?](#relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 
 <br>
@@ -33,6 +33,8 @@ export interface EditorSupportSchema
 <a name="consolecommands"></a>
 
 ### EditorSupportSchema.consoleCommands property
+
+The list of console commands
 
 <b>Signature:</b>
 
@@ -45,6 +47,8 @@ consoleCommands?: ConsoleCommand[];
 <a name="functions"></a>
 
 ### EditorSupportSchema.functions property
+
+The list of functions provided the graph database
 
 <b>Signature:</b>
 
@@ -72,6 +76,8 @@ labels?: string[];
 
 ### EditorSupportSchema.parameters property
 
+The list of parameters
+
 <b>Signature:</b>
 
 ```typescript
@@ -84,6 +90,8 @@ parameters?: string[];
 
 ### EditorSupportSchema.procedures property
 
+The list of procedures provided the graph database
+
 <b>Signature:</b>
 
 ```typescript
@@ -95,6 +103,8 @@ procedures?: ProcedureSchema[];
 <a name="propertykeys"></a>
 
 ### EditorSupportSchema.propertyKeys property
+
+The list of property keys in the graph database
 
 <b>Signature:</b>
 

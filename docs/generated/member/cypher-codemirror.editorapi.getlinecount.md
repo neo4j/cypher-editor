@@ -2,12 +2,16 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [getLineCount](./cypher-codemirror.editorapi.getlinecount.md)
 
-## EditorApi.getLineCount property
+## EditorApi.getLineCount() method
 
 Get the number of lines in the current editor value
 
 <b>Signature:</b>
 
 ```typescript
-getLineCount: () => number;
+getLineCount(): number;
 ```
+<b>Returns:</b>
+
+number
+

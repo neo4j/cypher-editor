@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setAutocompleteCloseOnBlur](./cypher-codemirror.editorapi.setautocompletecloseonblur.md)
 
-## EditorApi.setAutocompleteCloseOnBlur property
+## EditorApi.setAutocompleteCloseOnBlur() method
 
 Set whether or not the autocomplete auto closes whenever the editor loses focus
 
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
+setAutocompleteCloseOnBlur(autocompleteCloseOnBlur: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocompleteCloseOnBlur | boolean |
+
+<b>Returns:</b>
+
+void
+

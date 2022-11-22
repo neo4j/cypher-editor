@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offScrollChanged](./cypher-codemirror.editorapi.offscrollchanged.md)
 
-## EditorApi.offScrollChanged property
+## EditorApi.offScrollChanged() method
 
 remove an event listener for editor scroll position changes
 
 <b>Signature:</b>
 
 ```typescript
-offScrollChanged: (listener: ScrollChangedListener) => void;
+offScrollChanged(listener: ScrollChangedListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |
+
+<b>Returns:</b>
+
+void
+

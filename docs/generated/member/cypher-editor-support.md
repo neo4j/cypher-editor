@@ -6,24 +6,24 @@
 
 ## Classes
 
-|  Class |
-|  --- |
-|  [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) |
+|  Class | Description |
+|  --- | --- |
+|  [CypherEditorSupport](./cypher-editor-support.cyphereditorsupport.md) | Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [ConsoleCommand](./cypher-editor-support.consolecommand.md) |  |
+|  [ConsoleCommand](./cypher-editor-support.consolecommand.md) | A console command, these are typically prefixed with <code>:</code> like <code>:help</code> |
 |  [EditorSupportCompletionItem](./cypher-editor-support.editorsupportcompletionitem.md) | EditorSupportCompletionItem |
-|  [EditorSupportPosition](./cypher-editor-support.editorsupportposition.md) | EditorSupportPosition |
-|  [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | Editor Support Autocomplete Schema |
-|  [FunctionSchema](./cypher-editor-support.functionschema.md) |  |
-|  [ProcedureSchema](./cypher-editor-support.procedureschema.md) |  |
+|  [EditorSupportPosition](./cypher-editor-support.editorsupportposition.md) | The editor support library has its own representation of editor positions |
+|  [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) | The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting. |
+|  [FunctionSchema](./cypher-editor-support.functionschema.md) | A function provided by the graph database |
+|  [ProcedureSchema](./cypher-editor-support.procedureschema.md) | A procedure provided by the graph database |
 
 ## Type Aliases
 
-|  Type Alias |
-|  --- |
-|  [CompletionType](./cypher-editor-support.completiontype.md) |
+|  Type Alias | Description |
+|  --- | --- |
+|  [CompletionType](./cypher-editor-support.completiontype.md) | All autocomplete options have a CompletionType |
 

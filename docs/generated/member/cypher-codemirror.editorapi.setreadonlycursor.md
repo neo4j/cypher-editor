@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setReadOnlyCursor](./cypher-codemirror.editorapi.setreadonlycursor.md)
 
-## EditorApi.setReadOnlyCursor property
+## EditorApi.setReadOnlyCursor() method
 
 Set whether to show the cursor when the editor readOnly is true
 
 <b>Signature:</b>
 
 ```typescript
-setReadOnlyCursor: (readOnlyCursor: boolean) => void;
+setReadOnlyCursor(readOnlyCursor: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  readOnlyCursor | boolean |
+
+<b>Returns:</b>
+
+void
+

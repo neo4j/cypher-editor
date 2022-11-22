@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offKeyDown](./cypher-codemirror.editorapi.offkeydown.md)
 
-## EditorApi.offKeyDown property
+## EditorApi.offKeyDown() method
 
 remove an event listener for editor key down events
 
 <b>Signature:</b>
 
 ```typescript
-offKeyDown: (listener: KeyDownListener) => void;
+offKeyDown(listener: KeyDownListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [KeyDownListener](./cypher-codemirror.keydownlistener.md) |
+
+<b>Returns:</b>
+
+void
+

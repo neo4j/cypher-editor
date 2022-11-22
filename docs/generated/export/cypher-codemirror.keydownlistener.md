@@ -4,6 +4,8 @@
 
 ## KeyDownListener call signature
 
+Listener for editor key down events
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ export interface KeyDownListener {
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  event | KeyboardEvent |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  event | KeyboardEvent | the native keyboard event |
 
 <b>Returns:</b>
 

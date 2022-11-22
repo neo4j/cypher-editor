@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setPostExtensions](./cypher-codemirror.editorapi.setpostextensions.md)
 
-## EditorApi.setPostExtensions property
+## EditorApi.setPostExtensions() method
 
 set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
 
 <b>Signature:</b>
 
 ```typescript
-setPostExtensions: (preExtensions: Extension[]) => void;
+setPostExtensions(preExtensions: Extension[]): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  preExtensions | Extension\[\] |
+
+<b>Returns:</b>
+
+void
+

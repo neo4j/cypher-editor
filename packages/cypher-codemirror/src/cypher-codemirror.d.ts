@@ -167,193 +167,212 @@ export interface ValueChangedListener {
   (value: string, changes: ChangeSet): void;
 }
 
+/**
+ * Listener for editor key down events
+ */
 export interface KeyDownListener {
+  /**
+   * @param event - the native keyboard event
+   */
   (event: KeyboardEvent): void;
 }
 
+/**
+ * Listener for editor line number click events
+ */
 export interface LineNumberClickListener {
+  /**
+   * @param lineNumber - the 1 based line number that was clicked
+   * @param event - the native event
+   */
   (lineNumber: number, event: Event): void;
 }
 
 /**
- * This is the EditorApi which wraps all of the interaction with the cypher editor
+ * This is the EditorApi interface which wraps all of the interaction with the cypher editor
+ * 
+ * @remarks
+ * 
+ * An instance of this interface is returned by the {@link cypher-codemirror#createCypherEditor | createCypherEditor} function
  */
 export interface EditorApi {
   /**
    * Clears the undo/redo history of the editor
    */
-  clearHistory: () => void;
+  clearHistory(): void;
   /**
    * Cleanup function that can be used to safely dispose of the editor
    */
-  destroy: () => void;
+  destroy(): void;
   /**
    * Brings the browser focus to the editor
    */
-  focus: () => void;
+  focus(): void;
   /**
    * Get the number of lines in the current editor value
    */
-  getLineCount: () => number;
+  getLineCount(): number;
   /**
    * Get the current editor cursor position
    */
-  getPosition: () => PositionObject;
+  getPosition(): PositionObject;
   /**
    * Get a full position object for any supported position value or null if position value is invalid
    */
-  getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
+  getPositionForValue(positionValue: PositionAny): PositionObject | null;
   /**
    * Select the autocomplete option with the given index, causing it to be applied to the editor value
    */
-  selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
+  selectAutocompleteOption(autocompleteOptionIndex: number): void;
   /**
    * Set whether or not the autocomplete feature is enabled
    */
-  setAutocomplete: (autocomplete: boolean) => void;
+  setAutocomplete(autocomplete: boolean): void;
   /**
    * Set whether or not the autocomplete auto closes whenever the editor loses focus
    */
-  setAutocompleteCloseOnBlur: (autocompleteCloseOnBlur: boolean) => void;
+  setAutocompleteCloseOnBlur(autocompleteCloseOnBlur: boolean): void;
   /**
    * Set whether or not the autocomplete menu is shown to the user
    */
-  setAutocompleteOpen: (autocompleteOpen: boolean) => void;
+  setAutocompleteOpen(autocompleteOpen: boolean): void;
   /**
    * Set the schema - TODO need better docs here and probably rename this
    */
-  setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
+  setAutocompleteSchema(autocompleteSchema: EditorSupportSchema): void;
   /**
    * Set the keys that when typed will automatically open the autocomplete menu
    */
-  setAutocompleteTriggerStrings: (autocompleteTriggerStrings: string[]) => void;
+  setAutocompleteTriggerStrings(autocompleteTriggerStrings: string[]): void;
   /**
    * Set whether or not the editor maintains an undo/redo history
    */
-  setHistory: (history: boolean) => void;
+  setHistory(history: boolean): void;
   /**
    * Set the formatter for the line numbers of the editor
    */
-  setLineNumberFormatter: (
+  setLineNumberFormatter(
     lineNumberFormatter: (lineNumber: number, lineCount: number) => string
-  ) => void;
+  ): void;
   /**
    * Set whether or not line numbers are shown to the left of the editor ui
    */
-  setLineNumbers: (lineNumbers: boolean) => void;
+  setLineNumbers(lineNumbers: boolean): void;
   /**
    * Set whether or not the editor wraps lines vs using a horizontal scrollbar
    */
-  setLineWrapping: (lineWrapping: boolean) => void;
+  setLineWrapping(lineWrapping: boolean): void;
   /**
    * Set whether or not the editor should display lint errors to the user
    */
-  setLint: (lint: boolean) => void;
+  setLint(lint: boolean): void;
   /**
    * Set the text to be shown to the user when the editor value is empty
    */
-  setPlaceholder: (placeholder: string | undefined) => void;
+  setPlaceholder(placeholder: string | undefined): void;
   /**
    * Set the current editor cursor position
    */
-  setPosition: (position: PositionAny) => void;
+  setPosition(position: PositionAny): void;
   /**
    * Set whether the editor is read only or the user can edit the editor's value
    */
-  setReadOnly: (readOnly: boolean) => void;
+  setReadOnly(readOnly: boolean): void;
   /**
    * Set whether to show the cursor when the editor readOnly is true
    */
-  setReadOnlyCursor: (readOnlyCursor: boolean) => void;
+  setReadOnlyCursor(readOnlyCursor: boolean): void;
   /**
    * Set whether to use the light or dark theme for the editor
    */
-  setTheme: (theme: Theme) => void;
+  setTheme(theme: Theme): void;
   /**
    * Set the editor value
+   * 
+   * @param value - The new editor value
+   * @param parseOnSetValue - Whether to update the language parser tree immediately for the new value (defaults to true)
    */
-  setValue: (value: string, parseOnSetValue?: boolean) => void;
+  setValue(value: string, parseOnSetValue?: boolean): void;
 
   /**
    * Add an event listener for editor autocomplete changes
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onAutocompleteChanged: (listener: AutocompleteChangedListener) => () => void;
+  onAutocompleteChanged(listener: AutocompleteChangedListener): () => void;
   /**
    * remove an event listener for editor autocomplete changes
    */
-  offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
+  offAutocompleteChanged(listener: AutocompleteChangedListener): void;
   /**
    * Add an event listener for editor focus changes
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onFocusChanged: (listener: FocusChangedListener) => () => void;
+  onFocusChanged(listener: FocusChangedListener): () => void;
   /**
    * remove an event listener for editor focus changes
    */
-  offFocusChanged: (listener: FocusChangedListener) => void;
+  offFocusChanged(listener: FocusChangedListener): void;
   /**
    * Add an event listener for editor key down events
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onKeyDown: (listener: KeyDownListener) => () => void;
+  onKeyDown(listener: KeyDownListener): () => void;
   /**
    * remove an event listener for editor key down events
    */
-  offKeyDown: (listener: KeyDownListener) => void;
+  offKeyDown(listener: KeyDownListener): void;
   /**
    * Add an event listener for editor line number click events
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onLineNumberClick: (listener: LineNumberClickListener) => () => void;
+  onLineNumberClick(listener: LineNumberClickListener): () => void;
   /**
    * remove an event listener for editor line number click events
    */
-  offLineNumberClick: (listener: LineNumberClickListener) => void;
+  offLineNumberClick(listener: LineNumberClickListener): void;
   /**
    * Add an event listener for editor cursor position changes
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onPositionChanged: (listener: PositionChangedListener) => () => void;
+  onPositionChanged(listener: PositionChangedListener): () => void;
   /**
    * remove an event listener for editor curosor position changes
    */
-  offPositionChanged: (listener: PositionChangedListener) => void;
+  offPositionChanged(listener: PositionChangedListener): void;
   /**
    * Add an event listener for editor scroll position changes
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onScrollChanged: (listener: ScrollChangedListener) => () => void;
+  onScrollChanged(listener: ScrollChangedListener): () => void;
   /**
    * remove an event listener for editor scroll position changes
    */
-  offScrollChanged: (listener: ScrollChangedListener) => void;
-
+  offScrollChanged(listener: ScrollChangedListener): void;
   /**
    * Add an event listener for editor value changes
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onValueChanged: (listener: ValueChangedListener) => () => void;
+  onValueChanged(listener: ValueChangedListener): () => void;
   /**
    * remove an event listener for editor value changes
    */
-  offValueChanged: (listener: ValueChangedListener) => void;
+  offValueChanged(listener: ValueChangedListener): void;
 
   /**
    * set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
    */
-  setPreExtensions: (preExtensions: Extension[]) => void;
+  setPreExtensions(preExtensions: Extension[]): void;
   /**
    * set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
    */
-  setPostExtensions: (preExtensions: Extension[]) => void;
+  setPostExtensions(preExtensions: Extension[]): void;
 
   /**
    * The editor support instance used internally by the editor

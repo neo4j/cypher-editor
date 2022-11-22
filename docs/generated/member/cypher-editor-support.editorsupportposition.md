@@ -4,7 +4,7 @@
 
 ## EditorSupportPosition interface
 
-EditorSupportPosition
+The editor support library has its own representation of editor positions
 
 <b>Signature:</b>
 
@@ -14,8 +14,8 @@ export interface EditorSupportPosition
 
 ## Properties
 
-|  Property | Type |
-|  --- | --- |
-|  [column](./cypher-editor-support.editorsupportposition.column.md) | number |
-|  [line](./cypher-editor-support.editorsupportposition.line.md) | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](./cypher-editor-support.editorsupportposition.column.md) | number |  |
+|  [line](./cypher-editor-support.editorsupportposition.line.md) | number | The 1 based line number The 0 based column number |
 

@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onKeyDown](./cypher-codemirror.editorapi.onkeydown.md)
 
-## EditorApi.onKeyDown property
+## EditorApi.onKeyDown() method
 
 Add an event listener for editor key down events
 
 <b>Signature:</b>
 
 ```typescript
-onKeyDown: (listener: KeyDownListener) => () => void;
+onKeyDown(listener: KeyDownListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [KeyDownListener](./cypher-codemirror.keydownlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onPositionChanged](./cypher-codemirror.editorapi.onpositionchanged.md)
 
-## EditorApi.onPositionChanged property
+## EditorApi.onPositionChanged() method
 
 Add an event listener for editor cursor position changes
 
 <b>Signature:</b>
 
 ```typescript
-onPositionChanged: (listener: PositionChangedListener) => () => void;
+onPositionChanged(listener: PositionChangedListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

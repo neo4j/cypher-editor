@@ -4,6 +4,8 @@
 
 ## EditorSupportSchema.procedures property
 
+The list of procedures provided the graph database
+
 <b>Signature:</b>
 
 ```typescript

@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setReadOnly](./cypher-codemirror.editorapi.setreadonly.md)
 
-## EditorApi.setReadOnly property
+## EditorApi.setReadOnly() method
 
 Set whether the editor is read only or the user can edit the editor's value
 
 <b>Signature:</b>
 
 ```typescript
-setReadOnly: (readOnly: boolean) => void;
+setReadOnly(readOnly: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  readOnly | boolean |
+
+<b>Returns:</b>
+
+void
+

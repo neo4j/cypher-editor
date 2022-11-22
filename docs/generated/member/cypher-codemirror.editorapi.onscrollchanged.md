@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onScrollChanged](./cypher-codemirror.editorapi.onscrollchanged.md)
 
-## EditorApi.onScrollChanged property
+## EditorApi.onScrollChanged() method
 
 Add an event listener for editor scroll position changes
 
 <b>Signature:</b>
 
 ```typescript
-onScrollChanged: (listener: ScrollChangedListener) => () => void;
+onScrollChanged(listener: ScrollChangedListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

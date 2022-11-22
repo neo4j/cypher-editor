@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setAutocomplete](./cypher-codemirror.editorapi.setautocomplete.md)
 
-## EditorApi.setAutocomplete property
+## EditorApi.setAutocomplete() method
 
 Set whether or not the autocomplete feature is enabled
 
 <b>Signature:</b>
 
 ```typescript
-setAutocomplete: (autocomplete: boolean) => void;
+setAutocomplete(autocomplete: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocomplete | boolean |
+
+<b>Returns:</b>
+
+void
+

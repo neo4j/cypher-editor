@@ -4,6 +4,8 @@
 
 ## EditorSupportSchema.consoleCommands property
 
+The list of console commands
+
 <b>Signature:</b>
 
 ```typescript

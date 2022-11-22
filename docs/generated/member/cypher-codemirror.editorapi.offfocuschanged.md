@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offFocusChanged](./cypher-codemirror.editorapi.offfocuschanged.md)
 
-## EditorApi.offFocusChanged property
+## EditorApi.offFocusChanged() method
 
 remove an event listener for editor focus changes
 
 <b>Signature:</b>
 
 ```typescript
-offFocusChanged: (listener: FocusChangedListener) => void;
+offFocusChanged(listener: FocusChangedListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |
+
+<b>Returns:</b>
+
+void
+

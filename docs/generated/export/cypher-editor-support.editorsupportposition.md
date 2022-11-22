@@ -4,7 +4,7 @@
 
 ## EditorSupportPosition interface
 
-EditorSupportPosition
+The editor support library has its own representation of editor positions
 
 <b>Signature:</b>
 
@@ -18,10 +18,10 @@ export interface EditorSupportPosition
 
 ### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [column](#column) | number |
-|  [line](#line) | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](#column) | number |  |
+|  [line](#line) | number | The 1 based line number The 0 based column number |
 
 <br>
 
@@ -40,6 +40,8 @@ column: number;
 <a name="line"></a>
 
 ### EditorSupportPosition.line property
+
+The 1 based line number The 0 based column number
 
 <b>Signature:</b>
 

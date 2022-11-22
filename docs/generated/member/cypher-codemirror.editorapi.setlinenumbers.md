@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setLineNumbers](./cypher-codemirror.editorapi.setlinenumbers.md)
 
-## EditorApi.setLineNumbers property
+## EditorApi.setLineNumbers() method
 
 Set whether or not line numbers are shown to the left of the editor ui
 
 <b>Signature:</b>
 
 ```typescript
-setLineNumbers: (lineNumbers: boolean) => void;
+setLineNumbers(lineNumbers: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  lineNumbers | boolean |
+
+<b>Returns:</b>
+
+void
+

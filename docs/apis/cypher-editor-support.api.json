@@ -175,7 +175,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "cypher-editor-support!CompletionType:type",
-          "docComment": "",
+          "docComment": "/**\n * All autocomplete options have a CompletionType\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -201,7 +201,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!ConsoleCommand:interface",
-          "docComment": "",
+          "docComment": "/**\n * A console command, these are typically prefixed with `:` like `:help`\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -305,7 +305,7 @@
         {
           "kind": "Class",
           "canonicalReference": "cypher-editor-support!CypherEditorSupport:class",
-          "docComment": "",
+          "docComment": "/**\n * Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -632,8 +632,9 @@
                   "text": "type: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "CompletionType",
+                  "canonicalReference": "cypher-editor-support!CompletionType:type"
                 },
                 {
                   "kind": "Content",
@@ -682,7 +683,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!EditorSupportPosition:interface",
-          "docComment": "/**\n * EditorSupportPosition\n */\n",
+          "docComment": "/**\n * The editor support library has its own representation of editor positions\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -724,7 +725,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportPosition#line:member",
-              "docComment": "",
+              "docComment": "/**\n * The 1 based line number The 0 based column number\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -754,7 +755,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!EditorSupportSchema:interface",
-          "docComment": "/**\n * Editor Support Autocomplete Schema\n */\n",
+          "docComment": "/**\n * The editor support schema contains information about a graph database that enables advanced autocompletion & syntax highlighting.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -769,7 +770,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportSchema#consoleCommands:member",
-              "docComment": "",
+              "docComment": "/**\n * The list of console commands\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -801,7 +802,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportSchema#functions:member",
-              "docComment": "",
+              "docComment": "/**\n * The list of functions provided the graph database\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -860,7 +861,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportSchema#parameters:member",
-              "docComment": "",
+              "docComment": "/**\n * The list of parameters\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -887,7 +888,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportSchema#procedures:member",
-              "docComment": "",
+              "docComment": "/**\n * The list of procedures provided the graph database\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -919,7 +920,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "cypher-editor-support!EditorSupportSchema#propertyKeys:member",
-              "docComment": "",
+              "docComment": "/**\n * The list of property keys in the graph database\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -976,7 +977,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!FunctionSchema:interface",
-          "docComment": "",
+          "docComment": "/**\n * A function provided by the graph database\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -1048,7 +1049,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "cypher-editor-support!ProcedureSchema:interface",
-          "docComment": "",
+          "docComment": "/**\n * A procedure provided by the graph database\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

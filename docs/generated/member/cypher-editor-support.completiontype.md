@@ -4,6 +4,8 @@
 
 ## CompletionType type
 
+All autocomplete options have a CompletionType
+
 <b>Signature:</b>
 
 ```typescript

@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offAutocompleteChanged](./cypher-codemirror.editorapi.offautocompletechanged.md)
 
-## EditorApi.offAutocompleteChanged property
+## EditorApi.offAutocompleteChanged() method
 
 remove an event listener for editor autocomplete changes
 
 <b>Signature:</b>
 
 ```typescript
-offAutocompleteChanged: (listener: AutocompleteChangedListener) => void;
+offAutocompleteChanged(listener: AutocompleteChangedListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) |
+
+<b>Returns:</b>
+
+void
+

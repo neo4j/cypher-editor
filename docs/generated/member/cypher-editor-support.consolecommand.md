@@ -4,6 +4,8 @@
 
 ## ConsoleCommand interface
 
+A console command, these are typically prefixed with `:` like `:help`
+
 <b>Signature:</b>
 
 ```typescript

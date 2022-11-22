@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offPositionChanged](./cypher-codemirror.editorapi.offpositionchanged.md)
 
-## EditorApi.offPositionChanged property
+## EditorApi.offPositionChanged() method
 
 remove an event listener for editor curosor position changes
 
 <b>Signature:</b>
 
 ```typescript
-offPositionChanged: (listener: PositionChangedListener) => void;
+offPositionChanged(listener: PositionChangedListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) |
+
+<b>Returns:</b>
+
+void
+

@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setAutocompleteSchema](./cypher-codemirror.editorapi.setautocompleteschema.md)
 
-## EditorApi.setAutocompleteSchema property
+## EditorApi.setAutocompleteSchema() method
 
 Set the schema - TODO need better docs here and probably rename this
 
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteSchema: (autocompleteSchema: EditorSupportSchema) => void;
+setAutocompleteSchema(autocompleteSchema: EditorSupportSchema): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocompleteSchema | [EditorSupportSchema](./cypher-editor-support.editorsupportschema.md) |
+
+<b>Returns:</b>
+
+void
+

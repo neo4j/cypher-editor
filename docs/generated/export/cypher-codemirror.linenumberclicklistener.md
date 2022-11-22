@@ -4,6 +4,8 @@
 
 ## LineNumberClickListener call signature
 
+Listener for editor line number click events
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,10 @@ export interface LineNumberClickListener {
 
 #### Parameters:
 
-|  Parameter | Type |
-|  --- | --- |
-|  lineNumber | number |
-|  event | Event |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lineNumber | number | the 1 based line number that was clicked |
+|  event | Event | the native event |
 
 <b>Returns:</b>
 

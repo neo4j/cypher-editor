@@ -12,9 +12,9 @@ export interface KeyDownListener {
 
 ## Parameters
 
-|  Parameter | Type |
-|  --- | --- |
-|  event | KeyboardEvent |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  event | KeyboardEvent | the native keyboard event |
 
 <b>Returns:</b>
 

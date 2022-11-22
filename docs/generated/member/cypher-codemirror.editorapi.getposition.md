@@ -2,12 +2,16 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [getPosition](./cypher-codemirror.editorapi.getposition.md)
 
-## EditorApi.getPosition property
+## EditorApi.getPosition() method
 
 Get the current editor cursor position
 
 <b>Signature:</b>
 
 ```typescript
-getPosition: () => PositionObject;
+getPosition(): PositionObject;
 ```
+<b>Returns:</b>
+
+[PositionObject](./cypher-codemirror.positionobject.md)
+

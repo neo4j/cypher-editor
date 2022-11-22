@@ -4,6 +4,8 @@
 
 ## FunctionSchema interface
 
+A function provided by the graph database
+
 <b>Signature:</b>
 
 ```typescript

@@ -1,7 +1,11 @@
 /**
- * EditorSupportPosition
+ * The editor support library has its own representation of editor positions
  */
 export interface EditorSupportPosition {
+  /**
+   * The 1 based line number
+   * The 0 based column number
+   */
   line: number;
   column: number;
 }
@@ -10,23 +14,32 @@ export interface EditorSupportPosition {
  * EditorSupportCompletionItem
  */
 export interface EditorSupportCompletionItem {
-  type: string;
+  type: CompletionType;
   view: string;
   content: string;
   postfix: null;
 }
 
+/**
+ * A console command, these are typically prefixed with `:` like `:help`
+ */
 export interface ConsoleCommand {
   name: string;
   description?: string;
   commands?: ConsoleCommand[];
 }
 
+/**
+ * A function provided by the graph database
+ */
 export interface FunctionSchema {
   name: string;
   signature: string;
 }
 
+/**
+ * A procedure provided by the graph database
+ */
 export interface ProcedureSchema {
   name: string;
   signature: string;
@@ -34,7 +47,8 @@ export interface ProcedureSchema {
 }
 
 /**
- * Editor Support Autocomplete Schema
+ * The editor support schema contains information about a graph database
+ * that enables advanced autocompletion & syntax highlighting.
  */
 export interface EditorSupportSchema {
   /**
@@ -45,13 +59,31 @@ export interface EditorSupportSchema {
    * The list of relationship types in the graph database
    */
   relationshipTypes?: string[];
+  /**
+   * The list of property keys in the graph database
+   */
   propertyKeys?: string[];
+  /**
+   * The list of functions provided the graph database
+   */
   functions?: FunctionSchema[];
+  /**
+   * The list of procedures provided the graph database
+   */
   procedures?: ProcedureSchema[];
+  /**
+   * The list of console commands
+   */
   consoleCommands?: ConsoleCommand[];
+  /**
+   * The list of parameters
+   */
   parameters?: string[];
 }
 
+/**
+ * Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar
+ */
 export class CypherEditorSupport {
   constructor(input: string);
   getCompletion(
@@ -67,6 +99,9 @@ export class CypherEditorSupport {
   update(input: string): void;
 }
 
+/**
+ * All autocomplete options have a CompletionType
+ */
 export type CompletionType =
   | "keyword"
   | "label"

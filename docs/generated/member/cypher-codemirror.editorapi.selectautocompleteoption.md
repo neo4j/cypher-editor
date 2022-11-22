@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [selectAutocompleteOption](./cypher-codemirror.editorapi.selectautocompleteoption.md)
 
-## EditorApi.selectAutocompleteOption property
+## EditorApi.selectAutocompleteOption() method
 
 Select the autocomplete option with the given index, causing it to be applied to the editor value
 
 <b>Signature:</b>
 
 ```typescript
-selectAutocompleteOption: (autocompleteOptionIndex: number) => void;
+selectAutocompleteOption(autocompleteOptionIndex: number): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  autocompleteOptionIndex | number |
+
+<b>Returns:</b>
+
+void
+

@@ -18,6 +18,6 @@ export interface EditorSupportCompletionItem
 |  --- | --- |
 |  [content](./cypher-editor-support.editorsupportcompletionitem.content.md) | string |
 |  [postfix](./cypher-editor-support.editorsupportcompletionitem.postfix.md) | null |
-|  [type](./cypher-editor-support.editorsupportcompletionitem.type.md) | string |
+|  [type](./cypher-editor-support.editorsupportcompletionitem.type.md) | [CompletionType](./cypher-editor-support.completiontype.md) |
 |  [view](./cypher-editor-support.editorsupportcompletionitem.view.md) | string |
 

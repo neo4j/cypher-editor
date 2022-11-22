@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [getPositionForValue](./cypher-codemirror.editorapi.getpositionforvalue.md)
 
-## EditorApi.getPositionForValue property
+## EditorApi.getPositionForValue() method
 
 Get a full position object for any supported position value or null if position value is invalid
 
 <b>Signature:</b>
 
 ```typescript
-getPositionForValue: (positionValue: PositionAny) => PositionObject | null;
+getPositionForValue(positionValue: PositionAny): PositionObject | null;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  positionValue | [PositionAny](./cypher-codemirror.positionany.md) |
+
+<b>Returns:</b>
+
+[PositionObject](./cypher-codemirror.positionobject.md) \| null
+

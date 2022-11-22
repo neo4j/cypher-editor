@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setTheme](./cypher-codemirror.editorapi.settheme.md)
 
-## EditorApi.setTheme property
+## EditorApi.setTheme() method
 
 Set whether to use the light or dark theme for the editor
 
 <b>Signature:</b>
 
 ```typescript
-setTheme: (theme: Theme) => void;
+setTheme(theme: Theme): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  theme | [Theme](./cypher-codemirror.theme.md) |
+
+<b>Returns:</b>
+
+void
+

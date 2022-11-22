@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setHistory](./cypher-codemirror.editorapi.sethistory.md)
 
-## EditorApi.setHistory property
+## EditorApi.setHistory() method
 
 Set whether or not the editor maintains an undo/redo history
 
 <b>Signature:</b>
 
 ```typescript
-setHistory: (history: boolean) => void;
+setHistory(history: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  history | boolean |
+
+<b>Returns:</b>
+
+void
+

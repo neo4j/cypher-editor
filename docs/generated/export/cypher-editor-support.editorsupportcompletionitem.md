@@ -22,7 +22,7 @@ export interface EditorSupportCompletionItem
 |  --- | --- |
 |  [content](#content) | string |
 |  [postfix](#postfix) | null |
-|  [type](#type) | string |
+|  [type](#type) | [CompletionType](./cypher-editor-support.completiontype.md) |
 |  [view](#view) | string |
 
 <br>
@@ -58,7 +58,7 @@ postfix: null;
 <b>Signature:</b>
 
 ```typescript
-type: string;
+type: CompletionType;
 ```
 
 <br>

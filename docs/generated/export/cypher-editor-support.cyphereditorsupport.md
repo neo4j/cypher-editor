@@ -4,6 +4,8 @@
 
 ## CypherEditorSupport class
 
+Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar
+
 <b>Signature:</b>
 
 ```typescript

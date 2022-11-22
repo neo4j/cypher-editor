@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setLint](./cypher-codemirror.editorapi.setlint.md)
 
-## EditorApi.setLint property
+## EditorApi.setLint() method
 
 Set whether or not the editor should display lint errors to the user
 
 <b>Signature:</b>
 
 ```typescript
-setLint: (lint: boolean) => void;
+setLint(lint: boolean): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  lint | boolean |
+
+<b>Returns:</b>
+
+void
+

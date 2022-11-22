@@ -2,12 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [onFocusChanged](./cypher-codemirror.editorapi.onfocuschanged.md)
 
-## EditorApi.onFocusChanged property
+## EditorApi.onFocusChanged() method
 
 Add an event listener for editor focus changes
 
 <b>Signature:</b>
 
 ```typescript
-onFocusChanged: (listener: FocusChangedListener) => () => void;
+onFocusChanged(listener: FocusChangedListener): () => void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+

@@ -8,15 +8,17 @@
 
 ### Classes:
 
-|  Class |
-|  --- |
-|  [CypherEditorSupport](#cyphereditorsupport) |
+|  Class | Description |
+|  --- | --- |
+|  [CypherEditorSupport](#cyphereditorsupport) | Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar |
 
 <br>
 
 <a name="cyphereditorsupport"></a>
 
 ### CypherEditorSupport class
+
+Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar
 
 <b>Signature:</b>
 
@@ -140,18 +142,20 @@ void
 
 |  Interface | Description |
 |  --- | --- |
-|  [ConsoleCommand](#consolecommand) |  |
+|  [ConsoleCommand](#consolecommand) | A console command, these are typically prefixed with <code>:</code> like <code>:help</code> |
 |  [EditorSupportCompletionItem](#editorsupportcompletionitem) | EditorSupportCompletionItem |
-|  [EditorSupportPosition](#editorsupportposition) | EditorSupportPosition |
-|  [EditorSupportSchema](#editorsupportschema) | Editor Support Autocomplete Schema |
-|  [FunctionSchema](#functionschema) |  |
-|  [ProcedureSchema](#procedureschema) |  |
+|  [EditorSupportPosition](#editorsupportposition) | The editor support library has its own representation of editor positions |
+|  [EditorSupportSchema](#editorsupportschema) | The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting. |
+|  [FunctionSchema](#functionschema) | A function provided by the graph database |
+|  [ProcedureSchema](#procedureschema) | A procedure provided by the graph database |
 
 <br>
 
 <a name="consolecommand"></a>
 
 ### ConsoleCommand interface
+
+A console command, these are typically prefixed with `:` like `:help`
 
 <b>Signature:</b>
 
@@ -227,7 +231,7 @@ export interface EditorSupportCompletionItem
 |  --- | --- |
 |  [content](#editorsupportcompletionitem.content) | string |
 |  [postfix](#editorsupportcompletionitem.postfix) | null |
-|  [type](#editorsupportcompletionitem.type) | string |
+|  [type](#editorsupportcompletionitem.type) | [CompletionType](#completiontype) |
 |  [view](#editorsupportcompletionitem.view) | string |
 
 <br>
@@ -263,7 +267,7 @@ postfix: null;
 <b>Signature:</b>
 
 ```typescript
-type: string;
+type: CompletionType;
 ```
 
 <br>
@@ -284,7 +288,7 @@ view: string;
 
 ### EditorSupportPosition interface
 
-EditorSupportPosition
+The editor support library has its own representation of editor positions
 
 <b>Signature:</b>
 
@@ -296,10 +300,10 @@ export interface EditorSupportPosition
 
 #### Properties:
 
-|  Property | Type |
-|  --- | --- |
-|  [column](#editorsupportposition.column) | number |
-|  [line](#editorsupportposition.line) | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](#editorsupportposition.column) | number |  |
+|  [line](#editorsupportposition.line) | number | The 1 based line number The 0 based column number |
 
 <br>
 
@@ -319,6 +323,8 @@ column: number;
 
 #### EditorSupportPosition.line property
 
+The 1 based line number The 0 based column number
+
 <b>Signature:</b>
 
 ```typescript
@@ -331,7 +337,7 @@ line: number;
 
 ### EditorSupportSchema interface
 
-Editor Support Autocomplete Schema
+The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting.
 
 <b>Signature:</b>
 
@@ -345,12 +351,12 @@ export interface EditorSupportSchema
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [consoleCommands?](#editorsupportschema.consolecommands) | [ConsoleCommand](#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
-|  [functions?](#editorsupportschema.functions) | [FunctionSchema](#functionschema)<!-- -->\[\] | <i>(Optional)</i> |
+|  [consoleCommands?](#editorsupportschema.consolecommands) | [ConsoleCommand](#consolecommand)<!-- -->\[\] | <i>(Optional)</i> The list of console commands |
+|  [functions?](#editorsupportschema.functions) | [FunctionSchema](#functionschema)<!-- -->\[\] | <i>(Optional)</i> The list of functions provided the graph database |
 |  [labels?](#editorsupportschema.labels) | string\[\] | <i>(Optional)</i> The list of labels in the graph database |
-|  [parameters?](#editorsupportschema.parameters) | string\[\] | <i>(Optional)</i> |
-|  [procedures?](#editorsupportschema.procedures) | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i> |
-|  [propertyKeys?](#editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> |
+|  [parameters?](#editorsupportschema.parameters) | string\[\] | <i>(Optional)</i> The list of parameters |
+|  [procedures?](#editorsupportschema.procedures) | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i> The list of procedures provided the graph database |
+|  [propertyKeys?](#editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> The list of property keys in the graph database |
 |  [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 
 <br>
@@ -358,6 +364,8 @@ export interface EditorSupportSchema
 <a name="editorsupportschema.consolecommands"></a>
 
 #### EditorSupportSchema.consoleCommands property
+
+The list of console commands
 
 <b>Signature:</b>
 
@@ -370,6 +378,8 @@ consoleCommands?: ConsoleCommand[];
 <a name="editorsupportschema.functions"></a>
 
 #### EditorSupportSchema.functions property
+
+The list of functions provided the graph database
 
 <b>Signature:</b>
 
@@ -397,6 +407,8 @@ labels?: string[];
 
 #### EditorSupportSchema.parameters property
 
+The list of parameters
+
 <b>Signature:</b>
 
 ```typescript
@@ -409,6 +421,8 @@ parameters?: string[];
 
 #### EditorSupportSchema.procedures property
 
+The list of procedures provided the graph database
+
 <b>Signature:</b>
 
 ```typescript
@@ -420,6 +434,8 @@ procedures?: ProcedureSchema[];
 <a name="editorsupportschema.propertykeys"></a>
 
 #### EditorSupportSchema.propertyKeys property
+
+The list of property keys in the graph database
 
 <b>Signature:</b>
 
@@ -446,6 +462,8 @@ relationshipTypes?: string[];
 <a name="functionschema"></a>
 
 ### FunctionSchema interface
+
+A function provided by the graph database
 
 <b>Signature:</b>
 
@@ -491,6 +509,8 @@ signature: string;
 <a name="procedureschema"></a>
 
 ### ProcedureSchema interface
+
+A procedure provided by the graph database
 
 <b>Signature:</b>
 
@@ -548,15 +568,17 @@ signature: string;
 
 ### Type Aliases:
 
-|  Type Alias |
-|  --- |
-|  [CompletionType](#completiontype) |
+|  Type Alias | Description |
+|  --- | --- |
+|  [CompletionType](#completiontype) | All autocomplete options have a CompletionType |
 
 <br>
 
 <a name="completiontype"></a>
 
 ### CompletionType type
+
+All autocomplete options have a CompletionType
 
 <b>Signature:</b>
 

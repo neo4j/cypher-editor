@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setPlaceholder](./cypher-codemirror.editorapi.setplaceholder.md)
 
-## EditorApi.setPlaceholder property
+## EditorApi.setPlaceholder() method
 
 Set the text to be shown to the user when the editor value is empty
 
 <b>Signature:</b>
 
 ```typescript
-setPlaceholder: (placeholder: string | undefined) => void;
+setPlaceholder(placeholder: string | undefined): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  placeholder | string \| undefined |
+
+<b>Returns:</b>
+
+void
+

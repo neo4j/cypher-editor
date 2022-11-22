@@ -2,12 +2,16 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [focus](./cypher-codemirror.editorapi.focus.md)
 
-## EditorApi.focus property
+## EditorApi.focus() method
 
 Brings the browser focus to the editor
 
 <b>Signature:</b>
 
 ```typescript
-focus: () => void;
+focus(): void;
 ```
+<b>Returns:</b>
+
+void
+

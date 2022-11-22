@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setPosition](./cypher-codemirror.editorapi.setposition.md)
 
-## EditorApi.setPosition property
+## EditorApi.setPosition() method
 
 Set the current editor cursor position
 
 <b>Signature:</b>
 
 ```typescript
-setPosition: (position: PositionAny) => void;
+setPosition(position: PositionAny): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  position | [PositionAny](./cypher-codemirror.positionany.md) |
+
+<b>Returns:</b>
+
+void
+

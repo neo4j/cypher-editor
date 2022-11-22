@@ -4,3 +4,5 @@
 
 ## LineNumberClickListener call signature
 
+Listener for editor line number click events
+

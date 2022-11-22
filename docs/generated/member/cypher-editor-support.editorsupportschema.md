@@ -4,7 +4,7 @@
 
 ## EditorSupportSchema interface
 
-Editor Support Autocomplete Schema
+The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting.
 
 <b>Signature:</b>
 
@@ -16,11 +16,11 @@ export interface EditorSupportSchema
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [consoleCommands?](./cypher-editor-support.editorsupportschema.consolecommands.md) | [ConsoleCommand](./cypher-editor-support.consolecommand.md)<!-- -->\[\] | <i>(Optional)</i> |
-|  [functions?](./cypher-editor-support.editorsupportschema.functions.md) | [FunctionSchema](./cypher-editor-support.functionschema.md)<!-- -->\[\] | <i>(Optional)</i> |
+|  [consoleCommands?](./cypher-editor-support.editorsupportschema.consolecommands.md) | [ConsoleCommand](./cypher-editor-support.consolecommand.md)<!-- -->\[\] | <i>(Optional)</i> The list of console commands |
+|  [functions?](./cypher-editor-support.editorsupportschema.functions.md) | [FunctionSchema](./cypher-editor-support.functionschema.md)<!-- -->\[\] | <i>(Optional)</i> The list of functions provided the graph database |
 |  [labels?](./cypher-editor-support.editorsupportschema.labels.md) | string\[\] | <i>(Optional)</i> The list of labels in the graph database |
-|  [parameters?](./cypher-editor-support.editorsupportschema.parameters.md) | string\[\] | <i>(Optional)</i> |
-|  [procedures?](./cypher-editor-support.editorsupportschema.procedures.md) | [ProcedureSchema](./cypher-editor-support.procedureschema.md)<!-- -->\[\] | <i>(Optional)</i> |
-|  [propertyKeys?](./cypher-editor-support.editorsupportschema.propertykeys.md) | string\[\] | <i>(Optional)</i> |
+|  [parameters?](./cypher-editor-support.editorsupportschema.parameters.md) | string\[\] | <i>(Optional)</i> The list of parameters |
+|  [procedures?](./cypher-editor-support.editorsupportschema.procedures.md) | [ProcedureSchema](./cypher-editor-support.procedureschema.md)<!-- -->\[\] | <i>(Optional)</i> The list of procedures provided the graph database |
+|  [propertyKeys?](./cypher-editor-support.editorsupportschema.propertykeys.md) | string\[\] | <i>(Optional)</i> The list of property keys in the graph database |
 |  [relationshipTypes?](./cypher-editor-support.editorsupportschema.relationshiptypes.md) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
 

@@ -16,8 +16,8 @@
 |  --- | --- |
 |  [AutocompleteChangedListener](./cypher-codemirror.autocompletechangedlistener.md) | Listener for editor autocomplete changes |
 |  [FocusChangedListener](./cypher-codemirror.focuschangedlistener.md) | Listener for editor focus changes |
-|  [KeyDownListener](./cypher-codemirror.keydownlistener.md) |  |
-|  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |  |
+|  [KeyDownListener](./cypher-codemirror.keydownlistener.md) | Listener for editor key down events |
+|  [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) | Listener for editor line number click events |
 |  [PositionChangedListener](./cypher-codemirror.positionchangedlistener.md) | Listener for editor cursor position changes |
 |  [ScrollChangedListener](./cypher-codemirror.scrollchangedlistener.md) | Listener for editor scroll position changes |
 |  [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) | Listener for editor value changes |
@@ -27,7 +27,7 @@
 |  Interface | Description |
 |  --- | --- |
 |  [AutocompleteOption](./cypher-codemirror.autocompleteoption.md) | Information about an autocomplete option that was suggested to the user |
-|  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi which wraps all of the interaction with the cypher editor |
+|  [EditorApi](./cypher-codemirror.editorapi.md) | This is the EditorApi interface which wraps all of the interaction with the cypher editor |
 |  [EditorOptions](./cypher-codemirror.editoroptions.md) | These are the options for the [createCypherEditor](./cypher-codemirror.createcyphereditor.md) function |
 |  [PartialPositionObject](./cypher-codemirror.partialpositionobject.md) | Partial editor cursor position with line &amp; column only |
 |  [PositionObject](./cypher-codemirror.positionobject.md) | Full editor cursor position with line, column &amp; position |

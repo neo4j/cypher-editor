@@ -2,14 +2,25 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [setLineNumberFormatter](./cypher-codemirror.editorapi.setlinenumberformatter.md)
 
-## EditorApi.setLineNumberFormatter property
+## EditorApi.setLineNumberFormatter() method
 
 Set the formatter for the line numbers of the editor
 
 <b>Signature:</b>
 
 ```typescript
-setLineNumberFormatter: (
+setLineNumberFormatter(
     lineNumberFormatter: (lineNumber: number, lineCount: number) => string
-  ) => void;
+  ): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  lineNumberFormatter | (lineNumber: number, lineCount: number) =&gt; string |
+
+<b>Returns:</b>
+
+void
+

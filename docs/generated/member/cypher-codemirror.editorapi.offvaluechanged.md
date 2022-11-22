@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offValueChanged](./cypher-codemirror.editorapi.offvaluechanged.md)
 
-## EditorApi.offValueChanged property
+## EditorApi.offValueChanged() method
 
 remove an event listener for editor value changes
 
 <b>Signature:</b>
 
 ```typescript
-offValueChanged: (listener: ValueChangedListener) => void;
+offValueChanged(listener: ValueChangedListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [ValueChangedListener](./cypher-codemirror.valuechangedlistener.md) |
+
+<b>Returns:</b>
+
+void
+

@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [cypher-codemirror](./cypher-codemirror.md) &gt; [EditorApi](./cypher-codemirror.editorapi.md) &gt; [offLineNumberClick](./cypher-codemirror.editorapi.offlinenumberclick.md)
 
-## EditorApi.offLineNumberClick property
+## EditorApi.offLineNumberClick() method
 
 remove an event listener for editor line number click events
 
 <b>Signature:</b>
 
 ```typescript
-offLineNumberClick: (listener: LineNumberClickListener) => void;
+offLineNumberClick(listener: LineNumberClickListener): void;
 ```
+
+## Parameters
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [LineNumberClickListener](./cypher-codemirror.linenumberclicklistener.md) |
+
+<b>Returns:</b>
+
+void
+
