@@ -8,16 +8,22 @@
 
 ### Packages:
 
-|  Package |
-|  --- |
-|  [cypher-codemirror](#cypher-codemirror) |
-|  [cypher-editor-support](#cypher-editor-support) |
-|  [react-codemirror-cypher](#react-codemirror-cypher) |
-|  [svelte-codemirror-cypher](#svelte-codemirror-cypher) |
+|  Package | Description |
+|  --- | --- |
+|  [cypher-codemirror](#cypher-codemirror) | Adds support for the cypher query language to Codemirror version 6 |
+|  [cypher-editor-support](#cypher-editor-support) |  |
+|  [react-codemirror-cypher](#react-codemirror-cypher) |  |
+|  [svelte-codemirror-cypher](#svelte-codemirror-cypher) | This package exports a Svelte Cypher Editor component |
 
 <a name="cypher-codemirror"></a>
 
 ### cypher-codemirror package
+
+Adds support for the cypher query language to Codemirror version 6
+
+#### Remarks:
+
+This package provides a factory function for constructing an [EditorApi](#cypher-codemirror.editorapi) instance which wraps a Codemirror 6 instance with cypher language capabilities.
 
 <br>
 
@@ -3048,6 +3054,21 @@ value?: string;
 <a name="svelte-codemirror-cypher"></a>
 
 ### svelte-codemirror-cypher package
+
+This package exports a Svelte Cypher Editor component
+
+#### Remarks:
+
+The props for this component are defined by the [CypherEditorProps](#svelte-codemirror-cypher.cyphereditorprops) interface
+
+#### Example:
+
+Here's some example code using the props:
+
+```ts
+const props = { autocomplete: false };
+<CypherEditor {...props} />
+```
 
 <br>
 

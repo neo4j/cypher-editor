@@ -4,6 +4,21 @@
 
 ## svelte-codemirror-cypher package
 
+This package exports a Svelte Cypher Editor component
+
+## Remarks
+
+The props for this component are defined by the [CypherEditorProps](./svelte-codemirror-cypher.cyphereditorprops.md) interface
+
+## Example
+
+Here's some example code using the props:
+
+```ts
+const props = { autocomplete: false };
+<CypherEditor {...props} />
+```
+
 ## Classes
 
 |  Class | Description |

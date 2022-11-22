@@ -18,23 +18,6 @@ import type {
 } from "cypher-codemirror";
 
 /**
- * This package exports a Svelte Cypher Editor component
- * 
- * @remarks
- * 
- * The props for this component are defined by the {@link svelte-codemirro-cypher#CypherEditorProps | CypherEditorProps} interface
- * 
- * @example
- * Here's some example code using the props:
- *
- * ```ts
- * const props = { autocomplete: false };
- * <CypherEditor {...props} />
- * ```
- * @packageDocumentation
- */
-
-/**
  * Interface for Svelte Cypher Editor component props
  */
 export interface CypherEditorProps {

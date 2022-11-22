@@ -4,6 +4,12 @@
 
 ## cypher-codemirror package
 
+Adds support for the cypher query language to Codemirror version 6
+
+### Remarks:
+
+This package provides a factory function for constructing an [EditorApi](./cypher-codemirror.editorapi.md) instance which wraps a Codemirror 6 instance with cypher language capabilities.
+
 ### Functions:
 
 |  Function | Description |

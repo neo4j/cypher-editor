@@ -1,16 +1,17 @@
-import type { ChangeSet, Extension } from "@codemirror/state";
-import type { EditorView } from "@codemirror/view";
-
 /**
- * Codemirror 6 cypher language support
+ * Adds support for the cypher query language to Codemirror version 6
  *
  * @remarks
  *
  * This package provides a factory function for constructing an
  * {@link cypher-codemirror#EditorApi | EditorApi} instance which
- * wraps a Codemirror 6 instance with cypher language support.
+ * wraps a Codemirror 6 instance with cypher language capabilities.
+ * 
  * @packageDocumentation
  */
+
+import type { ChangeSet, Extension } from "@codemirror/state";
+import type { EditorView } from "@codemirror/view";
 
 import type {
   EditorSupportSchema,

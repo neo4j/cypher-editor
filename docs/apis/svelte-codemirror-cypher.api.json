@@ -162,7 +162,7 @@
   },
   "kind": "Package",
   "canonicalReference": "svelte-codemirror-cypher!",
-  "docComment": "",
+  "docComment": "/**\n * This package exports a Svelte Cypher Editor component\n *\n * @remarks\n *\n * The props for this component are defined by the {@link svelte-codemirror-cypher#CypherEditorProps | CypherEditorProps} interface\n *\n * @example\n *\n * Here's some example code using the props:\n * ```ts\n * const props = { autocomplete: false };\n * <CypherEditor {...props} />\n * ```\n *\n * @packageDocumentation\n */\n",
   "name": "svelte-codemirror-cypher",
   "preserveMemberOrder": false,
   "members": [

@@ -162,7 +162,7 @@
   },
   "kind": "Package",
   "canonicalReference": "cypher-codemirror!",
-  "docComment": "",
+  "docComment": "/**\n * Adds support for the cypher query language to Codemirror version 6\n *\n * @remarks\n *\n * This package provides a factory function for constructing an {@link cypher-codemirror#EditorApi | EditorApi} instance which wraps a Codemirror 6 instance with cypher language capabilities.\n *\n * @packageDocumentation\n */\n",
   "name": "cypher-codemirror",
   "preserveMemberOrder": false,
   "members": [
