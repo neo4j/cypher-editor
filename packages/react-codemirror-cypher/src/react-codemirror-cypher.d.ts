@@ -1,5 +1,5 @@
 /**
- * This package exports a React Cypher Editor component
+ * This package provides a React Cypher Editor component
  * 
  * @remarks
  * 

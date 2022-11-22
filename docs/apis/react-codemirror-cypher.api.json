@@ -162,7 +162,7 @@
   },
   "kind": "Package",
   "canonicalReference": "react-codemirror-cypher!",
-  "docComment": "/**\n * This package exports a React Cypher Editor component\n *\n * @remarks\n *\n * The props for this component are defined by the {@link react-codemirror-cypher#CypherEditorProps | CypherEditorProps} interface\n *\n * @example\n *\n * Here's some example code using the props:\n * ```ts\n * const props = { autocomplete: false };\n * <CypherEditor {...props} />\n * ```\n *\n * @packageDocumentation\n */\n",
+  "docComment": "/**\n * This package provides a React Cypher Editor component\n *\n * @remarks\n *\n * The props for this component are defined by the {@link react-codemirror-cypher#CypherEditorProps | CypherEditorProps} interface\n *\n * @example\n *\n * Here's some example code using the props:\n * ```ts\n * const props = { autocomplete: false };\n * <CypherEditor {...props} />\n * ```\n *\n * @packageDocumentation\n */\n",
   "name": "react-codemirror-cypher",
   "preserveMemberOrder": false,
   "members": [

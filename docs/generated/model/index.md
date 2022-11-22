@@ -12,8 +12,8 @@
 |  --- | --- |
 |  [cypher-codemirror](#cypher-codemirror) | Adds support for the cypher query language to Codemirror version 6 |
 |  [cypher-editor-support](#cypher-editor-support) | Cypher language support package using an antlr4 grammar |
-|  [react-codemirror-cypher](#react-codemirror-cypher) | This package exports a React Cypher Editor component |
-|  [svelte-codemirror-cypher](#svelte-codemirror-cypher) | This package exports a Svelte Cypher Editor component |
+|  [react-codemirror-cypher](#react-codemirror-cypher) | This package provides a React Cypher Editor component |
+|  [svelte-codemirror-cypher](#svelte-codemirror-cypher) | This package provides a Svelte Cypher Editor component |
 
 <a name="cypher-codemirror"></a>
 
@@ -2630,7 +2630,7 @@ export type CompletionType =
 
 ### react-codemirror-cypher package
 
-This package exports a React Cypher Editor component
+This package provides a React Cypher Editor component
 
 #### Remarks:
 
@@ -3190,7 +3190,7 @@ value?: string;
 
 ### svelte-codemirror-cypher package
 
-This package exports a Svelte Cypher Editor component
+This package provides a Svelte Cypher Editor component
 
 #### Remarks:
 

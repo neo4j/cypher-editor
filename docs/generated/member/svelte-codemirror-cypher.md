@@ -4,7 +4,7 @@
 
 ## svelte-codemirror-cypher package
 
-This package exports a Svelte Cypher Editor component
+This package provides a Svelte Cypher Editor component
 
 ## Remarks
 
