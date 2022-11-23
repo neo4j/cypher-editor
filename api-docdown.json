@@ -10,7 +10,7 @@
   "newlineKind": "crlf",
 
   "markdownOptions": {
-    "fileLevel": "all",
+    "fileLevel": "package",
     "indexFilename": "index",
     "indexTitle": "API Reference",
     "indexBreadcrumbTitle": "Home",

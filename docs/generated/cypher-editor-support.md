@@ -4,29 +4,49 @@
 
 ## cypher-editor-support package
 
+Cypher language support package using an antlr4 grammar
+
+### Remarks:
+
+This package provides cypher query parsing using an antlr4 grammar.
+
+It is mostly unchanged from the original implementation.
+
+It provides capabilities for cypher query syntax highlighting and and autocompletion suggestions.
+
 ---
+
+<br>
 
 ### Classes:
 
-| Class                                       |
-| ------------------------------------------- |
-| [CypherEditorSupport](#cyphereditorsupport) |
+|  Class | Description |
+|  --- | --- |
+|  [CypherEditorSupport](#cyphereditorsupport) | Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar |
+
+<br>
 
 <a name="cyphereditorsupport"></a>
 
 ### CypherEditorSupport class
 
+Instances of this class are used to encapsulate the parsed cypher tree for the antlr4 grammar
+
 <b>Signature:</b>
 
 ```typescript
-export class CypherEditorSupport
+export class CypherEditorSupport 
 ```
+
+<br>
 
 #### Constructors:
 
-| Constructor                                                  | Description                                                             |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| [(constructor)(input)](<#cyphereditorsupport.(constructor)>) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+|  Constructor | Description |
+|  --- | --- |
+|  [(constructor)(input)](#cyphereditorsupport.(constructor)) | Constructs a new instance of the <code>CypherEditorSupport</code> class |
+
+<br>
 
 <a name="cyphereditorsupport.(constructor)"></a>
 
@@ -39,20 +59,23 @@ Constructs a new instance of the `CypherEditorSupport` class
 ```typescript
 constructor(input: string);
 ```
-
 <b>Parameters:</b>
 
-| Parameter | Type   |
-| --------- | ------ |
-| input     | string |
+|  Parameter | Type |
+|  --- | --- |
+|  input | string |
+
+<br>
 
 #### Methods:
 
-| Method                                                                      |
-| --------------------------------------------------------------------------- |
-| [getCompletion(line, column, doFilter)](#cyphereditorsupport.getcompletion) |
-| [setSchema(schema)](#cyphereditorsupport.setschema)                         |
-| [update(input)](#cyphereditorsupport.update)                                |
+|  Method |
+|  --- |
+|  [getCompletion(line, column, doFilter)](#cyphereditorsupport.getcompletion) |
+|  [setSchema(schema)](#cyphereditorsupport.setschema) |
+|  [update(input)](#cyphereditorsupport.update) |
+
+<br>
 
 <a name="cyphereditorsupport.getcompletion"></a>
 
@@ -71,18 +94,19 @@ getCompletion(
     items: EditorSupportCompletionItem[];
   };
 ```
-
 <b>Parameters:</b>
 
-| Parameter | Type    | Description       |
-| --------- | ------- | ----------------- |
-| line      | number  |                   |
-| column    | number  |                   |
-| doFilter  | boolean | <i>(Optional)</i> |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  line | number |  |
+|  column | number |  |
+|  doFilter | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
 { from: [EditorSupportPosition](#editorsupportposition)<!-- -->; to: [EditorSupportPosition](#editorsupportposition)<!-- -->; items: [EditorSupportCompletionItem](#editorsupportcompletionitem)<!-- -->\[\]; }
+
+<br>
 
 <a name="cyphereditorsupport.setschema"></a>
 
@@ -93,16 +117,17 @@ getCompletion(
 ```typescript
 setSchema(schema: EditorSupportSchema): void;
 ```
-
 <b>Parameters:</b>
 
-| Parameter | Type                                        |
-| --------- | ------------------------------------------- |
-| schema    | [EditorSupportSchema](#editorsupportschema) |
+|  Parameter | Type |
+|  --- | --- |
+|  schema | [EditorSupportSchema](#editorsupportschema) |
 
 <b>Returns:</b>
 
 void
+
+<br>
 
 <a name="cyphereditorsupport.update"></a>
 
@@ -113,12 +138,11 @@ void
 ```typescript
 update(input: string): void;
 ```
-
 <b>Parameters:</b>
 
-| Parameter | Type   |
-| --------- | ------ |
-| input     | string |
+|  Parameter | Type |
+|  --- | --- |
+|  input | string |
 
 <b>Returns:</b>
 
@@ -126,34 +150,44 @@ void
 
 ---
 
+<br>
+
 ### Interfaces:
 
-| Interface                                                   | Description                        |
-| ----------------------------------------------------------- | ---------------------------------- |
-| [ConsoleCommand](#consolecommand)                           |                                    |
-| [EditorSupportCompletionItem](#editorsupportcompletionitem) | EditorSupportCompletionItem        |
-| [EditorSupportPosition](#editorsupportposition)             | EditorSupportPosition              |
-| [EditorSupportSchema](#editorsupportschema)                 | Editor Support Autocomplete Schema |
-| [FunctionSchema](#functionschema)                           |                                    |
-| [ProcedureSchema](#procedureschema)                         |                                    |
+|  Interface | Description |
+|  --- | --- |
+|  [ConsoleCommand](#consolecommand) | A console command, these are typically prefixed with <code>:</code> like <code>:help</code> |
+|  [EditorSupportCompletionItem](#editorsupportcompletionitem) | EditorSupportCompletionItem |
+|  [EditorSupportPosition](#editorsupportposition) | The editor support library has its own representation of editor positions |
+|  [EditorSupportSchema](#editorsupportschema) | The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting. |
+|  [FunctionSchema](#functionschema) | A function provided by the graph database |
+|  [ProcedureSchema](#procedureschema) | A procedure provided by the graph database |
+
+<br>
 
 <a name="consolecommand"></a>
 
 ### ConsoleCommand interface
 
+A console command, these are typically prefixed with `:` like `:help`
+
 <b>Signature:</b>
 
 ```typescript
-export interface ConsoleCommand
+export interface ConsoleCommand 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                                    | Type                                                                    | Description       |
-| ------------------------------------------- | ----------------------------------------------------------------------- | ----------------- |
-| [commands?](#consolecommand.commands)       | [ConsoleCommand](./cypher-editor-support.md#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
-| [description?](#consolecommand.description) | string                                                                  | <i>(Optional)</i> |
-| [name](#consolecommand.name)                | string                                                                  |                   |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [commands?](#consolecommand.commands) | [ConsoleCommand](./cypher-editor-support.md#consolecommand)<!-- -->\[\] | <i>(Optional)</i> |
+|  [description?](#consolecommand.description) | string | <i>(Optional)</i> |
+|  [name](#consolecommand.name) | string |  |
+
+<br>
 
 <a name="consolecommand.commands"></a>
 
@@ -165,6 +199,8 @@ export interface ConsoleCommand
 commands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="consolecommand.description"></a>
 
 #### ConsoleCommand.description property
@@ -174,6 +210,8 @@ commands?: ConsoleCommand[];
 ```typescript
 description?: string;
 ```
+
+<br>
 
 <a name="consolecommand.name"></a>
 
@@ -185,6 +223,8 @@ description?: string;
 name: string;
 ```
 
+<br>
+
 <a name="editorsupportcompletionitem"></a>
 
 ### EditorSupportCompletionItem interface
@@ -194,17 +234,21 @@ EditorSupportCompletionItem
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportCompletionItem
+export interface EditorSupportCompletionItem 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                                        | Type   |
-| ----------------------------------------------- | ------ |
-| [content](#editorsupportcompletionitem.content) | string |
-| [postfix](#editorsupportcompletionitem.postfix) | null   |
-| [type](#editorsupportcompletionitem.type)       | string |
-| [view](#editorsupportcompletionitem.view)       | string |
+|  Property | Type |
+|  --- | --- |
+|  [content](#editorsupportcompletionitem.content) | string |
+|  [postfix](#editorsupportcompletionitem.postfix) | null |
+|  [type](#editorsupportcompletionitem.type) | [CompletionType](#completiontype) |
+|  [view](#editorsupportcompletionitem.view) | string |
+
+<br>
 
 <a name="editorsupportcompletionitem.content"></a>
 
@@ -216,6 +260,8 @@ export interface EditorSupportCompletionItem
 content: string;
 ```
 
+<br>
+
 <a name="editorsupportcompletionitem.postfix"></a>
 
 #### EditorSupportCompletionItem.postfix property
@@ -226,6 +272,8 @@ content: string;
 postfix: null;
 ```
 
+<br>
+
 <a name="editorsupportcompletionitem.type"></a>
 
 #### EditorSupportCompletionItem.type property
@@ -233,8 +281,10 @@ postfix: null;
 <b>Signature:</b>
 
 ```typescript
-type: string;
+type: CompletionType;
 ```
+
+<br>
 
 <a name="editorsupportcompletionitem.view"></a>
 
@@ -246,24 +296,30 @@ type: string;
 view: string;
 ```
 
+<br>
+
 <a name="editorsupportposition"></a>
 
 ### EditorSupportPosition interface
 
-EditorSupportPosition
+The editor support library has its own representation of editor positions
 
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportPosition
+export interface EditorSupportPosition 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                                | Type   |
-| --------------------------------------- | ------ |
-| [column](#editorsupportposition.column) | number |
-| [line](#editorsupportposition.line)     | number |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [column](#editorsupportposition.column) | number |  |
+|  [line](#editorsupportposition.line) | number | The 1 based line number The 0 based column number |
+
+<br>
 
 <a name="editorsupportposition.column"></a>
 
@@ -275,9 +331,13 @@ export interface EditorSupportPosition
 column: number;
 ```
 
+<br>
+
 <a name="editorsupportposition.line"></a>
 
 #### EditorSupportPosition.line property
+
+The 1 based line number The 0 based column number
 
 <b>Signature:</b>
 
@@ -285,33 +345,41 @@ column: number;
 line: number;
 ```
 
+<br>
+
 <a name="editorsupportschema"></a>
 
 ### EditorSupportSchema interface
 
-Editor Support Autocomplete Schema
+The editor support schema contains information about a graph database that enables advanced autocompletion &amp; syntax highlighting.
 
 <b>Signature:</b>
 
 ```typescript
-export interface EditorSupportSchema
+export interface EditorSupportSchema 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                                                     | Type                                            | Description                                                            |
-| ------------------------------------------------------------ | ----------------------------------------------- | ---------------------------------------------------------------------- |
-| [consoleCommands?](#editorsupportschema.consolecommands)     | [ConsoleCommand](#consolecommand)<!-- -->\[\]   | <i>(Optional)</i>                                                      |
-| [functions?](#editorsupportschema.functions)                 | [FunctionSchema](#functionschema)<!-- -->\[\]   | <i>(Optional)</i>                                                      |
-| [labels?](#editorsupportschema.labels)                       | string\[\]                                      | <i>(Optional)</i> The list of labels in the graph database             |
-| [parameters?](#editorsupportschema.parameters)               | string\[\]                                      | <i>(Optional)</i>                                                      |
-| [procedures?](#editorsupportschema.procedures)               | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i>                                                      |
-| [propertyKeys?](#editorsupportschema.propertykeys)           | string\[\]                                      | <i>(Optional)</i>                                                      |
-| [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\]                                      | <i>(Optional)</i> The list of relationship types in the graph database |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [consoleCommands?](#editorsupportschema.consolecommands) | [ConsoleCommand](#consolecommand)<!-- -->\[\] | <i>(Optional)</i> The list of console commands |
+|  [functions?](#editorsupportschema.functions) | [FunctionSchema](#functionschema)<!-- -->\[\] | <i>(Optional)</i> The list of functions provided the graph database |
+|  [labels?](#editorsupportschema.labels) | string\[\] | <i>(Optional)</i> The list of labels in the graph database |
+|  [parameters?](#editorsupportschema.parameters) | string\[\] | <i>(Optional)</i> The list of parameters |
+|  [procedures?](#editorsupportschema.procedures) | [ProcedureSchema](#procedureschema)<!-- -->\[\] | <i>(Optional)</i> The list of procedures provided the graph database |
+|  [propertyKeys?](#editorsupportschema.propertykeys) | string\[\] | <i>(Optional)</i> The list of property keys in the graph database |
+|  [relationshipTypes?](#editorsupportschema.relationshiptypes) | string\[\] | <i>(Optional)</i> The list of relationship types in the graph database |
+
+<br>
 
 <a name="editorsupportschema.consolecommands"></a>
 
 #### EditorSupportSchema.consoleCommands property
+
+The list of console commands
 
 <b>Signature:</b>
 
@@ -319,15 +387,21 @@ export interface EditorSupportSchema
 consoleCommands?: ConsoleCommand[];
 ```
 
+<br>
+
 <a name="editorsupportschema.functions"></a>
 
 #### EditorSupportSchema.functions property
+
+The list of functions provided the graph database
 
 <b>Signature:</b>
 
 ```typescript
 functions?: FunctionSchema[];
 ```
+
+<br>
 
 <a name="editorsupportschema.labels"></a>
 
@@ -341,9 +415,13 @@ The list of labels in the graph database
 labels?: string[];
 ```
 
+<br>
+
 <a name="editorsupportschema.parameters"></a>
 
 #### EditorSupportSchema.parameters property
+
+The list of parameters
 
 <b>Signature:</b>
 
@@ -351,9 +429,13 @@ labels?: string[];
 parameters?: string[];
 ```
 
+<br>
+
 <a name="editorsupportschema.procedures"></a>
 
 #### EditorSupportSchema.procedures property
+
+The list of procedures provided the graph database
 
 <b>Signature:</b>
 
@@ -361,15 +443,21 @@ parameters?: string[];
 procedures?: ProcedureSchema[];
 ```
 
+<br>
+
 <a name="editorsupportschema.propertykeys"></a>
 
 #### EditorSupportSchema.propertyKeys property
+
+The list of property keys in the graph database
 
 <b>Signature:</b>
 
 ```typescript
 propertyKeys?: string[];
 ```
+
+<br>
 
 <a name="editorsupportschema.relationshiptypes"></a>
 
@@ -383,22 +471,30 @@ The list of relationship types in the graph database
 relationshipTypes?: string[];
 ```
 
+<br>
+
 <a name="functionschema"></a>
 
 ### FunctionSchema interface
 
+A function provided by the graph database
+
 <b>Signature:</b>
 
 ```typescript
-export interface FunctionSchema
+export interface FunctionSchema 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                               | Type   |
-| -------------------------------------- | ------ |
-| [name](#functionschema.name)           | string |
-| [signature](#functionschema.signature) | string |
+|  Property | Type |
+|  --- | --- |
+|  [name](#functionschema.name) | string |
+|  [signature](#functionschema.signature) | string |
+
+<br>
 
 <a name="functionschema.name"></a>
 
@@ -410,6 +506,8 @@ export interface FunctionSchema
 name: string;
 ```
 
+<br>
+
 <a name="functionschema.signature"></a>
 
 #### FunctionSchema.signature property
@@ -420,23 +518,31 @@ name: string;
 signature: string;
 ```
 
+<br>
+
 <a name="procedureschema"></a>
 
 ### ProcedureSchema interface
 
+A procedure provided by the graph database
+
 <b>Signature:</b>
 
 ```typescript
-export interface ProcedureSchema
+export interface ProcedureSchema 
 ```
+
+<br>
 
 #### Properties:
 
-| Property                                    | Type                                          |
-| ------------------------------------------- | --------------------------------------------- |
-| [name](#procedureschema.name)               | string                                        |
-| [returnItems](#procedureschema.returnitems) | [FunctionSchema](#functionschema)<!-- -->\[\] |
-| [signature](#procedureschema.signature)     | string                                        |
+|  Property | Type |
+|  --- | --- |
+|  [name](#procedureschema.name) | string |
+|  [returnItems](#procedureschema.returnitems) | [FunctionSchema](#functionschema)<!-- -->\[\] |
+|  [signature](#procedureschema.signature) | string |
+
+<br>
 
 <a name="procedureschema.name"></a>
 
@@ -448,6 +554,8 @@ export interface ProcedureSchema
 name: string;
 ```
 
+<br>
+
 <a name="procedureschema.returnitems"></a>
 
 #### ProcedureSchema.returnItems property
@@ -457,6 +565,8 @@ name: string;
 ```typescript
 returnItems: FunctionSchema[];
 ```
+
+<br>
 
 <a name="procedureschema.signature"></a>
 
@@ -469,3 +579,40 @@ signature: string;
 ```
 
 ---
+
+<br>
+
+### Type Aliases:
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [CompletionType](#completiontype) | All autocomplete options have a CompletionType |
+
+<br>
+
+<a name="completiontype"></a>
+
+### CompletionType type
+
+All autocomplete options have a CompletionType
+
+<b>Signature:</b>
+
+```typescript
+export type CompletionType =
+  | "keyword"
+  | "label"
+  | "variable"
+  | "parameter"
+  | "propertyKey"
+  | "relationshipType"
+  | "function"
+  | "procedure"
+  | "consoleCommand"
+  | "consoleCommandSubcommand"
+  | "procedureOutput"
+  | "noop";
+```
+
+---
+

@@ -6,13 +6,10 @@
 
 ### Packages:
 
-| Package                                                     |
-| ----------------------------------------------------------- |
-| [cypher-codemirror](./cypher-codemirror.md)                 |
-| [cypher-codemirror-base](./cypher-codemirror-base.md)       |
-| [cypher-codemirror5](./cypher-codemirror5.md)               |
-| [cypher-editor-support](./cypher-editor-support.md)         |
-| [react-codemirror-cypher](./react-codemirror-cypher.md)     |
-| [react-codemirror5-cypher](./react-codemirror5-cypher.md)   |
-| [svelte-codemirror-cypher](./svelte-codemirror-cypher.md)   |
-| [svelte-codemirror5-cypher](./svelte-codemirror5-cypher.md) |
+|  Package | Description |
+|  --- | --- |
+|  [cypher-codemirror](./cypher-codemirror.md) | Adds support for the cypher query language to Codemirror version 6 |
+|  [cypher-editor-support](./cypher-editor-support.md) | Cypher language support package using an antlr4 grammar |
+|  [react-codemirror-cypher](./react-codemirror-cypher.md) | This package provides a React Cypher Editor component |
+|  [svelte-codemirror-cypher](./svelte-codemirror-cypher.md) | This package provides a Svelte Cypher Editor component |
+
