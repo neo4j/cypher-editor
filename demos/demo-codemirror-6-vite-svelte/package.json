@@ -1,0 +1,41 @@
+{
+  "name": "demo-codemirror-6-vite-svelte",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --port 5175",
+    "deploy": "vite build",
+    "serve": "pm2 serve dist 5175 --spa --name demo5175",
+    "unserve": "pm2 delete demo5175",
+    "serve:bg": "npx -y http-server dist --port 5175",
+    "e2e": "export PORT=5175; playwright test --config=../../playwright.config.js",
+    "e2e:selector": "playwright codegen http://localhost:5175",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.1.0",
+    "@codemirror/commands": "^6.1.0",
+    "@codemirror/language": "^6.2.1",
+    "@codemirror/lint": "^6.0.0",
+    "@codemirror/search": "^6.1.0",
+    "@codemirror/state": "^6.1.1",
+    "@codemirror/view": "^6.2.0",
+    "@lezer/highlight": "^1.0.0",
+    "@neo4j-cypher/codemirror": "*",
+    "@neo4j-cypher/svelte-codemirror": "*",
+    "demo-base": "*",
+    "demo-base-svelte": "*",
+    "neo4j-driver": "^4.4.7"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "@tsconfig/svelte": "^3.0.0",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.8.0",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.4"
+  }
+}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { CypherEditor } from "svelte-codemirror-cypher";
+  import { CypherEditor } from "@neo4j-cypher/svelte-codemirror";
   import neo4j, { type Driver, type QueryResult } from "neo4j-driver";
   import { runQuery, schemaQuery } from "./cypher.utils";
   import { historyStore } from "./history.store";

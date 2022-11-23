@@ -21,10 +21,9 @@
 
   "includePackageNames": [],
   "excludePackageNames": [
-    "cypher-antlr4*",
-    "cypher-extract-statements",
+    "antlr4*",
+    "extract-statements*",
     "demo-*",
-    "*-base",
-    "*codemirror5*"
+    "svelte-ts"
   ]
 }

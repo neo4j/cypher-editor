@@ -8,8 +8,8 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [cypher-codemirror](./cypher-codemirror.md) | Adds support for the cypher query language to Codemirror version 6 |
-|  [cypher-editor-support](./cypher-editor-support.md) | Cypher language support package using an antlr4 grammar |
-|  [react-codemirror-cypher](./react-codemirror-cypher.md) | This package provides a React Cypher Editor component |
-|  [svelte-codemirror-cypher](./svelte-codemirror-cypher.md) | This package provides a Svelte Cypher Editor component |
+|  [@neo4j-cypher/codemirror](./neo4j-cypher_codemirror.md) | Adds support for the cypher query language to Codemirror version 6 |
+|  [@neo4j-cypher/editor-support](./neo4j-cypher_editor-support.md) | Cypher language support package using an antlr4 grammar |
+|  [@neo4j-cypher/react-codemirror](./neo4j-cypher_react-codemirror.md) | This package provides a React Cypher Editor component |
+|  [@neo4j-cypher/svelte-codemirror](./neo4j-cypher_svelte-codemirror.md) | This package provides a Svelte Cypher Editor component |
 

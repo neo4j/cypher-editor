@@ -1,0 +1,49 @@
+{
+  "name": "@neo4j-cypher/extract-statements",
+  "description": "Utility function to extract statements from a cypher query",
+  "keywords": [
+    "cypher",
+    "extract",
+    "statements"
+  ],
+  "version": "1.0.0",
+  "author": "Neo4j Inc.",
+  "license": "GPL-3.0",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+  },
+  "scripts": {
+    "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
+    "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
+    "build": "npm run build-lib && npm run build-es",
+    "clean:build": "rimraf lib && rimraf es"
+  },
+  "files": [
+    "es/",
+    "lib/",
+    "README.md"
+  ],
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@neo4j-cypher/antlr4-simple": "*",
+    "@neo4j-cypher/editor-support": "*"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
+    "@babel/plugin-transform-regenerator": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.9",
+    "@babel/preset-env": "^7.18.9"
+  }
+}

@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "VITE_NEO4J_USERNAME=neo4j VITE_NEO4J_PASSWORD=asdfgh vite --port 5273",
-    "build": "vite build",
+    "deploy": "vite build",
     "preview": "VITE_NEO4J_USERNAME=neo4j VITE_NEO4J_PASSWORD=asdfgh vite preview --port 5273",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "neo4j-driver": "^5.0.1",
-    "svelte-codemirror-cypher": "*"
+    "@neo4j-cypher/svelte-codemirror": "*",
+    "neo4j-driver": "^5.0.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.2",
