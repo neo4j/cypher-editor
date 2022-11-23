@@ -35,6 +35,17 @@ test.describe("Commands and Editor events", () => {
     await page.goto("http://localhost:" + process.env.PORT);
   });
 
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status !== testInfo.expectedStatus) {
+      // Get a unique place for the screenshot.
+      const screenshotPath = testInfo.outputPath(`failure.png`);
+      // Add it to the report.
+      testInfo.attachments.push({ name: 'screenshot', path: screenshotPath, contentType: 'image/png' });
+      // Take the screenshot itself.
+      await page.screenshot({ path: screenshotPath, timeout: 5000 });
+    }
+  });
+
   test("Has title", async ({ page }) => {
     const title = page.locator("text=/Cypher Codemirror/i");
     await expect(title).toBeVisible();
