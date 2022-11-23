@@ -7,6 +7,9 @@
 
 <style>
   p {
+    background-color: #fafafa;
     font-size: 1rem;
+    padding: 8px;
+    border-radius: 6px;
   }
 </style>

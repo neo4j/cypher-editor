@@ -1,0 +1,31 @@
+*,
+:before,
+:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #f6f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --colors-neutral-90: rgb(21, 30, 41);
+    --text-primary-50: rgb(0 111 214);
+    --form-label-text-color: rgb(83, 91, 102);
+    --border-color: rgb(196 200 205);
+    --font-weight-bold: 700;
+    --font-size-h6: 1rem;
+}
+
+h3 {
+    font-size: 1.875rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--colors-neutral-90);
+}
