@@ -4,12 +4,12 @@
  * @remarks
  *
  * This package provides cypher query parsing using an antlr4 grammar.
- * 
+ *
  * It is mostly unchanged from the original implementation.
- * 
+ *
  * It provides capabilities for cypher query syntax highlighting and
  * and autocompletion suggestions.
- * 
+ *
  * @packageDocumentation
  */
 

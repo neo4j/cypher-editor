@@ -25,7 +25,8 @@ export default defineConfig({
       "@neo4j-cypher/codemirror": "@neo4j-cypher/codemirror/src/codemirror.js",
       "@neo4j-cypher/antlr4": "@neo4j-cypher/antlr4/src/index.js",
       "@neo4j-cypher/antlr4-simple": "@neo4j-cypher/antlr4-simple/src/index.js",
-      "@neo4j-cypher/editor-support": "@neo4j-cypher/editor-support/src/editor-support.js",
+      "@neo4j-cypher/editor-support":
+        "@neo4j-cypher/editor-support/src/editor-support.js",
       "demo-base/css/app.css": "demo-base/css/app.css",
       "demo-base": "demo-base/src/index.js"
     }

@@ -27,13 +27,33 @@ const props = { autocomplete: false };
 
 |  Class | Description |
 |  --- | --- |
-|  [CypherEditor](#cyphereditor) | Cypher Editor Svelte Component |
+|  [CypherEditor](#cyphereditor) | Cypher Editor Svelte Component (with css styles included) |
+|  [UnstyledCypherEditor](#unstyledcyphereditor) | Cypher Editor Svelte Component |
 
 <br>
 
 <a name="cyphereditor"></a>
 
 ### CypherEditor class
+
+Cypher Editor Svelte Component (with css styles included)
+
+<b>Signature:</b>
+
+```typescript
+export default class CypherEditor extends SvelteComponentTyped<
+ CypherEditorProps,
+ {},
+ {}
+> 
+```
+<b>Extends:</b> SvelteComponentTyped&lt; [CypherEditorProps](#cyphereditorprops)<!-- -->, {}, {} &gt;
+
+<br>
+
+<a name="unstyledcyphereditor"></a>
+
+### UnstyledCypherEditor class
 
 Cypher Editor Svelte Component
 

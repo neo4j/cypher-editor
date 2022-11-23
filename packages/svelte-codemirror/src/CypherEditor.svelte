@@ -1,6 +1,5 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import "@neo4j-cypher/codemirror/css/cypher-codemirror.css";
   import { createCypherEditor, defaultOptions } from "@neo4j-cypher/codemirror";
 
   export let autocomplete = defaultOptions.autocomplete;

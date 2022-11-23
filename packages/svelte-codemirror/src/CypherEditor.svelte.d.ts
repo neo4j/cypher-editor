@@ -35,9 +35,9 @@ export interface CypherEditorProps {
   autocompleteCloseOnBlur?: boolean;
   /**
    * Whether the autocomplete window is open
-   * 
+   *
    * @remarks
-   * 
+   *
    * Changing this can be used to manually control the autocomplete open state
    *
    * @defaultValue `false`
@@ -141,7 +141,7 @@ export interface CypherEditorProps {
    * A css class name to be added to the root editor dom element when it is focused
    */
   focusedClassName?: string;
-  
+
   /**
    * A listener for when the editor api gets created
    */

@@ -8,25 +8,27 @@ const namedPackages = [
   "@neo4j-cypher/editor-support",
   // "@neo4j-cypher/react-codemirror",
   "@neo4j-cypher/svelte-codemirror"
-].map(name => ({ name, type: "named" }));
+].map((name) => ({ name, type: "named" }));
 
 const indexPackages = [
   "@neo4j-cypher/antlr4",
   "@neo4j-cypher/antlr4-simple",
   "@neo4j-cypher/extract-statements"
-].map(name => ({ name, type: "index" }));
+].map((name) => ({ name, type: "index" }));
 
 const demoPackages = [
   "demo-base",
   // "demo-base-react",
   "demo-base-svelte"
-].map(name => ({ name, type: "demo" }));
+].map((name) => ({ name, type: "demo" }));
 
 const allPackages = namedPackages.concat(indexPackages).concat(demoPackages);
 
 const localPackages = allPackages.reduce((lp, pkg) => {
   const { name, type } = pkg;
-  const pathName = name.includes("/") ? name.substring(name.indexOf("/") + 1) : name;
+  const pathName = name.includes("/")
+    ? name.substring(name.indexOf("/") + 1)
+    : name;
   const basePath = type === "demo" ? "../" : "../../packages/";
   lp[name] = {
     rootPath: basePath + pathName,

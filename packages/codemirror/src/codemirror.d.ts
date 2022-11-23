@@ -6,7 +6,7 @@
  * This package provides a factory function for constructing an
  * {@link codemirror#EditorApi | EditorApi} instance which
  * wraps a Codemirror 6 instance with cypher language capabilities.
- * 
+ *
  * @packageDocumentation
  */
 
@@ -211,9 +211,9 @@ export interface LineNumberFormatter {
 
 /**
  * This is the EditorApi interface which wraps all of the interaction with the cypher editor
- * 
+ *
  * @remarks
- * 
+ *
  * An instance of this interface is returned by the {@link codemirror#createCypherEditor | createCypherEditor} function
  */
 export interface EditorApi {
@@ -309,7 +309,7 @@ export interface EditorApi {
   setTheme(theme: Theme): void;
   /**
    * Set the editor value
-   * 
+   *
    * @param value - The new editor value
    * @param parseOnSetValue - Whether to update the language parser tree immediately for the new value (defaults to true)
    */

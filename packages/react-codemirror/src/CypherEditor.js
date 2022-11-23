@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { createCypherEditor, reactiveOptionKeys, defaultOptions } from "@neo4j-cypher/codemirror";
-
-import "@neo4j-cypher/codemirror/css/cypher-codemirror.css";
+import {
+  createCypherEditor,
+  reactiveOptionKeys,
+  defaultOptions
+} from "@neo4j-cypher/codemirror";
 
 class CypherEditor extends Component {
   constructor(props) {

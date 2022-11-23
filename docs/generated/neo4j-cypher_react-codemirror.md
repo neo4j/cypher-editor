@@ -27,13 +27,32 @@ const props = { autocomplete: false };
 
 |  Class | Description |
 |  --- | --- |
-|  [CypherEditor](#cyphereditor) | Cypher Editor React Component |
+|  [CypherEditor](#cyphereditor) | Cypher Editor React Component (with css styles included) |
+|  [UnstyledCypherEditor](#unstyledcyphereditor) | Cypher Editor React Component |
 
 <br>
 
 <a name="cyphereditor"></a>
 
 ### CypherEditor class
+
+Cypher Editor React Component (with css styles included)
+
+<b>Signature:</b>
+
+```typescript
+export default class CypherEditorStyled extends React.Component<
+  CypherEditorProps,
+  any
+> 
+```
+<b>Extends:</b> React.Component&lt; [CypherEditorProps](#cyphereditorprops)<!-- -->, any &gt;
+
+<br>
+
+<a name="unstyledcyphereditor"></a>
+
+### UnstyledCypherEditor class
 
 Cypher Editor React Component
 
