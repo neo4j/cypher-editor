@@ -1,5 +1,6 @@
 {
   "name": "demo-base",
+  "private": true,
   "description": "demo base files for cypher editor",
   "keywords": [],
   "version": "1.0.0",

@@ -9,21 +9,27 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
         with:
-          node-version: "lts/*"
-      - name: Install dependencies
-        run: yarn
+          fetch-depth: 0
+
+      - name: Setup node / npm env and install deps
+        uses: ./.github/workflows/reusable/env-setup
+
       - name: Warmup pm2
-        run: yarn pm2 list
+        run: npx pm2 list
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
-        run: yarn start:e2e
+        run: npm run start:e2e
+
       - name: Cleanup
         if: always()
-        run: yarn stop:e2e
+        run: npm run stop:e2e
+        
       - uses: actions/upload-artifact@v2
         if: always()
         with:

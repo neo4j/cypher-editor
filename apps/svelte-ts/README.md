@@ -11,9 +11,9 @@
 ### Try it out locally
 
 ```bash
-yarn install
+npm install
 ```
 
 ```bash
-yarn dev
+npm run dev
 ```
