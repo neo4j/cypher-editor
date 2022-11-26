@@ -1,6 +1,7 @@
 {
   "name": "demo-base-svelte",
   "description": "demo base svelte components",
+  "private": true,
   "keywords": [],
   "version": "1.0.0",
   "author": "Neo4j Inc.",

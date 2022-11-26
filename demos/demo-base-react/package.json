@@ -1,6 +1,7 @@
 {
   "name": "demo-base-react",
   "description": "demo base react components",
+  "private": true,
   "keywords": [],
   "version": "1.0.0",
   "author": "Neo4j Inc.",
