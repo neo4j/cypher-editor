@@ -7,7 +7,7 @@
     "codemirror",
     "codemirror 6"
   ],
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/react-codemirror.js",
