@@ -1,0 +1,35 @@
+name: 'Reusable Env Setup'
+description: 'Composite action to setup npm and yarn + caches.'
+inputs:
+  NODE_VERSION:
+    description: 'Node version'
+    required: false
+    default: lts/*
+  PNPM_VERSION:
+    description: 'Yarn version'
+    required: false
+    default: ^3.0.0
+runs:
+  using: 'composite'
+  steps:
+    - name: Turbo Cache
+      id: turbo-cache
+      uses: actions/cache@v3
+      with:
+        path: node_modules/.cache/turbo
+        key: ${{ runner.os }}-turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-${{ github.job }}-${{ github.ref_name }}-
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+        cache: 'yarn'
+
+    - name: Install and activate yarn
+      shell: bash
+      run: corepack prepare yarn@${{ inputs.YARN_VERSION }} --activate
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install
