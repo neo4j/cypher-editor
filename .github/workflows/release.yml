@@ -3,6 +3,8 @@ name: 'Code release'
 on:
   workflow_dispatch:
     branches: ["next-yarn-3"]
+  push:
+    branches: ["next-yarn-3"]
 
 jobs:
   build:
