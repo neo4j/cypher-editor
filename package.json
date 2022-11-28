@@ -33,7 +33,7 @@
     "build:docs-document": "api-docdown document",
     "clean:all": "turbo run clean:deploy clean:build && yarn clean:packages",
     "clean:demos": "turbo run clean:deploy",
-    "clean:packages": "rimraf packages/*/node_modules; rimraf node_modules",
+    "clean:packages": "rimraf packages/*/node_modules; rimraf demos/*/node_modules; rimraf apps/*/node_modules; rimraf node_modules",
     "clean:libs": "turbo run clean:build",
     "lerna": "lerna",
     "pm2": "pm2",
