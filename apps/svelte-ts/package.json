@@ -10,7 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@neo4j-cypher/svelte-codemirror": "*",
+    "@neo4j-cypher/svelte-codemirror": "workspace:*",
     "neo4j-driver": "^5.0.1"
   },
   "devDependencies": {

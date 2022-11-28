@@ -34,7 +34,7 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@neo4j-cypher/antlr4": "*",
+    "@neo4j-cypher/antlr4": "workspace:*",
     "antlr4": "4.10.1",
     "fuse.js": "^6.6.2",
     "lodash.find": "^4.6.0",

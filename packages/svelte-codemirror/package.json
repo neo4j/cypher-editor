@@ -29,11 +29,10 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@neo4j-cypher/codemirror": "*",
+    "@neo4j-cypher/codemirror": "workspace:*",
     "codemirror": "^6.0.1"
   },
   "peerDependencies": {
     "svelte": "^3.49.0"
-  },
-  "devDependencies": {}
+  }
 }

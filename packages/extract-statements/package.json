@@ -34,8 +34,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@neo4j-cypher/antlr4-simple": "*",
-    "@neo4j-cypher/editor-support": "*"
+    "@neo4j-cypher/antlr4-simple": "workspace:*",
+    "@neo4j-cypher/editor-support": "workspace:*"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",
