@@ -26,7 +26,7 @@
     "apps/*"
   ],
   "scripts": {
-    "build:demos": "turbo run deploy",
+    "build:demos": "turbo run deploy --filter='!./apps/*'",
     "build:libs": "turbo run build",
     "build:docs": "api-docdown generate",
     "build:docs-extract": "api-docdown extract",
