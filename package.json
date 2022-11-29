@@ -43,5 +43,8 @@
     "stop:e2e": "turbo run unserve"
   },
   "name": "cypher-editor",
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "@changesets/cli": "^2.25.2"
+  }
 }
