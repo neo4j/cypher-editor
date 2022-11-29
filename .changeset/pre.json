@@ -17,5 +17,8 @@
     "@neo4j-cypher/react-codemirror": "0.1.0",
     "@neo4j-cypher/svelte-codemirror": "0.1.0"
   },
-  "changesets": []
+  "changesets": [
+    "dirty-ties-smash",
+    "tough-apples-study"
+  ]
 }

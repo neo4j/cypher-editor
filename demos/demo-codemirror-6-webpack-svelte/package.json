@@ -1,7 +1,7 @@
 {
   "name": "demo-codemirror-6-webpack-svelte",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1-next.0",
   "scripts": {
     "startNoLocal": "cross-env NODE_ENV=\"development\" webpack serve",
     "start": "cross-env NODE_ENV=\"development\" webpack serve --config ./webpack.local.config.js",
