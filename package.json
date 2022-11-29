@@ -38,6 +38,7 @@
     "pm2": "pm2",
     "prepublishOnly": "yarn build:libs",
     "prettier": "prettier --write .",
+    "release": "yarn build:libs && yarn build:demos && changeset publish",
     "start:demos": "turbo run start",
     "start:e2e": "turbo run e2e",
     "stop:e2e": "turbo run unserve"

@@ -1,23 +1,30 @@
-name: 'Code release'
+name: Release
 
 on:
-  workflow_dispatch:
-    branches: ["next-yarn-3"]
   push:
-    branches: ["next-yarn-3"]
+    branches:
+      - next-yarn-3
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  build:
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: ./.github/workflows/reusable/env-setup
-      - name: Check versioning
-        run: yarn version check
-      - name: Build libs
-        run: yarn build:libs
-      - name: Build demos
-        run: yarn build:demos
-      
+
+      - name: Setup node / yarn env and install deps
+        uses: ./.github/workflows/reusable/env-setup
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
