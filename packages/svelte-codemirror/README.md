@@ -1,5 +1,6 @@
 ### @neo4j-cypher/svelte-codemirror
 
+Edit
 This package exports a Svelte component that provides a cypher editor using codemirror 6.
 
 You can use this package like the following full app example:
