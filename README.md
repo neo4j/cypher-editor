@@ -50,3 +50,7 @@ Or all packages together:
 yarn start:e2e
 yarn stop:e2e
 ```
+
+# Contribution process
+
+Contributions are very much appreciated but there are some
