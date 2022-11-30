@@ -30,22 +30,25 @@
     "build:docs": "api-docdown generate",
     "build:docs-extract": "api-docdown extract",
     "build:docs-document": "api-docdown document",
-    "clean:all": "turbo run clean:deploy clean:build && yarn clean:packages",
+    "clean:all": "turbo run clean:deploy clean:build && npm run clean:packages",
     "clean:demos": "turbo run clean:deploy",
-    "clean:packages": "rimraf packages/*/node_modules; rimraf demos/*/node_modules; rimraf apps/*/node_modules; rimraf node_modules; rimraf .yarn",
+    "clean:packages": "rimraf packages/*/node_modules; rimraf demos/*/node_modules; rimraf apps/*/node_modules; rimraf node_modules;",
     "clean:libs": "turbo run clean:build",
     "turbo": "turbo",
     "pm2": "pm2",
-    "prepublishOnly": "yarn build:libs",
+    "prepublishOnly": "npm run build:libs",
     "prettier": "prettier --write .",
-    "release": "yarn build:libs && yarn build:demos && changeset publish",
+    "release": "npm run build:libs && npm run build:demos && changeset publish",
     "start:demos": "turbo run start",
     "start:e2e": "turbo run e2e",
     "stop:e2e": "turbo run unserve"
   },
   "name": "cypher-editor",
-  "packageManager": "yarn@3.3.0",
   "dependencies": {
     "@changesets/cli": "^2.25.2"
+  },
+  "engines": {
+    "npm": "8.x",
+    "node": "18.x"
   }
 }

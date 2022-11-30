@@ -5,13 +5,13 @@ This repository is a monorepo, and all packages are located in the `packages` di
 To install the dependencies for the monorepo, run the following the base directory:
 
 ```
-yarn install
+npm install
 ```
 
 Optionally to build all library packages for release preparation, run the following in the base directory:
 
 ```
-yarn build:libs
+npm run build:libs
 ```
 
 ### Demos
@@ -20,7 +20,7 @@ Once you have install the dependencies, you can run any of the demos that are in
 
 ```
 cd packages/demo-codemirror-6-vite-svelte
-yarn start
+npm run start
 ```
 
 ### Tests
@@ -31,14 +31,14 @@ Some e2e tests are setup. You can run them indivudually in each package:
 cd packages/<demo-package-name>
 
 # for dev
-yarn start
-yarn e2e
+npm run start
+npm run e2e
 
 # for prod
-yarn build
-yarn serve
-yarn e2e
-yarn unserve
+npm run build
+npm run serve
+npm run e2e
+npm run unserve
 ```
 
 Or all packages together:
@@ -47,8 +47,8 @@ Or all packages together:
 # in project root
 
 # for prod
-yarn start:e2e
-yarn stop:e2e
+npm run start:e2e
+npm run stop:e2e
 ```
 
 # Contribution process

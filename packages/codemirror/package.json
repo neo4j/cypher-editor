@@ -45,7 +45,7 @@
     "@codemirror/state": "^6.1.1",
     "@codemirror/view": "^6.2.0",
     "@lezer/highlight": "^1.0.0",
-    "@neo4j-cypher/editor-support": "workspace:*"
+    "@neo4j-cypher/editor-support": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",

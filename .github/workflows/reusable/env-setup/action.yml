@@ -1,14 +1,11 @@
 name: 'Reusable Env Setup'
-description: 'Composite action to setup npm and yarn + caches.'
+description: 'Composite action to setup npm, node and caches.'
 inputs:
   NODE_VERSION:
     description: 'Node version'
     required: false
-    default: lts/*
-  YARN_VERSION:
-    description: 'Yarn version'
-    required: false
-    default: 3.3.0
+    default: 18.x
+  
 runs:
   using: 'composite'
   steps:
@@ -24,12 +21,8 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.NODE_VERSION }}
-        cache: 'yarn'
-
-    - name: Install and activate yarn
-      shell: bash
-      run: corepack prepare yarn@${{ inputs.YARN_VERSION }} --activate
+        cache: 'npm'
 
     - name: Install dependencies
       shell: bash
-      run: yarn install --immutable
+      run: npm ci

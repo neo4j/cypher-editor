@@ -22,10 +22,10 @@
     "@codemirror/state": "^6.1.1",
     "@codemirror/view": "^6.2.0",
     "@lezer/highlight": "^1.0.0",
-    "@neo4j-cypher/codemirror": "workspace:*",
-    "@neo4j-cypher/svelte-codemirror": "workspace:*",
-    "demo-base": "workspace:*",
-    "demo-base-svelte": "workspace:*",
+    "@neo4j-cypher/codemirror": "*",
+    "@neo4j-cypher/svelte-codemirror": "*",
+    "demo-base": "*",
+    "demo-base-svelte": "*",
     "neo4j-driver": "^4.4.7"
   },
   "devDependencies": {

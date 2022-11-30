@@ -29,7 +29,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@neo4j-cypher/codemirror": "workspace:*",
+    "@neo4j-cypher/codemirror": "*",
     "codemirror": "^6.0.1"
   },
   "peerDependencies": {
