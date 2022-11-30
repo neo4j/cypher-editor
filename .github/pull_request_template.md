@@ -9,4 +9,4 @@
 
 ### Changesets
 
-- [ ] If your PR makes a change that should be noted in one or more packages' changelogs, generate a changeset by running `npx changeset` and following the instructions. Consult with the maintainers of unsure what type of change the PR should generate.
+- [ ] If your PR makes a change that should be noted in one or more packages' changelogs, generate a changeset by running `npx changeset` and following the instructions. Consult the maintainers if you're unsure what type of version bump the PR should generate.
