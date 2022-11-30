@@ -77,8 +77,8 @@ test.describe("Commands and Editor events", () => {
     // Setup
     let lastEntries = [];
     const clearCypherBtn = page.locator(".cypher >> text=/clear/i");
-    const simpleButton = page.locator(".autocompleteSchema >> text=/simple/i");
-    const longButton = page.locator(".autocompleteSchema >> text=/long/i");
+    const simpleButton = page.locator(".schema >> text=/simple/i");
+    const longButton = page.locator(".schema >> text=/long/i");
 
     // Empty getEditor
     await clearCypherBtn.click();
@@ -87,9 +87,7 @@ test.describe("Commands and Editor events", () => {
     // Click simple schema
     await simpleButton.click();
     await sleep(1000);
-    expect(await getLogEntry(page, -1)).toEqual(
-      'command setAutocompleteSchema "simple"'
-    );
+    expect(await getLogEntry(page, -1)).toEqual('command setSchema "simple"');
 
     // Check log for autocomplete items in consoleCommand
     await getEditor(page).click();
@@ -112,7 +110,7 @@ test.describe("Commands and Editor events", () => {
       await getLogEntry(page, -2),
       await getLogEntry(page, -3)
     ];
-    expect(lastEntries).toContain('command setAutocompleteSchema "long"');
+    expect(lastEntries).toContain('command setSchema "long"');
 
     // Check log for autocomplete items in consoleCommand
     await getEditor(page).click();

@@ -45,7 +45,6 @@ export const defaultOptions = {
   autocomplete: true,
   autocompleteCloseOnBlur: true,
   autocompleteOpen: false,
-  autocompleteSchema: undefined,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true,
   autofocusProps: ["position", "readOnly", "value"],
@@ -59,6 +58,7 @@ export const defaultOptions = {
   position: undefined,
   readOnly: false,
   readOnlyCursor: false,
+  schema: undefined,
   theme: THEME_LIGHT,
   value: ""
 };
@@ -67,7 +67,6 @@ export const reactiveOptionKeys = [
   "autocomplete",
   "autocompleteCloseOnBlur",
   "autocompleteOpen",
-  "autocompleteSchema",
   "autocompleteTriggerStrings",
   // "autofocus",
   "history",
@@ -79,6 +78,7 @@ export const reactiveOptionKeys = [
   "position",
   "readOnly",
   "readOnlyCursor",
+  "schema",
   "theme",
   // "parseOnSetValue",
   "value"

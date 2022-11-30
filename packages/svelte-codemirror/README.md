@@ -12,7 +12,7 @@ You can use this package like the following full app example:
 
   let cypher = "MATCH (n) RETURN count(n)";
   let viewState: "loading" | "idle" | "executing" = "loading";
-  let autocompleteSchema = {};
+  let schema = {};
   let driver;
   let response;
 
@@ -62,7 +62,7 @@ You can use this package like the following full app example:
     bind:value={cypher}
     readOnly={viewState === "executing"}
     onKeyDown={keyDown}
-    {autocompleteSchema}
+    {schema}
     theme="dark"
   />
   {#if viewState !== "loading" && response}

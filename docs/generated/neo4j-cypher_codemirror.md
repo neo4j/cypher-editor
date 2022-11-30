@@ -464,7 +464,6 @@ editorSupport: CypherEditorSupport;
 |  [setAutocomplete(autocomplete)](#editorapi.setautocomplete) | Set whether or not the autocomplete feature is enabled |
 |  [setAutocompleteCloseOnBlur(autocompleteCloseOnBlur)](#editorapi.setautocompletecloseonblur) | Set whether or not the autocomplete auto closes whenever the editor loses focus |
 |  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete menu is shown to the user |
-|  [setAutocompleteSchema(autocompleteSchema)](#editorapi.setautocompleteschema) | Set the schema - TODO need better docs here and probably rename this |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
 |  [setLineNumberFormatter(lineNumberFormatter)](#editorapi.setlinenumberformatter) | Set the formatter for the line numbers of the editor |
@@ -477,6 +476,7 @@ editorSupport: CypherEditorSupport;
 |  [setPreExtensions(preExtensions)](#editorapi.setpreextensions) | set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
 |  [setReadOnly(readOnly)](#editorapi.setreadonly) | Set whether the editor is read only or the user can edit the editor's value |
 |  [setReadOnlyCursor(readOnlyCursor)](#editorapi.setreadonlycursor) | Set whether to show the cursor when the editor readOnly is true |
+|  [setSchema(schema)](#editorapi.setschema) | Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
 |  [setValue(value, parseOnSetValue)](#editorapi.setvalue) | Set the editor value |
 
@@ -1018,29 +1018,6 @@ void
 
 <br>
 
-<a name="editorapi.setautocompleteschema"></a>
-
-#### EditorApi.setAutocompleteSchema() method
-
-Set the schema - TODO need better docs here and probably rename this
-
-<b>Signature:</b>
-
-```typescript
-setAutocompleteSchema(autocompleteSchema: EditorSupportSchema): void;
-```
-<b>Parameters:</b>
-
-|  Parameter | Type |
-|  --- | --- |
-|  autocompleteSchema | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |
-
-<b>Returns:</b>
-
-void
-
-<br>
-
 <a name="editorapi.setautocompletetriggerstrings"></a>
 
 #### EditorApi.setAutocompleteTriggerStrings() method
@@ -1319,6 +1296,29 @@ void
 
 <br>
 
+<a name="editorapi.setschema"></a>
+
+#### EditorApi.setSchema() method
+
+Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database
+
+<b>Signature:</b>
+
+```typescript
+setSchema(schema: EditorSupportSchema): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  schema | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.settheme"></a>
 
 #### EditorApi.setTheme() method
@@ -1387,7 +1387,6 @@ export interface EditorOptions
 |  [autocomplete?](#editoroptions.autocomplete) | boolean | true | <i>(Optional)</i> Whether the autocomplete feature is enabled |
 |  [autocompleteCloseOnBlur?](#editoroptions.autocompletecloseonblur) | boolean | true | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
 |  [autocompleteOpen?](#editoroptions.autocompleteopen) | boolean | false | <i>(Optional)</i> Whether the autocomplete menu is initially shown to the user |
-|  [autocompleteSchema?](#editoroptions.autocompleteschema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema - TODO need better docs here and probably rename this |
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
@@ -1402,6 +1401,7 @@ export interface EditorOptions
 |  [preExtensions?](#editoroptions.preextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
 |  [readOnly?](#editoroptions.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#editoroptions.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
+|  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [value?](#editoroptions.value) | string | "" | <i>(Optional)</i> The initial editor value |
 
@@ -1455,23 +1455,6 @@ autocompleteOpen?: boolean;
 <b>Default Value:</b>
 
 false
-
-<br>
-
-<a name="editoroptions.autocompleteschema"></a>
-
-#### EditorOptions.autocompleteSchema property
-
-The schema - TODO need better docs here and probably rename this
-
-<b>Signature:</b>
-
-```typescript
-autocompleteSchema?: EditorSupportSchema;
-```
-<b>Default Value:</b>
-
-undefined
 
 <br>
 
@@ -1710,6 +1693,23 @@ readOnlyCursor?: boolean;
 <b>Default Value:</b>
 
 false
+
+<br>
+
+<a name="editoroptions.schema"></a>
+
+#### EditorOptions.schema property
+
+The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database
+
+<b>Signature:</b>
+
+```typescript
+schema?: EditorSupportSchema;
+```
+<b>Default Value:</b>
+
+undefined
 
 <br>
 

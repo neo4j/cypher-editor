@@ -38,7 +38,7 @@
     promise: Promise<QueryResult | GenericResult>;
     id?: number;
   };
-  type AutocompleteSchema = {
+  type Schema = {
     // Not complete types here
     consoleCommands?: Array<{ name: string }>;
     labels?: string[];
@@ -48,7 +48,7 @@
   const history = historyStore("MATCH (n) RETURN count(n)", 20);
   let viewState: "idle" | "executing" | "disconnected" | "connection-modal" =
     "connection-modal";
-  let autocompleteSchema: AutocompleteSchema = { consoleCommands };
+  let schema: Schema = { consoleCommands };
   let driver: Driver;
   let responses: StreamResponse[] = [];
   let id = 0;
@@ -61,13 +61,13 @@
     try {
       const res = await runQuery(driver, schemaQuery);
       const obj = res.records[0].toObject();
-      autocompleteSchema = {
+      schema = {
         consoleCommands,
         labels: obj.labels.map((x: string) => `:${x}`),
         relationshipTypes: obj.relationshipTypes.map((x: string) => `:${x}`)
       };
     } catch (e) {
-      autocompleteSchema = {
+      schema = {
         consoleCommands
       };
       console.log(e);
@@ -154,7 +154,7 @@
         readOnly={viewState === "executing"}
         readOnlyCursor={true}
         onKeyDown={keyDown}
-        {autocompleteSchema}
+        {schema}
         theme="light"
         lint={$history.trim().length > 0}
       />

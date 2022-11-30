@@ -168,7 +168,6 @@ export const initialOptions = {
   autocomplete: true, // whether to show autocompletion
   autocompleteCloseOnBlur: true,
   autocompleteOpen: false,
-  autocompleteSchema: simpleSchema,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
   history: true,
@@ -180,6 +179,7 @@ export const initialOptions = {
   position: { line: 2, column: 3 },
   readOnly: false, // can be one of: true / false / "nocursor"
   readOnlyCursor: false,
+  schema: simpleSchema,
   theme: THEME_LIGHT,
   parseOnSetValue: true,
   value: longQuery

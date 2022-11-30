@@ -52,7 +52,6 @@
 
   let autocomplete = initialOptions.autocomplete;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
-  let autocompleteSchema = initialOptions.autocompleteSchema;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
@@ -63,6 +62,7 @@
   let position = initialOptions.position;
   let readOnly = initialOptions.readOnly;
   let readOnlyCursor = initialOptions.readOnlyCursor;
+  let schema = initialOptions.schema;
   let theme = initialOptions.theme;
   let cypher = initialOptions.value;
 
@@ -225,9 +225,7 @@
   $: logs = appendLog(
     commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
   );
-  $: logs = appendLog(
-    commandLog("setAutocompleteSchema", deriveSchemaName(autocompleteSchema))
-  );
+  $: logs = appendLog(commandLog("setSchema", deriveSchemaName(schema)));
   $: logs = appendLog(
     commandLog(
       "setLineNumberFormatter",
@@ -394,20 +392,16 @@
       </div>
     </div>
 
-    <div class="setting setting-short autocompleteSchema">
+    <div class="setting setting-short schema">
       <div class="setting-label">Schema</div>
       <div class="setting-values">
         <button
-          class={autocompleteSchema === simpleSchema
-            ? "setting-active"
-            : undefined}
-          on:click={() => (autocompleteSchema = simpleSchema)}>Simple</button
+          class={schema === simpleSchema ? "setting-active" : undefined}
+          on:click={() => (schema = simpleSchema)}>Simple</button
         >
         <button
-          class={autocompleteSchema === neo4jSchema
-            ? "setting-active"
-            : undefined}
-          on:click={() => (autocompleteSchema = neo4jSchema)}>Long</button
+          class={schema === neo4jSchema ? "setting-active" : undefined}
+          on:click={() => (schema = neo4jSchema)}>Long</button
         >
       </div>
     </div>
@@ -686,7 +680,6 @@
         {onKeyDown}
         {autocomplete}
         {autocompleteCloseOnBlur}
-        {autocompleteSchema}
         {autocompleteTriggerStrings}
         {history}
         {lineNumberFormatter}
@@ -696,6 +689,7 @@
         {placeholder}
         {readOnly}
         {readOnlyCursor}
+        {schema}
         {theme}
         value={cypher}
         {autofocus}

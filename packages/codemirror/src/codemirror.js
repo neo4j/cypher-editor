@@ -139,10 +139,10 @@ export const getDefaultOptions = () => ({ ...defaultOptions });
 export function createCypherEditor(parentDOMElement, options = {}) {
   const combinedOptions = { ...defaultOptions, ...options };
   const {
-    autocompleteSchema,
     autofocus,
     position,
     parseOnSetValue,
+    schema,
     value,
     preExtensions,
     postExtensions
@@ -371,8 +371,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   if (position !== undefined) {
     setPosition(position);
   }
-  if (autocompleteSchema !== undefined) {
-    editorSupport.setSchema(autocompleteSchema);
+  if (schema !== undefined) {
+    editorSupport.setSchema(schema);
   }
   if (autocompleteOpen === true) {
     showAutocomplete();
@@ -581,7 +581,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return editor ? getStateLineCount(editor.state) : 0;
   };
 
-  const setAutocompleteSchema = (schema) => {
+  const setSchema = (schema) => {
     editorSupport.setSchema(schema);
     if (autocompleteOpen) {
       showAutocomplete();
@@ -621,7 +621,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocomplete,
     setAutocompleteCloseOnBlur,
     setAutocompleteOpen,
-    setAutocompleteSchema,
     setAutocompleteTriggerStrings,
     setHistory,
     setLineNumberFormatter,
@@ -632,6 +631,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setPosition,
     setReadOnly,
     setReadOnlyCursor,
+    setSchema,
     setTheme,
     setValue,
 

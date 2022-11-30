@@ -43,10 +43,6 @@ export interface CypherEditorProps {
    */
   autocompleteOpen?: boolean;
   /**
-   * The schema to use when showing autocomplete suggestions (and syntax highlighting)
-   */
-  autocompleteSchema?: EditorSupportSchema;
-  /**
    * The keys that when typed will automatically open the autocomplete menu
    *
    * @defaultValue [".",":","[]","()","{}","[","(","{","$"]
@@ -120,6 +116,10 @@ export interface CypherEditorProps {
    * @defaultValue false
    */
   readOnlyCursor?: boolean;
+  /**
+   * The schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
+   */
+  schema?: EditorSupportSchema;
   /**
    * Whether to use the light or dark theme for the editor
    *

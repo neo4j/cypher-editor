@@ -64,9 +64,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   let { lineNumberFormatter } = lineNumberFormatterObject;
-  const [autocompleteSchema, setAutocompleteSchema] = useState(
-    initialOptions.autocompleteSchema
-  );
+  const [schema, setSchema] = useState(initialOptions.schema);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
   const [readOnlyCursor, setReadOnlyCursor] = useState(
     initialOptions.readOnlyCursor
@@ -378,13 +376,13 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const showSimpleSchema = () => {
-    addCommandLog("setAutocompleteSchema", "simple");
-    setAutocompleteSchema(simpleSchema);
+    addCommandLog("setSchema", "simple");
+    setSchema(simpleSchema);
   };
 
   const showLongSchema = () => {
-    addCommandLog("setAutocompleteSchema", "long");
-    setAutocompleteSchema(neo4jSchema);
+    addCommandLog("setSchema", "long");
+    setSchema(neo4jSchema);
   };
 
   const showDefaultAutocompleteTriggerStrings = () => {
@@ -570,25 +568,17 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting setting-short autocompleteSchema">
+        <div className="setting setting-short schema">
           <div className="setting-label">Schema</div>
           <div className="setting-values">
             <button
-              className={
-                autocompleteSchema === simpleSchema
-                  ? "setting-active"
-                  : undefined
-              }
+              className={schema === simpleSchema ? "setting-active" : undefined}
               onClick={showSimpleSchema}
             >
               Simple
             </button>
             <button
-              className={
-                autocompleteSchema === neo4jSchema
-                  ? "setting-active"
-                  : undefined
-              }
+              className={schema === neo4jSchema ? "setting-active" : undefined}
               onClick={showLongSchema}
             >
               Long
@@ -935,7 +925,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             autocomplete={autocomplete}
             autocompleteCloseOnBlur={autocompleteCloseOnBlur}
             autocompleteOpen={autocompleteOpen}
-            autocompleteSchema={autocompleteSchema}
+            schema={schema}
             autocompleteTriggerStrings={autocompleteTriggerStrings}
             autofocus={autofocus}
             history={history}

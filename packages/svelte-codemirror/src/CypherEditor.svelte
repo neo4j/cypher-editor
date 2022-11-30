@@ -32,8 +32,8 @@
   export let autocompleteOpen = defaultOptions.autocompleteOpen;
   $: updateOption({ autocompleteOpen });
 
-  export let autocompleteSchema = defaultOptions.autocompleteSchema;
-  $: updateOption({ autocompleteSchema });
+  export let schema = defaultOptions.schema;
+  $: updateOption({ schema });
 
   export let autocompleteTriggerStrings =
     defaultOptions.autocompleteTriggerStrings;
@@ -155,7 +155,6 @@
       autocomplete,
       autocompleteCloseOnBlur,
       autocompleteOpen,
-      autocompleteSchema,
       autocompleteTriggerStrings,
       autofocus,
       history,
@@ -167,6 +166,7 @@
       position,
       readOnly,
       readOnlyCursor,
+      schema,
       theme,
       parseOnSetValue,
       value

@@ -258,10 +258,6 @@ export interface EditorApi {
    */
   setAutocompleteOpen(autocompleteOpen: boolean): void;
   /**
-   * Set the schema - TODO need better docs here and probably rename this
-   */
-  setAutocompleteSchema(autocompleteSchema: EditorSupportSchema): void;
-  /**
    * Set the keys that when typed will automatically open the autocomplete menu
    */
   setAutocompleteTriggerStrings(autocompleteTriggerStrings: string[]): void;
@@ -303,6 +299,10 @@ export interface EditorApi {
    * Set whether to show the cursor when the editor readOnly is true
    */
   setReadOnlyCursor(readOnlyCursor: boolean): void;
+  /**
+   * Set the schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
+   */
+  setSchema(schema: EditorSupportSchema): void;
   /**
    * Set whether to use the light or dark theme for the editor
    */
@@ -429,12 +429,6 @@ export interface EditorOptions {
    */
   autocompleteOpen?: boolean;
   /**
-   * The schema - TODO need better docs here and probably rename this
-   *
-   * @defaultValue undefined
-   */
-  autocompleteSchema?: EditorSupportSchema;
-  /**
    * The keys that when typed will automatically open the autocomplete menu
    *
    * @defaultValue [".",":","[]","()","{}","[","(","{","$"]
@@ -506,6 +500,12 @@ export interface EditorOptions {
    * @defaultValue false
    */
   readOnlyCursor?: boolean;
+  /**
+   * The schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
+   *
+   * @defaultValue undefined
+   */
+  schema?: EditorSupportSchema;
   /**
    * Whether to use the light or dark theme for the editor
    *

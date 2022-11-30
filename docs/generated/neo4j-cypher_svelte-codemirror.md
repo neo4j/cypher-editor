@@ -42,9 +42,9 @@ Cypher Editor Svelte Component (with css styles included)
 
 ```typescript
 export default class CypherEditor extends SvelteComponentTyped<
- CypherEditorProps,
- {},
- {}
+  CypherEditorProps,
+  {},
+  {}
 > 
 ```
 <b>Extends:</b> SvelteComponentTyped&lt; [CypherEditorProps](#cyphereditorprops)<!-- -->, {}, {} &gt;
@@ -101,7 +101,6 @@ export interface CypherEditorProps
 |  [autocomplete?](#cyphereditorprops.autocomplete) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete feature is enabled |
 |  [autocompleteCloseOnBlur?](#cyphereditorprops.autocompletecloseonblur) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
 |  [autocompleteOpen?](#cyphereditorprops.autocompleteopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete window is open |
-|  [autocompleteSchema?](#cyphereditorprops.autocompleteschema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema to use when showing autocomplete suggestions (and syntax highlighting) |
 |  [autocompleteTriggerStrings?](#cyphereditorprops.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#cyphereditorprops.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [autofocusProps?](#cyphereditorprops.autofocusprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["position", "readOnly", "value"\] | <i>(Optional)</i> setting any of these props will trigger the editor gaining focus |
@@ -125,6 +124,7 @@ export interface CypherEditorProps
 |  [position?](#cyphereditorprops.position) | [PositionAny](./neo4j-cypher_codemirror.md#positionany) |  | <i>(Optional)</i> The editor cursor position |
 |  [readOnly?](#cyphereditorprops.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
+|  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [value?](#cyphereditorprops.value) | string | "" | <i>(Optional)</i> The editor text value |
 
@@ -182,20 +182,6 @@ Changing this can be used to manually control the autocomplete open state
 <b>Default Value:</b>
 
 `false`
-
-<br>
-
-<a name="cyphereditorprops.autocompleteschema"></a>
-
-#### CypherEditorProps.autocompleteSchema property
-
-The schema to use when showing autocomplete suggestions (and syntax highlighting)
-
-<b>Signature:</b>
-
-```typescript
-autocompleteSchema?: EditorSupportSchema;
-```
 
 <br>
 
@@ -551,6 +537,20 @@ readOnlyCursor?: boolean;
 <b>Default Value:</b>
 
 false
+
+<br>
+
+<a name="cyphereditorprops.schema"></a>
+
+#### CypherEditorProps.schema property
+
+The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database
+
+<b>Signature:</b>
+
+```typescript
+schema?: EditorSupportSchema;
+```
 
 <br>
 
