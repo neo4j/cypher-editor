@@ -108,7 +108,7 @@ export interface CypherEditorProps
 |  [lineNumberFormatter?](#cyphereditorprops.linenumberformatter) | [LineNumberFormatter](./neo4j-cypher_codemirror.md#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#cyphereditorprops.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#cyphereditorprops.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
-|  [lint?](#cyphereditorprops.lint) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
+|  [lint?](#cyphereditorprops.lint) | boolean | false | <i>(Optional)</i> Whether the editor should display lint errors to the user |
 |  [onAutocompleteChanged?](#cyphereditorprops.onautocompletechanged) | [AutocompleteChangedListener](./neo4j-cypher_codemirror.md#autocompletechangedlistener) |  | <i>(Optional)</i> A listener for when the editor autocompletion state changes |
 |  [onEditorCreated?](#cyphereditorprops.oneditorcreated) | [EditorCreatedListener](./neo4j-cypher_codemirror.md#editorcreatedlistener) |  | <i>(Optional)</i> A listener for when the editor api gets created |
 |  [onFocusChanged?](#cyphereditorprops.onfocuschanged) | [FocusChangedListener](./neo4j-cypher_codemirror.md#focuschangedlistener) |  | <i>(Optional)</i> A listener for when the editor focus changes |
@@ -343,7 +343,7 @@ lint?: boolean;
 ```
 <b>Default Value:</b>
 
-true
+false
 
 <br>
 

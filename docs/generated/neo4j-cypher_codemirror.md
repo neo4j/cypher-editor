@@ -1393,7 +1393,7 @@ export interface EditorOptions
 |  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#editoroptions.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#editoroptions.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
-|  [lint?](#editoroptions.lint) | boolean | true | <i>(Optional)</i> Whether the editor should display lint errors to the user |
+|  [lint?](#editoroptions.lint) | boolean | false | <i>(Optional)</i> Whether the editor should display lint errors to the user |
 |  [parseOnSetValue?](#editoroptions.parseonsetvalue) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
 |  [placeholder?](#editoroptions.placeholder) | string | undefined | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
 |  [position?](#editoroptions.position) | [PositionAny](#positionany) | undefined | <i>(Optional)</i> The initial editor cursor position |
@@ -1573,7 +1573,7 @@ lint?: boolean;
 ```
 <b>Default Value:</b>
 
-true
+false
 
 <br>
 

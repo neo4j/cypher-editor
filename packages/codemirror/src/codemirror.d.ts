@@ -467,7 +467,7 @@ export interface EditorOptions {
   /**
    * Whether the editor should display lint errors to the user
    *
-   * @defaultValue true
+   * @defaultValue false
    */
   lint?: boolean;
   /**

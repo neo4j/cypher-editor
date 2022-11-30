@@ -52,7 +52,7 @@ export const defaultOptions = {
   lineNumberFormatter: defaultLineNumberFormatter,
   lineNumbers: true,
   lineWrapping: false,
-  lint: true,
+  lint: false,
   parseOnSetValue: true,
   placeholder: undefined,
   position: undefined,
