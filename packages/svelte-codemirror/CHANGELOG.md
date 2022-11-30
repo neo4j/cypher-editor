@@ -1,5 +1,11 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 0.1.1-next.1
+
+### Patch Changes
+
+- 813bd5e: Editing README
+
 ## 0.1.1-next.0
 
 ### Patch Changes
