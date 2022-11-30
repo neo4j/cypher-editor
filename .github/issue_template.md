@@ -33,7 +33,6 @@ What needs to be done to address this issue? Ideally, provide a pull request wit
 | Browser       |
 | node.js       |
 | npm           |
-| yarn          |
 
 ### Additional Information
 

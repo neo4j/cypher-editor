@@ -1,0 +1,28 @@
+name: 'Reusable Env Setup'
+description: 'Composite action to setup npm, node and caches.'
+inputs:
+  NODE_VERSION:
+    description: 'Node version'
+    required: false
+    default: 18.x
+  
+runs:
+  using: 'composite'
+  steps:
+    - name: Turbo Cache
+      id: turbo-cache
+      uses: actions/cache@v3
+      with:
+        path: node_modules/.cache/turbo
+        key: ${{ runner.os }}-turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-${{ github.job }}-${{ github.ref_name }}-
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci

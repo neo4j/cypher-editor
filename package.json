@@ -10,15 +10,14 @@
     "@babel/plugin-transform-runtime": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
     "@playwright/test": "^1.25.2",
+    "api-docdown": "^1.0.2",
     "cross-env": "^7.0.3",
-    "lerna": "^5.5.0",
     "pm2": "^5.2.0",
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
     "pretty-quick": "^3.1.3",
     "rimraf": "^3.0.2",
-    "turbo": "^1.4.7",
-    "api-docdown": "^1.0.2"
+    "turbo": "^1.4.7"
   },
   "workspaces": [
     "packages/*",
@@ -26,22 +25,30 @@
     "apps/*"
   ],
   "scripts": {
-    "build:demos": "turbo run deploy",
+    "build:demos": "turbo run deploy --filter='!./apps/*'",
     "build:libs": "turbo run build",
     "build:docs": "api-docdown generate",
     "build:docs-extract": "api-docdown extract",
     "build:docs-document": "api-docdown document",
-    "clean:all": "turbo run clean:deploy clean:build && yarn clean:packages",
+    "clean:all": "turbo run clean:deploy clean:build && npm run clean:packages",
     "clean:demos": "turbo run clean:deploy",
-    "clean:packages": "rimraf packages/*/node_modules; rimraf node_modules",
+    "clean:packages": "rimraf packages/*/node_modules; rimraf demos/*/node_modules; rimraf apps/*/node_modules; rimraf node_modules;",
     "clean:libs": "turbo run clean:build",
-    "lerna": "lerna",
+    "turbo": "turbo",
     "pm2": "pm2",
-    "prepublishOnly": "yarn build:libs",
+    "prepublishOnly": "npm run build:libs",
     "prettier": "prettier --write .",
+    "release": "npm run build:libs && npm run build:demos && changeset publish",
     "start:demos": "turbo run start",
     "start:e2e": "turbo run e2e",
     "stop:e2e": "turbo run unserve"
   },
-  "name": "cypher-editor"
+  "name": "cypher-editor",
+  "dependencies": {
+    "@changesets/cli": "^2.25.2"
+  },
+  "engines": {
+    "npm": "8.x",
+    "node": "18.x"
+  }
 }

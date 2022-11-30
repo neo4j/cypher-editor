@@ -6,7 +6,7 @@
     "extract",
     "statements"
   ],
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/index.js",

@@ -1,8 +1,9 @@
 {
   "name": "demo-base",
+  "private": true,
   "description": "demo base files for cypher editor",
   "keywords": [],
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/index.js",
