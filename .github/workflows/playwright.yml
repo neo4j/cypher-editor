@@ -26,7 +26,7 @@ jobs:
         run: npx pm2 list
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        uses: ./.github/workflows/reusable/playwright-browsers
 
       - name: Run Playwright tests
         run: npm run start:e2e
