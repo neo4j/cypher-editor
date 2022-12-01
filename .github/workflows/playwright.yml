@@ -17,6 +17,11 @@ jobs:
       - name: Setup node / npm env and install deps
         uses: ./.github/workflows/reusable/env-setup
 
+      - name: Build
+        run: |
+          npm run build:libs
+          npm run build:demos
+
       - name: Warmup pm2
         run: npx pm2 list
 
@@ -30,7 +35,7 @@ jobs:
         if: always()
         run: npm run stop:e2e
         
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-results
