@@ -6,7 +6,7 @@
     "extract",
     "statements"
   ],
-  "version": "0.0.0",
+  "version": "1.0.0-next.0",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/index.js",
@@ -34,8 +34,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@neo4j-cypher/antlr4-simple": "*",
-    "@neo4j-cypher/editor-support": "*"
+    "@neo4j-cypher/antlr4-simple": "1.0.0-next.0",
+    "@neo4j-cypher/editor-support": "1.0.0-next.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
