@@ -17,5 +17,7 @@
     "@neo4j-cypher/react-codemirror": "0.0.0",
     "@neo4j-cypher/svelte-codemirror": "0.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "tidy-needles-smash"
+  ]
 }
