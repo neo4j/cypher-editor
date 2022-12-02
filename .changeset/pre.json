@@ -18,6 +18,7 @@
     "@neo4j-cypher/svelte-codemirror": "0.0.0"
   },
   "changesets": [
+    "calm-pots-attack",
     "tidy-needles-smash"
   ]
 }
