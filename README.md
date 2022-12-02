@@ -57,4 +57,4 @@ Contributions are very much appreciated and here's an outline of the process.
 
 - Work in your own fork of the repo
 - Open a PR against the main branch
-- Follow the instructions in the pull request template
+- Follow the instructions in the pull request template (run `npx changeset`)
