@@ -1,5 +1,13 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.1
+
+### Patch Changes
+
+- 896eddf: add missing @babel/runtime dependency
+- Updated dependencies [896eddf]
+  - @neo4j-cypher/codemirror@1.0.0-next.1
+
 ## 1.0.0-next.0
 
 ### Major Changes

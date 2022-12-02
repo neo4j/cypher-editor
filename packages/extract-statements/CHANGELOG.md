@@ -1,5 +1,14 @@
 # @neo4j-cypher/extract-statements
 
+## 1.0.0-next.1
+
+### Patch Changes
+
+- 896eddf: add missing @babel/runtime dependency
+- Updated dependencies [896eddf]
+  - @neo4j-cypher/antlr4-simple@1.0.0-next.1
+  - @neo4j-cypher/editor-support@1.0.0-next.1
+
 ## 1.0.0-next.0
 
 ### Major Changes

@@ -1,5 +1,11 @@
 # demo-base
 
+## 1.0.0-next.1
+
+### Patch Changes
+
+- 896eddf: add missing @babel/runtime dependency
+
 ## 1.0.0-next.0
 
 ### Major Changes
