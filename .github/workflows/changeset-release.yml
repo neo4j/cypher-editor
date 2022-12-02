@@ -1,9 +1,9 @@
-name: Release
+name: Changeset PR & Release
 
 on:
   push:
     branches:
-      - next-release-prepare
+      - next
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
