@@ -37,6 +37,7 @@
     "node": ">=16"
   },
   "dependencies": {
+    "@babel/runtime": "^7.20.6",
     "@neo4j-cypher/codemirror": "1.0.0-next.0",
     "codemirror": "^6.0.1"
   },

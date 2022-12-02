@@ -37,6 +37,7 @@
     "node": ">=16"
   },
   "dependencies": {
+    "@babel/runtime": "^7.20.6",
     "@codemirror/autocomplete": "^6.3.4",
     "@codemirror/commands": "^6.1.2",
     "@codemirror/language": "^6.3.1",
