@@ -1,7 +1,7 @@
 {
   "name": "svelte-ts",
   "private": true,
-  "version": "1.0.0-next.1",
+  "version": "1.0.0-next.2",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5273",
@@ -10,7 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@neo4j-cypher/svelte-codemirror": "1.0.0-next.1",
+    "@neo4j-cypher/svelte-codemirror": "1.0.0-next.2",
     "neo4j-driver": "^5.3.0"
   },
   "devDependencies": {

@@ -1,5 +1,12 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- 6dcf015: Forward bind:value from wrapper component
+- 1982d54: Fix svelte type issues
+
 ## 1.0.0-next.1
 
 ### Patch Changes
