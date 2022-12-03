@@ -16,8 +16,8 @@
  * @packageDocumentation
  */
 
-export type {
+export {
   default as UnstyledCypherEditor,
   CypherEditorProps
 } from "./CypherEditor.svelte";
-export type { default as CypherEditor } from "./CypherEditorStyled.svelte";
+export { default as CypherEditor } from "./CypherEditorStyled.svelte";
