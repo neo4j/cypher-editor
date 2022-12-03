@@ -23,7 +23,7 @@
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
   import type { Driver, QueryResult } from "neo4j-driver";
-  import { CypherEditor } from "@neo4j-cypher/svelte-codemirror";
+  import CypherEditor from "@neo4j-cypher/svelte-codemirror";
 
   import { runQuery, schemaQuery } from "./cypher.utils";
   import { historyStore } from "./history.store";

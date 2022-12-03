@@ -44,6 +44,8 @@
   export let history = defaultOptions.history;
   $: updateOption({ history });
 
+  export let loadDefaultCSS = true;
+
   export let lineNumberFormatter = defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
 
@@ -151,6 +153,9 @@
   };
 
   onMount(() => {
+    if (loadDefaultCSS) {
+      import("@neo4j-cypher/codemirror/css/cypher-codemirror.css");
+    }
     const { editor } = createCypherEditor(cypherEditorRef, {
       autocomplete,
       autocompleteCloseOnBlur,

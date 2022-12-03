@@ -74,6 +74,12 @@ export interface CypherEditorProps {
    */
   lineNumberFormatter?: LineNumberFormatter;
   /**
+   * Whether default CSS should be loaded or not
+   *
+   * @defaultValue `true`
+   */
+  loadDefaultCSS?: boolean;
+  /**
    * Whether line numbers are shown to the left of the editor ui
    *
    * @defaultValue true

@@ -10,8 +10,8 @@
   "version": "1.0.0-next.1",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
-  "svelte": "src/svelte-codemirror.js",
-  "types": "src/svelte-codemirror.d.ts",
+  "svelte": "src/CypherEditor.svelte",
+  "types": "src/CypherEditor.svelte.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
