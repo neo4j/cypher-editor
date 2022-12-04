@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- b35f29a: make sure calls to editorApi.set function apply defaults, fixup react types
+
 ## 1.0.0-next.1
 
 ### Patch Changes
