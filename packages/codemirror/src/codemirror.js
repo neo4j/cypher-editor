@@ -31,7 +31,6 @@ import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
 import {
-  defaultLineNumberFormatter,
   defaultOptions as baseDefaultOptions,
   createEventHandlers,
   positionNewToOld,
@@ -417,7 +416,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireValueChanged(value, changes);
   };
 
-  const setValue = (value, parseOnSetValueParam = parseOnSetValue) => {
+  const setValue = (value = defaultOptions.value, parseOnSetValueParam = parseOnSetValue) => {
     const update = editor.state.update({
       changes: { from: 0, to: getStateLength(editor.state), insert: value }
     });
@@ -436,7 +435,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     acceptCompletion(editor);
   };
 
-  const setHistory = (newHistory) => {
+  const setHistory = (newHistory = defaultOptions.history) => {
     history = newHistory;
     editor.dispatch({
       effects: historyConf.reconfigure(getHistoryExtensions({ history }))
@@ -452,7 +451,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setLineNumbers = (newLineNumbers) => {
+  const setLineNumbers = (newLineNumbers = defaultOptions.lineNumbers) => {
     lineNumbers = newLineNumbers;
     editor.dispatch({
       effects: showLinesConf.reconfigure(
@@ -466,7 +465,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const setLineNumberFormatter = (
-    newLineNumberFormatter = defaultLineNumberFormatter
+    newLineNumberFormatter = defaultOptions.lineNumberFormatter
   ) => {
     lineNumberFormatter = newLineNumberFormatter;
     editor.dispatch({
@@ -480,7 +479,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setReadOnly = (newReadOnly) => {
+  const setReadOnly = (newReadOnly = defaultOptions.readOnly) => {
     readOnly = newReadOnly;
     editor.dispatch({
       effects: [
@@ -502,7 +501,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setReadOnlyCursor = (newReadOnlyCursor) => {
+  const setReadOnlyCursor = (newReadOnlyCursor = defaultOptions.readOnlyCursor) => {
     readOnlyCursor = newReadOnlyCursor;
     editor.dispatch({
       effects: [
@@ -516,7 +515,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setPlaceholder = (newPlaceholder) => {
+  const setPlaceholder = (newPlaceholder = defaultOptions.placeholder) => {
     placeholder = newPlaceholder;
     editor.dispatch({
       effects: [
@@ -525,7 +524,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setLineWrapping = (newLineWrapping) => {
+  const setLineWrapping = (newLineWrapping = defaultOptions.lineWrapping) => {
     lineWrapping = newLineWrapping;
     editor.dispatch({
       effects: [
@@ -536,7 +535,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setAutocomplete = (newAutocomplete) => {
+  const setAutocomplete = (newAutocomplete = defaultOptions.autocomplete) => {
     autocomplete = newAutocomplete;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
@@ -549,7 +548,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur) => {
+  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur = defaultOptions.autocompleteCloseOnBlur) => {
     autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
@@ -562,11 +561,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings) => {
+  const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings = defaultOptions.autocompleteTriggerStrings) => {
     autocompleteTriggerStrings = newAutocompleteTriggerStrings;
   };
 
-  const setLint = (newLint) => {
+  const setLint = (newLint = defaultOptions.lint) => {
     lint = newLint;
     editor.dispatch({
       effects: lintConf.reconfigure(getLintExtensions({ readOnly, lint }))
@@ -581,14 +580,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return editor ? getStateLineCount(editor.state) : 0;
   };
 
-  const setSchema = (schema) => {
+  const setSchema = (schema = defaultOptions.schema) => {
     editorSupport.setSchema(schema);
     if (autocompleteOpen) {
       showAutocomplete();
     }
   };
 
-  const setTheme = (theme) => {
+  const setTheme = (theme = defaultOptions.theme) => {
     editor.dispatch({
       effects: themeConf.reconfigure(getThemeExtensions({ theme }))
     });
@@ -602,7 +601,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor && editor.destroy();
   };
 
-  const setAutocompleteOpen = (open) => {
+  const setAutocompleteOpen = (open = defaultOptions.autocompleteOpen) => {
     if (open) {
       showAutocomplete();
     } else {
