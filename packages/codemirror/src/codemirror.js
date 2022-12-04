@@ -416,7 +416,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireValueChanged(value, changes);
   };
 
-  const setValue = (value = defaultOptions.value, parseOnSetValueParam = parseOnSetValue) => {
+  const setValue = (
+    value = defaultOptions.value,
+    parseOnSetValueParam = parseOnSetValue
+  ) => {
     const update = editor.state.update({
       changes: { from: 0, to: getStateLength(editor.state), insert: value }
     });
@@ -501,7 +504,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setReadOnlyCursor = (newReadOnlyCursor = defaultOptions.readOnlyCursor) => {
+  const setReadOnlyCursor = (
+    newReadOnlyCursor = defaultOptions.readOnlyCursor
+  ) => {
     readOnlyCursor = newReadOnlyCursor;
     editor.dispatch({
       effects: [
@@ -548,7 +553,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setAutocompleteCloseOnBlur = (newAutocompleteCloseOnBlur = defaultOptions.autocompleteCloseOnBlur) => {
+  const setAutocompleteCloseOnBlur = (
+    newAutocompleteCloseOnBlur = defaultOptions.autocompleteCloseOnBlur
+  ) => {
     autocompleteCloseOnBlur = newAutocompleteCloseOnBlur;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
@@ -561,7 +568,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
-  const setAutocompleteTriggerStrings = (newAutocompleteTriggerStrings = defaultOptions.autocompleteTriggerStrings) => {
+  const setAutocompleteTriggerStrings = (
+    newAutocompleteTriggerStrings = defaultOptions.autocompleteTriggerStrings
+  ) => {
     autocompleteTriggerStrings = newAutocompleteTriggerStrings;
   };
 
