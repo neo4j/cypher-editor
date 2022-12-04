@@ -15,8 +15,8 @@
  *
  * @packageDocumentation
  */
-export type {
+export {
   default as UnstyledCypherEditor,
   CypherEditorProps
 } from "./CypherEditor";
-export type { default as CypherEditor } from "./CypherEditorStyled";
+export { default as CypherEditor } from "./CypherEditorStyled";
