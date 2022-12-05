@@ -17,8 +17,8 @@
     "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
   },
   "scripts": {
-    "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
-    "build-es": "cross-env ES=true babel --config-file ../../babel.config.js --extensions \".js\" --out-dir es ./src",
+    "build-lib": "babel --config-file ../../babel.antlr4.config.js --extensions \".js\" --out-dir lib ./src",
+    "build-es": "cross-env ES=true babel --config-file ../../babel.antlr4.config.js --extensions \".js\" --out-dir es ./src",
     "build": "npm run build-lib && npm run build-es",
     "clean:build": "rimraf lib && rimraf es",
     "generate": "java -jar src/antlr-4.10.1-complete.jar -Dlanguage=JavaScript src/Cypher.g4"
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.6",
-    "antlr4": "4.10.1"
+    "@neo4j-cypher/antlr4-browser": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -43,6 +43,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.2",
     "@babel/plugin-transform-regenerator": "^7.20.5",
     "@babel/plugin-transform-runtime": "^7.19.6",
-    "@babel/preset-env": "^7.20.2"
+    "@babel/preset-env": "^7.20.2",
+    "babel-plugin-replace-imports": "^1.0.2"
   }
 }

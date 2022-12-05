@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import antlr4 from "antlr4";
+import antlr4 from "@neo4j-cypher/antlr4-browser";
 import {
   ReferencesProvider,
   CypherTypes,
