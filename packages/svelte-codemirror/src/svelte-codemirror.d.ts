@@ -17,7 +17,6 @@
  */
 
 export {
-  default as UnstyledCypherEditor,
+  default as CypherEditor,
   CypherEditorProps
 } from "./CypherEditor.svelte";
-export { default as CypherEditor } from "./CypherEditorStyled.svelte";

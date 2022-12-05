@@ -24,6 +24,7 @@
   import { slide } from "svelte/transition";
   import type { Driver, QueryResult } from "neo4j-driver";
   import { CypherEditor } from "@neo4j-cypher/svelte-codemirror";
+  import "@neo4j-cypher/codemirror/css/cypher-codemirror.css";
 
   import { runQuery, schemaQuery } from "./cypher.utils";
   import { historyStore } from "./history.store";
