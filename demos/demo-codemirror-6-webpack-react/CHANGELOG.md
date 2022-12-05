@@ -1,5 +1,16 @@
 # demo-codemirror-6-webpack-react
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- 48363de: add antlr4-browser package (remove fs dependency)
+- Updated dependencies [48363de]
+  - demo-base@1.0.0-next.2
+  - demo-base-react@1.0.0-next.2
+  - @neo4j-cypher/codemirror@1.0.0-next.3
+  - @neo4j-cypher/react-codemirror@1.0.0-next.3
+
 ## 1.0.0-next.2
 
 ### Patch Changes
