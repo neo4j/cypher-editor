@@ -18,5 +18,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { default as UnstyledCypherEditor } from "./CypherEditor.svelte";
-export { default as CypherEditor } from "./CypherEditorStyled.svelte";
+export { default as CypherEditor } from "./CypherEditor.svelte";
