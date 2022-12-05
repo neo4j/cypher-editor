@@ -15,13 +15,15 @@
     "@neo4j-cypher/editor-support": "0.0.0",
     "@neo4j-cypher/extract-statements": "0.0.0",
     "@neo4j-cypher/react-codemirror": "0.0.0",
-    "@neo4j-cypher/svelte-codemirror": "0.0.0"
+    "@neo4j-cypher/svelte-codemirror": "0.0.0",
+    "@neo4j-cypher/antlr4-browser": "0.0.0"
   },
   "changesets": [
     "calm-pots-attack",
     "eleven-moose-lie",
     "forty-fishes-sing",
     "real-fishes-dance",
+    "shy-otters-cover",
     "tidy-needles-smash"
   ]
 }

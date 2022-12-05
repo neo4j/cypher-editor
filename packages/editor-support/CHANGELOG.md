@@ -1,5 +1,13 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- 48363de: add antlr4-browser package (remove fs dependency)
+- Updated dependencies [48363de]
+  - @neo4j-cypher/antlr4@1.0.0-next.2
+
 ## 1.0.0-next.1
 
 ### Patch Changes

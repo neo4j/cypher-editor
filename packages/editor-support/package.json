@@ -4,7 +4,7 @@
   "keywords": [
     "cypher"
   ],
-  "version": "1.0.0-next.1",
+  "version": "1.0.0-next.2",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "lib/editor-support.js",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.6",
-    "@neo4j-cypher/antlr4": "1.0.0-next.1",
+    "@neo4j-cypher/antlr4": "1.0.0-next.2",
     "antlr4": "4.10.1",
     "fuse.js": "^6.6.2",
     "lodash.find": "^4.6.0",
