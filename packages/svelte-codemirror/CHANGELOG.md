@@ -1,5 +1,11 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- 4af77ae: Drop the styled component version due to technical compatibility and tooling limitations. Manually import CSS file to get a styled editor.
+
 ## 1.0.0-next.4
 
 ### Patch Changes
