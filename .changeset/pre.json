@@ -19,6 +19,7 @@
     "@neo4j-cypher/antlr4-browser": "0.0.0"
   },
   "changesets": [
+    "angry-seahorses-double",
     "calm-pots-attack",
     "eleven-moose-lie",
     "forty-fishes-sing",
