@@ -1,5 +1,16 @@
 # demo-codemirror-6-webpack-react
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- de33476: Add indentWithTab prop / option
+- Updated dependencies [de33476]
+  - demo-base@1.0.0-next.3
+  - demo-base-react@1.0.0-next.3
+  - @neo4j-cypher/codemirror@1.0.0-next.5
+  - @neo4j-cypher/react-codemirror@1.0.0-next.6
+
 ## 1.0.0-next.5
 
 ### Patch Changes

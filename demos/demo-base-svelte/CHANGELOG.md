@@ -1,5 +1,11 @@
 # demo-base-svelte
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- de33476: Add indentWithTab prop / option
+
 ## 1.0.0-next.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- de33476: Add indentWithTab prop / option
+
 ## 1.0.0-next.4
 
 ### Patch Changes

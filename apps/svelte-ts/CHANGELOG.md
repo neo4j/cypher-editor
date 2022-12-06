@@ -1,5 +1,13 @@
 # svelte-ts
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- de33476: Add indentWithTab prop / option
+- Updated dependencies [de33476]
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.7
+
 ## 1.0.0-next.6
 
 ### Patch Changes

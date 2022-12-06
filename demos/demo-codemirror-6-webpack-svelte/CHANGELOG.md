@@ -1,5 +1,16 @@
 # demo-codemirror-6-webpack-svelte
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- de33476: Add indentWithTab prop / option
+- Updated dependencies [de33476]
+  - demo-base@1.0.0-next.3
+  - demo-base-svelte@1.0.0-next.3
+  - @neo4j-cypher/codemirror@1.0.0-next.5
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.7
+
 ## 1.0.0-next.6
 
 ### Patch Changes
