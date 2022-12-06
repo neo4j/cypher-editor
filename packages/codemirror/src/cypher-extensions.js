@@ -175,9 +175,10 @@ const cypherCompletions = (context) => {
   );
   const completion = editorSupport.getCompletion(line, column, true);
   const { items, from, to } = completion;
-  const completions = items.map(({ type, view, postfix }) => ({
+  const completions = items.map(({ type, view, content, postfix }) => ({
     type,
     label: view,
+    apply: content,
     detail: postfix
   }));
   let word = context.matchBefore(/\w*/);
