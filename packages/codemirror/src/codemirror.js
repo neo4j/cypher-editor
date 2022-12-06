@@ -59,6 +59,7 @@ import {
   getAutocompleteExtensions,
   getLineWrappingExtensions,
   getHistoryExtensions,
+  getIndentWithTabExtensions,
   getLintExtensions
 } from "./cypher-extensions";
 
@@ -76,6 +77,7 @@ export const getExtensions = (
     showLinesConf = new Compartment(),
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
+    indentWithTabConf = new Compartment(),
     placeholderConf = new Compartment(),
     themeConf = new Compartment(),
     onLineNumberClick = () => {},
@@ -89,6 +91,7 @@ export const getExtensions = (
     autocomplete,
     autocompleteCloseOnBlur,
     history,
+    indentWithTab,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -119,6 +122,7 @@ export const getExtensions = (
     ),
     lineWrappingConf.of(getLineWrappingExtensions({ lineWrapping })),
     historyConf.of(getHistoryExtensions({ history })),
+    indentWithTabConf.of(getIndentWithTabExtensions({ indentWithTab })),
     readableConf.of(getReadableExtensions({ readOnly, readOnlyCursor })),
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
@@ -158,7 +162,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder,
     readOnly,
     readOnlyCursor,
-    history
+    history,
+    indentWithTab
   } = combinedOptions;
 
   const {
@@ -291,6 +296,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const showLinesConf = new Compartment();
   const lineWrappingConf = new Compartment();
   const historyConf = new Compartment();
+  const indentWithTabConf = new Compartment();
   const placeholderConf = new Compartment();
   const themeConf = new Compartment();
   const postConf = new Compartment();
@@ -307,6 +313,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         showLinesConf,
         lineWrappingConf,
         historyConf,
+        indentWithTabConf,
         placeholderConf,
         themeConf,
         postConf,
@@ -618,6 +625,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
+  const setIndentWithTab = (newIndentWithTab = defaultOptions.indentWithTab) => {
+    indentWithTab = newIndentWithTab;
+    editor.dispatch({
+      effects: indentWithTabConf.reconfigure(getIndentWithTabExtensions({ indentWithTab }))
+    });
+  };
+
   const editorAPI = {
     clearHistory,
     destroy,
@@ -631,6 +645,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocompleteOpen,
     setAutocompleteTriggerStrings,
     setHistory,
+    setIndentWithTab,
     setLineNumberFormatter,
     setLineNumbers,
     setLineWrapping,

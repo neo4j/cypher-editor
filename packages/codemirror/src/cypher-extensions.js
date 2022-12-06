@@ -25,7 +25,8 @@ import {
 import {
   history as historyExtension,
   defaultKeymap,
-  historyKeymap
+  historyKeymap,
+  indentWithTab
 } from "@codemirror/commands";
 import {
   StreamLanguage,
@@ -249,6 +250,8 @@ const darkExtensions = [
 
 export const historyExtensions = [historyExtension()];
 
+export const indentWithTabExtensions = [keymap.of([indentWithTab])];
+
 export const readableExtensions = [
   drawSelectionExtension(),
   EditorState.allowMultipleSelections.of(true),
@@ -327,6 +330,9 @@ export const getLineWrappingExtensions = ({ lineWrapping }) =>
 
 export const getHistoryExtensions = ({ history }) =>
   history ? historyExtensions : [];
+
+export const getIndentWithTabExtensions = ({ indentWithTab }) =>
+  indentWithTab ? indentWithTabExtensions : []
 
 export const getLintExtensions = ({ readOnly, lint }) =>
   readOnly === false && lint ? useLintExtensions : useNoLintExtensions;

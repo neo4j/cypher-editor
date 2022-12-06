@@ -86,6 +86,7 @@ export interface CypherEditorProps
 |  [className?](#cyphereditorprops.classname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element |
 |  [focusedClassName?](#cyphereditorprops.focusedclassname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element when it is focused |
 |  [history?](#cyphereditorprops.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [indentWithTab?](#cyphereditorprops.indentwithtab) | boolean | true | <i>(Optional)</i> Whether pressing the tab key affects editor indentation |
 |  [lineNumberFormatter?](#cyphereditorprops.linenumberformatter) | [LineNumberFormatter](./neo4j-cypher_codemirror.md#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#cyphereditorprops.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#cyphereditorprops.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
@@ -253,6 +254,23 @@ Whether the editor maintains an undo/redo history
 
 ```typescript
 history?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="cyphereditorprops.indentwithtab"></a>
+
+#### CypherEditorProps.indentWithTab property
+
+Whether pressing the tab key affects editor indentation
+
+<b>Signature:</b>
+
+```typescript
+indentWithTab?: boolean;
 ```
 <b>Default Value:</b>
 

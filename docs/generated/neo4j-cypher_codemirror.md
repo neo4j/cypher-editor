@@ -466,6 +466,7 @@ editorSupport: CypherEditorSupport;
 |  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete menu is shown to the user |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
+|  [setIndentWithTab(indentWithTab)](#editorapi.setindentwithtab) | Set whether pressing the tab key affects editor indentation |
 |  [setLineNumberFormatter(lineNumberFormatter)](#editorapi.setlinenumberformatter) | Set the formatter for the line numbers of the editor |
 |  [setLineNumbers(lineNumbers)](#editorapi.setlinenumbers) | Set whether or not line numbers are shown to the left of the editor ui |
 |  [setLineWrapping(lineWrapping)](#editorapi.setlinewrapping) | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
@@ -1064,6 +1065,29 @@ void
 
 <br>
 
+<a name="editorapi.setindentwithtab"></a>
+
+#### EditorApi.setIndentWithTab() method
+
+Set whether pressing the tab key affects editor indentation
+
+<b>Signature:</b>
+
+```typescript
+setIndentWithTab(indentWithTab: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  indentWithTab | boolean |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.setlinenumberformatter"></a>
 
 #### EditorApi.setLineNumberFormatter() method
@@ -1390,6 +1414,7 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [indentWithTab?](#editoroptions.indentwithtab) | boolean | true | <i>(Optional)</i> Whether pressing the tab key affects editor indentation |
 |  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#editoroptions.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#editoroptions.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
@@ -1502,6 +1527,23 @@ Whether the editor maintains an undo/redo history
 
 ```typescript
 history?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.indentwithtab"></a>
+
+#### EditorOptions.indentWithTab property
+
+Whether pressing the tab key affects editor indentation
+
+<b>Signature:</b>
+
+```typescript
+indentWithTab?: boolean;
 ```
 <b>Default Value:</b>
 

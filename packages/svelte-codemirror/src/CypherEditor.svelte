@@ -44,6 +44,9 @@
   export let history = defaultOptions.history;
   $: updateOption({ history });
 
+  export let indentWithTab = defaultOptions.indentWithTab;
+  $: updateOption({ indentWithTab });
+
   export let lineNumberFormatter = defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
 
@@ -158,6 +161,7 @@
       autocompleteTriggerStrings,
       autofocus,
       history,
+      indentWithTab,
       lineNumberFormatter,
       lineNumbers,
       lineWrapping,

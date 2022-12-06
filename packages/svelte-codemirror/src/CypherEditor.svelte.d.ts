@@ -68,6 +68,12 @@ export interface CypherEditorProps {
    */
   history?: boolean;
   /**
+   * Whether pressing the tab key affects editor indentation
+   * 
+   * @defaultValue true
+   */
+   indentWithTab?: boolean;
+  /**
    * The formatter for the line numbers of the editor
    *
    * @defaultValue (line, lineCount) => lineCount === 1 ? "$" : line + "";

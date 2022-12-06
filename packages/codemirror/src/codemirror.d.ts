@@ -266,6 +266,10 @@ export interface EditorApi {
    */
   setHistory(history: boolean): void;
   /**
+   * Set whether pressing the tab key affects editor indentation
+   */
+  setIndentWithTab(indentWithTab: boolean): void;
+  /**
    * Set the formatter for the line numbers of the editor
    */
   setLineNumberFormatter(
@@ -446,6 +450,12 @@ export interface EditorOptions {
    * @defaultValue true
    */
   history?: boolean;
+  /**
+   * Whether pressing the tab key affects editor indentation
+   * 
+   * @defaultValue true
+   */
+  indentWithTab?: boolean;
   /**
    * The formatter for the line numbers of the editor
    *
