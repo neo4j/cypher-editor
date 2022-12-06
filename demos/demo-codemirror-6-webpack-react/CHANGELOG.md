@@ -1,5 +1,13 @@
 # demo-codemirror-6-webpack-react
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- Updated dependencies [de36649]
+  - @neo4j-cypher/codemirror@1.0.0-next.4
+  - @neo4j-cypher/react-codemirror@1.0.0-next.5
+
 ## 1.0.0-next.4
 
 ### Patch Changes

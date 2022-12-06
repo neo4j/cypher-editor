@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- de36649: Use escaped Cypher when needed in the auto-completions
+
 ## 1.0.0-next.3
 
 ### Patch Changes
