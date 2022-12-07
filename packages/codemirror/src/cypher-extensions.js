@@ -243,9 +243,21 @@ export const cypherLineNumbers = ({
 
 // EXTENSIONS COLLECTIONS
 
+const themeOverrides = {
+  "&.cm-editor": {
+    "&.cm-focused": {
+      outline: "none"
+    }
+  }
+};
+
 const darkExtensions = [
-  EditorView.theme({}, { dark: true }),
+  EditorView.theme(themeOverrides, { dark: true }),
   EditorView.editorAttributes.of({ class: "cm-dark" })
+];
+
+const lightExtensions = [
+  EditorView.theme(themeOverrides, { dark: false })
 ];
 
 export const historyExtensions = [historyExtension()];
@@ -303,7 +315,7 @@ export const getPlaceholderExtensions = ({ placeholder }) =>
   placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
 
 export const getThemeExtensions = ({ theme }) =>
-  theme === THEME_DARK ? darkExtensions : [];
+  theme === THEME_DARK ? darkExtensions : lightExtensions;
 
 export const getLineNumbersExtensions = ({
   lineNumbers,
