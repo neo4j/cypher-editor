@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- a2750e5: add js theme override to remove focused outline
+
 ## 1.0.0-next.5
 
 ### Patch Changes
