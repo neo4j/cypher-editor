@@ -139,8 +139,18 @@ const defaultOptions = {
 
 export const getDefaultOptions = () => ({ ...defaultOptions });
 
+export const withDefaultOptions = (options) => {
+  const combinedOptions = { ...defaultOptions };
+  for (let key of Object.keys(options)) {
+    if (options[key] !== undefined) {
+      combinedOptions[key] = options[key];
+    }
+  }
+  return combinedOptions;
+};
+
 export function createCypherEditor(parentDOMElement, options = {}) {
-  const combinedOptions = { ...defaultOptions, ...options };
+  const combinedOptions = withDefaultOptions(options);
   const {
     autofocus,
     position,
