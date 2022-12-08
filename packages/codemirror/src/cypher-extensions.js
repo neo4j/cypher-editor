@@ -20,13 +20,16 @@
 
 import {
   autocompletion as autocompletionExtension,
-  completionKeymap
+  completionKeymap,
+  completionStatus,
+  acceptCompletion
 } from "@codemirror/autocomplete";
 import {
   history as historyExtension,
   defaultKeymap,
   historyKeymap,
-  indentWithTab
+  indentMore,
+  indentLess
 } from "@codemirror/commands";
 import {
   StreamLanguage,
@@ -261,7 +264,26 @@ const lightExtensions = [EditorView.theme(themeOverrides, { dark: false })];
 
 export const historyExtensions = [historyExtension()];
 
-export const indentWithTabExtensions = [keymap.of([indentWithTab])];
+const runTab = (view, event) => {
+  const status = completionStatus(view.state);
+  if (status === null) {
+    indentMore(view);
+  } else if (status === "active") {
+    acceptCompletion(view);
+    event && event.preventDefault();
+  }
+};
+
+const shiftTab = (view, event) => {
+  const status = completionStatus(view.state);
+  if (status === null) {
+    indentLess(view);
+  }
+};
+
+export const tabKeyExtensions = [
+  keymap.of([{ key: "Tab", run: runTab, shift: shiftTab }])
+];
 
 export const readableExtensions = [
   drawSelectionExtension(),
@@ -300,36 +322,6 @@ export const useStickyAutocompleteExtensions = [
 
 // GETTERS
 
-export const getReadableExtensions = ({ readOnly, readOnlyCursor }) =>
-  !readOnly || readOnlyCursor ? readableExtensions : [];
-
-export const getReadOnlyExtensions = ({ readOnly, readOnlyCursor }) =>
-  readOnly
-    ? readOnlyCursor
-      ? readOnlyExtensions
-      : readOnlyNoCursorExtensions
-    : [];
-
-export const getPlaceholderExtensions = ({ placeholder }) =>
-  placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
-
-export const getThemeExtensions = ({ theme }) =>
-  theme === THEME_DARK ? darkExtensions : lightExtensions;
-
-export const getTooltipAbsoluteExtensions = ({ tooltipAbsolute }) =>
-  tooltipAbsolute
-    ? [tooltips({ position: "absolute" })]
-    : [tooltips({ position: "fixed" })];
-
-export const getLineNumbersExtensions = ({
-  lineNumbers,
-  lineNumberFormatter,
-  onLineNumberClick
-}) =>
-  lineNumbers
-    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClick })]
-    : [];
-
 export const getAutocompleteExtensions = ({
   readOnly,
   autocomplete,
@@ -341,14 +333,44 @@ export const getAutocompleteExtensions = ({
       : useAutocompleteExtensions
     : [];
 
-export const getLineWrappingExtensions = ({ lineWrapping }) =>
-  lineWrapping ? lineWrappingExtensions : [];
-
 export const getHistoryExtensions = ({ history }) =>
   history ? historyExtensions : [];
 
-export const getIndentWithTabExtensions = ({ indentWithTab }) =>
-  indentWithTab ? indentWithTabExtensions : [];
+export const getLineNumbersExtensions = ({
+  lineNumbers,
+  lineNumberFormatter,
+  onLineNumberClick
+}) =>
+  lineNumbers
+    ? [cypherLineNumbers({ lineNumberFormatter, onLineNumberClick })]
+    : [];
+
+export const getLineWrappingExtensions = ({ lineWrapping }) =>
+  lineWrapping ? lineWrappingExtensions : [];
 
 export const getLintExtensions = ({ readOnly, lint }) =>
   readOnly === false && lint ? useLintExtensions : useNoLintExtensions;
+
+export const getPlaceholderExtensions = ({ placeholder }) =>
+  placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
+
+export const getReadableExtensions = ({ readOnly, readOnlyCursor }) =>
+  !readOnly || readOnlyCursor ? readableExtensions : [];
+
+export const getReadOnlyExtensions = ({ readOnly, readOnlyCursor }) =>
+  readOnly
+    ? readOnlyCursor
+      ? readOnlyExtensions
+      : readOnlyNoCursorExtensions
+    : [];
+
+export const getTabKeyExtensions = ({ tabKey }) =>
+  tabKey ? tabKeyExtensions : [];
+
+export const getThemeExtensions = ({ theme }) =>
+  theme === THEME_DARK ? darkExtensions : lightExtensions;
+
+export const getTooltipAbsoluteExtensions = ({ tooltipAbsolute }) =>
+  tooltipAbsolute
+    ? [tooltips({ position: "absolute" })]
+    : [tooltips({ position: "fixed" })];

@@ -266,10 +266,6 @@ export interface EditorApi {
    */
   setHistory(history?: boolean): void;
   /**
-   * Set whether pressing the tab key affects editor indentation
-   */
-  setIndentWithTab(indentWithTab?: boolean): void;
-  /**
    * Set the formatter for the line numbers of the editor
    */
   setLineNumberFormatter(
@@ -307,6 +303,10 @@ export interface EditorApi {
    * Set the schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
    */
   setSchema(schema?: EditorSupportSchema): void;
+  /**
+   * Set whether the tab key is enabled
+   */
+  setTabKey(tabKey?: boolean): void;
   /**
    * Set whether to use the light or dark theme for the editor
    */
@@ -455,12 +455,6 @@ export interface EditorOptions {
    */
   history?: boolean;
   /**
-   * Whether pressing the tab key affects editor indentation
-   *
-   * @defaultValue true
-   */
-  indentWithTab?: boolean;
-  /**
    * The formatter for the line numbers of the editor
    *
    * @defaultValue (line, lineCount) => lineCount === 1 ? "$" : line + "";
@@ -520,6 +514,12 @@ export interface EditorOptions {
    * @defaultValue undefined
    */
   schema?: EditorSupportSchema;
+  /**
+   * Whether the tab key is enabled
+   *
+   * @defaultValue true
+   */
+  tabKey?: boolean;
   /**
    * Whether to use the light or dark theme for the editor
    *

@@ -87,7 +87,6 @@ export interface CypherEditorProps
 |  [className?](#cyphereditorprops.classname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element |
 |  [focusedClassName?](#cyphereditorprops.focusedclassname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element when it is focused |
 |  [history?](#cyphereditorprops.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
-|  [indentWithTab?](#cyphereditorprops.indentwithtab) | boolean | true | <i>(Optional)</i> Whether pressing the tab key affects editor indentation |
 |  [lineNumberFormatter?](#cyphereditorprops.linenumberformatter) | [LineNumberFormatter](./neo4j-cypher_codemirror.md#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#cyphereditorprops.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#cyphereditorprops.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
@@ -106,6 +105,7 @@ export interface CypherEditorProps
 |  [readOnly?](#cyphereditorprops.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
+|  [tabKey?](#cyphereditorprops.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#cyphereditorprops.value) | string | "" | <i>(Optional)</i> The editor text value |
@@ -256,23 +256,6 @@ Whether the editor maintains an undo/redo history
 
 ```typescript
 history?: boolean;
-```
-<b>Default Value:</b>
-
-true
-
-<br>
-
-<a name="cyphereditorprops.indentwithtab"></a>
-
-#### CypherEditorProps.indentWithTab property
-
-Whether pressing the tab key affects editor indentation
-
-<b>Signature:</b>
-
-```typescript
-indentWithTab?: boolean;
 ```
 <b>Default Value:</b>
 
@@ -550,6 +533,23 @@ The schema making the editor aware of things such as node labels &amp; relations
 ```typescript
 schema?: EditorSupportSchema;
 ```
+
+<br>
+
+<a name="cyphereditorprops.tabkey"></a>
+
+#### CypherEditorProps.tabKey property
+
+Whether the tab key is enabled
+
+<b>Signature:</b>
+
+```typescript
+tabKey?: boolean;
+```
+<b>Default Value:</b>
+
+true
 
 <br>
 

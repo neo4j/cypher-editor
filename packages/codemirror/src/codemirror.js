@@ -60,13 +60,25 @@ import {
   getAutocompleteExtensions,
   getLineWrappingExtensions,
   getHistoryExtensions,
-  getIndentWithTabExtensions,
+  getTabKeyExtensions,
   getLintExtensions
 } from "./cypher-extensions";
 
 export * from "./cypher-codemirror-base";
 
 export * from "./cypher-extensions";
+
+export const getDefaultOptions = () => ({ ...defaultOptions });
+
+export const withDefaultOptions = (options) => {
+  const combinedOptions = { ...defaultOptions };
+  for (let key of Object.keys(options)) {
+    if (options[key] !== undefined) {
+      combinedOptions[key] = options[key];
+    }
+  }
+  return combinedOptions;
+};
 
 export const getExtensions = (
   options = {},
@@ -78,8 +90,8 @@ export const getExtensions = (
     showLinesConf = new Compartment(),
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
-    indentWithTabConf = new Compartment(),
     placeholderConf = new Compartment(),
+    tabKeyConf = new Compartment(),
     themeConf = new Compartment(),
     tooltipAbsoluteConf = new Compartment(),
     onLineNumberClick = () => {},
@@ -88,12 +100,12 @@ export const getExtensions = (
     onKeyDown = () => {}
   } = {}
 ) => {
-  const combinedOptions = { ...defaultOptions, ...options };
+  const combinedOptions = withDefaultOptions(options);
   const {
     autocomplete,
     autocompleteCloseOnBlur,
     history,
-    indentWithTab,
+    tabKey,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -125,7 +137,7 @@ export const getExtensions = (
     ),
     lineWrappingConf.of(getLineWrappingExtensions({ lineWrapping })),
     historyConf.of(getHistoryExtensions({ history })),
-    indentWithTabConf.of(getIndentWithTabExtensions({ indentWithTab })),
+    tabKeyConf.of(getTabKeyExtensions({ tabKey })),
     readableConf.of(getReadableExtensions({ readOnly, readOnlyCursor })),
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
@@ -139,18 +151,6 @@ const defaultOptions = {
   ...baseDefaultOptions,
   preExtensions: [],
   postExtensions: []
-};
-
-export const getDefaultOptions = () => ({ ...defaultOptions });
-
-export const withDefaultOptions = (options) => {
-  const combinedOptions = { ...defaultOptions };
-  for (let key of Object.keys(options)) {
-    if (options[key] !== undefined) {
-      combinedOptions[key] = options[key];
-    }
-  }
-  return combinedOptions;
 };
 
 export function createCypherEditor(parentDOMElement, options = {}) {
@@ -170,7 +170,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteCloseOnBlur,
     autocompleteTriggerStrings,
     history,
-    indentWithTab,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -178,6 +177,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder,
     readOnly,
     readOnlyCursor,
+    tabKey,
     tooltipAbsolute
   } = combinedOptions;
 
@@ -311,8 +311,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const showLinesConf = new Compartment();
   const lineWrappingConf = new Compartment();
   const historyConf = new Compartment();
-  const indentWithTabConf = new Compartment();
   const placeholderConf = new Compartment();
+  const tabKeyConf = new Compartment();
   const themeConf = new Compartment();
   const tooltipAbsoluteConf = new Compartment();
   const postConf = new Compartment();
@@ -324,12 +324,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       ...getExtensions(combinedOptions, {
         lintConf,
         autocompleteConf,
+        tabKeyConf,
         readableConf,
         readOnlyConf,
         showLinesConf,
         lineWrappingConf,
         historyConf,
-        indentWithTabConf,
         placeholderConf,
         themeConf,
         tooltipAbsoluteConf,
@@ -653,14 +653,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const setIndentWithTab = (
-    newIndentWithTab = defaultOptions.indentWithTab
-  ) => {
-    indentWithTab = newIndentWithTab;
+  const setTabKey = (newTabKey = defaultOptions.tabKey) => {
+    tabKey = newTabKey;
     editor.dispatch({
-      effects: indentWithTabConf.reconfigure(
-        getIndentWithTabExtensions({ indentWithTab })
-      )
+      effects: tabKeyConf.reconfigure(getTabKeyExtensions({ tabKey }))
     });
   };
 
@@ -677,7 +673,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocompleteOpen,
     setAutocompleteTriggerStrings,
     setHistory,
-    setIndentWithTab,
     setLineNumberFormatter,
     setLineNumbers,
     setLineWrapping,
@@ -687,6 +682,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setReadOnly,
     setReadOnlyCursor,
     setSchema,
+    setTabKey,
     setTheme,
     setTooltipAbsolute,
     setValue,

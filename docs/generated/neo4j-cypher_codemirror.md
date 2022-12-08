@@ -466,7 +466,6 @@ editorSupport: CypherEditorSupport;
 |  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete menu is shown to the user |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
-|  [setIndentWithTab(indentWithTab)](#editorapi.setindentwithtab) | Set whether pressing the tab key affects editor indentation |
 |  [setLineNumberFormatter(lineNumberFormatter)](#editorapi.setlinenumberformatter) | Set the formatter for the line numbers of the editor |
 |  [setLineNumbers(lineNumbers)](#editorapi.setlinenumbers) | Set whether or not line numbers are shown to the left of the editor ui |
 |  [setLineWrapping(lineWrapping)](#editorapi.setlinewrapping) | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
@@ -478,6 +477,7 @@ editorSupport: CypherEditorSupport;
 |  [setReadOnly(readOnly)](#editorapi.setreadonly) | Set whether the editor is read only or the user can edit the editor's value |
 |  [setReadOnlyCursor(readOnlyCursor)](#editorapi.setreadonlycursor) | Set whether to show the cursor when the editor readOnly is true |
 |  [setSchema(schema)](#editorapi.setschema) | Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
+|  [setTabKey(tabKey)](#editorapi.settabkey) | Set whether the tab key is enabled |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
 |  [setTooltipAbsolute(tooltipAbsolute)](#editorapi.settooltipabsolute) | Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds) |
 |  [setValue(value, parseOnSetValue)](#editorapi.setvalue) | Set the editor value |
@@ -1066,29 +1066,6 @@ void
 
 <br>
 
-<a name="editorapi.setindentwithtab"></a>
-
-#### EditorApi.setIndentWithTab() method
-
-Set whether pressing the tab key affects editor indentation
-
-<b>Signature:</b>
-
-```typescript
-setIndentWithTab(indentWithTab?: boolean): void;
-```
-<b>Parameters:</b>
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  indentWithTab | boolean | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-void
-
-<br>
-
 <a name="editorapi.setlinenumberformatter"></a>
 
 #### EditorApi.setLineNumberFormatter() method
@@ -1344,6 +1321,29 @@ void
 
 <br>
 
+<a name="editorapi.settabkey"></a>
+
+#### EditorApi.setTabKey() method
+
+Set whether the tab key is enabled
+
+<b>Signature:</b>
+
+```typescript
+setTabKey(tabKey?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  tabKey | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.settheme"></a>
 
 #### EditorApi.setTheme() method
@@ -1438,7 +1438,6 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
-|  [indentWithTab?](#editoroptions.indentwithtab) | boolean | true | <i>(Optional)</i> Whether pressing the tab key affects editor indentation |
 |  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#editoroptions.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#editoroptions.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
@@ -1451,6 +1450,7 @@ export interface EditorOptions
 |  [readOnly?](#editoroptions.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#editoroptions.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
+|  [tabKey?](#editoroptions.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#editoroptions.value) | string | "" | <i>(Optional)</i> The initial editor value |
@@ -1552,23 +1552,6 @@ Whether the editor maintains an undo/redo history
 
 ```typescript
 history?: boolean;
-```
-<b>Default Value:</b>
-
-true
-
-<br>
-
-<a name="editoroptions.indentwithtab"></a>
-
-#### EditorOptions.indentWithTab property
-
-Whether pressing the tab key affects editor indentation
-
-<b>Signature:</b>
-
-```typescript
-indentWithTab?: boolean;
 ```
 <b>Default Value:</b>
 
@@ -1777,6 +1760,23 @@ schema?: EditorSupportSchema;
 <b>Default Value:</b>
 
 undefined
+
+<br>
+
+<a name="editoroptions.tabkey"></a>
+
+#### EditorOptions.tabKey property
+
+Whether the tab key is enabled
+
+<b>Signature:</b>
+
+```typescript
+tabKey?: boolean;
+```
+<b>Default Value:</b>
+
+true
 
 <br>
 

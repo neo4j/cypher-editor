@@ -44,9 +44,6 @@
   export let history = defaultOptions.history;
   $: updateOption({ history });
 
-  export let indentWithTab = defaultOptions.indentWithTab;
-  $: updateOption({ indentWithTab });
-
   export let lineNumberFormatter = defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
 
@@ -70,6 +67,9 @@
 
   export let readOnlyCursor = defaultOptions.readOnlyCursor;
   $: updateOption({ readOnlyCursor });
+
+  export let tabKey = defaultOptions.tabKey;
+  $: updateOption({ tabKey });
 
   export let theme = defaultOptions.theme;
   $: updateOption({ theme });
@@ -164,7 +164,6 @@
       autocompleteTriggerStrings,
       autofocus,
       history,
-      indentWithTab,
       lineNumberFormatter,
       lineNumbers,
       lineWrapping,
@@ -174,6 +173,7 @@
       readOnly,
       readOnlyCursor,
       schema,
+      tabKey,
       theme,
       tooltipAbsolute,
       parseOnSetValue,
