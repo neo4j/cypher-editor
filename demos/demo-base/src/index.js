@@ -75,24 +75,24 @@ SET variable.propKey = 1;`,
   }
 };
 
-export const metaQuery = `	CALL db.labels() YIELD label
-	RETURN {name:'labels', data:COLLECT(label)[..1000]} AS result
-	UNION ALL
-	CALL db.relationshipTypes() YIELD relationshipType
-	RETURN {name:'relationshipTypes', data:COLLECT(relationshipType)[..1000]} AS result
-	UNION ALL
-	CALL db.propertyKeys() YIELD propertyKey
-	RETURN {name:'propertyKeys', data:COLLECT(propertyKey)[..1000]} AS result
-	UNION ALL
-	CALL dbms.functions() YIELD name, signature, description
-	RETURN {name:'functions', data: collect({name: name, signature: signature, description: description})} AS result
-	UNION ALL
-	CALL dbms.procedures() YIELD name, signature, description
-	RETURN {name:'procedures', data:collect({name: name, signature: signature, description: description})} AS result
-	UNION ALL
-	MATCH () RETURN { name:'nodes', data:count(*) } AS result
-	UNION ALL
-	MATCH ()-[]->() RETURN { name:'relationships', data: count(*)} AS result
+export const metaQuery = `CALL db.labels() YIELD label
+RETURN {name:'labels', data:COLLECT(label)[..1000]} AS result
+UNION ALL
+CALL db.relationshipTypes() YIELD relationshipType
+RETURN {name:'relationshipTypes', data:COLLECT(relationshipType)[..1000]} AS result
+UNION ALL
+CALL db.propertyKeys() YIELD propertyKey
+RETURN {name:'propertyKeys', data:COLLECT(propertyKey)[..1000]} AS result
+UNION ALL
+CALL dbms.functions() YIELD name, signature, description
+RETURN {name:'functions', data: collect({name: name, signature: signature, description: description})} AS result
+UNION ALL
+CALL dbms.procedures() YIELD name, signature, description
+RETURN {name:'procedures', data:collect({name: name, signature: signature, description: description})} AS result
+UNION ALL
+MATCH () RETURN { name:'nodes', data:count(*) } AS result
+UNION ALL
+MATCH ()-[]->() RETURN { name:'relationships', data: count(*)} AS result
 `;
 
 export const shortMetaQuery = `  CALL db.labels() YIELD label

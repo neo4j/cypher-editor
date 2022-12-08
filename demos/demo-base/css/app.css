@@ -27,7 +27,6 @@ a:hover {
 body {
     margin: 0;
     display: flex;
-    min-width: 320px;
     min-height: 100vh;
     width: 100%;
     min-width: 100%;
@@ -147,10 +146,19 @@ body {
 }
 
 .database-editor {
+    border-radius: var(--border-radius-3xl);
+    overflow: hidden;
     display: flex;
     width: calc(100% - 16px);
     min-width: calc(100% - 16px);
     max-width: calc(100% - 16px);
+    border: 2px solid rgb(var(--colors-neutral-50));
+}
+
+@media (prefers-color-scheme: dark) {
+    .database-editor {
+        border: 2px solid rgb(var(--colors-primary-10));
+    }
 }
 
 .info {
