@@ -1,5 +1,13 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.10
+
+### Patch Changes
+
+- b5ca4c5: rename indentWithTab -> tabKey, fix tab with autocomplete
+- Updated dependencies [b5ca4c5]
+  - @neo4j-cypher/codemirror@1.0.0-next.9
+
 ## 1.0.0-next.9
 
 ### Patch Changes

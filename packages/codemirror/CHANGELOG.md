@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- b5ca4c5: rename indentWithTab -> tabKey, fix tab with autocomplete
+
 ## 1.0.0-next.8
 
 ### Patch Changes
