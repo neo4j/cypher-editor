@@ -248,76 +248,80 @@ export interface EditorApi {
   /**
    * Set whether or not the autocomplete feature is enabled
    */
-  setAutocomplete(autocomplete: boolean): void;
+  setAutocomplete(autocomplete?: boolean): void;
   /**
    * Set whether or not the autocomplete auto closes whenever the editor loses focus
    */
-  setAutocompleteCloseOnBlur(autocompleteCloseOnBlur: boolean): void;
+  setAutocompleteCloseOnBlur(autocompleteCloseOnBlur?: boolean): void;
   /**
    * Set whether or not the autocomplete menu is shown to the user
    */
-  setAutocompleteOpen(autocompleteOpen: boolean): void;
+  setAutocompleteOpen(autocompleteOpen?: boolean): void;
   /**
    * Set the keys that when typed will automatically open the autocomplete menu
    */
-  setAutocompleteTriggerStrings(autocompleteTriggerStrings: string[]): void;
+  setAutocompleteTriggerStrings(autocompleteTriggerStrings?: string[]): void;
   /**
    * Set whether or not the editor maintains an undo/redo history
    */
-  setHistory(history: boolean): void;
+  setHistory(history?: boolean): void;
   /**
    * Set whether pressing the tab key affects editor indentation
    */
-  setIndentWithTab(indentWithTab: boolean): void;
+  setIndentWithTab(indentWithTab?: boolean): void;
   /**
    * Set the formatter for the line numbers of the editor
    */
   setLineNumberFormatter(
-    lineNumberFormatter: (lineNumber: number, lineCount: number) => string
+    lineNumberFormatter?: (lineNumber: number, lineCount: number) => string
   ): void;
   /**
    * Set whether or not line numbers are shown to the left of the editor ui
    */
-  setLineNumbers(lineNumbers: boolean): void;
+  setLineNumbers(lineNumbers?: boolean): void;
   /**
    * Set whether or not the editor wraps lines vs using a horizontal scrollbar
    */
-  setLineWrapping(lineWrapping: boolean): void;
+  setLineWrapping(lineWrapping?: boolean): void;
   /**
    * Set whether or not the editor should display lint errors to the user
    */
-  setLint(lint: boolean): void;
+  setLint(lint?: boolean): void;
   /**
    * Set the text to be shown to the user when the editor value is empty
    */
-  setPlaceholder(placeholder: string | undefined): void;
+  setPlaceholder(placeholder?: string | undefined): void;
   /**
    * Set the current editor cursor position
    */
-  setPosition(position: PositionAny): void;
+  setPosition(position?: PositionAny): void;
   /**
    * Set whether the editor is read only or the user can edit the editor's value
    */
-  setReadOnly(readOnly: boolean): void;
+  setReadOnly(readOnly?: boolean): void;
   /**
    * Set whether to show the cursor when the editor readOnly is true
    */
-  setReadOnlyCursor(readOnlyCursor: boolean): void;
+  setReadOnlyCursor(readOnlyCursor?: boolean): void;
   /**
    * Set the schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
    */
-  setSchema(schema: EditorSupportSchema): void;
+  setSchema(schema?: EditorSupportSchema): void;
   /**
    * Set whether to use the light or dark theme for the editor
    */
-  setTheme(theme: Theme): void;
+  setTheme(theme?: Theme): void;
+  /**
+   * Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds)
+   */
+  setTooltipAbsolute(tooltipAbsolute?: boolean): void;
   /**
    * Set the editor value
    *
    * @param value - The new editor value
    * @param parseOnSetValue - Whether to update the language parser tree immediately for the new value (defaults to true)
    */
-  setValue(value: string, parseOnSetValue?: boolean): void;
+  setValue(value?: string, parseOnSetValue?: boolean): void;
 
   /**
    * Add an event listener for editor autocomplete changes
@@ -522,6 +526,12 @@ export interface EditorOptions {
    * @defaultValue "light"
    */
   theme?: Theme;
+  /**
+   * Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds)
+   *
+   * @defaultValue false
+   */
+  tooltipAbsolute?: boolean;
   /**
    * The initial editor value
    *

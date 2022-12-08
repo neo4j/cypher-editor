@@ -55,6 +55,7 @@ import {
   getReadOnlyExtensions,
   getPlaceholderExtensions,
   getThemeExtensions,
+  getTooltipAbsoluteExtensions,
   getLineNumbersExtensions,
   getAutocompleteExtensions,
   getLineWrappingExtensions,
@@ -80,6 +81,7 @@ export const getExtensions = (
     indentWithTabConf = new Compartment(),
     placeholderConf = new Compartment(),
     themeConf = new Compartment(),
+    tooltipAbsoluteConf = new Compartment(),
     onLineNumberClick = () => {},
     onFocusChanged = () => {},
     onScrollChanged = () => {},
@@ -99,7 +101,8 @@ export const getExtensions = (
     placeholder,
     readOnly,
     readOnlyCursor,
-    theme
+    theme,
+    tooltipAbsolute
   } = combinedOptions;
 
   return [
@@ -127,6 +130,7 @@ export const getExtensions = (
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
     themeConf.of(getThemeExtensions({ theme })),
+    tooltipAbsoluteConf.of(getTooltipAbsoluteExtensions({ tooltipAbsolute })),
     readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor }))
   ];
 };
@@ -165,6 +169,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteOpen,
     autocompleteCloseOnBlur,
     autocompleteTriggerStrings,
+    history,
+    indentWithTab,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -172,8 +178,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder,
     readOnly,
     readOnlyCursor,
-    history,
-    indentWithTab
+    tooltipAbsolute
   } = combinedOptions;
 
   const {
@@ -309,6 +314,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const indentWithTabConf = new Compartment();
   const placeholderConf = new Compartment();
   const themeConf = new Compartment();
+  const tooltipAbsoluteConf = new Compartment();
   const postConf = new Compartment();
 
   const initialState = EditorState.create({
@@ -326,6 +332,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         indentWithTabConf,
         placeholderConf,
         themeConf,
+        tooltipAbsoluteConf,
         postConf,
         onLineNumberClick: lineNumberClick,
         onFocusChanged: focusChanged,
@@ -619,6 +626,17 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
+  const setTooltipAbsolute = (
+    newTooltipAbsolute = defaultOptions.tooltipAbsolute
+  ) => {
+    tooltipAbsolute = newTooltipAbsolute;
+    editor.dispatch({
+      effects: tooltipAbsoluteConf.reconfigure(
+        getTooltipAbsoluteExtensions({ tooltipAbsolute })
+      )
+    });
+  };
+
   const focus = () => {
     editor && editor.focus();
   };
@@ -670,6 +688,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setReadOnlyCursor,
     setSchema,
     setTheme,
+    setTooltipAbsolute,
     setValue,
 
     onAutocompleteChanged,

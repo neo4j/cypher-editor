@@ -479,6 +479,7 @@ editorSupport: CypherEditorSupport;
 |  [setReadOnlyCursor(readOnlyCursor)](#editorapi.setreadonlycursor) | Set whether to show the cursor when the editor readOnly is true |
 |  [setSchema(schema)](#editorapi.setschema) | Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
+|  [setTooltipAbsolute(tooltipAbsolute)](#editorapi.settooltipabsolute) | Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds) |
 |  [setValue(value, parseOnSetValue)](#editorapi.setvalue) | Set the editor value |
 
 <br>
@@ -959,13 +960,13 @@ Set whether or not the autocomplete feature is enabled
 <b>Signature:</b>
 
 ```typescript
-setAutocomplete(autocomplete: boolean): void;
+setAutocomplete(autocomplete?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  autocomplete | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  autocomplete | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -982,13 +983,13 @@ Set whether or not the autocomplete auto closes whenever the editor loses focus
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteCloseOnBlur(autocompleteCloseOnBlur: boolean): void;
+setAutocompleteCloseOnBlur(autocompleteCloseOnBlur?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  autocompleteCloseOnBlur | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  autocompleteCloseOnBlur | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1005,13 +1006,13 @@ Set whether or not the autocomplete menu is shown to the user
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteOpen(autocompleteOpen: boolean): void;
+setAutocompleteOpen(autocompleteOpen?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  autocompleteOpen | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  autocompleteOpen | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1028,13 +1029,13 @@ Set the keys that when typed will automatically open the autocomplete menu
 <b>Signature:</b>
 
 ```typescript
-setAutocompleteTriggerStrings(autocompleteTriggerStrings: string[]): void;
+setAutocompleteTriggerStrings(autocompleteTriggerStrings?: string[]): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  autocompleteTriggerStrings | string\[\] |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  autocompleteTriggerStrings | string\[\] | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1051,13 +1052,13 @@ Set whether or not the editor maintains an undo/redo history
 <b>Signature:</b>
 
 ```typescript
-setHistory(history: boolean): void;
+setHistory(history?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  history | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  history | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1074,13 +1075,13 @@ Set whether pressing the tab key affects editor indentation
 <b>Signature:</b>
 
 ```typescript
-setIndentWithTab(indentWithTab: boolean): void;
+setIndentWithTab(indentWithTab?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  indentWithTab | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  indentWithTab | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1098,14 +1099,14 @@ Set the formatter for the line numbers of the editor
 
 ```typescript
 setLineNumberFormatter(
-    lineNumberFormatter: (lineNumber: number, lineCount: number) => string
+    lineNumberFormatter?: (lineNumber: number, lineCount: number) => string
   ): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  lineNumberFormatter | (lineNumber: number, lineCount: number) =&gt; string |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lineNumberFormatter | (lineNumber: number, lineCount: number) =&gt; string | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1122,13 +1123,13 @@ Set whether or not line numbers are shown to the left of the editor ui
 <b>Signature:</b>
 
 ```typescript
-setLineNumbers(lineNumbers: boolean): void;
+setLineNumbers(lineNumbers?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  lineNumbers | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lineNumbers | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1145,13 +1146,13 @@ Set whether or not the editor wraps lines vs using a horizontal scrollbar
 <b>Signature:</b>
 
 ```typescript
-setLineWrapping(lineWrapping: boolean): void;
+setLineWrapping(lineWrapping?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  lineWrapping | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lineWrapping | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1168,13 +1169,13 @@ Set whether or not the editor should display lint errors to the user
 <b>Signature:</b>
 
 ```typescript
-setLint(lint: boolean): void;
+setLint(lint?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  lint | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  lint | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1191,13 +1192,13 @@ Set the text to be shown to the user when the editor value is empty
 <b>Signature:</b>
 
 ```typescript
-setPlaceholder(placeholder: string | undefined): void;
+setPlaceholder(placeholder?: string | undefined): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  placeholder | string \| undefined |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  placeholder | string \| undefined | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1214,13 +1215,13 @@ Set the current editor cursor position
 <b>Signature:</b>
 
 ```typescript
-setPosition(position: PositionAny): void;
+setPosition(position?: PositionAny): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  position | [PositionAny](#positionany) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  position | [PositionAny](#positionany) | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1283,13 +1284,13 @@ Set whether the editor is read only or the user can edit the editor's value
 <b>Signature:</b>
 
 ```typescript
-setReadOnly(readOnly: boolean): void;
+setReadOnly(readOnly?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  readOnly | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  readOnly | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1306,13 +1307,13 @@ Set whether to show the cursor when the editor readOnly is true
 <b>Signature:</b>
 
 ```typescript
-setReadOnlyCursor(readOnlyCursor: boolean): void;
+setReadOnlyCursor(readOnlyCursor?: boolean): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  readOnlyCursor | boolean |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  readOnlyCursor | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1329,13 +1330,13 @@ Set the schema making the editor aware of things such as node labels &amp; relat
 <b>Signature:</b>
 
 ```typescript
-setSchema(schema: EditorSupportSchema): void;
+setSchema(schema?: EditorSupportSchema): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  schema | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  schema | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1352,13 +1353,36 @@ Set whether to use the light or dark theme for the editor
 <b>Signature:</b>
 
 ```typescript
-setTheme(theme: Theme): void;
+setTheme(theme?: Theme): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  theme | [Theme](#theme) |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  theme | [Theme](#theme) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.settooltipabsolute"></a>
+
+#### EditorApi.setTooltipAbsolute() method
+
+Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds)
+
+<b>Signature:</b>
+
+```typescript
+setTooltipAbsolute(tooltipAbsolute?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  tooltipAbsolute | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1375,13 +1399,13 @@ Set the editor value
 <b>Signature:</b>
 
 ```typescript
-setValue(value: string, parseOnSetValue?: boolean): void;
+setValue(value?: string, parseOnSetValue?: boolean): void;
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | string | The new editor value |
+|  value | string | <i>(Optional)</i> The new editor value |
 |  parseOnSetValue | boolean | <i>(Optional)</i> Whether to update the language parser tree immediately for the new value (defaults to true) |
 
 <b>Returns:</b>
@@ -1428,6 +1452,7 @@ export interface EditorOptions
 |  [readOnlyCursor?](#editoroptions.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
+|  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#editoroptions.value) | string | "" | <i>(Optional)</i> The initial editor value |
 
 <br>
@@ -1769,6 +1794,23 @@ theme?: Theme;
 <b>Default Value:</b>
 
 "light"
+
+<br>
+
+<a name="editoroptions.tooltipabsolute"></a>
+
+#### EditorOptions.tooltipAbsolute property
+
+Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds)
+
+<b>Signature:</b>
+
+```typescript
+tooltipAbsolute?: boolean;
+```
+<b>Default Value:</b>
+
+false
 
 <br>
 

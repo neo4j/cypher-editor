@@ -45,7 +45,8 @@ import {
   rectangularSelection as rectangularSelectionExtension,
   crosshairCursor as crosshairCursorExtension,
   keymap,
-  placeholder as placeholderExtension
+  placeholder as placeholderExtension,
+  tooltips
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 import { TreeUtils } from "@neo4j-cypher/editor-support";
@@ -314,6 +315,11 @@ export const getPlaceholderExtensions = ({ placeholder }) =>
 
 export const getThemeExtensions = ({ theme }) =>
   theme === THEME_DARK ? darkExtensions : lightExtensions;
+
+export const getTooltipAbsoluteExtensions = ({ tooltipAbsolute }) =>
+  tooltipAbsolute
+    ? [tooltips({ position: "absolute" })]
+    : [tooltips({ position: "fixed" })];
 
 export const getLineNumbersExtensions = ({
   lineNumbers,

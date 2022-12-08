@@ -95,6 +95,7 @@ class CypherEditor extends Component {
       readOnlyCursor,
       schema,
       theme,
+      tooltipAbsolute,
       parseOnSetValue,
       value,
       onEditorCreated
@@ -120,6 +121,7 @@ class CypherEditor extends Component {
       readOnlyCursor,
       schema,
       theme,
+      tooltipAbsolute,
       parseOnSetValue,
       value
     });

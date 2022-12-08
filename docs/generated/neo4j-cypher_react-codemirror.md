@@ -106,6 +106,7 @@ export interface CypherEditorProps
 |  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
+|  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#cyphereditorprops.value) | string | "" | <i>(Optional)</i> The editor text value |
 
 <br>
@@ -565,6 +566,23 @@ theme?: Theme;
 <b>Default Value:</b>
 
 "light"
+
+<br>
+
+<a name="cyphereditorprops.tooltipabsolute"></a>
+
+#### CypherEditorProps.tooltipAbsolute property
+
+Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds)
+
+<b>Signature:</b>
+
+```typescript
+tooltipAbsolute?: boolean;
+```
+<b>Default Value:</b>
+
+false
 
 <br>
 

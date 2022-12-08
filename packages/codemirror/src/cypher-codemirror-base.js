@@ -61,6 +61,7 @@ export const defaultOptions = {
   readOnlyCursor: false,
   schema: undefined,
   theme: THEME_LIGHT,
+  tooltipAbsolute: false,
   value: ""
 };
 
@@ -82,6 +83,7 @@ export const reactiveOptionKeys = [
   "readOnlyCursor",
   "schema",
   "theme",
+  "tooltipAbsolute",
   // "parseOnSetValue",
   "value"
 ];

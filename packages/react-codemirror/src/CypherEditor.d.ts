@@ -133,6 +133,12 @@ export interface CypherEditorProps {
    */
   theme?: Theme;
   /**
+   * Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds)
+   *
+   * @defaultValue false
+   */
+  tooltipAbsolute?: boolean;
+  /**
    * The editor text value
    *
    * @defaultValue ""

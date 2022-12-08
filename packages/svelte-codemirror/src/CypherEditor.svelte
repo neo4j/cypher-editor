@@ -74,6 +74,9 @@
   export let theme = defaultOptions.theme;
   $: updateOption({ theme });
 
+  export let tooltipAbsolute = defaultOptions.tooltipAbsolute;
+  $: updateOption({ tooltipAbsolute });
+
   export let value = "";
   $: updateOption({ value });
 
@@ -172,6 +175,7 @@
       readOnlyCursor,
       schema,
       theme,
+      tooltipAbsolute,
       parseOnSetValue,
       value
     });
