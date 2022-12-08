@@ -256,9 +256,7 @@ const darkExtensions = [
   EditorView.editorAttributes.of({ class: "cm-dark" })
 ];
 
-const lightExtensions = [
-  EditorView.theme(themeOverrides, { dark: false })
-];
+const lightExtensions = [EditorView.theme(themeOverrides, { dark: false })];
 
 export const historyExtensions = [historyExtension()];
 
@@ -344,7 +342,7 @@ export const getHistoryExtensions = ({ history }) =>
   history ? historyExtensions : [];
 
 export const getIndentWithTabExtensions = ({ indentWithTab }) =>
-  indentWithTab ? indentWithTabExtensions : []
+  indentWithTab ? indentWithTabExtensions : [];
 
 export const getLintExtensions = ({ readOnly, lint }) =>
   readOnly === false && lint ? useLintExtensions : useNoLintExtensions;

@@ -625,10 +625,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
   };
 
-  const setIndentWithTab = (newIndentWithTab = defaultOptions.indentWithTab) => {
+  const setIndentWithTab = (
+    newIndentWithTab = defaultOptions.indentWithTab
+  ) => {
     indentWithTab = newIndentWithTab;
     editor.dispatch({
-      effects: indentWithTabConf.reconfigure(getIndentWithTabExtensions({ indentWithTab }))
+      effects: indentWithTabConf.reconfigure(
+        getIndentWithTabExtensions({ indentWithTab })
+      )
     });
   };
 

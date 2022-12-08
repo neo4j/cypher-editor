@@ -15,7 +15,4 @@
  *
  * @packageDocumentation
  */
-export {
-  default as CypherEditor,
-  CypherEditorProps
-} from "./CypherEditor";
+export { default as CypherEditor, CypherEditorProps } from "./CypherEditor";

@@ -452,7 +452,7 @@ export interface EditorOptions {
   history?: boolean;
   /**
    * Whether pressing the tab key affects editor indentation
-   * 
+   *
    * @defaultValue true
    */
   indentWithTab?: boolean;

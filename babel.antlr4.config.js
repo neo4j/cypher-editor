@@ -24,9 +24,12 @@ module.exports = {
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-transform-runtime",
-    ["babel-plugin-replace-imports", {
-      test: /^antlr4$/,
-      replacer: "@neo4j-cypher/antlr4-browser"
-    }]
+    [
+      "babel-plugin-replace-imports",
+      {
+        test: /^antlr4$/,
+        replacer: "@neo4j-cypher/antlr4-browser"
+      }
+    ]
   ]
 };
