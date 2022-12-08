@@ -53,21 +53,22 @@
   let autocomplete = initialOptions.autocomplete;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
+  let autofocus = initialOptions.autofocus;
   let history = initialOptions.history;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
   let lineNumbers = initialOptions.lineNumbers;
   let lineWrapping = initialOptions.lineWrapping;
   let lint = initialOptions.lint;
+  let parseOnSetValue = initialOptions.parseOnSetValue;
   let placeholder = initialOptions.placeholder;
   let position = initialOptions.position;
   let readOnly = initialOptions.readOnly;
   let readOnlyCursor = initialOptions.readOnlyCursor;
   let schema = initialOptions.schema;
+  let tabKey = initialOptions.tabKey;
   let theme = initialOptions.theme;
+  let tooltipAbsolute = initialOptions.tooltipAbsolute;
   let cypher = initialOptions.value;
-
-  let autofocus = initialOptions.autofocus;
-  let parseOnSetValue = initialOptions.parseOnSetValue;
 
   let cypherEditor;
   let autocompleteOpen = false;
@@ -221,7 +222,9 @@
   $: logs = appendLog(commandLog("setPlaceholder", placeholder));
   $: logs = appendLog(commandLog("setReadOnly", readOnly));
   $: logs = appendLog(commandLog("setReadOnlyCursor", readOnlyCursor));
+  $: logs = appendLog(commandLog("setTabKey", tabKey));
   $: logs = appendLog(commandLog("setTheme", theme));
+  $: logs = appendLog(commandLog("setTooltipAbsolute", tooltipAbsolute));
   $: logs = appendLog(
     commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
   );
@@ -662,7 +665,36 @@
         >
       </div>
     </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Tab Key Enabled</div>
+      <div class="setting-values">
+        <button
+          class={tabKey === false ? "setting-active" : undefined}
+          on:click={() => (tabKey = false)}>False</button
+        >
+        <button
+          class={tabKey === true ? "setting-active" : undefined}
+          on:click={() => (tabKey = true)}>True</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Tooltip Absolute</div>
+      <div class="setting-values">
+        <button
+          class={tooltipAbsolute === false ? "setting-active" : undefined}
+          on:click={() => (tooltipAbsolute = false)}>False</button
+        >
+        <button
+          class={tooltipAbsolute === true ? "setting-active" : undefined}
+          on:click={() => (tooltipAbsolute = true)}>True</button
+        >
+      </div>
+    </div>
   </div>
+
   <div class="right">
     <div class="card">
       <h1>{title}</h1>
@@ -690,7 +722,9 @@
         {readOnly}
         {readOnlyCursor}
         {schema}
+        {tabKey}
         {theme}
+        {tooltipAbsolute}
         value={cypher}
         {autofocus}
         {parseOnSetValue}

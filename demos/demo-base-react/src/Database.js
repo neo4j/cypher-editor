@@ -43,46 +43,52 @@ const driver = createDriver();
 
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = getTitle({ codemirrorVersion, framework, bundler });
-  const [cypher, setCypher] = useState(initialOptions.value);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [results, setResults] = useState(null);
-  const [theme, setTheme] = useState(initialOptions.theme);
-  const [position, setPosition] = useState(initialOptions.position);
+
+  const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
+  const [autocompleteCloseOnBlur, setAutocompleteCloseOnBlur] = useState(
+    initialOptions.autocompleteCloseOnBlur
+  );
   const [autocompleteOpen, setAutocompleteOpen] = useState(
     initialOptions.autocompleteOpen
   );
   const [autocompleteOptions, setAutocompleteOptions] = useState(undefined);
-  const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
-  const [parseOnSetValue, setParseOnSetValue] = useState(
-    initialOptions.parseOnSetValue
+  const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
+    initialOptions.autocompleteTriggerStrings
   );
-  const [focused, setFocused] = useState(initialOptions.autofocus);
+  const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
+  const [cypher, setCypher] = useState(initialOptions.value);
   const [editor, setEditor] = useState(null);
-  const [lineNumbers, setLineNumbers] = useState(initialOptions.lineNumbers);
+  const [error, setError] = useState(null);
+  const [focused, setFocused] = useState(initialOptions.autofocus);
+  const [history, setHistory] = useState(initialOptions.history);
   const [lineNumberFormatterObject, setLineNumberFormatterObject] = useState({
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
   let { lineNumberFormatter } = lineNumberFormatterObject;
-  const [schema, setSchema] = useState(initialOptions.schema);
+  const [lineNumbers, setLineNumbers] = useState(initialOptions.lineNumbers);
+  const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
+  const [lint, setLint] = useState(initialOptions.lint);
+  const [loading, setLoading] = useState(false);
+  const [parseOnSetValue, setParseOnSetValue] = useState(
+    initialOptions.parseOnSetValue
+  );
+  const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
+  const [position, setPosition] = useState(initialOptions.position);
+  const [positionPosition, setPositionPosition] = useState("0");
+  const [positionLine, setPositionLine] = useState("1");
+  const [positionColumn, setPositionColumn] = useState("1");
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
   const [readOnlyCursor, setReadOnlyCursor] = useState(
     initialOptions.readOnlyCursor
   );
-  const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
-  const [autocompleteTriggerStrings, setAutocompleteTriggerStrings] = useState(
-    initialOptions.autocompleteTriggerStrings
+  const [results, setResults] = useState(null);
+  const [schema, setSchema] = useState(initialOptions.schema);
+  const [tabKey, setTabKey] = useState(initialOptions.tabKey);
+  const [theme, setTheme] = useState(initialOptions.theme);
+  const [tooltipAbsolute, setTooltipAbsolute] = useState(
+    initialOptions.tooltipAbsolute
   );
-  const [autocompleteCloseOnBlur, setAutocompleteCloseOnBlur] = useState(
-    initialOptions.autocompleteCloseOnBlur
-  );
-  const [placeholder, setPlaceholder] = useState(initialOptions.placeholder);
-  const [lineWrapping, setLineWrapping] = useState(initialOptions.lineWrapping);
-  const [lint, setLint] = useState(initialOptions.lint);
-  const [history, setHistory] = useState(initialOptions.history);
-  const [positionPosition, setPositionPosition] = useState("0");
-  const [positionLine, setPositionLine] = useState("1");
-  const [positionColumn, setPositionColumn] = useState("1");
+
   const [goPositionPositionEnabled, setGoPositionPositionEnabled] =
     useState(false);
   const [goPositionLineColumnEnabled, setGoPositionLineColumnEnabled] =
@@ -514,6 +520,26 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     }
   };
 
+  const disableTabKey = () => {
+    addCommandLog("setTabKey", false);
+    setTabKey(false);
+  };
+
+  const enableTabKey = () => {
+    addCommandLog("setTabKey", true);
+    setTabKey(true);
+  };
+
+  const disableTooltipAbsolute = () => {
+    addCommandLog("setTooltipAbsolute", false);
+    setTooltipAbsolute(false);
+  };
+
+  const enableTooltipAbsolute = () => {
+    addCommandLog("setTooltipAbsolute", true);
+    setTooltipAbsolute(true);
+  };
+
   let content = "";
   if (loading) {
     content = <p>...waiting</p>;
@@ -907,7 +933,48 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             </button>
           </div>
         </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Tab Key Enabled</div>
+          <div className="setting-values">
+            <button
+              className={tabKey === false ? "setting-active" : undefined}
+              onClick={disableTabKey}
+            >
+              False
+            </button>
+            <button
+              className={tabKey === true ? "setting-active" : undefined}
+              onClick={enableTabKey}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Tooltip Absolute</div>
+          <div className="setting-values">
+            <button
+              className={
+                tooltipAbsolute === false ? "setting-active" : undefined
+              }
+              onClick={disableTooltipAbsolute}
+            >
+              False
+            </button>
+            <button
+              className={
+                tooltipAbsolute === true ? "setting-active" : undefined
+              }
+              onClick={enableTooltipAbsolute}
+            >
+              True
+            </button>
+          </div>
+        </div>
       </div>
+
       <div className="right">
         <div className="card">
           <h1>{title}</h1>
@@ -937,7 +1004,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             position={position}
             readOnly={readOnly}
             readOnlyCursor={readOnlyCursor}
+            tabKey={tabKey}
             theme={theme}
+            tooltipAbsolute={tooltipAbsolute}
             parseOnSetValue={parseOnSetValue}
             value={cypher}
             className="database-editor"

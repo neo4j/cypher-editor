@@ -529,7 +529,7 @@ export interface EditorOptions {
   /**
    * Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds)
    *
-   * @defaultValue false
+   * @defaultValue true
    */
   tooltipAbsolute?: boolean;
   /**

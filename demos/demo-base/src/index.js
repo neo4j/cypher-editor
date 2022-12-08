@@ -37,8 +37,7 @@ export {
 export { neo4jSchema, simpleSchema } from "./schema-data";
 import { simpleSchema } from "./schema-data";
 
-export const codeMirrorSettings = {
-  value: `// line comment
+export const sampleQuery = `// line comment
 /* block comment */
 :play "http://example.com";
 :play incommand-dash;
@@ -51,29 +50,7 @@ RETURN some.functionNamme()
 CALL some.procedureName()
 CALL some.procedureName() YIELD param1, param2 as somethingElse
 MATCH (variable {propKey: 1})
-SET variable.propKey = 1;`,
-  mode: "application/x-cypher-query",
-  indentWithTabs: true,
-  smartIndent: false,
-  lineNumbers: true,
-  matchBrackets: true,
-  autofocus: true,
-  theme: "cypher cypher-dark",
-  lint: true,
-  styleActiveLine: true,
-  extraKeys: { "Ctrl-Space": "autocomplete" },
-  hintOptions: {
-    completeSingle: false,
-    closeOnUnfocus: false,
-    alignWithWord: true,
-    async: true
-  },
-  gutters: ["cypher-hints"],
-  lineWrapping: false,
-  autoCloseBrackets: {
-    explode: ""
-  }
-};
+SET variable.propKey = 1;`;
 
 export const metaQuery = `	CALL db.labels() YIELD label
 	RETURN {name:'labels', data:COLLECT(label)[..1000]} AS result
@@ -111,37 +88,8 @@ export const user = "neo4j";
 
 export const pass = "asdfgh";
 
-const defaultCodemirrorOptions = {
-  // lineNumbers: true,
-  mode: "cypher",
-  // theme: theme,
-  // placeholder: undefined
-
-  gutters: ["cypher-hints"],
-  // lineWrapping: false,
-  // autofocus: true,
-  smartIndent: false,
-  // lint: true,
-  extraKeys: {
-    "Ctrl-Space": "autocomplete"
-  },
-  hintOptions: {
-    completeSingle: false, //
-    closeOnUnfocus: false, //
-    alignWithWord: true, //
-    async: true //
-  },
-  autoCloseBrackets: {
-    explode: ""
-  }
-};
-
 const defaultOptions = {
   ...baseDefaultOptions,
-
-  codemirrorOptions: {
-    ...defaultCodemirrorOptions
-  },
 
   preExtensions: [],
   postExtensions: []
@@ -162,6 +110,8 @@ export const customLineNumberFormatter = (line, lineCount) => {
 
 export const samplePlaceholder = "Sample Placeholder";
 
+export const defaultTheme = THEME_LIGHT;
+
 // Note: an automated test for the initial autofocus (defaultOptions.autofocus) would be good.
 export const initialOptions = {
   ...defaultOptions,
@@ -180,12 +130,12 @@ export const initialOptions = {
   readOnly: false, // can be one of: true / false / "nocursor"
   readOnlyCursor: false,
   schema: simpleSchema,
-  theme: THEME_LIGHT,
+  tabKey: true,
+  theme: defaultTheme,
+  tooltipAbsolute: true,
   parseOnSetValue: true,
   value: longQuery
 };
-
-export const defaultTheme = "light";
 
 export const getTitle = ({ codemirrorVersion, framework, bundler }) =>
   `Cypher Codemirror ${codemirrorVersion} ${framework} ${bundler}`;

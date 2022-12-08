@@ -27,6 +27,8 @@ import {
 
 import { editorSupportField } from "./cypher-state-definitions";
 
+export const getStatePositionAnchorAbsolute = (state) =>
+  state.selection.main.anchor;
 export const getStatePositionAbsolute = (state) => state.selection.main.head;
 export const getStateEditorSupport = (state) =>
   state.field(editorSupportField, false);
@@ -52,6 +54,9 @@ export const getStatePositionForAbsolute = (state, position) => {
 
 export const getStatePosition = (state) =>
   getStatePositionForAbsolute(state, getStatePositionAbsolute(state));
+
+export const getStatePositionAnchor = (state) =>
+  getStatePositionForAbsolute(state, getStatePositionAnchorAbsolute(state));
 
 export const getStatePositionForAny = (state, positionValue) => {
   let position = null;

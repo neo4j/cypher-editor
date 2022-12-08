@@ -1452,7 +1452,7 @@ export interface EditorOptions
 |  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [tabKey?](#editoroptions.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
-|  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
+|  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#editoroptions.value) | string | "" | <i>(Optional)</i> The initial editor value |
 
 <br>
@@ -1810,7 +1810,7 @@ tooltipAbsolute?: boolean;
 ```
 <b>Default Value:</b>
 
-false
+true
 
 <br>
 

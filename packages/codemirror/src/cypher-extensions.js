@@ -29,7 +29,8 @@ import {
   defaultKeymap,
   historyKeymap,
   indentMore,
-  indentLess
+  indentLess,
+  insertTab
 } from "@codemirror/commands";
 import {
   StreamLanguage,
@@ -66,7 +67,8 @@ import {
   getStateLineCount,
   getStateValue,
   getStatePositionAbsoluteForLineColumn,
-  getStatePositionForAbsolute
+  getStatePositionForAbsolute,
+  getStatePositionAnchor
 } from "./cypher-state-selectors";
 
 const typeMarkerTheme = EditorView.baseTheme({
@@ -264,10 +266,30 @@ const lightExtensions = [EditorView.theme(themeOverrides, { dark: false })];
 
 export const historyExtensions = [historyExtension()];
 
+const whitespaceRegex = /[\s]/;
+
+export const isAtStartOfLine = (state) => {
+  const positionObject = getStatePositionAnchor(state);
+  const value = getStateValue(state);
+  const lineStart = positionObject.position - positionObject.column;
+  for (let i = 0; i < positionObject.column; i++) {
+    if (!whitespaceRegex.test(value.charAt(lineStart + i))) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const runTab = (view, event) => {
   const status = completionStatus(view.state);
+
   if (status === null) {
-    indentMore(view);
+    if (isAtStartOfLine(view.state)) {
+      indentMore(view);
+    } else {
+      insertTab(view);
+    }
+    event && event.preventDefault();
   } else if (status === "active") {
     acceptCompletion(view);
     event && event.preventDefault();
@@ -276,8 +298,9 @@ const runTab = (view, event) => {
 
 const shiftTab = (view, event) => {
   const status = completionStatus(view.state);
-  if (status === null) {
+  if (status === null && isAtStartOfLine(view.state)) {
     indentLess(view);
+    event && event.preventDefault();
   }
 };
 

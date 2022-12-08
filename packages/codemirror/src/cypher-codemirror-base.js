@@ -61,7 +61,7 @@ export const defaultOptions = {
   schema: undefined,
   tabKey: true,
   theme: THEME_LIGHT,
-  tooltipAbsolute: false,
+  tooltipAbsolute: true,
   value: ""
 };
 

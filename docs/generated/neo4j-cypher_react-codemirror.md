@@ -106,7 +106,7 @@ export interface CypherEditorProps
 |  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [tabKey?](#cyphereditorprops.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
-|  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | false | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
+|  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
 |  [value?](#cyphereditorprops.value) | string | "" | <i>(Optional)</i> The editor text value |
 
 <br>
@@ -582,7 +582,7 @@ tooltipAbsolute?: boolean;
 ```
 <b>Default Value:</b>
 
-false
+true
 
 <br>
 
