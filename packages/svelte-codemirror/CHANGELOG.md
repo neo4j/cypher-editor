@@ -1,5 +1,13 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.12
+
+### Patch Changes
+
+- 4a8e102: tooltipAbsolute default to true, fix tab key bugs
+- Updated dependencies [4a8e102]
+  - @neo4j-cypher/codemirror@1.0.0-next.10
+
 ## 1.0.0-next.11
 
 ### Patch Changes
