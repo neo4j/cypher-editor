@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- 95e70e0: add tooltipAbsolute option / prop
+
 ## 1.0.0-next.7
 
 ### Patch Changes
