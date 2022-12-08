@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.10
+
+### Patch Changes
+
+- 4a8e102: tooltipAbsolute default to true, fix tab key bugs
+
 ## 1.0.0-next.9
 
 ### Patch Changes
