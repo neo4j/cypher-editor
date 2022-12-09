@@ -32,9 +32,6 @@
   export let autocompleteOpen = defaultOptions.autocompleteOpen;
   $: updateOption({ autocompleteOpen });
 
-  export let schema = defaultOptions.schema;
-  $: updateOption({ schema });
-
   export let autocompleteTriggerStrings =
     defaultOptions.autocompleteTriggerStrings;
   $: updateOption({ autocompleteTriggerStrings });
@@ -43,6 +40,9 @@
 
   export let history = defaultOptions.history;
   $: updateOption({ history });
+
+  export let indentUnit = defaultOptions.indentUnit;
+  $: updateOption({ indentUnit });
 
   export let lineNumberFormatter = defaultOptions.lineNumberFormatter;
   $: updateOption({ lineNumberFormatter });
@@ -68,6 +68,15 @@
   export let readOnlyCursor = defaultOptions.readOnlyCursor;
   $: updateOption({ readOnlyCursor });
 
+  export let schema = defaultOptions.schema;
+  $: updateOption({ schema });
+
+  export let search = defaultOptions.search;
+  $: updateOption({ search });
+
+  export let searchTop = defaultOptions.searchTop;
+  $: updateOption({ searchTop });
+
   export let tabKey = defaultOptions.tabKey;
   $: updateOption({ tabKey });
 
@@ -77,7 +86,7 @@
   export let tooltipAbsolute = defaultOptions.tooltipAbsolute;
   $: updateOption({ tooltipAbsolute });
 
-  export let value = "";
+  export let value = defaultOptions.value;
   $: updateOption({ value });
 
   export let className = "";
@@ -97,7 +106,8 @@
   let isFocused = false;
   let cypherEditorRef;
   let cypherEditor;
-  let innerValue = value;
+  let lastValue = null;
+  let lastPosition = null;
 
   $: editorClassName =
     (className ? className + " " : "") +
@@ -109,9 +119,22 @@
     }
     const key = Object.keys(prop).pop();
 
-    // Call setValue only if the change comes from the outside
-    if (key === "value" && innerValue === value) {
-      return;
+    if (key === "value") {
+      if (prop[key] === lastValue) {
+        return;
+      } else {
+        lastValue = prop[key];
+      }
+    }
+    if (key === "position") {
+      const { position } = cypherEditor.getPositionForValue(prop[key]) || {
+        position: null
+      };
+      if (position === lastPosition) {
+        return;
+      } else {
+        lastPosition = position;
+      }
     }
 
     const methodName = "set" + key[0].toUpperCase() + key.slice(1);
@@ -125,7 +148,7 @@
   }
 
   const valueChanged = (newValue, changes) => {
-    innerValue = newValue;
+    lastValue = newValue;
     value = newValue;
     onValueChanged && onValueChanged(newValue, changes);
   };
@@ -140,6 +163,7 @@
   };
 
   const positionChanged = (positionObject) => {
+    lastPosition = (positionObject || { position: null }).position;
     onPositionChanged && onPositionChanged(positionObject);
   };
 
@@ -164,6 +188,7 @@
       autocompleteTriggerStrings,
       autofocus,
       history,
+      indentUnit,
       lineNumberFormatter,
       lineNumbers,
       lineWrapping,
@@ -173,6 +198,8 @@
       readOnly,
       readOnlyCursor,
       schema,
+      search,
+      searchTop,
       tabKey,
       theme,
       tooltipAbsolute,

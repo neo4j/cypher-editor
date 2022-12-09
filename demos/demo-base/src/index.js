@@ -121,6 +121,7 @@ export const initialOptions = {
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
   history: true,
+  indentUnit: "\t",
   lineNumberFormatter: defaultLineNumberFormatter,
   lineNumbers: true, // whether to show the line numbers next to the editor
   lineWrapping: false,
@@ -130,6 +131,8 @@ export const initialOptions = {
   readOnly: false, // can be one of: true / false / "nocursor"
   readOnlyCursor: false,
   schema: simpleSchema,
+  search: true,
+  searchTop: false,
   tabKey: true,
   theme: defaultTheme,
   tooltipAbsolute: true,

@@ -266,6 +266,10 @@ export interface EditorApi {
    */
   setHistory(history?: boolean): void;
   /**
+   * Set the indent text to use when tabKey is enabled
+   */
+  setIndentUnit(indentUnit?: string): void;
+  /**
    * Set the formatter for the line numbers of the editor
    */
   setLineNumberFormatter(
@@ -303,6 +307,14 @@ export interface EditorApi {
    * Set the schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
    */
   setSchema(schema?: EditorSupportSchema): void;
+  /**
+   * Set whether search is enabled
+   */
+  setSearch(search?: boolean): void;
+  /**
+   * Set whether search is appears at the top of the editor window
+   */
+  setSearchTop(searchTop?: boolean): void;
   /**
    * Set whether the tab key is enabled
    */
@@ -455,6 +467,12 @@ export interface EditorOptions {
    */
   history?: boolean;
   /**
+   * The indent text to use when tabKey is enabled
+   *
+   * @defaultValue "  "
+   */
+  indentUnit?: string;
+  /**
    * The formatter for the line numbers of the editor
    *
    * @defaultValue (line, lineCount) => lineCount === 1 ? "$" : line + "";
@@ -514,6 +532,18 @@ export interface EditorOptions {
    * @defaultValue undefined
    */
   schema?: EditorSupportSchema;
+  /**
+   * Whether search is enabled
+   *
+   * @defaultValue true
+   */
+  search?: boolean;
+  /**
+   * Whether search is shown at the top of the editor window
+   *
+   * @defaultValue false
+   */
+  searchTop?: boolean;
   /**
    * Whether the tab key is enabled
    *

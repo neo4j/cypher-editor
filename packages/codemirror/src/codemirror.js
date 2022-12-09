@@ -54,6 +54,7 @@ import {
   getReadableExtensions,
   getReadOnlyExtensions,
   getPlaceholderExtensions,
+  getSearchExtensions,
   getThemeExtensions,
   getTooltipAbsoluteExtensions,
   getLineNumbersExtensions,
@@ -91,6 +92,7 @@ export const getExtensions = (
     lineWrappingConf = new Compartment(),
     historyConf = new Compartment(),
     placeholderConf = new Compartment(),
+    searchConf = new Compartment(),
     tabKeyConf = new Compartment(),
     themeConf = new Compartment(),
     tooltipAbsoluteConf = new Compartment(),
@@ -106,6 +108,7 @@ export const getExtensions = (
     autocompleteCloseOnBlur,
     history,
     tabKey,
+    indentUnit,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -113,6 +116,8 @@ export const getExtensions = (
     placeholder,
     readOnly,
     readOnlyCursor,
+    search,
+    searchTop,
     theme,
     tooltipAbsolute
   } = combinedOptions;
@@ -137,11 +142,12 @@ export const getExtensions = (
     ),
     lineWrappingConf.of(getLineWrappingExtensions({ lineWrapping })),
     historyConf.of(getHistoryExtensions({ history })),
-    tabKeyConf.of(getTabKeyExtensions({ tabKey })),
+    tabKeyConf.of(getTabKeyExtensions({ tabKey, indentUnit })),
     readableConf.of(getReadableExtensions({ readOnly, readOnlyCursor })),
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
     syntaxCSS,
     themeConf.of(getThemeExtensions({ theme })),
+    searchConf.of(getSearchExtensions({ readOnly, search, searchTop })),
     tooltipAbsoluteConf.of(getTooltipAbsoluteExtensions({ tooltipAbsolute })),
     readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor }))
   ];
@@ -170,6 +176,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteCloseOnBlur,
     autocompleteTriggerStrings,
     history,
+    indentUnit,
     lineNumberFormatter,
     lineNumbers,
     lineWrapping,
@@ -177,9 +184,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     placeholder,
     readOnly,
     readOnlyCursor,
+    search,
+    searchTop,
     tabKey,
     tooltipAbsolute
   } = combinedOptions;
+  let lastPosition = null;
 
   const {
     on: onValueChanged,
@@ -232,6 +242,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const positionChanged = (positionObject) => {
+    lastPosition = (positionObject || { position: null }).position;
     firePositionChanged(positionOldToNew(positionObject));
   };
 
@@ -312,6 +323,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const lineWrappingConf = new Compartment();
   const historyConf = new Compartment();
   const placeholderConf = new Compartment();
+  const searchConf = new Compartment();
   const tabKeyConf = new Compartment();
   const themeConf = new Compartment();
   const tooltipAbsoluteConf = new Compartment();
@@ -331,6 +343,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         lineWrappingConf,
         historyConf,
         placeholderConf,
+        searchConf,
         themeConf,
         tooltipAbsoluteConf,
         postConf,
@@ -365,9 +378,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     const positionObject = getPositionForValue(positionParam);
     if (positionObject) {
       const { position } = positionObject;
-      editor.dispatch(
-        editor.state.update({ scrollIntoView, selection: { anchor: position } })
-      );
+      if (position !== lastPosition) {
+        editor.dispatch(
+          editor.state.update({
+            scrollIntoView,
+            selection: { anchor: position }
+          })
+        );
+      }
     }
   };
 
@@ -394,6 +412,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   if (position !== undefined) {
     setPosition(position);
   }
+  lastPosition = (getStatePosition(editor.state) || { position: null })
+    .position;
   if (schema !== undefined) {
     editorSupport.setSchema(schema);
   }
@@ -656,7 +676,36 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setTabKey = (newTabKey = defaultOptions.tabKey) => {
     tabKey = newTabKey;
     editor.dispatch({
-      effects: tabKeyConf.reconfigure(getTabKeyExtensions({ tabKey }))
+      effects: tabKeyConf.reconfigure(
+        getTabKeyExtensions({ tabKey, indentUnit })
+      )
+    });
+  };
+
+  const setIndentUnit = (newIndentUnit = defaultOptions.indentUnit) => {
+    indentUnit = newIndentUnit;
+    editor.dispatch({
+      effects: tabKeyConf.reconfigure(
+        getTabKeyExtensions({ tabKey, indentUnit })
+      )
+    });
+  };
+
+  const setSearch = (newSearch = defaultOptions.search) => {
+    search = newSearch;
+    editor.dispatch({
+      effects: searchConf.reconfigure(
+        getSearchExtensions({ readOnly, search, searchTop })
+      )
+    });
+  };
+
+  const setSearchTop = (newSearchTop = defaultOptions.searchTop) => {
+    searchTop = newSearchTop;
+    editor.dispatch({
+      effects: searchConf.reconfigure(
+        getSearchExtensions({ readOnly, search, searchTop })
+      )
     });
   };
 
@@ -673,6 +722,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocompleteOpen,
     setAutocompleteTriggerStrings,
     setHistory,
+    setIndentUnit,
     setLineNumberFormatter,
     setLineNumbers,
     setLineWrapping,
@@ -682,6 +732,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setReadOnly,
     setReadOnlyCursor,
     setSchema,
+    setSearch,
+    setSearchTop,
     setTabKey,
     setTheme,
     setTooltipAbsolute,

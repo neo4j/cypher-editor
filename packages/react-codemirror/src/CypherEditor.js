@@ -31,6 +31,8 @@ class CypherEditor extends Component {
     this.state = {
       focused: false
     };
+    this.lastValue = null;
+    this.lastPosition = null;
   }
 
   setEditorRef = (ref) => {
@@ -38,8 +40,7 @@ class CypherEditor extends Component {
   };
 
   valueChanged = (value, changes) => {
-    this.innerValue = value;
-    this.value = value;
+    this.lastValue = value;
     const { onValueChanged } = this.props;
     onValueChanged && onValueChanged(value, changes);
   };
@@ -56,6 +57,7 @@ class CypherEditor extends Component {
   };
 
   positionChanged = (positionObject) => {
+    this.lastPosition = (positionObject || { position: null }).position;
     const { onPositionChanged } = this.props;
     onPositionChanged && onPositionChanged(positionObject);
   };
@@ -84,6 +86,7 @@ class CypherEditor extends Component {
       autocompleteTriggerStrings,
       autofocus,
       history,
+      indentUnit,
       lineNumberFormatter,
       lineNumbers,
       lineWrapping,
@@ -93,6 +96,8 @@ class CypherEditor extends Component {
       readOnly,
       readOnlyCursor,
       schema,
+      search,
+      searchTop,
       tabKey,
       theme,
       tooltipAbsolute,
@@ -101,7 +106,7 @@ class CypherEditor extends Component {
       onEditorCreated
     } = this.props;
 
-    this.value = this.innerValue = value;
+    this.value = value;
 
     const { editor } = createCypherEditor(this.editorRef, {
       autocomplete,
@@ -110,6 +115,7 @@ class CypherEditor extends Component {
       autocompleteTriggerStrings,
       autofocus,
       history,
+      indentUnit,
       lineNumberFormatter,
       lineNumbers,
       lineWrapping,
@@ -119,6 +125,8 @@ class CypherEditor extends Component {
       readOnly,
       readOnlyCursor,
       schema,
+      search,
+      searchTop,
       tabKey,
       theme,
       tooltipAbsolute,
@@ -168,9 +176,22 @@ class CypherEditor extends Component {
     }
     const key = Object.keys(prop).pop();
 
-    // Call setValue only if the change comes from the outside
-    if (key === "value" && this.innerValue === this.value) {
-      return; // TODO - this probably isn't needed for React (only needed for bind:value in Svelte?)
+    if (key === "value") {
+      if (prop[key] === this.lastValue) {
+        return;
+      } else {
+        this.lastValue = prop[key];
+      }
+    }
+    if (key === "position") {
+      const { position } = this.cypherEditor.getPositionForValue(prop[key]) || {
+        position: null
+      };
+      if (position === this.lastPosition) {
+        return;
+      } else {
+        this.lastPosition = position;
+      }
     }
 
     const methodName = "set" + key[0].toUpperCase() + key.slice(1);

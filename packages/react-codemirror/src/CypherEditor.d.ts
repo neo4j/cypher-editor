@@ -67,6 +67,12 @@ export interface CypherEditorProps {
    */
   history?: boolean;
   /**
+   * The indent text to use when tabKey is enabled
+   *
+   * @defaultValue "  "
+   */
+  indentUnit?: string;
+  /**
    * The formatter for the line numbers of the editor
    *
    * @defaultValue (line, lineCount) => lineCount === 1 ? "$" : line + "";
@@ -120,6 +126,18 @@ export interface CypherEditorProps {
    * The schema making the editor aware of things such as node labels & relationship types & procedures in the current graph database
    */
   schema?: EditorSupportSchema;
+  /**
+   * Whether search is enabled
+   *
+   * @defaultValue true
+   */
+  search?: boolean;
+  /**
+   * Whether search is shown at the top of the editor window
+   *
+   * @defaultValue false
+   */
+  searchTop?: boolean;
   /**
    * Whether the tab key is enabled
    *

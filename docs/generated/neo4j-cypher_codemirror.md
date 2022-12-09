@@ -466,6 +466,7 @@ editorSupport: CypherEditorSupport;
 |  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete menu is shown to the user |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
+|  [setIndentUnit(indentUnit)](#editorapi.setindentunit) | Set the indent text to use when tabKey is enabled |
 |  [setLineNumberFormatter(lineNumberFormatter)](#editorapi.setlinenumberformatter) | Set the formatter for the line numbers of the editor |
 |  [setLineNumbers(lineNumbers)](#editorapi.setlinenumbers) | Set whether or not line numbers are shown to the left of the editor ui |
 |  [setLineWrapping(lineWrapping)](#editorapi.setlinewrapping) | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
@@ -477,6 +478,8 @@ editorSupport: CypherEditorSupport;
 |  [setReadOnly(readOnly)](#editorapi.setreadonly) | Set whether the editor is read only or the user can edit the editor's value |
 |  [setReadOnlyCursor(readOnlyCursor)](#editorapi.setreadonlycursor) | Set whether to show the cursor when the editor readOnly is true |
 |  [setSchema(schema)](#editorapi.setschema) | Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
+|  [setSearch(search)](#editorapi.setsearch) | Set whether search is enabled |
+|  [setSearchTop(searchTop)](#editorapi.setsearchtop) | Set whether search is appears at the top of the editor window |
 |  [setTabKey(tabKey)](#editorapi.settabkey) | Set whether the tab key is enabled |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
 |  [setTooltipAbsolute(tooltipAbsolute)](#editorapi.settooltipabsolute) | Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds) |
@@ -1066,6 +1069,29 @@ void
 
 <br>
 
+<a name="editorapi.setindentunit"></a>
+
+#### EditorApi.setIndentUnit() method
+
+Set the indent text to use when tabKey is enabled
+
+<b>Signature:</b>
+
+```typescript
+setIndentUnit(indentUnit?: string): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  indentUnit | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.setlinenumberformatter"></a>
 
 #### EditorApi.setLineNumberFormatter() method
@@ -1321,6 +1347,52 @@ void
 
 <br>
 
+<a name="editorapi.setsearch"></a>
+
+#### EditorApi.setSearch() method
+
+Set whether search is enabled
+
+<b>Signature:</b>
+
+```typescript
+setSearch(search?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  search | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setsearchtop"></a>
+
+#### EditorApi.setSearchTop() method
+
+Set whether search is appears at the top of the editor window
+
+<b>Signature:</b>
+
+```typescript
+setSearchTop(searchTop?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  searchTop | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.settabkey"></a>
 
 #### EditorApi.setTabKey() method
@@ -1438,6 +1510,7 @@ export interface EditorOptions
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
+|  [indentUnit?](#editoroptions.indentunit) | string | " " | <i>(Optional)</i> The indent text to use when tabKey is enabled |
 |  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
 |  [lineNumbers?](#editoroptions.linenumbers) | boolean | true | <i>(Optional)</i> Whether line numbers are shown to the left of the editor ui |
 |  [lineWrapping?](#editoroptions.linewrapping) | boolean | false | <i>(Optional)</i> Whether the editor wraps lines vs using a horizontal scrollbar |
@@ -1450,6 +1523,8 @@ export interface EditorOptions
 |  [readOnly?](#editoroptions.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#editoroptions.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
+|  [search?](#editoroptions.search) | boolean | true | <i>(Optional)</i> Whether search is enabled |
+|  [searchTop?](#editoroptions.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
 |  [tabKey?](#editoroptions.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
@@ -1556,6 +1631,23 @@ history?: boolean;
 <b>Default Value:</b>
 
 true
+
+<br>
+
+<a name="editoroptions.indentunit"></a>
+
+#### EditorOptions.indentUnit property
+
+The indent text to use when tabKey is enabled
+
+<b>Signature:</b>
+
+```typescript
+indentUnit?: string;
+```
+<b>Default Value:</b>
+
+" "
 
 <br>
 
@@ -1760,6 +1852,40 @@ schema?: EditorSupportSchema;
 <b>Default Value:</b>
 
 undefined
+
+<br>
+
+<a name="editoroptions.search"></a>
+
+#### EditorOptions.search property
+
+Whether search is enabled
+
+<b>Signature:</b>
+
+```typescript
+search?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.searchtop"></a>
+
+#### EditorOptions.searchTop property
+
+Whether search is shown at the top of the editor window
+
+<b>Signature:</b>
+
+```typescript
+searchTop?: boolean;
+```
+<b>Default Value:</b>
+
+false
 
 <br>
 

@@ -61,6 +61,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [error, setError] = useState(null);
   const [focused, setFocused] = useState(initialOptions.autofocus);
   const [history, setHistory] = useState(initialOptions.history);
+  const [indentUnit, setIndentUnit] = useState(initialOptions.indentUnit);
   const [lineNumberFormatterObject, setLineNumberFormatterObject] = useState({
     lineNumberFormatter: initialOptions.lineNumberFormatter
   });
@@ -83,6 +84,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   );
   const [results, setResults] = useState(null);
   const [schema, setSchema] = useState(initialOptions.schema);
+  const [search, setSearch] = useState(initialOptions.search);
+  const [searchTop, setSearchTop] = useState(initialOptions.searchTop);
   const [tabKey, setTabKey] = useState(initialOptions.tabKey);
   const [theme, setTheme] = useState(initialOptions.theme);
   const [tooltipAbsolute, setTooltipAbsolute] = useState(
@@ -540,6 +543,36 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setTooltipAbsolute(true);
   };
 
+  const enableSearch = () => {
+    addCommandLog("setSearch", true);
+    setSearch(true);
+  };
+
+  const disableSearch = () => {
+    addCommandLog("setSearch", false);
+    setSearch(false);
+  };
+
+  const setIndentUnitTwoSpaces = () => {
+    addCommandLog("setIndentUnit", "  ");
+    setIndentUnit("  ");
+  };
+
+  const setIndentUnitTab = () => {
+    addCommandLog("setIndentUnit", "\t");
+    setIndentUnit("\t");
+  };
+
+  const showSearchTop = () => {
+    addCommandLog("setSearchTop", true);
+    setSearchTop(true);
+  };
+
+  const showSearchBottom = () => {
+    addCommandLog("setSearchTop", false);
+    setSearchTop(false);
+  };
+
   let content = "";
   if (loading) {
     content = <p>...waiting</p>;
@@ -973,6 +1006,60 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             </button>
           </div>
         </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Enabled</div>
+          <div className="setting-values">
+            <button
+              className={search === false ? "setting-active" : undefined}
+              onClick={disableSearch}
+            >
+              False
+            </button>
+            <button
+              className={search === true ? "setting-active" : undefined}
+              onClick={enableSearch}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Top</div>
+          <div className="setting-values">
+            <button
+              className={searchTop === false ? "setting-active" : undefined}
+              onClick={showSearchBottom}
+            >
+              False
+            </button>
+            <button
+              className={searchTop === true ? "setting-active" : undefined}
+              onClick={showSearchTop}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Indent Unit</div>
+          <div className="setting-values">
+            <button
+              className={indentUnit === "  " ? "setting-active" : undefined}
+              onClick={setIndentUnitTwoSpaces}
+            >
+              Two Spaces
+            </button>
+            <button
+              className={indentUnit === "\t" ? "setting-active" : undefined}
+              onClick={setIndentUnitTab}
+            >
+              Tab
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="right">
@@ -992,10 +1079,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             autocomplete={autocomplete}
             autocompleteCloseOnBlur={autocompleteCloseOnBlur}
             autocompleteOpen={autocompleteOpen}
-            schema={schema}
             autocompleteTriggerStrings={autocompleteTriggerStrings}
             autofocus={autofocus}
             history={history}
+            indentUnit={indentUnit}
             lineNumberFormatter={lineNumberFormatter}
             lineNumbers={lineNumbers}
             lineWrapping={lineWrapping}
@@ -1004,6 +1091,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             position={position}
             readOnly={readOnly}
             readOnlyCursor={readOnlyCursor}
+            schema={schema}
+            search={search}
+            searchTop={searchTop}
             tabKey={tabKey}
             theme={theme}
             tooltipAbsolute={tooltipAbsolute}

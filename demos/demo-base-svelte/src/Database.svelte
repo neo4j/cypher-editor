@@ -55,6 +55,7 @@
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autofocus = initialOptions.autofocus;
   let history = initialOptions.history;
+  let indentUnit = initialOptions.indentUnit;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
   let lineNumbers = initialOptions.lineNumbers;
   let lineWrapping = initialOptions.lineWrapping;
@@ -65,6 +66,8 @@
   let readOnly = initialOptions.readOnly;
   let readOnlyCursor = initialOptions.readOnlyCursor;
   let schema = initialOptions.schema;
+  let search = initialOptions.search;
+  let searchTop = initialOptions.searchTop;
   let tabKey = initialOptions.tabKey;
   let theme = initialOptions.theme;
   let tooltipAbsolute = initialOptions.tooltipAbsolute;
@@ -215,7 +218,17 @@
   $: logs = appendLog(
     commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
   );
+  $: logs = appendLog(
+    commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
+  );
   $: logs = appendLog(commandLog("setHistory", history));
+  $: logs = appendLog(commandLog("setIndentUnit", indentUnit));
+  $: logs = appendLog(
+    commandLog(
+      "setLineNumberFormatter",
+      deriveLineNumberFormatterName() + " " + typeof lineNumberFormatter
+    )
+  );
   $: logs = appendLog(commandLog("setLineNumbers", lineNumbers));
   $: logs = appendLog(commandLog("setLineWrapping", lineWrapping));
   $: logs = appendLog(commandLog("setLint", lint));
@@ -225,16 +238,9 @@
   $: logs = appendLog(commandLog("setTabKey", tabKey));
   $: logs = appendLog(commandLog("setTheme", theme));
   $: logs = appendLog(commandLog("setTooltipAbsolute", tooltipAbsolute));
-  $: logs = appendLog(
-    commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
-  );
   $: logs = appendLog(commandLog("setSchema", deriveSchemaName(schema)));
-  $: logs = appendLog(
-    commandLog(
-      "setLineNumberFormatter",
-      deriveLineNumberFormatterName() + " " + typeof lineNumberFormatter
-    )
-  );
+  $: logs = appendLog(commandLog("setSearch", search));
+  $: logs = appendLog(commandLog("setSearchTop", searchTop));
 
   function deriveSchemaName(checkSchema) {
     if (checkSchema === simpleSchema) {
@@ -693,6 +699,52 @@
         >
       </div>
     </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Indent Unit</div>
+      <div class="setting-values">
+        <button
+          class={indentUnit === "  " ? "setting-active" : undefined}
+          on:click={() => (indentUnit = "  ")}>Two Spaces</button
+        >
+        <button
+          class={indentUnit === "\t" ? "setting-active" : undefined}
+          on:click={() => (indentUnit = "\t")}>Tab</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Search Top</div>
+      <div class="setting-values">
+        <button
+          class={searchTop === false ? "setting-active" : undefined}
+          on:click={() => (searchTop = false)}
+        >
+          False
+        </button>
+        <button
+          class={searchTop === true ? "setting-active" : undefined}
+          on:click={() => (searchTop = true)}
+        >
+          True
+        </button>
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Search Enabled</div>
+      <div class="setting-values">
+        <button
+          class={search === false ? "setting-active" : undefined}
+          on:click={() => (search = false)}>False</button
+        >
+        <button
+          class={search === true ? "setting-active" : undefined}
+          on:click={() => (search = true)}>True</button
+        >
+      </div>
+    </div>
   </div>
 
   <div class="right">
@@ -714,6 +766,7 @@
         {autocompleteCloseOnBlur}
         {autocompleteTriggerStrings}
         {history}
+        {indentUnit}
         {lineNumberFormatter}
         {lineNumbers}
         {lineWrapping}
@@ -722,6 +775,8 @@
         {readOnly}
         {readOnlyCursor}
         {schema}
+        {search}
+        {searchTop}
         {tabKey}
         {theme}
         {tooltipAbsolute}

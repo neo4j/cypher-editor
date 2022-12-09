@@ -29,18 +29,18 @@ import {
   defaultKeymap,
   historyKeymap,
   indentMore,
-  indentLess,
-  insertTab
+  indentLess
 } from "@codemirror/commands";
 import {
   StreamLanguage,
   indentOnInput,
   foldKeymap,
   syntaxHighlighting,
-  HighlightStyle
+  HighlightStyle,
+  indentUnit as indentUnitExtension
 } from "@codemirror/language";
 import { linter, lintKeymap } from "@codemirror/lint";
-import { searchKeymap } from "@codemirror/search";
+import { searchKeymap, search } from "@codemirror/search";
 import { EditorState, StateEffect } from "@codemirror/state";
 import {
   EditorView,
@@ -68,7 +68,7 @@ import {
   getStateValue,
   getStatePositionAbsoluteForLineColumn,
   getStatePositionForAbsolute,
-  getStatePositionAnchor
+  getStateHasSelection
 } from "./cypher-state-selectors";
 
 const typeMarkerTheme = EditorView.baseTheme({
@@ -264,48 +264,48 @@ const darkExtensions = [
 
 const lightExtensions = [EditorView.theme(themeOverrides, { dark: false })];
 
-export const historyExtensions = [historyExtension()];
-
-const whitespaceRegex = /[\s]/;
-
-export const isAtStartOfLine = (state) => {
-  const positionObject = getStatePositionAnchor(state);
-  const value = getStateValue(state);
-  const lineStart = positionObject.position - positionObject.column;
-  for (let i = 0; i < positionObject.column; i++) {
-    if (!whitespaceRegex.test(value.charAt(lineStart + i))) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const runTab = (view, event) => {
-  const status = completionStatus(view.state);
+const runTab = (view) => {
+  const { state, dispatch } = view;
+  const status = completionStatus(state);
 
   if (status === null) {
-    if (isAtStartOfLine(view.state)) {
-      indentMore(view);
+    if (getStateHasSelection(state)) {
+      return indentMore(view);
     } else {
-      insertTab(view);
+      dispatch(
+        state.update(state.replaceSelection(state.facet(indentUnitExtension)), {
+          scrollIntoView: true,
+          userEvent: "input"
+        })
+      );
+      return true;
     }
-    event && event.preventDefault();
   } else if (status === "active") {
-    acceptCompletion(view);
-    event && event.preventDefault();
+    return acceptCompletion(view);
   }
+  return false;
 };
 
-const shiftTab = (view, event) => {
-  const status = completionStatus(view.state);
-  if (status === null && isAtStartOfLine(view.state)) {
-    indentLess(view);
-    event && event.preventDefault();
+const shiftTab = (view) => {
+  const { state } = view;
+  const status = completionStatus(state);
+  if (status === null && getStateHasSelection(state)) {
+    return indentLess(view);
   }
+  return false;
 };
 
 export const tabKeyExtensions = [
   keymap.of([{ key: "Tab", run: runTab, shift: shiftTab }])
+];
+
+export const historyExtensions = [historyExtension(), keymap.of(historyKeymap)];
+
+const searchTopExtensions = [search({ top: true }), keymap.of(searchKeymap)];
+
+const searchBottomExtensions = [
+  search({ top: false }),
+  keymap.of(searchKeymap)
 ];
 
 export const readableExtensions = [
@@ -314,14 +314,7 @@ export const readableExtensions = [
   indentOnInput(),
   rectangularSelectionExtension(),
   crosshairCursorExtension(),
-  keymap.of([
-    ...defaultKeymap,
-    ...searchKeymap,
-    ...historyKeymap,
-    ...foldKeymap,
-    ...completionKeymap,
-    ...lintKeymap
-  ])
+  keymap.of([...defaultKeymap, ...foldKeymap])
 ];
 
 export const readOnlyExtensions = [EditorState.readOnly.of(true)];
@@ -333,14 +326,18 @@ export const readOnlyNoCursorExtensions = [
 
 export const lineWrappingExtensions = [EditorView.lineWrapping];
 
-export const useLintExtensions = [cypherLinter()];
+export const useLintExtensions = [cypherLinter(), keymap.of(lintKeymap)];
 
 export const useNoLintExtensions = [cypherLinter({ showErrors: false })];
 
-export const useAutocompleteExtensions = [cypherCompletion()];
+export const useAutocompleteExtensions = [
+  cypherCompletion(),
+  keymap.of(completionKeymap)
+];
 
 export const useStickyAutocompleteExtensions = [
-  cypherCompletion({ closeOnBlur: false })
+  cypherCompletion({ closeOnBlur: false }),
+  keymap.of(completionKeymap)
 ];
 
 // GETTERS
@@ -387,11 +384,14 @@ export const getReadOnlyExtensions = ({ readOnly, readOnlyCursor }) =>
       : readOnlyNoCursorExtensions
     : [];
 
-export const getTabKeyExtensions = ({ tabKey }) =>
-  tabKey ? tabKeyExtensions : [];
+export const getTabKeyExtensions = ({ tabKey, indentUnit }) =>
+  tabKey ? tabKeyExtensions.concat(indentUnitExtension.of(indentUnit)) : [];
 
 export const getThemeExtensions = ({ theme }) =>
   theme === THEME_DARK ? darkExtensions : lightExtensions;
+
+export const getSearchExtensions = ({ readOnly, search, searchTop }) =>
+  search ? (searchTop ? searchTopExtensions : searchBottomExtensions) : [];
 
 export const getTooltipAbsoluteExtensions = ({ tooltipAbsolute }) =>
   tooltipAbsolute
