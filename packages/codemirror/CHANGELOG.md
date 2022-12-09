@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.11
+
+### Patch Changes
+
+- 42dc131: fix position/selection bug, add search & indentUnit options
+
 ## 1.0.0-next.10
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # demo-base-react
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- 42dc131: fix position/selection bug, add search & indentUnit options
+
 ## 1.0.0-next.3
 
 ### Patch Changes

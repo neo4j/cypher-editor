@@ -1,5 +1,13 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- 42dc131: fix position/selection bug, add search & indentUnit options
+- Updated dependencies [42dc131]
+  - @neo4j-cypher/codemirror@1.0.0-next.11
+
 ## 1.0.0-next.12
 
 ### Patch Changes
