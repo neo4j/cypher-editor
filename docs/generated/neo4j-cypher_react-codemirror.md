@@ -112,7 +112,7 @@ export interface CypherEditorProps
 |  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [search?](#cyphereditorprops.search) | boolean | true | <i>(Optional)</i> Whether search is enabled |
-|  [searchMatches?](#cyphereditorprops.searchmatches) | number | 0 | <i>(Optional)</i> The max number of search matches to be included with search changed callbacks. Must be between 0 and 1000, 0 means no matches |
+|  [searchMatches?](#cyphereditorprops.searchmatches) | number | 0 | <i>(Optional)</i> The max number of search matches to be included with search changed callbacks |
 |  [searchOpen?](#cyphereditorprops.searchopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the search panel is open |
 |  [searchText?](#cyphereditorprops.searchtext) | string | "" | <i>(Optional)</i> The search text for the search panel |
 |  [searchTop?](#cyphereditorprops.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
@@ -684,13 +684,17 @@ true
 
 #### CypherEditorProps.searchMatches property
 
-The max number of search matches to be included with search changed callbacks. Must be between 0 and 1000, 0 means no matches
+The max number of search matches to be included with search changed callbacks
 
 <b>Signature:</b>
 
 ```typescript
 searchMatches?: number;
 ```
+<b>Remarks:</b>
+
+Must be between 0 and 1000, 0 means no searching for matches (better for performance)
+
 <b>Default Value:</b>
 
 0
@@ -731,7 +735,7 @@ searchText?: string;
 ```
 <b>Remarks:</b>
 
-Changing this can be used to manually control the search editor text
+Changing this can be used to manually control the search panel text
 
 <b>Default Value:</b>
 

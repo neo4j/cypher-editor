@@ -157,7 +157,7 @@ export interface CypherEditorProps {
    * @remarks
    *
    * Must be between 0 and 1000, 0 means no searching for matches (better for performance)
-   * 
+   *
    * @defaultValue 0
    */
   searchMatches?: number;
