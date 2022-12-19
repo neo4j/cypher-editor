@@ -1,5 +1,12 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- b8d7618: fix issues with parsing emoji & special chars
+- 0a21042: add bracketMatching & closeBrackets options (both default true)
+
 ## 1.0.0-next.12
 
 ### Patch Changes

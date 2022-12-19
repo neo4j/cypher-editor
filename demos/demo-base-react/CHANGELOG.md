@@ -1,5 +1,11 @@
 # demo-base-react
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- 0a21042: add bracketMatching & closeBrackets options (both default true)
+
 ## 1.0.0-next.5
 
 ### Patch Changes
