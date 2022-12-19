@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.12
+
+### Patch Changes
+
+- 95e6d25: add cypherLanguage & various search/cursor options, misc improvements
+
 ## 1.0.0-next.11
 
 ### Patch Changes

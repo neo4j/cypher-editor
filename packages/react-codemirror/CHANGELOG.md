@@ -1,5 +1,13 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- 95e6d25: add cypherLanguage & various search/cursor options, misc improvements
+- Updated dependencies [95e6d25]
+  - @neo4j-cypher/codemirror@1.0.0-next.12
+
 ## 1.0.0-next.12
 
 ### Patch Changes

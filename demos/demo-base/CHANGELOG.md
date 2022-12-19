@@ -1,5 +1,11 @@
 # demo-base
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- 95e6d25: add cypherLanguage & various search/cursor options, misc improvements
+
 ## 1.0.0-next.4
 
 ### Patch Changes
