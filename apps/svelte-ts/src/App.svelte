@@ -310,7 +310,6 @@
   :global(.cm-editor) {
     max-height: 200px;
     font-size: 18px;
-    outline: none !important;
   }
   :global(.cm-editor .cm-gutters) {
     border: 0;
