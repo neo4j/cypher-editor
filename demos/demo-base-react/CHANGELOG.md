@@ -1,5 +1,11 @@
 # demo-base-react
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- 7d6a0c9: add cypherLanguage & various search/cursor options, misc improvements
+
 ## 1.0.0-next.4
 
 ### Patch Changes
