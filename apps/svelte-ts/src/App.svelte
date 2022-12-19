@@ -174,6 +174,7 @@
       {#each responses as response (response.id)}
         <div class="response" transition:slide>
           <div class="header">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               title={response.cmd}
               class="cypher"
