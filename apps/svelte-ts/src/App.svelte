@@ -158,6 +158,7 @@
         {schema}
         theme="light"
         lint={$history.trim().length > 0}
+        tooltipAbsolute={false}
       />
     </div>
   </div>
