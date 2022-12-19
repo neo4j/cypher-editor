@@ -66,6 +66,7 @@ An editor api that wraps the created editor instance
 |  [LineNumberFormatter](#linenumberformatter) | Formats a line number for display beside the editor text |
 |  [PositionChangedListener](#positionchangedlistener) | Listener for editor cursor position changes |
 |  [ScrollChangedListener](#scrollchangedlistener) | Listener for editor scroll position changes |
+|  [SearchChangedListener](#searchchangedlistener) | Listener for editor search changes |
 |  [ValueChangedListener](#valuechangedlistener) | Listener for editor value changes |
 
 <br>
@@ -80,16 +81,20 @@ Listener for editor autocomplete changes
 
 ```typescript
 export interface AutocompleteChangedListener {
-  (open: boolean, from?: number, options?: AutocompleteOption[]): void;
+  (
+    open: boolean,
+    options?: AutocompleteOption[],
+    option?: AutocompleteOption
+  ): void;
 }
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  open | boolean | whether the autocomplete menu is open or not |
-|  from | number | <i>(Optional)</i> the start cursor position for the suggested options |
+|  open | boolean | whether the autocomplete panel is open or not |
 |  options | [AutocompleteOption](#autocompleteoption)<!-- -->\[\] | <i>(Optional)</i> the list of autocomplete options being suggested to the user |
+|  option | [AutocompleteOption](#autocompleteoption) | <i>(Optional)</i> the autocomplete option selected by the user |
 
 <b>Returns:</b>
 
@@ -274,6 +279,37 @@ void
 
 <br>
 
+<a name="searchchangedlistener"></a>
+
+### SearchChangedListener call signature
+
+Listener for editor search changes
+
+#### Remarks:
+
+The `matches` argument value is controlled via the [searchMatches](#editoroptions.searchmatches) option
+
+<b>Signature:</b>
+
+```typescript
+export interface SearchChangedListener {
+  (open: boolean, text?: string, matches?: SearchMatch[]): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  open | boolean | whether the search panel is open or not |
+|  text | string | <i>(Optional)</i> the current search text of the search panel |
+|  matches | [SearchMatch](#searchmatch)<!-- -->\[\] | <i>(Optional)</i> the search matches for the current search text |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="valuechangedlistener"></a>
 
 ### ValueChangedListener call signature
@@ -312,6 +348,7 @@ void
 |  [PartialPositionObject](#partialpositionobject) | Partial editor cursor position with line &amp; column only |
 |  [PositionObject](#positionobject) | Full editor cursor position with line, column &amp; position |
 |  [ScrollInfo](#scrollinfo) | Information about the editor scroll position |
+|  [SearchMatch](#searchmatch) | Information about a search match that was shown to the user |
 
 <br>
 
@@ -334,6 +371,7 @@ export interface AutocompleteOption
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [detail?](#autocompleteoption.detail) | string | <i>(Optional)</i> More detailed information about the autocomplete option |
+|  [from](#autocompleteoption.from) | number | The position in the editor text where the autocompletion option will be inserted |
 |  [label](#autocompleteoption.label) | string | The label of the autocomplete option in the list of options |
 |  [type?](#autocompleteoption.type) | [CompletionType](./neo4j-cypher_editor-support.md#completiontype) | <i>(Optional)</i> The type of the autocomplete option |
 
@@ -349,6 +387,20 @@ More detailed information about the autocomplete option
 
 ```typescript
 detail?: string;
+```
+
+<br>
+
+<a name="autocompleteoption.from"></a>
+
+#### AutocompleteOption.from property
+
+The position in the editor text where the autocompletion option will be inserted
+
+<b>Signature:</b>
+
+```typescript
+from: number;
 ```
 
 <br>
@@ -446,25 +498,29 @@ editorSupport: CypherEditorSupport;
 |  [getLineCount()](#editorapi.getlinecount) | Get the number of lines in the current editor value |
 |  [getPosition()](#editorapi.getposition) | Get the current editor cursor position |
 |  [getPositionForValue(positionValue)](#editorapi.getpositionforvalue) | Get a full position object for any supported position value or null if position value is invalid |
-|  [offAutocompleteChanged(listener)](#editorapi.offautocompletechanged) | remove an event listener for editor autocomplete changes |
-|  [offFocusChanged(listener)](#editorapi.offfocuschanged) | remove an event listener for editor focus changes |
-|  [offKeyDown(listener)](#editorapi.offkeydown) | remove an event listener for editor key down events |
-|  [offLineNumberClick(listener)](#editorapi.offlinenumberclick) | remove an event listener for editor line number click events |
-|  [offPositionChanged(listener)](#editorapi.offpositionchanged) | remove an event listener for editor curosor position changes |
-|  [offScrollChanged(listener)](#editorapi.offscrollchanged) | remove an event listener for editor scroll position changes |
-|  [offValueChanged(listener)](#editorapi.offvaluechanged) | remove an event listener for editor value changes |
+|  [offAutocompleteChanged(listener)](#editorapi.offautocompletechanged) | Remove an event listener for editor autocomplete changes |
+|  [offFocusChanged(listener)](#editorapi.offfocuschanged) | Remove an event listener for editor focus changes |
+|  [offKeyDown(listener)](#editorapi.offkeydown) | Remove an event listener for editor key down events |
+|  [offLineNumberClick(listener)](#editorapi.offlinenumberclick) | Remove an event listener for editor line number click events |
+|  [offPositionChanged(listener)](#editorapi.offpositionchanged) | Remove an event listener for editor curosor position changes |
+|  [offScrollChanged(listener)](#editorapi.offscrollchanged) | Remove an event listener for editor scroll position changes |
+|  [offSearchChanged(listener)](#editorapi.offsearchchanged) | Remove an event listener for editor search changes |
+|  [offValueChanged(listener)](#editorapi.offvaluechanged) | Remove an event listener for editor value changes |
 |  [onAutocompleteChanged(listener)](#editorapi.onautocompletechanged) | Add an event listener for editor autocomplete changes |
 |  [onFocusChanged(listener)](#editorapi.onfocuschanged) | Add an event listener for editor focus changes |
 |  [onKeyDown(listener)](#editorapi.onkeydown) | Add an event listener for editor key down events |
 |  [onLineNumberClick(listener)](#editorapi.onlinenumberclick) | Add an event listener for editor line number click events |
 |  [onPositionChanged(listener)](#editorapi.onpositionchanged) | Add an event listener for editor cursor position changes |
 |  [onScrollChanged(listener)](#editorapi.onscrollchanged) | Add an event listener for editor scroll position changes |
+|  [onSearchChanged(listener)](#editorapi.onsearchchanged) | Add an event listener for editor search changes |
 |  [onValueChanged(listener)](#editorapi.onvaluechanged) | Add an event listener for editor value changes |
 |  [selectAutocompleteOption(autocompleteOptionIndex)](#editorapi.selectautocompleteoption) | Select the autocomplete option with the given index, causing it to be applied to the editor value |
 |  [setAutocomplete(autocomplete)](#editorapi.setautocomplete) | Set whether or not the autocomplete feature is enabled |
 |  [setAutocompleteCloseOnBlur(autocompleteCloseOnBlur)](#editorapi.setautocompletecloseonblur) | Set whether or not the autocomplete auto closes whenever the editor loses focus |
-|  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete menu is shown to the user |
+|  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete panel is shown to the user |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
+|  [setCursorWide(cursorWide)](#editorapi.setcursorwide) | Set whether the wide cursor should be shown |
+|  [setCypherLanguage(cypherLanguage)](#editorapi.setcypherlanguage) | Set whether or not cypher language extensions are enabled |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
 |  [setIndentUnit(indentUnit)](#editorapi.setindentunit) | Set the indent text to use when tabKey is enabled |
 |  [setLineNumberFormatter(lineNumberFormatter)](#editorapi.setlinenumberformatter) | Set the formatter for the line numbers of the editor |
@@ -472,13 +528,16 @@ editorSupport: CypherEditorSupport;
 |  [setLineWrapping(lineWrapping)](#editorapi.setlinewrapping) | Set whether or not the editor wraps lines vs using a horizontal scrollbar |
 |  [setLint(lint)](#editorapi.setlint) | Set whether or not the editor should display lint errors to the user |
 |  [setPlaceholder(placeholder)](#editorapi.setplaceholder) | Set the text to be shown to the user when the editor value is empty |
-|  [setPosition(position)](#editorapi.setposition) | Set the current editor cursor position |
-|  [setPostExtensions(preExtensions)](#editorapi.setpostextensions) | set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions |
-|  [setPreExtensions(preExtensions)](#editorapi.setpreextensions) | set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
+|  [setPosition(position, scrollIntoView)](#editorapi.setposition) | Set the current editor cursor position |
+|  [setPostExtensions(preExtensions)](#editorapi.setpostextensions) | Set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions |
+|  [setPreExtensions(preExtensions)](#editorapi.setpreextensions) | Set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions |
 |  [setReadOnly(readOnly)](#editorapi.setreadonly) | Set whether the editor is read only or the user can edit the editor's value |
 |  [setReadOnlyCursor(readOnlyCursor)](#editorapi.setreadonlycursor) | Set whether to show the cursor when the editor readOnly is true |
 |  [setSchema(schema)](#editorapi.setschema) | Set the schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [setSearch(search)](#editorapi.setsearch) | Set whether search is enabled |
+|  [setSearchMatches(searchMatches)](#editorapi.setsearchmatches) | Set the max number of search matches to be included with search changed callbacks |
+|  [setSearchOpen(searchOpen)](#editorapi.setsearchopen) | Set whether or not the search panel is shown to the user |
+|  [setSearchText(searchText)](#editorapi.setsearchtext) | Set the search text value in the search panel |
 |  [setSearchTop(searchTop)](#editorapi.setsearchtop) | Set whether search is appears at the top of the editor window |
 |  [setTabKey(tabKey)](#editorapi.settabkey) | Set whether the tab key is enabled |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
@@ -599,7 +658,7 @@ getPositionForValue(positionValue: PositionAny): PositionObject | null;
 
 #### EditorApi.offAutocompleteChanged() method
 
-remove an event listener for editor autocomplete changes
+Remove an event listener for editor autocomplete changes
 
 <b>Signature:</b>
 
@@ -622,7 +681,7 @@ void
 
 #### EditorApi.offFocusChanged() method
 
-remove an event listener for editor focus changes
+Remove an event listener for editor focus changes
 
 <b>Signature:</b>
 
@@ -645,7 +704,7 @@ void
 
 #### EditorApi.offKeyDown() method
 
-remove an event listener for editor key down events
+Remove an event listener for editor key down events
 
 <b>Signature:</b>
 
@@ -668,7 +727,7 @@ void
 
 #### EditorApi.offLineNumberClick() method
 
-remove an event listener for editor line number click events
+Remove an event listener for editor line number click events
 
 <b>Signature:</b>
 
@@ -691,7 +750,7 @@ void
 
 #### EditorApi.offPositionChanged() method
 
-remove an event listener for editor curosor position changes
+Remove an event listener for editor curosor position changes
 
 <b>Signature:</b>
 
@@ -714,7 +773,7 @@ void
 
 #### EditorApi.offScrollChanged() method
 
-remove an event listener for editor scroll position changes
+Remove an event listener for editor scroll position changes
 
 <b>Signature:</b>
 
@@ -733,11 +792,34 @@ void
 
 <br>
 
+<a name="editorapi.offsearchchanged"></a>
+
+#### EditorApi.offSearchChanged() method
+
+Remove an event listener for editor search changes
+
+<b>Signature:</b>
+
+```typescript
+offSearchChanged(listener: SearchChangedListener): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [SearchChangedListener](#searchchangedlistener) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.offvaluechanged"></a>
 
 #### EditorApi.offValueChanged() method
 
-remove an event listener for editor value changes
+Remove an event listener for editor value changes
 
 <b>Signature:</b>
 
@@ -906,6 +988,31 @@ A cleanup function that when called removes the listener
 
 <br>
 
+<a name="editorapi.onsearchchanged"></a>
+
+#### EditorApi.onSearchChanged() method
+
+Add an event listener for editor search changes
+
+<b>Signature:</b>
+
+```typescript
+onSearchChanged(listener: SearchChangedListener): () => void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [SearchChangedListener](#searchchangedlistener) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+
+<br>
+
 <a name="editorapi.onvaluechanged"></a>
 
 #### EditorApi.onValueChanged() method
@@ -1004,7 +1111,7 @@ void
 
 #### EditorApi.setAutocompleteOpen() method
 
-Set whether or not the autocomplete menu is shown to the user
+Set whether or not the autocomplete panel is shown to the user
 
 <b>Signature:</b>
 
@@ -1039,6 +1146,52 @@ setAutocompleteTriggerStrings(autocompleteTriggerStrings?: string[]): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  autocompleteTriggerStrings | string\[\] | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setcursorwide"></a>
+
+#### EditorApi.setCursorWide() method
+
+Set whether the wide cursor should be shown
+
+<b>Signature:</b>
+
+```typescript
+setCursorWide(cursorWide?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  cursorWide | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setcypherlanguage"></a>
+
+#### EditorApi.setCypherLanguage() method
+
+Set whether or not cypher language extensions are enabled
+
+<b>Signature:</b>
+
+```typescript
+setCypherLanguage(cypherLanguage?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  cypherLanguage | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1218,13 +1371,14 @@ Set the current editor cursor position
 <b>Signature:</b>
 
 ```typescript
-setPosition(position?: PositionAny): void;
+setPosition(position?: PositionAny, scrollIntoView?: boolean): void;
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  position | [PositionAny](#positionany) | <i>(Optional)</i> |
+|  scrollIntoView | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1236,18 +1390,18 @@ void
 
 #### EditorApi.setPostExtensions() method
 
-set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
+Set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
 
 <b>Signature:</b>
 
 ```typescript
-setPostExtensions(preExtensions: Extension[]): void;
+setPostExtensions(preExtensions?: Extension[]): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  preExtensions | Extension\[\] |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  preExtensions | Extension\[\] | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1259,18 +1413,18 @@ void
 
 #### EditorApi.setPreExtensions() method
 
-set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
+Set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
 
 <b>Signature:</b>
 
 ```typescript
-setPreExtensions(preExtensions: Extension[]): void;
+setPreExtensions(preExtensions?: Extension[]): void;
 ```
 <b>Parameters:</b>
 
-|  Parameter | Type |
-|  --- | --- |
-|  preExtensions | Extension\[\] |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  preExtensions | Extension\[\] | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1363,6 +1517,75 @@ setSearch(search?: boolean): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  search | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setsearchmatches"></a>
+
+#### EditorApi.setSearchMatches() method
+
+Set the max number of search matches to be included with search changed callbacks
+
+<b>Signature:</b>
+
+```typescript
+setSearchMatches(searchMatches?: number): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  searchMatches | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setsearchopen"></a>
+
+#### EditorApi.setSearchOpen() method
+
+Set whether or not the search panel is shown to the user
+
+<b>Signature:</b>
+
+```typescript
+setSearchOpen(searchOpen?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  searchOpen | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setsearchtext"></a>
+
+#### EditorApi.setSearchText() method
+
+Set the search text value in the search panel
+
+<b>Signature:</b>
+
+```typescript
+setSearchText(searchText?: string): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  searchText | string | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -1506,9 +1729,11 @@ export interface EditorOptions
 |  --- | --- | --- | --- |
 |  [autocomplete?](#editoroptions.autocomplete) | boolean | true | <i>(Optional)</i> Whether the autocomplete feature is enabled |
 |  [autocompleteCloseOnBlur?](#editoroptions.autocompletecloseonblur) | boolean | true | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
-|  [autocompleteOpen?](#editoroptions.autocompleteopen) | boolean | false | <i>(Optional)</i> Whether the autocomplete menu is initially shown to the user |
+|  [autocompleteOpen?](#editoroptions.autocompleteopen) | boolean | false | <i>(Optional)</i> Whether the autocomplete panel is initially shown to the user |
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
+|  [cursorWide?](#editoroptions.cursorwide) | boolean | true | <i>(Optional)</i> Whether the wide cursor should be shown |
+|  [cypherLanguage?](#editoroptions.cypherlanguage) | boolean | true | <i>(Optional)</i> Whether or not cypher language extensions are enabled |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
 |  [indentUnit?](#editoroptions.indentunit) | string | " " | <i>(Optional)</i> The indent text to use when tabKey is enabled |
 |  [lineNumberFormatter?](#editoroptions.linenumberformatter) | [LineNumberFormatter](#linenumberformatter) | (line, lineCount) =<!-- -->&gt; lineCount === 1 ? "$" : line + ""; | <i>(Optional)</i> The formatter for the line numbers of the editor |
@@ -1518,12 +1743,15 @@ export interface EditorOptions
 |  [parseOnSetValue?](#editoroptions.parseonsetvalue) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
 |  [placeholder?](#editoroptions.placeholder) | string | undefined | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
 |  [position?](#editoroptions.position) | [PositionAny](#positionany) | undefined | <i>(Optional)</i> The initial editor cursor position |
-|  [postExtensions?](#editoroptions.postextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor after the cypher language support extensions. |
-|  [preExtensions?](#editoroptions.preextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
+|  [postExtensions?](#editoroptions.postextensions) | Extension\[\] | \[\] | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor after the cypher language support extensions. |
+|  [preExtensions?](#editoroptions.preextensions) | Extension\[\] | \[\] | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
 |  [readOnly?](#editoroptions.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#editoroptions.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#editoroptions.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) | undefined | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [search?](#editoroptions.search) | boolean | true | <i>(Optional)</i> Whether search is enabled |
+|  [searchMatches?](#editoroptions.searchmatches) | number | 0 | <i>(Optional)</i> The max number of search matches to be included with search changed callbacks |
+|  [searchOpen?](#editoroptions.searchopen) | boolean | false | <i>(Optional)</i> Whether the search panel is initially shown to the user |
+|  [searchText?](#editoroptions.searchtext) | string | "" | <i>(Optional)</i> The initial search text for the search panel |
 |  [searchTop?](#editoroptions.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
 |  [tabKey?](#editoroptions.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
@@ -1570,7 +1798,7 @@ true
 
 #### EditorOptions.autocompleteOpen property
 
-Whether the autocomplete menu is initially shown to the user
+Whether the autocomplete panel is initially shown to the user
 
 <b>Signature:</b>
 
@@ -1610,6 +1838,40 @@ Whether the editor should be auto focused on first creation
 
 ```typescript
 autofocus?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.cursorwide"></a>
+
+#### EditorOptions.cursorWide property
+
+Whether the wide cursor should be shown
+
+<b>Signature:</b>
+
+```typescript
+cursorWide?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.cypherlanguage"></a>
+
+#### EditorOptions.cypherLanguage property
+
+Whether or not cypher language extensions are enabled
+
+<b>Signature:</b>
+
+```typescript
+cypherLanguage?: boolean;
 ```
 <b>Default Value:</b>
 
@@ -1783,7 +2045,7 @@ postExtensions?: Extension[];
 ```
 <b>Default Value:</b>
 
-undefined
+\[\]
 
 <br>
 
@@ -1800,7 +2062,7 @@ preExtensions?: Extension[];
 ```
 <b>Default Value:</b>
 
-undefined
+\[\]
 
 <br>
 
@@ -1869,6 +2131,61 @@ search?: boolean;
 <b>Default Value:</b>
 
 true
+
+<br>
+
+<a name="editoroptions.searchmatches"></a>
+
+#### EditorOptions.searchMatches property
+
+The max number of search matches to be included with search changed callbacks
+
+<b>Signature:</b>
+
+```typescript
+searchMatches?: number;
+```
+<b>Remarks:</b>
+
+Must be between 0 and 1000, 0 means no searching for matches (better for performance)
+
+<b>Default Value:</b>
+
+0
+
+<br>
+
+<a name="editoroptions.searchopen"></a>
+
+#### EditorOptions.searchOpen property
+
+Whether the search panel is initially shown to the user
+
+<b>Signature:</b>
+
+```typescript
+searchOpen?: boolean;
+```
+<b>Default Value:</b>
+
+false
+
+<br>
+
+<a name="editoroptions.searchtext"></a>
+
+#### EditorOptions.searchText property
+
+The initial search text for the search panel
+
+<b>Signature:</b>
+
+```typescript
+searchText?: string;
+```
+<b>Default Value:</b>
+
+""
 
 <br>
 
@@ -2183,6 +2500,57 @@ The scrollWidth position of the editor scroll dom element
 scrollWidth: number;
 ```
 
+<br>
+
+<a name="searchmatch"></a>
+
+### SearchMatch interface
+
+Information about a search match that was shown to the user
+
+<b>Signature:</b>
+
+```typescript
+export interface SearchMatch 
+```
+
+<br>
+
+#### Properties:
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [from](#searchmatch.from) | number | The position in the editor text where the search match starts |
+|  [to](#searchmatch.to) | number | The position in the editor text where the search match ends |
+
+<br>
+
+<a name="searchmatch.from"></a>
+
+#### SearchMatch.from property
+
+The position in the editor text where the search match starts
+
+<b>Signature:</b>
+
+```typescript
+from: number;
+```
+
+<br>
+
+<a name="searchmatch.to"></a>
+
+#### SearchMatch.to property
+
+The position in the editor text where the search match ends
+
+<b>Signature:</b>
+
+```typescript
+to: number;
+```
+
 ---
 
 <br>
@@ -2192,6 +2560,7 @@ scrollWidth: number;
 |  Type Alias | Description |
 |  --- | --- |
 |  [AutofocusProp](#autofocusprop) | The prop keys that can be used with autofocusProps |
+|  [ClearHistoryProps](#clearhistoryprops) | The prop keys that can be used with clearHistoryProps |
 |  [PositionAny](#positionany) | Any supported editor cursor position |
 |  [Theme](#theme) | The current editor theme |
 
@@ -2206,7 +2575,25 @@ The prop keys that can be used with autofocusProps
 <b>Signature:</b>
 
 ```typescript
-export type AutofocusProp = "position" | "readOnly" | "value";
+export type AutofocusProp = "cursorWide" | "position" | "readOnly" | "value";
+```
+
+<br>
+
+<a name="clearhistoryprops"></a>
+
+### ClearHistoryProps type
+
+The prop keys that can be used with clearHistoryProps
+
+<b>Signature:</b>
+
+```typescript
+export type ClearHistoryProps =
+  | "cursorWide"
+  | "position"
+  | "readOnly"
+  | "value";
 ```
 
 <br>
@@ -2235,7 +2622,7 @@ The current editor theme
 <b>Signature:</b>
 
 ```typescript
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "auto";
 ```
 
 ---

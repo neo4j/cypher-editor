@@ -41,7 +41,7 @@ import {
 } from "@codemirror/language";
 import { linter, lintKeymap } from "@codemirror/lint";
 import { searchKeymap, search } from "@codemirror/search";
-import { EditorState, StateEffect } from "@codemirror/state";
+import { EditorState } from "@codemirror/state";
 import {
   EditorView,
   lineNumbers as lineNumbersExtension,
@@ -55,12 +55,13 @@ import {
 import { tags } from "@lezer/highlight";
 import { TreeUtils } from "@neo4j-cypher/editor-support";
 
-import { THEME_DARK } from "./cypher-codemirror-base";
+import { THEME_DARK, THEME_AUTO } from "./cypher-codemirror-base";
 import { cypher } from "./cypher";
 import {
   typeMarkerField,
   addTypeMarkerEffect,
-  clearTypeMarkersEffect
+  clearTypeMarkersEffect,
+  editorSupportField
 } from "./cypher-state-definitions";
 import {
   getStateEditorSupport,
@@ -76,15 +77,13 @@ const typeMarkerTheme = EditorView.baseTheme({
 });
 
 const typeMarkerFromTo = (view, options = {}) => {
-  let effects = [addTypeMarkerEffect.of(options)];
-
-  if (!view.state.field(typeMarkerField, false)) {
-    effects.push(
-      StateEffect.appendConfig.of([typeMarkerField, typeMarkerTheme])
-    );
-  }
+  const effects = [addTypeMarkerEffect.of(options)];
   view.dispatch({ effects });
   return true;
+};
+
+export const resetColors = (view, editorSupport) => {
+  view.dispatch(clearTypeMarkersEffect.of());
 };
 
 export const fixColors = (view, editorSupport) => {
@@ -92,7 +91,6 @@ export const fixColors = (view, editorSupport) => {
   if (editorSupport.parseTree == null) {
     return;
   }
-
   editorSupport.applyHighlighthing((element, type) => {
     const { start: from, stop: to } = TreeUtils.getPosition(element) || {
       start: 0,
@@ -254,15 +252,36 @@ const themeOverrides = {
     "&.cm-focused": {
       outline: "none"
     }
+  },
+  ".cm-cursor .cm-cursor-wide": {
+    borderLeft: "0.67em solid rgba(147, 161, 161, 0.37)"
   }
 };
 
-const darkExtensions = [
-  EditorView.theme(themeOverrides, { dark: true }),
+const USE_DARK_FLAG = true;
+
+const themeDarkExtensions = [
+  EditorView.theme(themeOverrides, USE_DARK_FLAG ? { dark: true } : {}),
   EditorView.editorAttributes.of({ class: "cm-dark" })
 ];
 
-const lightExtensions = [EditorView.theme(themeOverrides, { dark: false })];
+const themeLightExtensions = [
+  EditorView.theme(themeOverrides, USE_DARK_FLAG ? { dark: false } : {}),
+  EditorView.editorAttributes.of({ class: "cm-light" })
+];
+
+const themeAutoExtensions = [
+  EditorView.theme(themeOverrides, {}),
+  EditorView.editorAttributes.of({ class: "cm-auto" })
+];
+
+const cursorWideExtensions = [
+  EditorView.editorAttributes.of({ class: "cm-cursor-wide" })
+];
+
+const cursorNormalExtensions = [
+  EditorView.editorAttributes.of({ class: "cm-cursor-normal" })
+];
 
 const runTab = (view) => {
   const { state, dispatch } = view;
@@ -342,16 +361,32 @@ export const useStickyAutocompleteExtensions = [
 
 // GETTERS
 
+export const getCypherLanguageExtensions = ({ cypherLanguage: cypher }) =>
+  cypher
+    ? [
+        cypherLanguage(),
+        typeMarkerField,
+        typeMarkerTheme,
+        editorSupportField,
+        syntaxCSS,
+        EditorView.editorAttributes.of({ class: "cm-cypher" })
+      ]
+    : [];
+
 export const getAutocompleteExtensions = ({
+  cypherLanguage,
   readOnly,
   autocomplete,
   autocompleteCloseOnBlur
 }) =>
-  readOnly === false && autocomplete
+  cypherLanguage && readOnly === false && autocomplete
     ? !autocompleteCloseOnBlur
       ? useStickyAutocompleteExtensions
       : useAutocompleteExtensions
     : [];
+
+export const getCursorWideExtensions = ({ cursorWide }) =>
+  cursorWide ? cursorWideExtensions : cursorNormalExtensions;
 
 export const getHistoryExtensions = ({ history }) =>
   history ? historyExtensions : [];
@@ -368,8 +403,10 @@ export const getLineNumbersExtensions = ({
 export const getLineWrappingExtensions = ({ lineWrapping }) =>
   lineWrapping ? lineWrappingExtensions : [];
 
-export const getLintExtensions = ({ readOnly, lint }) =>
-  readOnly === false && lint ? useLintExtensions : useNoLintExtensions;
+export const getLintExtensions = ({ cypherLanguage, readOnly, lint }) =>
+  cypherLanguage && readOnly === false && lint
+    ? useLintExtensions
+    : useNoLintExtensions;
 
 export const getPlaceholderExtensions = ({ placeholder }) =>
   placeholder !== undefined ? [placeholderExtension(placeholder)] : [];
@@ -388,7 +425,11 @@ export const getTabKeyExtensions = ({ tabKey, indentUnit }) =>
   tabKey ? tabKeyExtensions.concat(indentUnitExtension.of(indentUnit)) : [];
 
 export const getThemeExtensions = ({ theme }) =>
-  theme === THEME_DARK ? darkExtensions : lightExtensions;
+  theme === THEME_DARK
+    ? themeDarkExtensions
+    : theme === THEME_AUTO
+    ? themeAutoExtensions
+    : themeLightExtensions;
 
 export const getSearchExtensions = ({ readOnly, search, searchTop }) =>
   search ? (searchTop ? searchTopExtensions : searchBottomExtensions) : [];

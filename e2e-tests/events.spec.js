@@ -99,7 +99,7 @@ test.describe("Commands and Editor events", () => {
       await getLogEntry(page, -3)
     ];
     expect(lastEntries).toContain(
-      'event autocompleteChanged {"open":true,"from":0,"options":{"consoleCommand":7}}'
+      'event autocompleteChanged {"open":true,"from":[0],"options":{"consoleCommand":7}}'
     );
 
     // Click long schema
@@ -123,7 +123,7 @@ test.describe("Commands and Editor events", () => {
       await getLogEntry(page, -3)
     ];
     expect(lastEntries).toContain(
-      'event autocompleteChanged {"open":true,"from":0,"options":{"consoleCommand":8}}'
+      'event autocompleteChanged {"open":true,"from":[0],"options":{"consoleCommand":8}}'
     );
   });
 

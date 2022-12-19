@@ -38,6 +38,14 @@
 
   export let autofocusProps = defaultOptions.autofocusProps;
 
+  export let clearHistoryProps = defaultOptions.clearHistoryProps;
+
+  export let cursorWide = defaultOptions.cursorWide;
+  $: updateOption({ cursorWide });
+
+  export let cypherLanguage = defaultOptions.cypherLanguage;
+  $: updateOption({ cypherLanguage });
+
   export let history = defaultOptions.history;
   $: updateOption({ history });
 
@@ -74,6 +82,15 @@
   export let search = defaultOptions.search;
   $: updateOption({ search });
 
+  export let searchMatches = defaultOptions.searchMatches;
+  $: updateOption({ searchMatches });
+
+  export let searchOpen = defaultOptions.searchOpen;
+  $: updateOption({ searchOpen });
+
+  export let searchText = defaultOptions.searchText;
+  $: updateOption({ searchText });
+
   export let searchTop = defaultOptions.searchTop;
   $: updateOption({ searchTop });
 
@@ -97,6 +114,7 @@
   export let onValueChanged = undefined;
   export let onFocusChanged = undefined;
   export let onScrollChanged = undefined;
+  export let onSearchChanged = undefined;
   export let onPositionChanged = undefined;
   export let onEditorCreated = undefined;
   export let onAutocompleteChanged = undefined;
@@ -145,6 +163,9 @@
     if (autofocusProps.includes(key)) {
       cypherEditor.focus();
     }
+    if (clearHistoryProps.includes(key)) {
+      cypherEditor.clearHistory();
+    }
   }
 
   const valueChanged = (newValue, changes) => {
@@ -167,9 +188,13 @@
     onPositionChanged && onPositionChanged(positionObject);
   };
 
-  const autocompleteChanged = (autocompleteOpen, from, options) => {
+  const autocompleteChanged = (autocompleteOpen, options, option) => {
     onAutocompleteChanged &&
-      onAutocompleteChanged(autocompleteOpen, from, options);
+      onAutocompleteChanged(autocompleteOpen, options, option);
+  };
+
+  const searchChanged = (searchOpen, text, matches) => {
+    onSearchChanged && onSearchChanged(searchOpen, text, matches);
   };
 
   const lineNumberClick = (line, event) => {
@@ -187,6 +212,8 @@
       autocompleteOpen,
       autocompleteTriggerStrings,
       autofocus,
+      cursorWide,
+      cypherLanguage,
       history,
       indentUnit,
       lineNumberFormatter,
@@ -199,6 +226,9 @@
       readOnlyCursor,
       schema,
       search,
+      searchMatches,
+      searchOpen,
+      searchText,
       searchTop,
       tabKey,
       theme,
@@ -212,6 +242,7 @@
     cypherEditor.onScrollChanged(scrollChanged);
     cypherEditor.onPositionChanged(positionChanged);
     cypherEditor.onAutocompleteChanged(autocompleteChanged);
+    cypherEditor.onSearchChanged(searchChanged);
     cypherEditor.onLineNumberClick(lineNumberClick);
     cypherEditor.onKeyDown(keyDown);
 
@@ -225,6 +256,7 @@
       cypherEditor.offScrollChanged(scrollChanged);
       cypherEditor.offPositionChanged(positionChanged);
       cypherEditor.offAutocompleteChanged(autocompleteChanged);
+      cypherEditor.offSearchChanged(searchChanged);
       cypherEditor.offLineNumberClick(lineNumberClick);
       cypherEditor.offKeyDown(keyDown);
 

@@ -31,10 +31,6 @@ export const editorSupportField = StateField.define({
   }
 });
 
-export const initEditorSupportEffect = StateEffect.appendConfig.of([
-  editorSupportField
-]);
-
 export const addTypeMarkerEffect = StateEffect.define();
 export const clearTypeMarkersEffect = StateEffect.define();
 

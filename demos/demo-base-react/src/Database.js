@@ -41,6 +41,8 @@ import {
 
 const driver = createDriver();
 
+const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
+
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = getTitle({ codemirrorVersion, framework, bundler });
 
@@ -56,6 +58,10 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     initialOptions.autocompleteTriggerStrings
   );
   const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
+  const [cursorWide, setCursorWide] = useState(initialOptions.cursorWide);
+  const [cypherLanguage, setCypherLanguage] = useState(
+    initialOptions.cypherLanguage
+  );
   const [cypher, setCypher] = useState(initialOptions.value);
   const [editor, setEditor] = useState(null);
   const [error, setError] = useState(null);
@@ -85,6 +91,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [results, setResults] = useState(null);
   const [schema, setSchema] = useState(initialOptions.schema);
   const [search, setSearch] = useState(initialOptions.search);
+  const [searchMatches, setSearchMatches] = useState(
+    initialOptions.searchMatches
+  );
+  const [searchOpen, setSearchOpen] = useState(initialOptions.searchOpen);
+  const [searchText, setSearchText] = useState(initialOptions.searchText);
   const [searchTop, setSearchTop] = useState(initialOptions.searchTop);
   const [tabKey, setTabKey] = useState(initialOptions.tabKey);
   const [theme, setTheme] = useState(initialOptions.theme);
@@ -201,9 +212,27 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     editor && setLineCount(editor.getLineCount());
   };
 
-  const onValueChanged = (value, change) => {
-    addEventLog("valueChanged", value ? value.length : 0);
-    updateValue(value);
+  const onAutocompleteChanged = (open, options, option) => {
+    addEventLog("autocompleteChanged", { open, options, option });
+    setAutocompleteOpen(open);
+    setAutocompleteOptions(options);
+    updatePickGoButtons({
+      autocompleteOpen: open,
+      autocompleteOptions: options
+    });
+  };
+
+  const onEditorCreated = (editor) => {
+    addEventLog("editorCreated", "");
+    setEditor(editor);
+    setPosition(editor.getPosition());
+    setLineCount(editor.getLineCount());
+    updateGoButtons({ cypherEditor: editor });
+  };
+
+  const onFocusChanged = (focused) => {
+    addEventLog("focusChanged", focused);
+    setFocused(focused);
   };
 
   const onPositionChanged = (positionObject) => {
@@ -211,14 +240,27 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setPosition(positionObject);
   };
 
-  const onAutocompleteChanged = (open, from, options) => {
-    addEventLog("autocompleteChanged", { open, from, options });
-    setAutocompleteOpen(open);
-    setAutocompleteOptions(options);
-    updatePickGoButtons({
-      autocompleteOpen: open,
-      autocompleteOptions: options
+  const onScrollChanged = (scrollInfo) => {
+    addEventLog(
+      "scrollChanged",
+      getChangedScrollInfo(lastScrollInfo, scrollInfo)
+    );
+    setLastScrollInfo(scrollInfo);
+  };
+
+  const onSearchChanged = (open, text, matches) => {
+    addEventLog("searchChanged", {
+      open,
+      text,
+      matches: matches ? matches.length : matches
     });
+    setSearchOpen(open);
+    setSearchText(text);
+  };
+
+  const onValueChanged = (value, change) => {
+    addEventLog("valueChanged", value ? value.length : 0);
+    updateValue(value);
   };
 
   const onLineNumberClick = (line, event) => {
@@ -237,121 +279,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     });
   };
 
-  const onEditorCreated = (editor) => {
-    addEventLog("editorCreated", "");
-    setEditor(editor);
-    setPosition(editor.getPosition());
-    setLineCount(editor.getLineCount());
-    updateGoButtons({ cypherEditor: editor });
-  };
-
-  const onFocusChanged = (focused) => {
-    addEventLog("focusChanged", focused);
-    setFocused(focused);
-  };
-
-  const onScrollChanged = (scrollInfo) => {
-    addEventLog(
-      "scrollChanged",
-      getChangedScrollInfo(lastScrollInfo, scrollInfo)
-    );
-    setLastScrollInfo(scrollInfo);
-  };
-
-  const lightTheme = () => {
-    addCommandLog("setTheme", "light");
-    setTheme("light");
-  };
-
-  const darkTheme = () => {
-    addCommandLog("setTheme", "dark");
-    setTheme("dark");
-  };
-
   const cypherLength = cypher.length;
   const positionString = position ? JSON.stringify(position) : "";
   const focusedString = focused + "";
   const autocompleteString = autocompleteOpen + "";
-
-  const showLineNumbers = () => {
-    addCommandLog("setLineNumbers", true);
-    setLineNumbers(true);
-  };
-
-  const hideLineNumbers = () => {
-    addCommandLog("setLineNumbers", false);
-    setLineNumbers(false);
-  };
-
-  const setNoPlaceholder = () => {
-    addCommandLog("setPlaceholder", undefined);
-    setPlaceholder(undefined);
-  };
-
-  const setSamplePlaceholder = () => {
-    addCommandLog("setPlaceholder", samplePlaceholder);
-    setPlaceholder(samplePlaceholder);
-  };
-
-  const showLineWrapping = () => {
-    addCommandLog("setLineWrapping", true);
-    setLineWrapping(true);
-  };
-
-  const showNoLineWrapping = () => {
-    addCommandLog("setLineWrapping", false);
-    setLineWrapping(false);
-  };
-
-  const makeReadable = () => {
-    addCommandLog("setReadOnly", false);
-    setReadOnly(false);
-  };
-
-  const makeReadOnly = () => {
-    addCommandLog("setReadOnly", true);
-    setReadOnly(true);
-  };
-
-  const makeReadOnlyNoCursor = () => {
-    addCommandLog("setReadOnlyCursor", false);
-    setReadOnlyCursor(false);
-  };
-
-  const makeReadOnlyCursor = () => {
-    addCommandLog("setReadOnlyCursor", true);
-    setReadOnlyCursor(true);
-  };
-
-  const enableAutocomplete = () => {
-    addCommandLog("setAutocomplete", true);
-    setAutocomplete(true);
-  };
-
-  const disableAutocomplete = () => {
-    addCommandLog("setAutocomplete", false);
-    setAutocomplete(false);
-  };
-
-  const enableLint = () => {
-    addCommandLog("setLint", true);
-    setLint(true);
-  };
-
-  const disableLint = () => {
-    addCommandLog("setLint", false);
-    setLint(false);
-  };
-
-  const enableHistory = () => {
-    addCommandLog("setHistory", true);
-    setHistory(true);
-  };
-
-  const disableHistory = () => {
-    addCommandLog("setHistory", false);
-    setHistory(false);
-  };
+  const searchString = searchOpen + "";
 
   const clearHistory = () => {
     addCommandLog("clearHistory", "");
@@ -363,38 +295,42 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     editor && editor.focus();
   };
 
-  const showDefaultLineNumberFormatter = () => {
-    addCommandLog("setLineNumberFormatter", "default");
-    setLineNumberFormatterObject({
-      lineNumberFormatter: defaultLineNumberFormatter
-    });
+  const selectCompletion = () => {
+    addCommandLog("selectAutocompleteOption", autocompleteOptionIndex);
+    editor && editor.selectAutocompleteOption(+autocompleteOptionIndex);
   };
 
-  const showNoneLineNumberFormatter = () => {
-    addCommandLog("setLineNumberFormatter", "none");
-    setLineNumberFormatterObject({
-      lineNumberFormatter: noneLineNumberFormatter
-    });
+  const setAutocompleteOn = () => {
+    addCommandLog("setAutocomplete", true);
+    setAutocomplete(true);
   };
 
-  const showCustomLineNumberFormatter = () => {
-    addCommandLog("setLineNumberFormatter", "custom");
-    setLineNumberFormatterObject({
-      lineNumberFormatter: customLineNumberFormatter
-    });
+  const setAutocompleteOff = () => {
+    addCommandLog("setAutocomplete", false);
+    setAutocomplete(false);
   };
 
-  const showSimpleSchema = () => {
-    addCommandLog("setSchema", "simple");
-    setSchema(simpleSchema);
+  const setAutocompleteOpenOn = () => {
+    addCommandLog("setAutocompleteOpen", true);
+    setAutocompleteOpen(true);
   };
 
-  const showLongSchema = () => {
-    addCommandLog("setSchema", "long");
-    setSchema(neo4jSchema);
+  const setAutocompleteOpenOff = () => {
+    addCommandLog("setAutocompleteOpen", false);
+    setAutocompleteOpen(false);
   };
 
-  const showDefaultAutocompleteTriggerStrings = () => {
+  const setAutocompleteCloseOnBlurOff = () => {
+    addCommandLog("setAutocompleteCloseOnBlur", false);
+    setAutocompleteCloseOnBlur(false);
+  };
+
+  const setAutocompleteCloseOnBlurOn = () => {
+    addCommandLog("setAutocompleteCloseOnBlur", true);
+    setAutocompleteCloseOnBlur(true);
+  };
+
+  const setAutocompleteTriggerStringsDefault = () => {
     addCommandLog(
       "setAutocompleteTriggerStrings",
       initialOptions.autocompleteTriggerStrings
@@ -402,53 +338,278 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setAutocompleteTriggerStrings(initialOptions.autocompleteTriggerStrings);
   };
 
-  const showNoAutocompleteTriggerStrings = () => {
+  const setAutocompleteTriggerStringsNone = () => {
     addCommandLog("setAutocompleteTriggerStrings", false);
     setAutocompleteTriggerStrings(false);
   };
 
-  const showStickyAutocomplete = () => {
-    addCommandLog("setAutocompleteCloseOnBlur", false);
-    setAutocompleteCloseOnBlur(false);
+  const setCursorWideOn = () => {
+    addCommandLog("setCursorWide", true);
+    setCursorWide(true);
   };
 
-  const showUnstickyAutocomplete = () => {
-    addCommandLog("setAutocompleteCloseOnBlur", true);
-    setAutocompleteCloseOnBlur(true);
+  const setCursorWideOff = () => {
+    addCommandLog("setCursorWide", false);
+    setCursorWide(false);
   };
 
-  const goToPosition = (position) => {
+  const setCypherLanguageOn = () => {
+    addCommandLog("setCypherLanguage", true);
+    setCypherLanguage(true);
+  };
+
+  const setCypherLanguageOff = () => {
+    addCommandLog("setCypherLanguage", false);
+    setCypherLanguage(false);
+  };
+
+  const setHistoryOn = () => {
+    addCommandLog("setHistory", true);
+    setHistory(true);
+  };
+
+  const setHistoryOff = () => {
+    addCommandLog("setHistory", false);
+    setHistory(false);
+  };
+
+  const setIndentUnitTwoSpaces = () => {
+    addCommandLog("setIndentUnit", "  ");
+    setIndentUnit("  ");
+  };
+
+  const setIndentUnitTab = () => {
+    addCommandLog("setIndentUnit", "\t");
+    setIndentUnit("\t");
+  };
+
+  const setLineNumberFormatterDefault = () => {
+    addCommandLog("setLineNumberFormatter", "default");
+    setLineNumberFormatterObject({
+      lineNumberFormatter: defaultLineNumberFormatter
+    });
+  };
+
+  const setLineNumberFormatterNone = () => {
+    addCommandLog("setLineNumberFormatter", "none");
+    setLineNumberFormatterObject({
+      lineNumberFormatter: noneLineNumberFormatter
+    });
+  };
+
+  const setLineNumberFormatterCustom = () => {
+    addCommandLog("setLineNumberFormatter", "custom");
+    setLineNumberFormatterObject({
+      lineNumberFormatter: customLineNumberFormatter
+    });
+  };
+
+  const setLineNumbersOn = () => {
+    addCommandLog("setLineNumbers", true);
+    setLineNumbers(true);
+  };
+
+  const setLineNumbersOff = () => {
+    addCommandLog("setLineNumbers", false);
+    setLineNumbers(false);
+  };
+
+  const setLineWrappingOn = () => {
+    addCommandLog("setLineWrapping", true);
+    setLineWrapping(true);
+  };
+
+  const setLineWrappingOff = () => {
+    addCommandLog("setLineWrapping", false);
+    setLineWrapping(false);
+  };
+
+  const setLintOn = () => {
+    addCommandLog("setLint", true);
+    setLint(true);
+  };
+
+  const setLintOff = () => {
+    addCommandLog("setLint", false);
+    setLint(false);
+  };
+
+  const setPlaceholderNone = () => {
+    addCommandLog("setPlaceholder", undefined);
+    setPlaceholder(undefined);
+  };
+
+  const setPlaceholderSample = () => {
+    addCommandLog("setPlaceholder", samplePlaceholder);
+    setPlaceholder(samplePlaceholder);
+  };
+
+  const setPositionTo = (position) => {
     addCommandLog("setPosition", position);
     setPosition(position);
     editor && editor.focus();
   };
 
-  const goToPositionStart = () => {
-    goToPosition(0);
+  const setPositionToStart = () => {
+    setPositionTo(0);
   };
 
-  const goToPositionEnd = () => {
-    goToPosition(cypherLength);
+  const setPositionToEnd = () => {
+    setPositionTo(cypherLength);
   };
 
-  const goToPositionPosition = () => {
+  const setPositionToAbsolute = () => {
     if (isNumberString(positionPosition)) {
-      goToPosition(+positionPosition);
+      setPositionTo(+positionPosition);
     }
   };
 
-  const goToPositionLineColumn = () => {
+  const setPositionToLineColumn = () => {
     if (isNumberString(positionLine) && isNumberString(positionColumn)) {
-      goToPosition({ line: +positionLine, column: +positionColumn });
+      setPositionTo({ line: +positionLine, column: +positionColumn });
     }
   };
 
-  const selectCompletion = () => {
-    addCommandLog("selectCompletion", autocompleteOptionIndex);
-    editor && editor.selectAutocompleteOption(+autocompleteOptionIndex);
+  const setReadOnlyOff = () => {
+    addCommandLog("setReadOnly", false);
+    setReadOnly(false);
   };
 
-  const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
+  const setReadOnlyOn = () => {
+    addCommandLog("setReadOnly", true);
+    setReadOnly(true);
+  };
+
+  const setReadOnlyCursorOff = () => {
+    addCommandLog("setReadOnlyCursor", false);
+    setReadOnlyCursor(false);
+  };
+
+  const setReadOnlyCursorOn = () => {
+    addCommandLog("setReadOnlyCursor", true);
+    setReadOnlyCursor(true);
+  };
+
+  const setSchemaSimple = () => {
+    addCommandLog("setSchema", "simple");
+    setSchema(simpleSchema);
+  };
+
+  const setSchemaLong = () => {
+    addCommandLog("setSchema", "long");
+    setSchema(neo4jSchema);
+  };
+
+  const setSearchOn = () => {
+    addCommandLog("setSearch", true);
+    setSearch(true);
+  };
+
+  const setSearchOff = () => {
+    addCommandLog("setSearch", false);
+    setSearch(false);
+  };
+
+  const setSearchMatchesNone = () => {
+    addCommandLog("setSearchMatches", 0);
+    setSearchMatches(0);
+  };
+
+  const setSearchMatchesTen = () => {
+    addCommandLog("setSearchMatches", 10);
+    setSearchMatches(10);
+  };
+
+  const setSearchOpenOn = () => {
+    addCommandLog("setSearchOpen", true);
+    setSearchOpen(true);
+  };
+
+  const setSearchOpenOff = () => {
+    addCommandLog("setSearchOpen", false);
+    setSearchOpen(false);
+  };
+
+  const setSearchTextAll = () => {
+    addCommandLog("setSearchText", "all");
+    setSearchText("all");
+  };
+
+  const setSearchTextCall = () => {
+    addCommandLog("setSearchText", "call");
+    setSearchText("call");
+  };
+
+  const setSearchTextUnion = () => {
+    addCommandLog("setSearchText", "union");
+    setSearchText("union");
+  };
+
+  const setSearchTopOn = () => {
+    addCommandLog("setSearchTop", true);
+    setSearchTop(true);
+  };
+
+  const setSearchTopOff = () => {
+    addCommandLog("setSearchTop", false);
+    setSearchTop(false);
+  };
+
+  const setTabKeyOff = () => {
+    addCommandLog("setTabKey", false);
+    setTabKey(false);
+  };
+
+  const setTabKeyOn = () => {
+    addCommandLog("setTabKey", true);
+    setTabKey(true);
+  };
+
+  const setThemeLight = () => {
+    addCommandLog("setTheme", "light");
+    setTheme("light");
+  };
+
+  const setThemeDark = () => {
+    addCommandLog("setTheme", "dark");
+    setTheme("dark");
+  };
+
+  const setThemeAuto = () => {
+    addCommandLog("setTheme", "auto");
+    setTheme("auto");
+  };
+
+  const setTooltipAbsoluteOff = () => {
+    addCommandLog("setTooltipAbsolute", false);
+    setTooltipAbsolute(false);
+  };
+
+  const setTooltipAbsoluteOn = () => {
+    addCommandLog("setTooltipAbsolute", true);
+    setTooltipAbsolute(true);
+  };
+
+  const setValueLong = () => {
+    if (editor) {
+      addCommandLog("setValue", longQuery.length + " (long)");
+      updateValue(longQuery);
+    }
+  };
+
+  const setValueSimple = () => {
+    if (editor) {
+      addCommandLog("setValue", simpleQuery.length + " (simple)");
+      updateValue(simpleQuery);
+    }
+  };
+
+  const setValueClear = () => {
+    if (editor) {
+      addCommandLog("setValue", "0 (clear)");
+      updateValue("");
+    }
+  };
 
   const positionPositionChanged = (e) => {
     const { target } = e;
@@ -502,77 +663,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     updatePickGoButtons(updateParams);
   };
 
-  const showLongValue = () => {
-    if (editor) {
-      addCommandLog("setValue", longQuery.length + " (long)");
-      updateValue(longQuery);
-    }
-  };
-
-  const showSimpleValue = () => {
-    if (editor) {
-      addCommandLog("setValue", simpleQuery.length + " (simple)");
-      updateValue(simpleQuery);
-    }
-  };
-
-  const clearValue = () => {
-    if (editor) {
-      addCommandLog("setValue", "0 (clear)");
-      updateValue("");
-    }
-  };
-
-  const disableTabKey = () => {
-    addCommandLog("setTabKey", false);
-    setTabKey(false);
-  };
-
-  const enableTabKey = () => {
-    addCommandLog("setTabKey", true);
-    setTabKey(true);
-  };
-
-  const disableTooltipAbsolute = () => {
-    addCommandLog("setTooltipAbsolute", false);
-    setTooltipAbsolute(false);
-  };
-
-  const enableTooltipAbsolute = () => {
-    addCommandLog("setTooltipAbsolute", true);
-    setTooltipAbsolute(true);
-  };
-
-  const enableSearch = () => {
-    addCommandLog("setSearch", true);
-    setSearch(true);
-  };
-
-  const disableSearch = () => {
-    addCommandLog("setSearch", false);
-    setSearch(false);
-  };
-
-  const setIndentUnitTwoSpaces = () => {
-    addCommandLog("setIndentUnit", "  ");
-    setIndentUnit("  ");
-  };
-
-  const setIndentUnitTab = () => {
-    addCommandLog("setIndentUnit", "\t");
-    setIndentUnit("\t");
-  };
-
-  const showSearchTop = () => {
-    addCommandLog("setSearchTop", true);
-    setSearchTop(true);
-  };
-
-  const showSearchBottom = () => {
-    addCommandLog("setSearchTop", false);
-    setSearchTop(false);
-  };
-
   let content = "";
   if (loading) {
     content = <p>...waiting</p>;
@@ -587,208 +677,88 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   return (
     <div className="database">
       <div className="left">
-        <div className="setting setting-short">
-          <div className="setting-label">Theme</div>
-          <div className="setting-values">
-            <button
-              className={theme === "light" ? "setting-active" : undefined}
-              onClick={lightTheme}
-            >
-              Light
-            </button>
-            <button
-              className={theme === "dark" ? "setting-active" : undefined}
-              onClick={darkTheme}
-            >
-              Dark
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-short">
-          <div className="setting-label">Placeholder</div>
-          <div className="setting-values">
-            <button
-              className={
-                placeholder === undefined ? "setting-active" : undefined
-              }
-              onClick={setNoPlaceholder}
-            >
-              None
-            </button>
-            <button
-              className={
-                placeholder === samplePlaceholder ? "setting-active" : undefined
-              }
-              onClick={setSamplePlaceholder}
-            >
-              Sample
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-short schema">
-          <div className="setting-label">Schema</div>
-          <div className="setting-values">
-            <button
-              className={schema === simpleSchema ? "setting-active" : undefined}
-              onClick={showSimpleSchema}
-            >
-              Simple
-            </button>
-            <button
-              className={schema === neo4jSchema ? "setting-active" : undefined}
-              onClick={showLongSchema}
-            >
-              Long
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-short">
-          <div className="setting-label">Lint</div>
-          <div className="setting-values">
-            <button
-              className={lint === true ? "setting-active" : undefined}
-              onClick={enableLint}
-            >
-              True
-            </button>
-            <button
-              className={lint === false ? "setting-active" : undefined}
-              onClick={disableLint}
-            >
-              False
-            </button>
-          </div>
-        </div>
-
-        <div className="setting">
-          <div className="setting-label">Line Numbers</div>
-          <div className="setting-values">
-            <button
-              className={lineNumbers === true ? "setting-active" : undefined}
-              onClick={showLineNumbers}
-            >
-              True
-            </button>
-            <button
-              className={lineNumbers === false ? "setting-active" : undefined}
-              onClick={hideLineNumbers}
-            >
-              False
-            </button>
-          </div>
-        </div>
-
-        <div className="setting">
-          <div className="setting-label">Line Wrapping</div>
-          <div className="setting-values">
-            <button
-              className={lineWrapping === false ? "setting-active" : undefined}
-              onClick={showNoLineWrapping}
-            >
-              False
-            </button>
-            <button
-              className={lineWrapping === true ? "setting-active" : undefined}
-              onClick={showLineWrapping}
-            >
-              True
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-long">
-          <div className="setting-label">Line Number Formatter</div>
-          <div className="setting-values">
-            <button
-              className={
-                lineNumberFormatter === defaultLineNumberFormatter
-                  ? "setting-active"
-                  : undefined
-              }
-              onClick={showDefaultLineNumberFormatter}
-            >
-              Default
-            </button>
-            <button
-              className={
-                lineNumberFormatter === noneLineNumberFormatter
-                  ? "setting-active"
-                  : undefined
-              }
-              onClick={showNoneLineNumberFormatter}
-            >
-              None
-            </button>
-            <button
-              className={
-                lineNumberFormatter === customLineNumberFormatter
-                  ? "setting-active"
-                  : undefined
-              }
-              onClick={showCustomLineNumberFormatter}
-            >
-              Custom
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-long">
-          <div className="setting-label">Read Only</div>
-          <div className="setting-values">
-            <button
-              className={readOnly === false ? "setting-active" : undefined}
-              onClick={makeReadable}
-            >
-              False
-            </button>
-            <button
-              className={readOnly === true ? "setting-active" : undefined}
-              onClick={makeReadOnly}
-            >
-              True
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-long">
-          <div className="setting-label">Read Only Cursor</div>
-          <div className="setting-values">
-            <button
-              disabled={!readOnly}
-              className={
-                readOnlyCursor === false ? "setting-active" : undefined
-              }
-              onClick={makeReadOnlyNoCursor}
-            >
-              False
-            </button>
-            <button
-              disabled={!readOnly}
-              className={readOnlyCursor === true ? "setting-active" : undefined}
-              onClick={makeReadOnlyCursor}
-            >
-              True
-            </button>
-          </div>
-        </div>
-
         <div className="setting">
           <div className="setting-label">Autocomplete</div>
           <div className="setting-values">
             <button
               className={autocomplete === true ? "setting-active" : undefined}
-              onClick={enableAutocomplete}
+              onClick={setAutocompleteOn}
             >
               True
             </button>
             <button
               className={autocomplete === false ? "setting-active" : undefined}
-              onClick={disableAutocomplete}
+              onClick={setAutocompleteOff}
             >
               False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Autocomplete Close On Blur</div>
+          <div className="setting-values">
+            <button
+              className={
+                autocompleteCloseOnBlur === false ? "setting-active" : undefined
+              }
+              onClick={setAutocompleteCloseOnBlurOff}
+            >
+              False
+            </button>
+            <button
+              className={
+                autocompleteCloseOnBlur === true ||
+                autocompleteCloseOnBlur === undefined
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={setAutocompleteCloseOnBlurOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Autocomplete Open</div>
+          <div className="setting-values">
+            <button
+              className={
+                autocompleteOpen === false ? "setting-active" : undefined
+              }
+              onClick={setAutocompleteOpenOff}
+            >
+              False
+            </button>
+            <button
+              className={
+                autocompleteOpen === true ? "setting-active" : undefined
+              }
+              onClick={setAutocompleteOpenOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Autocomplete Select</div>
+
+          <div className="setting-values">
+            <label htmlFor="autocompleteOptionIndex">index</label>
+            <input
+              className="short-input"
+              name="autocompleteOptionIndex"
+              type="text"
+              value={autocompleteOptionIndex}
+              onInput={autocompleteOptionIndexChanged}
+            />
+            <button
+              disabled={!selectAutocompleteOptionEnabled}
+              onClick={selectCompletion}
+            >
+              Go
             </button>
           </div>
         </div>
@@ -803,7 +773,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
                   ? "setting-active"
                   : undefined
               }
-              onClick={showDefaultAutocompleteTriggerStrings}
+              onClick={setAutocompleteTriggerStringsDefault}
             >
               Default
             </button>
@@ -813,7 +783,25 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
                   ? "setting-active"
                   : undefined
               }
-              onClick={showNoAutocompleteTriggerStrings}
+              onClick={setAutocompleteTriggerStringsNone}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Cursor Wide</div>
+          <div className="setting-values">
+            <button
+              className={cursorWide ? "setting-active" : undefined}
+              onClick={setCursorWideOn}
+            >
+              True
+            </button>
+            <button
+              className={!cursorWide ? "setting-active" : undefined}
+              onClick={setCursorWideOff}
             >
               False
             </button>
@@ -821,46 +809,20 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting setting-long">
-          <div className="setting-label">Autocomplete Close On Blur</div>
+          <div className="setting-label">Cypher Language</div>
           <div className="setting-values">
             <button
-              className={
-                autocompleteCloseOnBlur === false ? "setting-active" : undefined
-              }
-              onClick={showStickyAutocomplete}
-            >
-              False
-            </button>
-            <button
-              className={
-                autocompleteCloseOnBlur === true ||
-                autocompleteCloseOnBlur === undefined
-                  ? "setting-active"
-                  : undefined
-              }
-              onClick={showUnstickyAutocomplete}
-            >
-              True
-            </button>
-          </div>
-        </div>
-
-        <div className="setting">
-          <div className="setting-label">History</div>
-          <div className="setting-values">
-            <button
-              className={history ? "setting-active" : undefined}
-              onClick={enableHistory}
+              className={cypherLanguage ? "setting-active" : undefined}
+              onClick={setCypherLanguageOn}
             >
               True
             </button>
             <button
-              className={!history ? "setting-active" : undefined}
-              onClick={disableHistory}
+              className={!cypherLanguage ? "setting-active" : undefined}
+              onClick={setCypherLanguageOff}
             >
               False
             </button>
-            <button onClick={clearHistory}>Clear</button>
           </div>
         </div>
 
@@ -871,13 +833,162 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
+        <div className="setting">
+          <div className="setting-label">History</div>
+          <div className="setting-values">
+            <button
+              className={history ? "setting-active" : undefined}
+              onClick={setHistoryOn}
+            >
+              True
+            </button>
+            <button
+              className={!history ? "setting-active" : undefined}
+              onClick={setHistoryOff}
+            >
+              False
+            </button>
+            <button onClick={clearHistory}>Clear</button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Indent Unit</div>
+          <div className="setting-values">
+            <button
+              className={indentUnit === "  " ? "setting-active" : undefined}
+              onClick={setIndentUnitTwoSpaces}
+            >
+              Two Spaces
+            </button>
+            <button
+              className={indentUnit === "\t" ? "setting-active" : undefined}
+              onClick={setIndentUnitTab}
+            >
+              Tab
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Line Number Formatter</div>
+          <div className="setting-values">
+            <button
+              className={
+                lineNumberFormatter === defaultLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={setLineNumberFormatterDefault}
+            >
+              Default
+            </button>
+            <button
+              className={
+                lineNumberFormatter === noneLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={setLineNumberFormatterNone}
+            >
+              None
+            </button>
+            <button
+              className={
+                lineNumberFormatter === customLineNumberFormatter
+                  ? "setting-active"
+                  : undefined
+              }
+              onClick={setLineNumberFormatterCustom}
+            >
+              Custom
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Line Numbers</div>
+          <div className="setting-values">
+            <button
+              className={lineNumbers === true ? "setting-active" : undefined}
+              onClick={setLineNumbersOn}
+            >
+              True
+            </button>
+            <button
+              className={lineNumbers === false ? "setting-active" : undefined}
+              onClick={setLineNumbersOff}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Line Wrapping</div>
+          <div className="setting-values">
+            <button
+              className={lineWrapping === false ? "setting-active" : undefined}
+              onClick={setLineWrappingOff}
+            >
+              False
+            </button>
+            <button
+              className={lineWrapping === true ? "setting-active" : undefined}
+              onClick={setLineWrappingOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Lint</div>
+          <div className="setting-values">
+            <button
+              className={lint === true ? "setting-active" : undefined}
+              onClick={setLintOn}
+            >
+              True
+            </button>
+            <button
+              className={lint === false ? "setting-active" : undefined}
+              onClick={setLintOff}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Placeholder</div>
+          <div className="setting-values">
+            <button
+              className={
+                placeholder === undefined ? "setting-active" : undefined
+              }
+              onClick={setPlaceholderNone}
+            >
+              None
+            </button>
+            <button
+              className={
+                placeholder === samplePlaceholder ? "setting-active" : undefined
+              }
+              onClick={setPlaceholderSample}
+            >
+              Sample
+            </button>
+          </div>
+        </div>
+
         <div className="setting setting-long">
           <div className="setting-label">
             Position
-            <button title="start" onClick={goToPositionStart}>
+            <button title="start" onClick={setPositionToStart}>
               start
             </button>
-            <button title="end" onClick={goToPositionEnd}>
+            <button title="end" onClick={setPositionToEnd}>
               end
             </button>
           </div>
@@ -891,7 +1002,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             />
             <button
               disabled={!goPositionPositionEnabled}
-              onClick={goToPositionPosition}
+              onClick={setPositionToAbsolute}
             >
               Go
             </button>
@@ -915,7 +1026,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             />
             <button
               disabled={!goPositionLineColumnEnabled}
-              onClick={goToPositionLineColumn}
+              onClick={setPositionToLineColumn}
             >
               Go
             </button>
@@ -923,46 +1034,155 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
 
         <div className="setting setting-long">
-          <div className="setting-label">Select Completion</div>
-
+          <div className="setting-label">Read Only</div>
           <div className="setting-values">
-            <label htmlFor="autocompleteOptionIndex">index</label>
-            <input
-              className="short-input"
-              name="autocompleteOptionIndex"
-              type="text"
-              value={autocompleteOptionIndex}
-              onInput={autocompleteOptionIndexChanged}
-            />
             <button
-              disabled={!selectAutocompleteOptionEnabled}
-              onClick={selectCompletion}
+              className={readOnly === false ? "setting-active" : undefined}
+              onClick={setReadOnlyOff}
             >
-              Go
+              False
+            </button>
+            <button
+              className={readOnly === true ? "setting-active" : undefined}
+              onClick={setReadOnlyOn}
+            >
+              True
             </button>
           </div>
         </div>
 
-        <div className="setting cypher">
-          <div className="setting-label">Value</div>
+        <div className="setting setting-long">
+          <div className="setting-label">Read Only Cursor</div>
           <div className="setting-values">
             <button
-              className={cypher === longQuery ? "setting-active" : undefined}
-              onClick={showLongValue}
+              disabled={!readOnly}
+              className={
+                readOnlyCursor === false ? "setting-active" : undefined
+              }
+              onClick={setReadOnlyCursorOff}
             >
-              Long
+              False
             </button>
             <button
-              className={cypher === simpleQuery ? "setting-active" : undefined}
-              onClick={showSimpleValue}
+              disabled={!readOnly}
+              className={readOnlyCursor === true ? "setting-active" : undefined}
+              onClick={setReadOnlyCursorOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short schema">
+          <div className="setting-label">Schema</div>
+          <div className="setting-values">
+            <button
+              className={schema === simpleSchema ? "setting-active" : undefined}
+              onClick={setSchemaSimple}
             >
               Simple
             </button>
             <button
-              className={cypher === "" ? "setting-active" : undefined}
-              onClick={clearValue}
+              className={schema === neo4jSchema ? "setting-active" : undefined}
+              onClick={setSchemaLong}
             >
-              Clear
+              Long
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Search</div>
+          <div className="setting-values">
+            <button
+              className={search === false ? "setting-active" : undefined}
+              onClick={setSearchOff}
+            >
+              False
+            </button>
+            <button
+              className={search === true ? "setting-active" : undefined}
+              onClick={setSearchOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Matches</div>
+          <div className="setting-values">
+            <button
+              className={searchMatches === 0 ? "setting-active" : undefined}
+              onClick={setSearchMatchesNone}
+            >
+              0
+            </button>
+            <button
+              className={searchMatches === 10 ? "setting-active" : undefined}
+              onClick={setSearchMatchesTen}
+            >
+              10
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Open</div>
+          <div className="setting-values">
+            <button
+              className={searchOpen === false ? "setting-active" : undefined}
+              onClick={setSearchOpenOff}
+            >
+              False
+            </button>
+            <button
+              className={searchOpen === true ? "setting-active" : undefined}
+              onClick={setSearchOpenOn}
+            >
+              True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Text</div>
+          <div className="setting-values">
+            <button
+              className={searchText === "all" ? "setting-active" : undefined}
+              onClick={setSearchTextAll}
+            >
+              all
+            </button>
+            <button
+              className={searchText === "call" ? "setting-active" : undefined}
+              onClick={setSearchTextCall}
+            >
+              call
+            </button>
+            <button
+              className={searchText === "union" ? "setting-active" : undefined}
+              onClick={setSearchTextUnion}
+            >
+              union
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Search Top</div>
+          <div className="setting-values">
+            <button
+              className={searchTop === false ? "setting-active" : undefined}
+              onClick={setSearchTopOff}
+            >
+              False
+            </button>
+            <button
+              className={searchTop === true ? "setting-active" : undefined}
+              onClick={setSearchTopOn}
+            >
+              True
             </button>
           </div>
         </div>
@@ -972,15 +1192,39 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           <div className="setting-values">
             <button
               className={tabKey === false ? "setting-active" : undefined}
-              onClick={disableTabKey}
+              onClick={setTabKeyOff}
             >
               False
             </button>
             <button
               className={tabKey === true ? "setting-active" : undefined}
-              onClick={enableTabKey}
+              onClick={setTabKeyOn}
             >
               True
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-short">
+          <div className="setting-label">Theme</div>
+          <div className="setting-values">
+            <button
+              className={theme === "light" ? "setting-active" : undefined}
+              onClick={setThemeLight}
+            >
+              Light
+            </button>
+            <button
+              className={theme === "dark" ? "setting-active" : undefined}
+              onClick={setThemeDark}
+            >
+              Dark
+            </button>
+            <button
+              className={theme === "auto" ? "setting-active" : undefined}
+              onClick={setThemeAuto}
+            >
+              Auto
             </button>
           </div>
         </div>
@@ -992,7 +1236,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               className={
                 tooltipAbsolute === false ? "setting-active" : undefined
               }
-              onClick={disableTooltipAbsolute}
+              onClick={setTooltipAbsoluteOff}
             >
               False
             </button>
@@ -1000,63 +1244,33 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               className={
                 tooltipAbsolute === true ? "setting-active" : undefined
               }
-              onClick={enableTooltipAbsolute}
+              onClick={setTooltipAbsoluteOn}
             >
               True
             </button>
           </div>
         </div>
 
-        <div className="setting setting-long">
-          <div className="setting-label">Search Enabled</div>
+        <div className="setting cypher">
+          <div className="setting-label">Value</div>
           <div className="setting-values">
             <button
-              className={search === false ? "setting-active" : undefined}
-              onClick={disableSearch}
+              className={cypher === longQuery ? "setting-active" : undefined}
+              onClick={setValueLong}
             >
-              False
+              Long
             </button>
             <button
-              className={search === true ? "setting-active" : undefined}
-              onClick={enableSearch}
+              className={cypher === simpleQuery ? "setting-active" : undefined}
+              onClick={setValueSimple}
             >
-              True
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-long">
-          <div className="setting-label">Search Top</div>
-          <div className="setting-values">
-            <button
-              className={searchTop === false ? "setting-active" : undefined}
-              onClick={showSearchBottom}
-            >
-              False
+              Simple
             </button>
             <button
-              className={searchTop === true ? "setting-active" : undefined}
-              onClick={showSearchTop}
+              className={cypher === "" ? "setting-active" : undefined}
+              onClick={setValueClear}
             >
-              True
-            </button>
-          </div>
-        </div>
-
-        <div className="setting setting-long">
-          <div className="setting-label">Indent Unit</div>
-          <div className="setting-values">
-            <button
-              className={indentUnit === "  " ? "setting-active" : undefined}
-              onClick={setIndentUnitTwoSpaces}
-            >
-              Two Spaces
-            </button>
-            <button
-              className={indentUnit === "\t" ? "setting-active" : undefined}
-              onClick={setIndentUnitTab}
-            >
-              Tab
+              Clear
             </button>
           </div>
         </div>
@@ -1068,19 +1282,22 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
         </div>
         <div className="card">
           <CypherEditor
-            onValueChanged={onValueChanged}
-            onPositionChanged={onPositionChanged}
-            onFocusChanged={onFocusChanged}
             onAutocompleteChanged={onAutocompleteChanged}
+            onEditorCreated={onEditorCreated}
+            onFocusChanged={onFocusChanged}
+            onPositionChanged={onPositionChanged}
+            onScrollChanged={onScrollChanged}
+            onSearchChanged={onSearchChanged}
+            onValueChanged={onValueChanged}
             onLineNumberClick={onLineNumberClick}
             onKeyDown={onKeyDown}
-            onScrollChanged={onScrollChanged}
-            onEditorCreated={onEditorCreated}
             autocomplete={autocomplete}
             autocompleteCloseOnBlur={autocompleteCloseOnBlur}
             autocompleteOpen={autocompleteOpen}
             autocompleteTriggerStrings={autocompleteTriggerStrings}
             autofocus={autofocus}
+            cursorWide={cursorWide}
+            cypherLanguage={cypherLanguage}
             history={history}
             indentUnit={indentUnit}
             lineNumberFormatter={lineNumberFormatter}
@@ -1093,6 +1310,9 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             readOnlyCursor={readOnlyCursor}
             schema={schema}
             search={search}
+            searchMatches={searchMatches}
+            searchOpen={searchOpen}
+            searchText={searchText}
             searchTop={searchTop}
             tabKey={tabKey}
             theme={theme}
@@ -1108,9 +1328,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             <div className="info-item">Length: {cypherLength}</div>
             <div className="info-item">Line Count: {lineCount}</div>
             <div className="info-item">Focused: {focusedString}</div>
-            <div className="info-item">
-              Autocompleting: {autocompleteString}
-            </div>
+            <div className="info-item">Autocomplete: {autocompleteString}</div>
+            <div className="info-item">Search: {searchString}</div>
           </div>
         </div>
         <div className="card">

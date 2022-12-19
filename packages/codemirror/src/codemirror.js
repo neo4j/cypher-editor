@@ -23,20 +23,24 @@ import {
   startCompletion,
   closeCompletion,
   acceptCompletion,
-  setSelectedCompletion,
-  completionStatus
-  // currentCompletions (could use this if we could get currentCompletionsFrom as well)
+  setSelectedCompletion
 } from "@codemirror/autocomplete";
+import {
+  getSearchQuery,
+  setSearchQuery,
+  openSearchPanel,
+  closeSearchPanel,
+  SearchQuery
+} from "@codemirror/search";
 import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
 import {
-  defaultOptions as baseDefaultOptions,
+  defaultOptions,
   createEventHandlers,
   positionNewToOld,
   positionOldToNew
 } from "./cypher-codemirror-base";
-import { initEditorSupportEffect } from "./cypher-state-definitions";
 import {
   getStatePositionAbsolute,
   getStateEditorSupport,
@@ -44,13 +48,20 @@ import {
   getStateValue,
   getStateLength,
   getStatePosition,
-  getStatePositionForAny
+  getStatePositionForAny,
+  getStateSearchOpen,
+  getStateSearchSpec,
+  getStateSearchMatches,
+  getStateSearchText,
+  getStateAutocompleteOpen,
+  getStateAutocompleteOptions,
+  areViewUpdateAutocompleteOptionsEqual,
+  getViewUpdatePickedAutocompleteOption
 } from "./cypher-state-selectors";
 import {
   fixColors,
-  syntaxCSS,
+  resetColors,
   domListener,
-  cypherLanguage,
   getReadableExtensions,
   getReadOnlyExtensions,
   getPlaceholderExtensions,
@@ -62,7 +73,9 @@ import {
   getLineWrappingExtensions,
   getHistoryExtensions,
   getTabKeyExtensions,
-  getLintExtensions
+  getLintExtensions,
+  getCursorWideExtensions,
+  getCypherLanguageExtensions
 } from "./cypher-extensions";
 
 export * from "./cypher-codemirror-base";
@@ -86,6 +99,8 @@ export const getExtensions = (
   {
     lintConf = new Compartment(),
     autocompleteConf = new Compartment(),
+    cursorWideConf = new Compartment(),
+    cypherLanguageConf = new Compartment(),
     readableConf = new Compartment(),
     readOnlyConf = new Compartment(),
     showLinesConf = new Compartment(),
@@ -106,6 +121,8 @@ export const getExtensions = (
   const {
     autocomplete,
     autocompleteCloseOnBlur,
+    cursorWide,
+    cypherLanguage,
     history,
     tabKey,
     indentUnit,
@@ -124,10 +141,11 @@ export const getExtensions = (
 
   return [
     domListener({ onFocusChanged, onScrollChanged, onKeyDown }),
-    cypherLanguage(),
-    lintConf.of(getLintExtensions({ readOnly, lint })),
+    cypherLanguageConf.of(getCypherLanguageExtensions({ cypherLanguage })),
+    lintConf.of(getLintExtensions({ cypherLanguage, readOnly, lint })),
     autocompleteConf.of(
       getAutocompleteExtensions({
+        cypherLanguage,
         readOnly,
         autocomplete,
         autocompleteCloseOnBlur
@@ -145,18 +163,37 @@ export const getExtensions = (
     tabKeyConf.of(getTabKeyExtensions({ tabKey, indentUnit })),
     readableConf.of(getReadableExtensions({ readOnly, readOnlyCursor })),
     placeholderConf.of(getPlaceholderExtensions({ placeholder })),
-    syntaxCSS,
     themeConf.of(getThemeExtensions({ theme })),
+    cursorWideConf.of(getCursorWideExtensions({ cursorWide })),
     searchConf.of(getSearchExtensions({ readOnly, search, searchTop })),
     tooltipAbsoluteConf.of(getTooltipAbsoluteExtensions({ tooltipAbsolute })),
     readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor }))
   ];
 };
 
-const defaultOptions = {
-  ...baseDefaultOptions,
-  preExtensions: [],
-  postExtensions: []
+const isActiveSearchMatches = (searchMatches) =>
+  searchMatches > 0 && searchMatches <= 1000;
+
+const detectThemeDark = () =>
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+const addDetectThemeDarkListener = (isThemeDarkCallback) => {
+  const listener = (event) => {
+    isThemeDarkCallback(event.matches);
+  };
+  window.matchMedia &&
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", listener);
+  return listener;
+};
+
+const removeDetectThemeDarkListener = (listener) => {
+  window.matchMedia &&
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .removeEventListener("change", listener);
 };
 
 export function createCypherEditor(parentDOMElement, options = {}) {
@@ -165,7 +202,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autofocus,
     position,
     parseOnSetValue,
-    schema,
     value,
     preExtensions,
     postExtensions
@@ -175,6 +211,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     autocompleteOpen,
     autocompleteCloseOnBlur,
     autocompleteTriggerStrings,
+    cypherLanguage,
     history,
     indentUnit,
     lineNumberFormatter,
@@ -185,11 +222,27 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     readOnly,
     readOnlyCursor,
     search,
+    searchMatches,
+    searchOpen,
+    searchText,
     searchTop,
+    schema,
     tabKey,
+    theme,
     tooltipAbsolute
   } = combinedOptions;
+  let editorSupport = null;
   let lastPosition = null;
+  let searchInitializing = false;
+  let detectedThemeDark = theme === "auto" ? detectThemeDark() : null;
+
+  const setDetectedThemeDark = (dark) => {
+    detectedThemeDark = dark;
+    updateTheme();
+  };
+
+  let detectedThemeDarkListener =
+    theme === "auto" ? addDetectThemeDarkListener(setDetectedThemeDark) : null;
 
   const {
     on: onValueChanged,
@@ -218,7 +271,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const {
     on: onAutocompleteChanged,
     off: offAutocompleteChanged,
-    fire: fireAutocompleteChanged
+    fire: fireAutocompleteChanged,
+    count: autocompleteCount
+  } = createEventHandlers();
+
+  const {
+    on: onSearchChanged,
+    off: offSearchChanged,
+    fire: fireSearchChanged,
+    count: searchCount
   } = createEventHandlers();
 
   const {
@@ -241,76 +302,129 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fireKeyDown(event);
   };
 
-  const positionChanged = (positionObject) => {
+  const handleValueChanged = (value, changes) => {
+    if (
+      cypherLanguage &&
+      autocomplete &&
+      Array.isArray(autocompleteTriggerStrings)
+    ) {
+      let changedText = [];
+      changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
+        changedText = inserted.text;
+      });
+
+      if (changedText.length > 0 && changedText.length <= 2) {
+        const text = changedText[0];
+        if (autocompleteTriggerStrings.indexOf(text) !== -1) {
+          showDeferredAutocomplete();
+        } else if (changedText.length === 2) {
+          const longerText = text + changedText[1];
+          if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
+            showDeferredAutocomplete();
+          }
+        }
+      }
+    }
+
+    fireValueChanged(value, changes);
+  };
+
+  const handlePositionChanged = (positionObject) => {
     lastPosition = (positionObject || { position: null }).position;
     firePositionChanged(positionOldToNew(positionObject));
   };
 
-  const autocompleteChanged = (newAutocompleteOpen, from, options) => {
+  const handleAutocompleteChanged = (newAutocompleteOpen, options, option) => {
     autocompleteOpen = newAutocompleteOpen;
-    fireAutocompleteChanged(autocompleteOpen, from, options);
+    fireAutocompleteChanged(autocompleteOpen, options, option);
   };
 
-  const focusChanged = (focused) => {
+  const handleSearchChanged = (newSearchOpen, text, matches) => {
+    if (!searchInitializing) {
+      searchOpen = newSearchOpen;
+      fireSearchChanged(searchOpen, text, matches);
+    }
+  };
+
+  const handleFocusChanged = (focused) => {
     fireFocusChanged(focused);
   };
 
-  const scrollChanged = (scrollInfo) => {
+  const handleScrollChanged = (scrollInfo) => {
     fireScrollChanged(scrollInfo);
   };
 
   const updateListener = EditorView.updateListener.of((v) => {
-    if (v.docChanged) {
-      valueChanged(getStateValue(v.state), v.changes);
-      positionChanged(getStatePosition(v.state));
-    } else if (v.selectionSet) {
-      const oldPosition = getStatePositionAbsolute(v.startState);
-      const newPosition = getStatePositionAbsolute(v.state);
-      if (oldPosition !== newPosition) {
-        positionChanged(getStatePosition(v.state));
-      }
-      if (deferredAutocomplete) {
-        deferredAutocomplete = false;
-        showAutocomplete();
-      }
+    const { docChanged: valueChanged, selectionSet: selectionChanged } = v;
+    const oldPosition = selectionChanged
+      ? valueChanged
+        ? null
+        : getStatePositionAbsolute(v.startState)
+      : null;
+    const newPosition = selectionChanged
+      ? getStatePositionAbsolute(v.state)
+      : null;
+    const positionChanged = valueChanged || oldPosition !== newPosition;
+    const oldAutocompleteOpen = getStateAutocompleteOpen(v.startState);
+    const newAutocompleteOpen = getStateAutocompleteOpen(v.state);
+    const pickedAutocompleteOption = getViewUpdatePickedAutocompleteOption(
+      v,
+      true
+    );
+    const autocompleteChanged =
+      cypherLanguage &&
+      autocomplete &&
+      (oldAutocompleteOpen !== newAutocompleteOpen ||
+        !areViewUpdateAutocompleteOptionsEqual(v) ||
+        pickedAutocompleteOption);
+    const oldSearchOpen = getStateSearchOpen(v.startState);
+    const newSearchOpen = getStateSearchOpen(v.state);
+    const oldSearchText = getStateSearchText(v.startState);
+    const newSearchText = getStateSearchText(v.state);
+    const oldSearchSpec = getStateSearchSpec(v.startState);
+    const newSearchSpec = getStateSearchSpec(v.state);
+    const activeSearchMatches = isActiveSearchMatches(searchMatches);
+    const searchChanged =
+      search &&
+      (oldSearchOpen !== newSearchOpen ||
+        (activeSearchMatches
+          ? oldSearchSpec !== newSearchSpec
+          : oldSearchText !== newSearchText));
+
+    if (valueChanged) {
+      handleValueChanged(getStateValue(v.state), v.changes);
     }
-    const startStatus = completionStatus(v.startState);
-    const endStatus = completionStatus(v.state);
-    if (startStatus !== "active" && endStatus === "active") {
-      const { transactions } = v;
+    if (positionChanged) {
+      handlePositionChanged(getStatePosition(v.state));
+    }
+    if (selectionChanged && deferredAutocomplete) {
+      deferredAutocomplete = false;
+      showAutocomplete();
+    }
 
-      const autocompleteResults = [];
+    if (autocompleteChanged) {
+      const newAutocompleteOptions = newAutocompleteOpen
+        ? getStateAutocompleteOptions(v.state, true)
+        : undefined;
+      const newAutocompleteOption = pickedAutocompleteOption;
+      handleAutocompleteChanged(
+        newAutocompleteOpen,
+        newAutocompleteOptions,
+        newAutocompleteOption
+      );
+    }
 
-      for (let transaction of transactions) {
-        const { effects } = transaction;
-        if (effects) {
-          for (let effect of effects) {
-            const { value: values } = effect;
-            if (values) {
-              for (let value of values) {
-                const { result } = value;
-                if (result && typeof result === "object") {
-                  const { from, options } = result;
-                  if (from !== undefined && options !== undefined) {
-                    autocompleteResults.push({ from, options });
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      if (autocompleteResults.length > 0) {
-        if (autocompleteResults.length > 1) {
-          console.error(
-            "multiple autocomplete results found in update transactions"
-          );
-        }
-        const { from, options } = autocompleteResults[0];
-        autocompleteChanged(true, from, options);
-      }
-    } else if (startStatus !== null && endStatus === null) {
-      autocompleteChanged(false);
+    if (searchChanged) {
+      const newSearchMatches = activeSearchMatches
+        ? getStateSearchMatches(v.state, searchMatches)
+        : undefined;
+      handleSearchChanged(newSearchOpen, newSearchText, newSearchMatches);
+    } else if (valueChanged && activeSearchMatches) {
+      handleSearchChanged(
+        newSearchOpen,
+        newSearchText,
+        getStateSearchMatches(v.state, searchMatches)
+      );
     }
   });
 
@@ -326,16 +440,28 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const searchConf = new Compartment();
   const tabKeyConf = new Compartment();
   const themeConf = new Compartment();
+  const cursorWideConf = new Compartment();
+  const cypherLanguageConf = new Compartment();
   const tooltipAbsoluteConf = new Compartment();
   const postConf = new Compartment();
+
+  const createOptions =
+    theme === "auto"
+      ? {
+          ...combinedOptions,
+          theme: detectedThemeDark ? "dark" : "light"
+        }
+      : combinedOptions;
 
   const initialState = EditorState.create({
     doc: value,
     extensions: [
       preConf.of(preExtensions),
-      ...getExtensions(combinedOptions, {
+      ...getExtensions(createOptions, {
         lintConf,
         autocompleteConf,
+        cursorWideConf,
+        cypherLanguageConf,
         tabKeyConf,
         readableConf,
         readOnlyConf,
@@ -348,8 +474,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         tooltipAbsoluteConf,
         postConf,
         onLineNumberClick: lineNumberClick,
-        onFocusChanged: focusChanged,
-        onScrollChanged: scrollChanged,
+        onFocusChanged: handleFocusChanged,
+        onScrollChanged: handleScrollChanged,
         onKeyDown: keyDown
       }),
       updateListener,
@@ -367,9 +493,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return this.version;
   };
   editor.newContentVersion.bind(editor);
-  editor.dispatch({ effects: [initEditorSupportEffect] });
-  const editorSupport = getStateEditorSupport(editor.state);
-  editorSupport.update(value);
+  if (cypherLanguage) {
+    editorSupport = getStateEditorSupport(editor.state);
+    editorSupport.update(value);
+  }
 
   const getPositionForValue = (positionValue) =>
     getStatePositionForAny(editor.state, positionNewToOld(positionValue));
@@ -402,11 +529,27 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const showAutocomplete = () => {
-    startCompletion(editor);
+    if (cypherLanguage && autocomplete) {
+      startCompletion(editor);
+    }
   };
 
   const hideAutocomplete = () => {
-    closeCompletion(editor);
+    if (cypherLanguage && autocomplete) {
+      closeCompletion(editor);
+    }
+  };
+
+  const showSearch = () => {
+    if (search) {
+      openSearchPanel(editor);
+    }
+  };
+
+  const hideSearch = () => {
+    if (search) {
+      closeSearchPanel(editor);
+    }
   };
 
   if (position !== undefined) {
@@ -414,50 +557,32 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   }
   lastPosition = (getStatePosition(editor.state) || { position: null })
     .position;
-  if (schema !== undefined) {
+  if (cypherLanguage && schema !== undefined) {
     editorSupport.setSchema(schema);
   }
-  if (autocompleteOpen === true) {
+  if (cypherLanguage && autocomplete && autocompleteOpen === true) {
     showAutocomplete();
+  }
+  if (cypherLanguage && search && searchOpen === true) {
+    showSearch();
   }
 
   if (autofocus) {
     editor.contentDOM.focus();
   }
 
-  const setPreExtensions = (preExtensions) => {
+  const setPreExtensions = (preExtensions = defaultOptions.preExtensions) => {
     editor.dispatch({
       effects: preConf.reconfigure(preExtensions)
     });
   };
 
-  const setPostExtensions = (postExtensions) => {
+  const setPostExtensions = (
+    postExtensions = defaultOptions.postExtensions
+  ) => {
     editor.dispatch({
       effects: postConf.reconfigure(postExtensions)
     });
-  };
-
-  const valueChanged = (value, changes) => {
-    if (autocomplete && Array.isArray(autocompleteTriggerStrings)) {
-      let changedText = [];
-      changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
-        changedText = inserted.text;
-      });
-
-      if (changedText.length > 0 && changedText.length <= 2) {
-        const text = changedText[0];
-        if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          showDeferredAutocomplete();
-        } else if (changedText.length === 2) {
-          const longerText = text + changedText[1];
-          if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            showDeferredAutocomplete();
-          }
-        }
-      }
-    }
-
-    fireValueChanged(value, changes);
   };
 
   const setValue = (
@@ -468,7 +593,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       changes: { from: 0, to: getStateLength(editor.state), insert: value }
     });
     editor.update([update]);
-    if (parseOnSetValueParam !== false) {
+    if (cypherLanguage && parseOnSetValueParam !== false) {
       const version = editor.newContentVersion();
       const editorSupport = getStateEditorSupport(editor.state);
       editorSupport.update(value, version);
@@ -478,8 +603,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const selectAutocompleteOption = (index) => {
-    editor.dispatch({ effects: setSelectedCompletion(index) });
-    acceptCompletion(editor);
+    if (cypherLanguage && autocomplete) {
+      editor.dispatch({ effects: setSelectedCompletion(index) });
+      acceptCompletion(editor);
+    }
   };
 
   const setHistory = (newHistory = defaultOptions.history) => {
@@ -490,12 +617,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const clearHistory = () => {
-    editor.dispatch({
-      effects: historyConf.reconfigure([])
-    });
-    editor.dispatch({
-      effects: historyConf.reconfigure(getHistoryExtensions({ history }))
-    });
+    if (history) {
+      editor.dispatch({
+        effects: historyConf.reconfigure([])
+      });
+      editor.dispatch({
+        effects: historyConf.reconfigure(getHistoryExtensions({ history }))
+      });
+    }
   };
 
   const setLineNumbers = (newLineNumbers = defaultOptions.lineNumbers) => {
@@ -515,15 +644,17 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     newLineNumberFormatter = defaultOptions.lineNumberFormatter
   ) => {
     lineNumberFormatter = newLineNumberFormatter;
-    editor.dispatch({
-      effects: showLinesConf.reconfigure(
-        getLineNumbersExtensions({
-          lineNumbers,
-          lineNumberFormatter,
-          onLineNumberClick: lineNumberClick
-        })
-      )
-    });
+    if (lineNumbers) {
+      editor.dispatch({
+        effects: showLinesConf.reconfigure(
+          getLineNumbersExtensions({
+            lineNumbers,
+            lineNumberFormatter,
+            onLineNumberClick: lineNumberClick
+          })
+        )
+      });
+    }
   };
 
   const setReadOnly = (newReadOnly = defaultOptions.readOnly) => {
@@ -538,12 +669,15 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         ),
         autocompleteConf.reconfigure(
           getAutocompleteExtensions({
+            cypherLanguage,
             readOnly,
             autocomplete,
             autocompleteCloseOnBlur
           })
         ),
-        lintConf.reconfigure(getLintExtensions({ readOnly, lint }))
+        lintConf.reconfigure(
+          getLintExtensions({ cypherLanguage, readOnly, lint })
+        )
       ]
     });
   };
@@ -585,16 +719,24 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const setAutocomplete = (newAutocomplete = defaultOptions.autocomplete) => {
+    const autocompleteActivated =
+      cypherLanguage && newAutocomplete && !(cypherLanguage && autocomplete);
     autocomplete = newAutocomplete;
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         getAutocompleteExtensions({
+          cypherLanguage,
           readOnly,
           autocomplete,
           autocompleteCloseOnBlur
         })
       )
     });
+    if (autocompleteActivated) {
+      if (autocompleteOpen) {
+        showAutocomplete();
+      }
+    }
   };
 
   const setAutocompleteCloseOnBlur = (
@@ -604,12 +746,24 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editor.dispatch({
       effects: autocompleteConf.reconfigure(
         getAutocompleteExtensions({
+          cypherLanguage,
           readOnly,
           autocomplete,
           autocompleteCloseOnBlur
         })
       )
     });
+  };
+
+  const setAutocompleteOpen = (
+    newAutocompleteOpen = defaultOptions.autocompleteOpen
+  ) => {
+    autocompleteOpen = newAutocompleteOpen;
+    if (autocompleteOpen) {
+      showAutocomplete();
+    } else {
+      hideAutocomplete();
+    }
   };
 
   const setAutocompleteTriggerStrings = (
@@ -621,7 +775,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const setLint = (newLint = defaultOptions.lint) => {
     lint = newLint;
     editor.dispatch({
-      effects: lintConf.reconfigure(getLintExtensions({ readOnly, lint }))
+      effects: lintConf.reconfigure(
+        getLintExtensions({ cypherLanguage, readOnly, lint })
+      )
     });
   };
 
@@ -633,17 +789,101 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     return editor ? getStateLineCount(editor.state) : 0;
   };
 
-  const setSchema = (schema = defaultOptions.schema) => {
-    editorSupport.setSchema(schema);
-    if (autocompleteOpen) {
-      showAutocomplete();
+  const setSchema = (newSchema = defaultOptions.schema) => {
+    schema = newSchema;
+    if (cypherLanguage) {
+      editorSupport.setSchema(schema);
+      if (autocomplete && autocompleteOpen) {
+        showAutocomplete();
+      }
     }
   };
 
-  const setTheme = (theme = defaultOptions.theme) => {
+  const setTheme = (newTheme = defaultOptions.theme) => {
+    const oldTheme = theme;
+    theme = newTheme;
+    if (oldTheme === "auto" && newTheme !== "auto") {
+      detectedThemeDark = null;
+      detectedThemeDarkListener &&
+        removeDetectThemeDarkListener(detectedThemeDarkListener);
+      detectedThemeDarkListener = null;
+    }
+    if (oldTheme !== "auto" && newTheme === "auto") {
+      detectedThemeDark = detectThemeDark();
+      detectedThemeDarkListener =
+        addDetectThemeDarkListener(setDetectedThemeDark);
+    }
+    const derivedTheme =
+      theme === "auto" ? (detectedThemeDark ? "dark" : "light") : theme;
     editor.dispatch({
-      effects: themeConf.reconfigure(getThemeExtensions({ theme }))
+      effects: themeConf.reconfigure(
+        getThemeExtensions({ theme: derivedTheme })
+      )
     });
+  };
+
+  const updateTheme = () => {
+    setTheme(theme);
+  };
+
+  const setCursorWide = (cursorWide = defaultOptions.cursorWide) => {
+    editor.dispatch({
+      effects: cursorWideConf.reconfigure(
+        getCursorWideExtensions({ cursorWide })
+      )
+    });
+  };
+
+  const setCypherLanguage = (
+    newCypherLanguage = defaultOptions.cypherLanguage
+  ) => {
+    const cypherLanguageChanged = cypherLanguage !== newCypherLanguage;
+    const autocompleteActivated =
+      newCypherLanguage && autocomplete && !(cypherLanguage && autocomplete);
+
+    cypherLanguage = newCypherLanguage;
+
+    if (cypherLanguageChanged && !cypherLanguage) {
+      editorSupport = null;
+    }
+
+    editor.dispatch({
+      effects: cypherLanguageConf.reconfigure(
+        getCypherLanguageExtensions({ cypherLanguage })
+      )
+    });
+    editor.dispatch({
+      effects: autocompleteConf.reconfigure(
+        getAutocompleteExtensions({
+          cypherLanguage,
+          readOnly,
+          autocomplete,
+          autocompleteCloseOnBlur
+        })
+      )
+    });
+    editor.dispatch({
+      effects: lintConf.reconfigure(
+        getLintExtensions({ cypherLanguage, readOnly, lint })
+      )
+    });
+    if (cypherLanguageChanged && cypherLanguage) {
+      editor.version = 1;
+      const version = editor.newContentVersion();
+      editorSupport = getStateEditorSupport(editor.state);
+      editorSupport.setSchema(schema);
+      editorSupport.update(value, version);
+
+      fixColors(editor, editorSupport);
+    }
+    if (autocompleteActivated) {
+      if (autocompleteOpen) {
+        showAutocomplete();
+      }
+    }
+    if (!cypherLanguage) {
+      editor && resetColors(editor);
+    }
   };
 
   const setTooltipAbsolute = (
@@ -663,14 +903,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const destroy = () => {
     editor && editor.destroy();
-  };
-
-  const setAutocompleteOpen = (open = defaultOptions.autocompleteOpen) => {
-    if (open) {
-      showAutocomplete();
-    } else {
-      hideAutocomplete();
-    }
+    detectedThemeDarkListener &&
+      removeDetectThemeDarkListener(detectedThemeDarkListener);
   };
 
   const setTabKey = (newTabKey = defaultOptions.tabKey) => {
@@ -692,12 +926,66 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const setSearch = (newSearch = defaultOptions.search) => {
+    const searchActivated = newSearch && !search;
     search = newSearch;
+    if (searchActivated) {
+      searchInitializing = true;
+    }
     editor.dispatch({
       effects: searchConf.reconfigure(
         getSearchExtensions({ readOnly, search, searchTop })
       )
     });
+    if (searchActivated) {
+      setSearchText(searchText);
+      if (searchOpen) {
+        showSearch();
+      }
+      searchInitializing = false;
+      handleSearchChanged(
+        searchOpen,
+        searchText,
+        getStateSearchMatches(editor.state, searchMatches)
+      );
+    }
+  };
+
+  const setSearchMatches = (
+    newSearchMatches = defaultOptions.searchMatches
+  ) => {
+    const searchMatchesChanged = newSearchMatches !== searchMatches;
+    searchMatches = newSearchMatches;
+    if (searchMatchesChanged && searchMatches > 0) {
+    }
+  };
+
+  const setSearchOpen = (newSearchOpen = defaultOptions.searchOpen) => {
+    searchOpen = newSearchOpen;
+    if (searchOpen) {
+      showSearch();
+    } else {
+      hideSearch();
+    }
+  };
+
+  const setSearchText = (newSearchText = defaultOptions.searchText) => {
+    searchText = newSearchText;
+    if (search) {
+      const searchQuery = getSearchQuery(editor.state);
+      const { caseSensitive, literal, regexp, replace, wholeWord } =
+        searchQuery;
+      const newSearchQuery = new SearchQuery({
+        search: searchText,
+        caseSensitive,
+        literal,
+        regexp,
+        replace,
+        wholeWord
+      });
+      editor.dispatch({
+        effects: setSearchQuery.of(newSearchQuery)
+      });
+    }
   };
 
   const setSearchTop = (newSearchTop = defaultOptions.searchTop) => {
@@ -721,6 +1009,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocompleteCloseOnBlur,
     setAutocompleteOpen,
     setAutocompleteTriggerStrings,
+    setCursorWide,
+    setCypherLanguage,
     setHistory,
     setIndentUnit,
     setLineNumberFormatter,
@@ -733,6 +1023,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setReadOnlyCursor,
     setSchema,
     setSearch,
+    setSearchMatches,
+    setSearchOpen,
+    setSearchText,
     setSearchTop,
     setTabKey,
     setTheme,
@@ -751,6 +1044,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offPositionChanged,
     onScrollChanged,
     offScrollChanged,
+    onSearchChanged,
+    offSearchChanged,
     onValueChanged,
     offValueChanged,
 
@@ -760,7 +1055,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     editorSupport
   };
 
-  if (parseOnSetValue !== false) {
+  if (cypherLanguage && parseOnSetValue !== false) {
     const version = editor.newContentVersion();
     editorSupport.update(value, version);
 

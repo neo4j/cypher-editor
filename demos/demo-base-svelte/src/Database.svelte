@@ -50,10 +50,14 @@
 
   const driver = createDriver();
 
+  const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
+
   let autocomplete = initialOptions.autocomplete;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autofocus = initialOptions.autofocus;
+  let cursorWide = initialOptions.cursorWide;
+  let cypherLanguage = initialOptions.cypherLanguage;
   let history = initialOptions.history;
   let indentUnit = initialOptions.indentUnit;
   let lineNumberFormatter = initialOptions.lineNumberFormatter;
@@ -67,6 +71,9 @@
   let readOnlyCursor = initialOptions.readOnlyCursor;
   let schema = initialOptions.schema;
   let search = initialOptions.search;
+  let searchMatches = initialOptions.searchMatches;
+  let searchOpen = initialOptions.searchOpen;
+  let searchText = initialOptions.searchText;
   let searchTop = initialOptions.searchTop;
   let tabKey = initialOptions.tabKey;
   let theme = initialOptions.theme;
@@ -127,34 +134,13 @@
     }
   };
 
-  const onValueChanged = (value: string, change?: any) => {
-    logs = logs.concat(eventLog("valueChanged", value ? value.length : 0));
-    updateValue(value);
-  };
-
-  const onPositionChanged = (positionObject) => {
-    logs = logs.concat(eventLog("positionChanged", positionObject));
-    position = positionObject;
-  };
-
-  const onAutocompleteChanged = (open, from, options) => {
+  const onAutocompleteChanged = (open, options, option) => {
     logs = logs.concat(
-      eventLog("autocompleteChanged", { open, from, options })
+      eventLog("autocompleteChanged", { open, options, option })
     );
     autocompleteOpen = open;
     autocompleteOptions = options;
     updatePickGoButtons();
-  };
-
-  const onLineNumberClick = (line, event) => {
-    logs = logs.concat(eventLog("lineNumberClick", line));
-  };
-
-  const onKeyDown = (event) => {
-    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
-    logs = logs.concat(
-      eventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey })
-    );
   };
 
   const onEditorCreated = (editor) => {
@@ -170,6 +156,11 @@
     focused = newFocused;
   };
 
+  const onPositionChanged = (positionObject) => {
+    logs = logs.concat(eventLog("positionChanged", positionObject));
+    position = positionObject;
+  };
+
   const onScrollChanged = (scrollInfo) => {
     logs = logs.concat(
       eventLog(
@@ -180,10 +171,39 @@
     lastScrollInfo = scrollInfo;
   };
 
+  const onSearchChanged = (open, text, matches) => {
+    logs = logs.concat(
+      eventLog("searchChanged", {
+        open,
+        text,
+        matches: matches ? matches.length : matches
+      })
+    );
+    searchOpen = open;
+    searchText = text;
+  };
+
+  const onValueChanged = (value: string, change?: any) => {
+    logs = logs.concat(eventLog("valueChanged", value ? value.length : 0));
+    updateValue(value);
+  };
+
+  const onKeyDown = (event) => {
+    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
+    logs = logs.concat(
+      eventLog("keyDown", { code, altKey, key, controlKey, metaKey, shiftKey })
+    );
+  };
+
+  const onLineNumberClick = (line, event) => {
+    logs = logs.concat(eventLog("lineNumberClick", line));
+  };
+
   $: cypherLength = cypher ? cypher.length : 0;
   $: positionString = position ? JSON.stringify(position) : "";
   $: focusedString = focused + "";
   $: autocompleteString = autocompleteOpen + "";
+  $: searchString = searchOpen + "";
   $: logText = getLogText(logs, { eventFilters });
 
   let textareaRef;
@@ -206,42 +226,6 @@
     return logs;
   }
 
-  const setSamplePlaceholder = () => {
-    placeholder = samplePlaceholder;
-  };
-  const clearHistory = () => {
-    logs = appendLog(commandLog("clearHistory", ""));
-    cypherEditor && cypherEditor.clearHistory();
-  };
-
-  $: logs = appendLog(commandLog("setAutocomplete", autocomplete));
-  $: logs = appendLog(
-    commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
-  );
-  $: logs = appendLog(
-    commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
-  );
-  $: logs = appendLog(commandLog("setHistory", history));
-  $: logs = appendLog(commandLog("setIndentUnit", indentUnit));
-  $: logs = appendLog(
-    commandLog(
-      "setLineNumberFormatter",
-      deriveLineNumberFormatterName() + " " + typeof lineNumberFormatter
-    )
-  );
-  $: logs = appendLog(commandLog("setLineNumbers", lineNumbers));
-  $: logs = appendLog(commandLog("setLineWrapping", lineWrapping));
-  $: logs = appendLog(commandLog("setLint", lint));
-  $: logs = appendLog(commandLog("setPlaceholder", placeholder));
-  $: logs = appendLog(commandLog("setReadOnly", readOnly));
-  $: logs = appendLog(commandLog("setReadOnlyCursor", readOnlyCursor));
-  $: logs = appendLog(commandLog("setTabKey", tabKey));
-  $: logs = appendLog(commandLog("setTheme", theme));
-  $: logs = appendLog(commandLog("setTooltipAbsolute", tooltipAbsolute));
-  $: logs = appendLog(commandLog("setSchema", deriveSchemaName(schema)));
-  $: logs = appendLog(commandLog("setSearch", search));
-  $: logs = appendLog(commandLog("setSearchTop", searchTop));
-
   function deriveSchemaName(checkSchema) {
     if (checkSchema === simpleSchema) {
       return "simple";
@@ -263,44 +247,109 @@
     }
   }
 
+  $: logs = appendLog(commandLog("setAutocomplete", autocomplete));
+  $: logs = appendLog(
+    commandLog("setAutocompleteCloseOnBlur", autocompleteCloseOnBlur)
+  );
+  $: logs = appendLog(commandLog("setAutocompleteOpen", autocompleteOpen));
+  $: logs = appendLog(
+    commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
+  );
+  $: logs = appendLog(commandLog("setCursorWide", cursorWide));
+  $: logs = appendLog(commandLog("setCypherLanguage", cypherLanguage));
+  $: logs = appendLog(commandLog("setHistory", history));
+  $: logs = appendLog(commandLog("setIndentUnit", indentUnit));
+  $: logs = appendLog(
+    commandLog(
+      "setLineNumberFormatter",
+      deriveLineNumberFormatterName() + " " + typeof lineNumberFormatter
+    )
+  );
+  $: logs = appendLog(commandLog("setLineNumbers", lineNumbers));
+  $: logs = appendLog(commandLog("setLineWrapping", lineWrapping));
+  $: logs = appendLog(commandLog("setLint", lint));
+  $: logs = appendLog(commandLog("setPlaceholder", placeholder));
+  $: logs = appendLog(commandLog("setReadOnly", readOnly));
+  $: logs = appendLog(commandLog("setReadOnlyCursor", readOnlyCursor));
+  $: logs = appendLog(commandLog("setSchema", deriveSchemaName(schema)));
+  $: logs = appendLog(commandLog("setSearch", search));
+  $: logs = appendLog(commandLog("setSearchMatches", searchMatches));
+  $: logs = appendLog(commandLog("setSearchOpen", searchOpen));
+  $: logs = appendLog(commandLog("setSearchText", searchText));
+  $: logs = appendLog(commandLog("setSearchTop", searchTop));
+  $: logs = appendLog(commandLog("setTabKey", tabKey));
+  $: logs = appendLog(commandLog("setTheme", theme));
+  $: logs = appendLog(commandLog("setTooltipAbsolute", tooltipAbsolute));
+
+  const clearHistory = () => {
+    logs = appendLog(commandLog("clearHistory", ""));
+    cypherEditor && cypherEditor.clearHistory();
+  };
+
   const focusEditor = () => {
     logs = logs.concat(commandLog("focus", ""));
     cypherEditor && cypherEditor.focus();
   };
 
-  const goToPosition = (newPosition) => {
-    logs = logs.concat(commandLog("setPosition", newPosition));
-    position = newPosition;
-    cypherEditor && cypherEditor.focus();
-  };
-
-  const goToPositionStart = () => {
-    goToPosition(0);
-  };
-
-  const goToPositionEnd = () => {
-    goToPosition(cypherLength);
-  };
-
-  const goToPositionPosition = () => {
-    if (isNumberString(positionPosition)) {
-      goToPosition(+positionPosition);
-    }
-  };
-
-  const goToPositionLineColumn = () => {
-    if (isNumberString(positionLine) && isNumberString(positionColumn)) {
-      goToPosition({ line: +positionLine, column: +positionColumn });
-    }
-  };
-
   const selectCompletion = () => {
-    logs = appendLog(commandLog("selectCompletion", autocompleteOptionIndex));
+    logs = appendLog(
+      commandLog("selectAutocompleteOption", autocompleteOptionIndex)
+    );
     cypherEditor &&
       cypherEditor.selectAutocompleteOption(+autocompleteOptionIndex);
   };
 
-  const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
+  const setPlaceholderSample = () => {
+    placeholder = samplePlaceholder;
+  };
+
+  const setPositionTo = (newPosition) => {
+    logs = logs.concat(commandLog("setPosition", newPosition));
+    position = newPosition;
+    cypherEditor && cypherEditor.setPosition(position);
+  };
+
+  const setPositionToStart = () => {
+    setPositionTo(0);
+  };
+
+  const setPositionToEnd = () => {
+    setPositionTo(cypherLength);
+  };
+
+  const setPositionToAbsolute = () => {
+    if (isNumberString(positionPosition)) {
+      setPositionTo(+positionPosition);
+    }
+  };
+
+  const setPositionToLineColumn = () => {
+    if (isNumberString(positionLine) && isNumberString(positionColumn)) {
+      setPositionTo({ line: +positionLine, column: +positionColumn });
+    }
+  };
+
+  const setValueLong = () => {
+    if (cypherEditor) {
+      logs = appendLog(commandLog("setValue", longQuery.length + " (long)"));
+      updateValue(longQuery);
+    }
+  };
+
+  const setValueSimple = () => {
+    if (cypherEditor) {
+      logs = appendLog(
+        commandLog("setValue", simpleQuery.length + " (simple)")
+      );
+      updateValue(simpleQuery);
+    }
+  };
+  const setValueClear = () => {
+    if (cypherEditor) {
+      logs = appendLog(commandLog("setValue", "0 (clear)"));
+      updateValue("");
+    }
+  };
 
   const positionPositionChanged = (e) => {
     const { target } = e;
@@ -345,86 +394,188 @@
     }
     updatePickGoButtons();
   };
-
-  const showLongValue = () => {
-    if (cypherEditor) {
-      logs = appendLog(commandLog("setValue", longQuery.length + " (long)"));
-      updateValue(longQuery);
-    }
-  };
-
-  const showSimpleValue = () => {
-    if (cypherEditor) {
-      logs = appendLog(
-        commandLog("setValue", simpleQuery.length + " (simple)")
-      );
-      updateValue(simpleQuery);
-    }
-  };
-  const clearCypher = () => {
-    if (cypherEditor) {
-      logs = appendLog(commandLog("setValue", "0 (clear)"));
-      updateValue("");
-    }
-  };
 </script>
 
 <div class="database">
   <div class="left">
-    <div class="setting setting-short">
-      <div class="setting-label">Theme</div>
+    <div class="setting">
+      <div class="setting-label">Autocomplete</div>
       <div class="setting-values">
         <button
-          class={theme === "light" ? "setting-active" : undefined}
-          on:click={() => (theme = "light")}>Light</button
+          class={autocomplete === true ? "setting-active" : undefined}
+          on:click={() => (autocomplete = true)}>True</button
         >
         <button
-          class={theme === "dark" ? "setting-active" : undefined}
-          on:click={() => (theme = "dark")}>Dark</button
+          class={autocomplete === false ? "setting-active" : undefined}
+          on:click={() => (autocomplete = false)}>False</button
         >
       </div>
     </div>
 
-    <div class="setting setting-short">
-      <div class="setting-label">Placeholder</div>
+    <div class="setting setting-long">
+      <div class="setting-label">Autocomplete Close On Blur</div>
       <div class="setting-values">
         <button
-          class={placeholder === undefined ? "setting-active" : undefined}
-          on:click={() => (placeholder = undefined)}>None</button
-        >
-        <button
-          class={placeholder === samplePlaceholder
+          class={autocompleteCloseOnBlur === false
             ? "setting-active"
             : undefined}
-          on:click={setSamplePlaceholder}>Sample</button
+          on:click={() => (autocompleteCloseOnBlur = false)}>False</button
+        >
+        <button
+          class={autocompleteCloseOnBlur === true ||
+          autocompleteCloseOnBlur === undefined
+            ? "setting-active"
+            : undefined}
+          on:click={() => (autocompleteCloseOnBlur = true)}>True</button
         >
       </div>
     </div>
 
-    <div class="setting setting-short schema">
-      <div class="setting-label">Schema</div>
+    <div class="setting setting-long">
+      <div class="setting-label">Autocomplete Open</div>
       <div class="setting-values">
         <button
-          class={schema === simpleSchema ? "setting-active" : undefined}
-          on:click={() => (schema = simpleSchema)}>Simple</button
+          class={autocompleteOpen === false ? "setting-active" : undefined}
+          on:click={() => (autocompleteOpen = false)}>False</button
         >
         <button
-          class={schema === neo4jSchema ? "setting-active" : undefined}
-          on:click={() => (schema = neo4jSchema)}>Long</button
+          class={autocompleteOpen === true || autocompleteOpen === undefined
+            ? "setting-active"
+            : undefined}
+          on:click={() => (autocompleteOpen = true)}>True</button
         >
       </div>
     </div>
 
-    <div class="setting setting-short">
-      <div class="setting-label">Lint</div>
+    <div class="setting setting-long">
+      <div class="setting-label">Autocomplete Select</div>
+
+      <div class="setting-values">
+        <label for="autocompleteOptionIndex">index</label>
+        <input
+          class="short-input"
+          name="autocompleteOptionIndex"
+          type="text"
+          value={autocompleteOptionIndex}
+          on:input={autocompleteOptionIndexChanged}
+        />
+        <button
+          disabled={!selectAutocompleteOptionEnabled}
+          on:click={selectCompletion}
+        >
+          Go
+        </button>
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Autocomplete Triggers</div>
       <div class="setting-values">
         <button
-          class={lint === true ? "setting-active" : undefined}
-          on:click={() => (lint = true)}>True</button
+          class={autocompleteTriggerStrings ===
+          initialOptions.autocompleteTriggerStrings
+            ? "setting-active"
+            : undefined}
+          on:click={() =>
+            (autocompleteTriggerStrings =
+              initialOptions.autocompleteTriggerStrings)}>Default</button
         >
         <button
-          class={lint === false ? "setting-active" : undefined}
-          on:click={() => (lint = false)}>False</button
+          class={autocompleteTriggerStrings === false
+            ? "setting-active"
+            : undefined}
+          on:click={() => (autocompleteTriggerStrings = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Cursor Wide</div>
+      <div class="setting-values">
+        <button
+          class={cursorWide ? "setting-active" : undefined}
+          on:click={() => (cursorWide = true)}>True</button
+        >
+        <button
+          class={!cursorWide ? "setting-active" : undefined}
+          on:click={() => (cursorWide = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Cypher Language</div>
+      <div class="setting-values">
+        <button
+          class={cypherLanguage ? "setting-active" : undefined}
+          on:click={() => (cypherLanguage = true)}>True</button
+        >
+        <button
+          class={!cypherLanguage ? "setting-active" : undefined}
+          on:click={() => (cypherLanguage = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Focus</div>
+      <div class="setting-values">
+        <button on:click={focusEditor}>Focus Editor</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">History</div>
+      <div class="setting-values">
+        <button
+          class={history ? "setting-active" : undefined}
+          on:click={() => (history = true)}>True</button
+        >
+        <button
+          class={!history ? "setting-active" : undefined}
+          on:click={() => (history = false)}>False</button
+        >
+        <button on:click={clearHistory}>Clear</button>
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Indent Unit</div>
+      <div class="setting-values">
+        <button
+          class={indentUnit === "  " ? "setting-active" : undefined}
+          on:click={() => (indentUnit = "  ")}>Two Spaces</button
+        >
+        <button
+          class={indentUnit === "\t" ? "setting-active" : undefined}
+          on:click={() => (indentUnit = "\t")}>Tab</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Line Number Formatter</div>
+      <div class="setting-values">
+        <button
+          class={lineNumberFormatter === defaultLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={() => (lineNumberFormatter = defaultLineNumberFormatter)}
+          >Default</button
+        >
+        <button
+          class={lineNumberFormatter === noneLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={() => (lineNumberFormatter = noneLineNumberFormatter)}
+          >None</button
+        >
+        <button
+          class={lineNumberFormatter === customLineNumberFormatter
+            ? "setting-active"
+            : undefined}
+          on:click={() => (lineNumberFormatter = customLineNumberFormatter)}
+          >Custom</button
         >
       </div>
     </div>
@@ -457,29 +608,75 @@
       </div>
     </div>
 
-    <div class="setting setting-long">
-      <div class="setting-label">Line Number Formatter</div>
+    <div class="setting setting-short">
+      <div class="setting-label">Lint</div>
       <div class="setting-values">
         <button
-          class={lineNumberFormatter === defaultLineNumberFormatter
-            ? "setting-active"
-            : undefined}
-          on:click={() => (lineNumberFormatter = defaultLineNumberFormatter)}
-          >Default</button
+          class={lint === true ? "setting-active" : undefined}
+          on:click={() => (lint = true)}>True</button
         >
         <button
-          class={lineNumberFormatter === noneLineNumberFormatter
-            ? "setting-active"
-            : undefined}
-          on:click={() => (lineNumberFormatter = noneLineNumberFormatter)}
-          >None</button
+          class={lint === false ? "setting-active" : undefined}
+          on:click={() => (lint = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-short">
+      <div class="setting-label">Placeholder</div>
+      <div class="setting-values">
+        <button
+          class={placeholder === undefined ? "setting-active" : undefined}
+          on:click={() => (placeholder = undefined)}>None</button
         >
         <button
-          class={lineNumberFormatter === customLineNumberFormatter
+          class={placeholder === samplePlaceholder
             ? "setting-active"
             : undefined}
-          on:click={() => (lineNumberFormatter = customLineNumberFormatter)}
-          >Custom</button
+          on:click={setPlaceholderSample}>Sample</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">
+        Position
+        <button title="start" on:click={setPositionToStart}>start</button>
+        <button title="end" on:click={setPositionToEnd}>end</button>
+      </div>
+      <div class="setting-values">
+        <label for="position">position</label>
+        <input
+          name="position"
+          type="text"
+          value={positionPosition}
+          on:input={positionPositionChanged}
+        />
+        <button
+          disabled={!goPositionPositionEnabled}
+          on:click={setPositionToAbsolute}>Go</button
+        >
+      </div>
+      <div class="setting-values">
+        <label for="line">line</label>
+        <input
+          class="short-input"
+          name="line"
+          type="text"
+          value={positionLine}
+          on:input={positionLineChanged}
+        />
+        <label for="column">column</label>
+        <input
+          class="short-input"
+          name="column"
+          type="text"
+          value={positionColumn}
+          on:input={positionColumnChanged}
+        />
+        <button
+          disabled={!goPositionLineColumnEnabled}
+          on:click={setPositionToLineColumn}>Go</button
         >
       </div>
     </div>
@@ -514,202 +711,76 @@
       </div>
     </div>
 
-    <div class="setting">
-      <div class="setting-label">Autocomplete</div>
+    <div class="setting setting-short schema">
+      <div class="setting-label">Schema</div>
       <div class="setting-values">
         <button
-          class={autocomplete === true ? "setting-active" : undefined}
-          on:click={() => (autocomplete = true)}>True</button
+          class={schema === simpleSchema ? "setting-active" : undefined}
+          on:click={() => (schema = simpleSchema)}>Simple</button
         >
         <button
-          class={autocomplete === false ? "setting-active" : undefined}
-          on:click={() => (autocomplete = false)}>False</button
-        >
-      </div>
-    </div>
-
-    <div class="setting setting-long">
-      <div class="setting-label">Autocomplete Triggers</div>
-      <div class="setting-values">
-        <button
-          class={autocompleteTriggerStrings ===
-          initialOptions.autocompleteTriggerStrings
-            ? "setting-active"
-            : undefined}
-          on:click={() =>
-            (autocompleteTriggerStrings =
-              initialOptions.autocompleteTriggerStrings)}>Default</button
-        >
-        <button
-          class={autocompleteTriggerStrings === false
-            ? "setting-active"
-            : undefined}
-          on:click={() => (autocompleteTriggerStrings = false)}>False</button
-        >
-      </div>
-    </div>
-
-    <div class="setting setting-long">
-      <div class="setting-label">Autocomplete Close On Blur</div>
-      <div class="setting-values">
-        <button
-          class={autocompleteCloseOnBlur === false
-            ? "setting-active"
-            : undefined}
-          on:click={() => (autocompleteCloseOnBlur = false)}>False</button
-        >
-        <button
-          class={autocompleteCloseOnBlur === true ||
-          autocompleteCloseOnBlur === undefined
-            ? "setting-active"
-            : undefined}
-          on:click={() => (autocompleteCloseOnBlur = true)}>True</button
+          class={schema === neo4jSchema ? "setting-active" : undefined}
+          on:click={() => (schema = neo4jSchema)}>Long</button
         >
       </div>
     </div>
 
     <div class="setting">
-      <div class="setting-label">History</div>
+      <div class="setting-label">Search</div>
       <div class="setting-values">
         <button
-          class={history ? "setting-active" : undefined}
-          on:click={() => (history = true)}>True</button
+          class={search === false ? "setting-active" : undefined}
+          on:click={() => (search = false)}>False</button
         >
         <button
-          class={!history ? "setting-active" : undefined}
-          on:click={() => (history = false)}>False</button
-        >
-        <button on:click={clearHistory}>Clear</button>
-      </div>
-    </div>
-
-    <div class="setting">
-      <div class="setting-label">Focus</div>
-      <div class="setting-values">
-        <button on:click={focusEditor}>Focus Editor</button>
-      </div>
-    </div>
-
-    <div class="setting setting-long">
-      <div class="setting-label">
-        Position
-        <button title="start" on:click={goToPositionStart}>start</button>
-        <button title="end" on:click={goToPositionEnd}>end</button>
-      </div>
-      <div class="setting-values">
-        <label for="position">position</label>
-        <input
-          name="position"
-          type="text"
-          value={positionPosition}
-          on:input={positionPositionChanged}
-        />
-        <button
-          disabled={!goPositionPositionEnabled}
-          on:click={goToPositionPosition}>Go</button
-        >
-      </div>
-      <div class="setting-values">
-        <label for="line">line</label>
-        <input
-          class="short-input"
-          name="line"
-          type="text"
-          value={positionLine}
-          on:input={positionLineChanged}
-        />
-        <label for="column">column</label>
-        <input
-          class="short-input"
-          name="column"
-          type="text"
-          value={positionColumn}
-          on:input={positionColumnChanged}
-        />
-        <button
-          disabled={!goPositionLineColumnEnabled}
-          on:click={goToPositionLineColumn}>Go</button
+          class={search === true ? "setting-active" : undefined}
+          on:click={() => (search = true)}>True</button
         >
       </div>
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Select Completion</div>
-
-      <div class="setting-values">
-        <label for="autocompleteOptionIndex">index</label>
-        <input
-          class="short-input"
-          name="autocompleteOptionIndex"
-          type="text"
-          value={autocompleteOptionIndex}
-          on:input={autocompleteOptionIndexChanged}
-        />
-        <button
-          disabled={!selectAutocompleteOptionEnabled}
-          on:click={selectCompletion}
-        >
-          Go
-        </button>
-      </div>
-    </div>
-
-    <div class="setting cypher">
-      <div class="setting-label">Value</div>
+      <div class="setting-label">Search Matches</div>
       <div class="setting-values">
         <button
-          class={cypher === longQuery ? "setting-active" : undefined}
-          on:click={showLongValue}>Long</button
+          class={searchMatches === 0 ? "setting-active" : undefined}
+          on:click={() => (searchMatches = 0)}>0</button
         >
         <button
-          class={cypher === simpleQuery ? "setting-active" : undefined}
-          on:click={showSimpleValue}>Simple</button
-        >
-        <button
-          class={cypher === "" ? "setting-active" : undefined}
-          on:click={clearCypher}>Clear</button
+          class={searchMatches === 10 ? "setting-active" : undefined}
+          on:click={() => (searchMatches = 10)}>10</button
         >
       </div>
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Tab Key Enabled</div>
+      <div class="setting-label">Search Open</div>
       <div class="setting-values">
         <button
-          class={tabKey === false ? "setting-active" : undefined}
-          on:click={() => (tabKey = false)}>False</button
+          class={searchOpen === true ? "setting-active" : undefined}
+          on:click={() => (searchOpen = true)}>True</button
         >
         <button
-          class={tabKey === true ? "setting-active" : undefined}
-          on:click={() => (tabKey = true)}>True</button
+          class={searchOpen === false ? "setting-active" : undefined}
+          on:click={() => (searchOpen = false)}>False</button
         >
       </div>
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Tooltip Absolute</div>
+      <div class="setting-label">Search Text</div>
       <div class="setting-values">
         <button
-          class={tooltipAbsolute === false ? "setting-active" : undefined}
-          on:click={() => (tooltipAbsolute = false)}>False</button
+          class={searchText === "all" ? "setting-active" : undefined}
+          on:click={() => (searchText = "all")}>all</button
         >
         <button
-          class={tooltipAbsolute === true ? "setting-active" : undefined}
-          on:click={() => (tooltipAbsolute = true)}>True</button
-        >
-      </div>
-    </div>
-
-    <div class="setting setting-long">
-      <div class="setting-label">Indent Unit</div>
-      <div class="setting-values">
-        <button
-          class={indentUnit === "  " ? "setting-active" : undefined}
-          on:click={() => (indentUnit = "  ")}>Two Spaces</button
+          class={searchText === "call" ? "setting-active" : undefined}
+          on:click={() => (searchText = "call")}>call</button
         >
         <button
-          class={indentUnit === "\t" ? "setting-active" : undefined}
-          on:click={() => (indentUnit = "\t")}>Tab</button
+          class={searchText === "union" ? "setting-active" : undefined}
+          on:click={() => (searchText = "union")}>union</button
         >
       </div>
     </div>
@@ -733,15 +804,65 @@
     </div>
 
     <div class="setting setting-long">
-      <div class="setting-label">Search Enabled</div>
+      <div class="setting-label">Tab Key Enabled</div>
       <div class="setting-values">
         <button
-          class={search === false ? "setting-active" : undefined}
-          on:click={() => (search = false)}>False</button
+          class={tabKey === false ? "setting-active" : undefined}
+          on:click={() => (tabKey = false)}>False</button
         >
         <button
-          class={search === true ? "setting-active" : undefined}
-          on:click={() => (search = true)}>True</button
+          class={tabKey === true ? "setting-active" : undefined}
+          on:click={() => (tabKey = true)}>True</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-short">
+      <div class="setting-label">Theme</div>
+      <div class="setting-values">
+        <button
+          class={theme === "light" ? "setting-active" : undefined}
+          on:click={() => (theme = "light")}>Light</button
+        >
+        <button
+          class={theme === "dark" ? "setting-active" : undefined}
+          on:click={() => (theme = "dark")}>Dark</button
+        >
+        <button
+          class={theme === "auto" ? "setting-active" : undefined}
+          on:click={() => (theme = "auto")}>Auto</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Tooltip Absolute</div>
+      <div class="setting-values">
+        <button
+          class={tooltipAbsolute === false ? "setting-active" : undefined}
+          on:click={() => (tooltipAbsolute = false)}>False</button
+        >
+        <button
+          class={tooltipAbsolute === true ? "setting-active" : undefined}
+          on:click={() => (tooltipAbsolute = true)}>True</button
+        >
+      </div>
+    </div>
+
+    <div class="setting cypher">
+      <div class="setting-label">Value</div>
+      <div class="setting-values">
+        <button
+          class={cypher === longQuery ? "setting-active" : undefined}
+          on:click={setValueLong}>Long</button
+        >
+        <button
+          class={cypher === simpleQuery ? "setting-active" : undefined}
+          on:click={setValueSimple}>Simple</button
+        >
+        <button
+          class={cypher === "" ? "setting-active" : undefined}
+          on:click={setValueClear}>Clear</button
         >
       </div>
     </div>
@@ -754,17 +875,21 @@
     <div class="card">
       <svelte:component
         this={editor}
-        {onValueChanged}
-        {onPositionChanged}
-        {onFocusChanged}
-        {onScrollChanged}
-        {onEditorCreated}
         {onAutocompleteChanged}
+        {onEditorCreated}
+        {onFocusChanged}
+        {onPositionChanged}
+        {onScrollChanged}
+        {onSearchChanged}
+        {onValueChanged}
         {onLineNumberClick}
         {onKeyDown}
         {autocomplete}
+        {autocompleteOpen}
         {autocompleteCloseOnBlur}
         {autocompleteTriggerStrings}
+        {cursorWide}
+        {cypherLanguage}
         {history}
         {indentUnit}
         {lineNumberFormatter}
@@ -776,6 +901,9 @@
         {readOnlyCursor}
         {schema}
         {search}
+        {searchMatches}
+        {searchOpen}
+        {searchText}
         {searchTop}
         {tabKey}
         {theme}
@@ -792,7 +920,8 @@
         <div class="info-item">Length: {cypherLength}</div>
         <div class="info-item">Line Count: {lineCount}</div>
         <div class="info-item">Focused: {focusedString}</div>
-        <div class="info-item">Autocompleting: {autocompleteString}</div>
+        <div class="info-item">Autocomplete: {autocompleteString}</div>
+        <div class="info-item">Search: {searchString}</div>
       </div>
     </div>
     <div class="card">

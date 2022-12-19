@@ -80,11 +80,14 @@ export interface CypherEditorProps
 |  --- | --- | --- | --- |
 |  [autocomplete?](#cyphereditorprops.autocomplete) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete feature is enabled |
 |  [autocompleteCloseOnBlur?](#cyphereditorprops.autocompletecloseonblur) | boolean | <code>true</code> | <i>(Optional)</i> Whether the autocomplete auto closes whenever the editor loses focus |
-|  [autocompleteOpen?](#cyphereditorprops.autocompleteopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete window is open |
+|  [autocompleteOpen?](#cyphereditorprops.autocompleteopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the autocomplete panel is open |
 |  [autocompleteTriggerStrings?](#cyphereditorprops.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#cyphereditorprops.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [autofocusProps?](#cyphereditorprops.autofocusprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["position", "readOnly", "value"\] | <i>(Optional)</i> setting any of these props will trigger the editor gaining focus |
 |  [className?](#cyphereditorprops.classname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element |
+|  [clearHistoryProps?](#cyphereditorprops.clearhistoryprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["cypherLanguage"\] | <i>(Optional)</i> setting any of these props will trigger the editor to clear its undo/redo history |
+|  [cursorWide?](#cyphereditorprops.cursorwide) | boolean | true | <i>(Optional)</i> Whether the wide cursor should be shown |
+|  [cypherLanguage?](#cyphereditorprops.cypherlanguage) | boolean | true | <i>(Optional)</i> Whether or not cypher language extensions are enabled |
 |  [focusedClassName?](#cyphereditorprops.focusedclassname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element when it is focused |
 |  [history?](#cyphereditorprops.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
 |  [indentUnit?](#cyphereditorprops.indentunit) | string | " " | <i>(Optional)</i> The indent text to use when tabKey is enabled |
@@ -99,14 +102,20 @@ export interface CypherEditorProps
 |  [onLineNumberClick?](#cyphereditorprops.onlinenumberclick) | [LineNumberClickListener](./neo4j-cypher_codemirror.md#linenumberclicklistener) |  | <i>(Optional)</i> A listener for when the user clicks an editor line number |
 |  [onPositionChanged?](#cyphereditorprops.onpositionchanged) | [PositionChangedListener](./neo4j-cypher_codemirror.md#positionchangedlistener) |  | <i>(Optional)</i> A listener for when the editor cursor position changes |
 |  [onScrollChanged?](#cyphereditorprops.onscrollchanged) | [ScrollChangedListener](./neo4j-cypher_codemirror.md#scrollchangedlistener) |  | <i>(Optional)</i> A listener for when the editor scroll position changes |
+|  [onSearchChanged?](#cyphereditorprops.onsearchchanged) | [SearchChangedListener](./neo4j-cypher_codemirror.md#searchchangedlistener) |  | <i>(Optional)</i> A listener for when the editor search state changes |
 |  [onValueChanged?](#cyphereditorprops.onvaluechanged) | [ValueChangedListener](./neo4j-cypher_codemirror.md#valuechangedlistener) |  | <i>(Optional)</i> A listener for when the editor value changes |
 |  [parseOnSetValue?](#cyphereditorprops.parseonsetvalue) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
 |  [placeholder?](#cyphereditorprops.placeholder) | string |  | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
 |  [position?](#cyphereditorprops.position) | [PositionAny](./neo4j-cypher_codemirror.md#positionany) |  | <i>(Optional)</i> The editor cursor position |
+|  [postExtensions?](#cyphereditorprops.postextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor after the cypher language support extensions. |
+|  [preExtensions?](#cyphereditorprops.preextensions) | Extension\[\] | undefined | <i>(Optional)</i> The codemirror 6 extensions that should be added to the editor before the cypher language support extensions. |
 |  [readOnly?](#cyphereditorprops.readonly) | boolean | false | <i>(Optional)</i> Whether the editor is read only or the user can edit the editor's value |
 |  [readOnlyCursor?](#cyphereditorprops.readonlycursor) | boolean | false | <i>(Optional)</i> Whether to show the cursor when the editor readOnly is true |
 |  [schema?](#cyphereditorprops.schema) | [EditorSupportSchema](./neo4j-cypher_editor-support.md#editorsupportschema) |  | <i>(Optional)</i> The schema making the editor aware of things such as node labels &amp; relationship types &amp; procedures in the current graph database |
 |  [search?](#cyphereditorprops.search) | boolean | true | <i>(Optional)</i> Whether search is enabled |
+|  [searchMatches?](#cyphereditorprops.searchmatches) | number | 0 | <i>(Optional)</i> The max number of search matches to be included with search changed callbacks. Must be between 0 and 1000, 0 means no matches |
+|  [searchOpen?](#cyphereditorprops.searchopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the search panel is open |
+|  [searchText?](#cyphereditorprops.searchtext) | string | "" | <i>(Optional)</i> The search text for the search panel |
 |  [searchTop?](#cyphereditorprops.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
 |  [tabKey?](#cyphereditorprops.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
@@ -153,7 +162,7 @@ autocompleteCloseOnBlur?: boolean;
 
 #### CypherEditorProps.autocompleteOpen property
 
-Whether the autocomplete window is open
+Whether the autocomplete panel is open
 
 <b>Signature:</b>
 
@@ -232,6 +241,57 @@ A css class name to be added to the root editor dom element
 ```typescript
 className?: string;
 ```
+
+<br>
+
+<a name="cyphereditorprops.clearhistoryprops"></a>
+
+#### CypherEditorProps.clearHistoryProps property
+
+setting any of these props will trigger the editor to clear its undo/redo history
+
+<b>Signature:</b>
+
+```typescript
+clearHistoryProps?: AutofocusProp[];
+```
+<b>Default Value:</b>
+
+\["cypherLanguage"\]
+
+<br>
+
+<a name="cyphereditorprops.cursorwide"></a>
+
+#### CypherEditorProps.cursorWide property
+
+Whether the wide cursor should be shown
+
+<b>Signature:</b>
+
+```typescript
+cursorWide?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="cyphereditorprops.cypherlanguage"></a>
+
+#### CypherEditorProps.cypherLanguage property
+
+Whether or not cypher language extensions are enabled
+
+<b>Signature:</b>
+
+```typescript
+cypherLanguage?: boolean;
+```
+<b>Default Value:</b>
+
+true
 
 <br>
 
@@ -449,6 +509,20 @@ onScrollChanged?: ScrollChangedListener;
 
 <br>
 
+<a name="cyphereditorprops.onsearchchanged"></a>
+
+#### CypherEditorProps.onSearchChanged property
+
+A listener for when the editor search state changes
+
+<b>Signature:</b>
+
+```typescript
+onSearchChanged?: SearchChangedListener;
+```
+
+<br>
+
 <a name="cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -505,6 +579,40 @@ The editor cursor position
 ```typescript
 position?: PositionAny;
 ```
+
+<br>
+
+<a name="cyphereditorprops.postextensions"></a>
+
+#### CypherEditorProps.postExtensions property
+
+The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.
+
+<b>Signature:</b>
+
+```typescript
+postExtensions?: Extension[];
+```
+<b>Default Value:</b>
+
+undefined
+
+<br>
+
+<a name="cyphereditorprops.preextensions"></a>
+
+#### CypherEditorProps.preExtensions property
+
+The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.
+
+<b>Signature:</b>
+
+```typescript
+preExtensions?: Extension[];
+```
+<b>Default Value:</b>
+
+undefined
 
 <br>
 
@@ -570,6 +678,65 @@ search?: boolean;
 <b>Default Value:</b>
 
 true
+
+<br>
+
+<a name="cyphereditorprops.searchmatches"></a>
+
+#### CypherEditorProps.searchMatches property
+
+The max number of search matches to be included with search changed callbacks. Must be between 0 and 1000, 0 means no matches
+
+<b>Signature:</b>
+
+```typescript
+searchMatches?: number;
+```
+<b>Default Value:</b>
+
+0
+
+<br>
+
+<a name="cyphereditorprops.searchopen"></a>
+
+#### CypherEditorProps.searchOpen property
+
+Whether the search panel is open
+
+<b>Signature:</b>
+
+```typescript
+searchOpen?: boolean;
+```
+<b>Remarks:</b>
+
+Changing this can be used to manually control the search open state
+
+<b>Default Value:</b>
+
+`false`
+
+<br>
+
+<a name="cyphereditorprops.searchtext"></a>
+
+#### CypherEditorProps.searchText property
+
+The search text for the search panel
+
+<b>Signature:</b>
+
+```typescript
+searchText?: string;
+```
+<b>Remarks:</b>
+
+Changing this can be used to manually control the search editor text
+
+<b>Default Value:</b>
+
+""
 
 <br>
 

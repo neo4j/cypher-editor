@@ -59,17 +59,30 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 /**
  * The current editor theme
  */
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "auto";
 
 /**
  * The prop keys that can be used with autofocusProps
  */
-export type AutofocusProp = "position" | "readOnly" | "value";
+export type AutofocusProp = "cursorWide" | "position" | "readOnly" | "value";
+
+/**
+ * The prop keys that can be used with clearHistoryProps
+ */
+export type ClearHistoryProps =
+  | "cursorWide"
+  | "position"
+  | "readOnly"
+  | "value";
 
 /**
  * Information about an autocomplete option that was suggested to the user
  */
 export interface AutocompleteOption {
+  /**
+   * The position in the editor text where the autocompletion option will be inserted
+   */
+  from: number;
   /**
    * The label of the autocomplete option in the list of options
    */
@@ -82,6 +95,20 @@ export interface AutocompleteOption {
    * The type of the autocomplete option
    */
   type?: CompletionType;
+}
+
+/**
+ * Information about a search match that was shown to the user
+ */
+export interface SearchMatch {
+  /**
+   * The position in the editor text where the search match starts
+   */
+  from: number;
+  /**
+   * The position in the editor text where the search match ends
+   */
+  to: number;
 }
 
 /**
@@ -129,11 +156,30 @@ export interface EditorCreatedListener {
  */
 export interface AutocompleteChangedListener {
   /**
-   * @param open - whether the autocomplete menu is open or not
-   * @param from - the start cursor position for the suggested options
+   * @param open - whether the autocomplete panel is open or not
    * @param options - the list of autocomplete options being suggested to the user
+   * @param option - the autocomplete option selected by the user
    */
-  (open: boolean, from?: number, options?: AutocompleteOption[]): void;
+  (
+    open: boolean,
+    options?: AutocompleteOption[],
+    option?: AutocompleteOption
+  ): void;
+}
+
+/**
+ * Listener for editor search changes
+ *
+ * @remarks
+ * The `matches` argument value is controlled via the {@link codemirror#EditorOptions.searchMatches | searchMatches} option
+ */
+export interface SearchChangedListener {
+  /**
+   * @param open - whether the search panel is open or not
+   * @param text - the current search text of the search panel
+   * @param matches - the search matches for the current search text
+   */
+  (open: boolean, text?: string, matches?: SearchMatch[]): void;
 }
 
 /**
@@ -254,13 +300,21 @@ export interface EditorApi {
    */
   setAutocompleteCloseOnBlur(autocompleteCloseOnBlur?: boolean): void;
   /**
-   * Set whether or not the autocomplete menu is shown to the user
+   * Set whether or not the autocomplete panel is shown to the user
    */
   setAutocompleteOpen(autocompleteOpen?: boolean): void;
   /**
    * Set the keys that when typed will automatically open the autocomplete menu
    */
   setAutocompleteTriggerStrings(autocompleteTriggerStrings?: string[]): void;
+  /**
+   * Set whether the wide cursor should be shown
+   */
+  setCursorWide(cursorWide?: boolean): void;
+  /**
+   * Set whether or not cypher language extensions are enabled
+   */
+  setCypherLanguage(cypherLanguage?: boolean): void;
   /**
    * Set whether or not the editor maintains an undo/redo history
    */
@@ -294,7 +348,7 @@ export interface EditorApi {
   /**
    * Set the current editor cursor position
    */
-  setPosition(position?: PositionAny): void;
+  setPosition(position?: PositionAny, scrollIntoView?: boolean): void;
   /**
    * Set whether the editor is read only or the user can edit the editor's value
    */
@@ -311,6 +365,18 @@ export interface EditorApi {
    * Set whether search is enabled
    */
   setSearch(search?: boolean): void;
+  /**
+   * Set the max number of search matches to be included with search changed callbacks
+   */
+  setSearchMatches(searchMatches?: number): void;
+  /**
+   * Set whether or not the search panel is shown to the user
+   */
+  setSearchOpen(searchOpen?: boolean): void;
+  /**
+   * Set the search text value in the search panel
+   */
+  setSearchText(searchText?: string): void;
   /**
    * Set whether search is appears at the top of the editor window
    */
@@ -342,7 +408,7 @@ export interface EditorApi {
    */
   onAutocompleteChanged(listener: AutocompleteChangedListener): () => void;
   /**
-   * remove an event listener for editor autocomplete changes
+   * Remove an event listener for editor autocomplete changes
    */
   offAutocompleteChanged(listener: AutocompleteChangedListener): void;
   /**
@@ -352,7 +418,7 @@ export interface EditorApi {
    */
   onFocusChanged(listener: FocusChangedListener): () => void;
   /**
-   * remove an event listener for editor focus changes
+   * Remove an event listener for editor focus changes
    */
   offFocusChanged(listener: FocusChangedListener): void;
   /**
@@ -362,7 +428,7 @@ export interface EditorApi {
    */
   onKeyDown(listener: KeyDownListener): () => void;
   /**
-   * remove an event listener for editor key down events
+   * Remove an event listener for editor key down events
    */
   offKeyDown(listener: KeyDownListener): void;
   /**
@@ -372,7 +438,7 @@ export interface EditorApi {
    */
   onLineNumberClick(listener: LineNumberClickListener): () => void;
   /**
-   * remove an event listener for editor line number click events
+   * Remove an event listener for editor line number click events
    */
   offLineNumberClick(listener: LineNumberClickListener): void;
   /**
@@ -382,7 +448,7 @@ export interface EditorApi {
    */
   onPositionChanged(listener: PositionChangedListener): () => void;
   /**
-   * remove an event listener for editor curosor position changes
+   * Remove an event listener for editor curosor position changes
    */
   offPositionChanged(listener: PositionChangedListener): void;
   /**
@@ -392,9 +458,19 @@ export interface EditorApi {
    */
   onScrollChanged(listener: ScrollChangedListener): () => void;
   /**
-   * remove an event listener for editor scroll position changes
+   * Remove an event listener for editor scroll position changes
    */
   offScrollChanged(listener: ScrollChangedListener): void;
+  /**
+   * Add an event listener for editor search changes
+   *
+   * @returns A cleanup function that when called removes the listener
+   */
+  onSearchChanged(listener: SearchChangedListener): () => void;
+  /**
+   * Remove an event listener for editor search changes
+   */
+  offSearchChanged(listener: SearchChangedListener): void;
   /**
    * Add an event listener for editor value changes
    *
@@ -402,18 +478,18 @@ export interface EditorApi {
    */
   onValueChanged(listener: ValueChangedListener): () => void;
   /**
-   * remove an event listener for editor value changes
+   * Remove an event listener for editor value changes
    */
   offValueChanged(listener: ValueChangedListener): void;
 
   /**
-   * set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
+   * Set the codemirror 6 extensions that should be added to the editor before the cypher language support extensions
    */
-  setPreExtensions(preExtensions: Extension[]): void;
+  setPreExtensions(preExtensions?: Extension[]): void;
   /**
-   * set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
+   * Set the codemirror 6 extensions that should be added to the editor after the cypher language support extensions
    */
-  setPostExtensions(preExtensions: Extension[]): void;
+  setPostExtensions(preExtensions?: Extension[]): void;
 
   /**
    * The editor support instance used internally by the editor
@@ -443,7 +519,7 @@ export interface EditorOptions {
    */
   autocompleteCloseOnBlur?: boolean;
   /**
-   * Whether the autocomplete menu is initially shown to the user
+   * Whether the autocomplete panel is initially shown to the user
    *
    * @defaultValue false
    */
@@ -460,6 +536,18 @@ export interface EditorOptions {
    * @defaultValue true
    */
   autofocus?: boolean;
+  /**
+   * Whether the wide cursor should be shown
+   *
+   * @defaultValue true
+   */
+  cursorWide?: boolean;
+  /**
+   * Whether or not cypher language extensions are enabled
+   *
+   * @defaultValue true
+   */
+  cypherLanguage?: boolean;
   /**
    * Whether the editor maintains an undo/redo history
    *
@@ -539,6 +627,28 @@ export interface EditorOptions {
    */
   search?: boolean;
   /**
+   * The max number of search matches to be included with search changed callbacks
+   *
+   * @remarks
+   *
+   * Must be between 0 and 1000, 0 means no searching for matches (better for performance)
+   * 
+   * @defaultValue 0
+   */
+  searchMatches?: number;
+  /**
+   * Whether the search panel is initially shown to the user
+   *
+   * @defaultValue false
+   */
+  searchOpen?: boolean;
+  /**
+   * The initial search text for the search panel
+   *
+   * @defaultValue ""
+   */
+  searchText?: string;
+  /**
    * Whether search is shown at the top of the editor window
    *
    * @defaultValue false
@@ -571,13 +681,13 @@ export interface EditorOptions {
   /**
    * The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.
    *
-   * @defaultValue undefined
+   * @defaultValue []
    */
   preExtensions?: Extension[];
   /**
    * The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.
    *
-   * @defaultValue undefined
+   * @defaultValue []
    */
   postExtensions?: Extension[];
 }

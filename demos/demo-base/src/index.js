@@ -22,6 +22,7 @@ import neo4j from "neo4j-driver";
 import {
   THEME_LIGHT,
   THEME_DARK,
+  THEME_AUTO,
   defaultAutocompleteTriggerStrings,
   defaultLineNumberFormatter,
   defaultOptions as baseDefaultOptions
@@ -30,6 +31,7 @@ import {
 export {
   THEME_LIGHT,
   THEME_DARK,
+  THEME_AUTO,
   defaultAutocompleteTriggerStrings,
   defaultLineNumberFormatter
 };
@@ -116,10 +118,12 @@ export const defaultTheme = THEME_LIGHT;
 export const initialOptions = {
   ...defaultOptions,
   autocomplete: true, // whether to show autocompletion
-  autocompleteCloseOnBlur: true,
+  autocompleteCloseOnBlur: false,
   autocompleteOpen: false,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
+  cursorWide: true,
+  cypherLanguage: true,
   history: true,
   indentUnit: "\t",
   lineNumberFormatter: defaultLineNumberFormatter,
@@ -132,6 +136,9 @@ export const initialOptions = {
   readOnlyCursor: false,
   schema: simpleSchema,
   search: true,
+  searchMatches: 10,
+  searchOpen: false,
+  searchText: "",
   searchTop: false,
   tabKey: true,
   theme: defaultTheme,
@@ -154,13 +161,48 @@ const trimOptions = (options) => {
   return typeMap; // options.map(({ type }) => ({ type }));
 };
 
-const printArgument = (argument) => {
-  try {
-    if (typeof argument === "object" && argument !== null) {
-      const { open, from, options } = argument;
-      if (open !== undefined && from !== undefined && options !== undefined) {
-        return JSON.stringify({ open, from, options: trimOptions(options) });
+const optionFroms = (options) => {
+  const fromMap = {};
+  const optionFroms = [];
+  if (options) {
+    for (let { from } of options) {
+      if (fromMap[from] === undefined) {
+        fromMap[from] = true;
+        optionFroms.push(from);
       }
+    }
+  }
+  return optionFroms;
+};
+
+const printArgument = (type, label, argument) => {
+  try {
+    if (
+      type === "event" &&
+      label === "autocompleteChanged" &&
+      typeof argument === "object" &&
+      argument !== null
+    ) {
+      const { open, options, option } = argument;
+
+      return JSON.stringify({
+        open,
+        ...(options !== undefined && options !== null
+          ? {
+              from: optionFroms(options),
+              options: trimOptions(options)
+            }
+          : {}),
+        ...(option !== undefined && option !== null
+          ? {
+              option: {
+                type: option.type,
+                label: option.label,
+                from: option.from
+              }
+            }
+          : {})
+      });
     }
     return JSON.stringify(argument);
   } catch (e) {
@@ -182,7 +224,7 @@ export const getLogText = (logs, { eventFilters, commandFilters } = {}) => {
   )
     .map(
       ({ type, label, argument }) =>
-        type + " " + label + " " + printArgument(argument)
+        type + " " + label + " " + printArgument(type, label, argument)
     )
     .join("\n");
 };
@@ -261,7 +303,8 @@ export const eventTypes = [
   "keyDown",
   "positionChanged",
   "scrollChanged",
-  "valueChanged"
+  "valueChanged",
+  "searchChanged"
 ];
 
 export const createEventTypeFilterMap = (initialValue = true) => {

@@ -62,10 +62,15 @@ class CypherEditor extends Component {
     onPositionChanged && onPositionChanged(positionObject);
   };
 
-  autocompleteChanged = (autocompleteOpen, from, options) => {
+  autocompleteChanged = (autocompleteOpen, options, option) => {
     const { onAutocompleteChanged } = this.props;
     onAutocompleteChanged &&
-      onAutocompleteChanged(autocompleteOpen, from, options);
+      onAutocompleteChanged(autocompleteOpen, options, option);
+  };
+
+  searchChanged = (searchOpen, text, matches) => {
+    const { onSearchChanged } = this.props;
+    onSearchChanged && onSearchChanged(searchOpen, text, matches);
   };
 
   lineNumberClick = (line, event) => {
@@ -85,6 +90,8 @@ class CypherEditor extends Component {
       autocompleteOpen,
       autocompleteTriggerStrings,
       autofocus,
+      cursorWide,
+      cypherLanguage,
       history,
       indentUnit,
       lineNumberFormatter,
@@ -97,6 +104,9 @@ class CypherEditor extends Component {
       readOnlyCursor,
       schema,
       search,
+      searchMatches,
+      searchOpen,
+      searchText,
       searchTop,
       tabKey,
       theme,
@@ -114,6 +124,8 @@ class CypherEditor extends Component {
       autocompleteOpen,
       autocompleteTriggerStrings,
       autofocus,
+      cursorWide,
+      cypherLanguage,
       history,
       indentUnit,
       lineNumberFormatter,
@@ -126,6 +138,9 @@ class CypherEditor extends Component {
       readOnlyCursor,
       schema,
       search,
+      searchMatches,
+      searchOpen,
+      searchText,
       searchTop,
       tabKey,
       theme,
@@ -139,6 +154,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onScrollChanged(this.scrollChanged);
     this.cypherEditor.onPositionChanged(this.positionChanged);
     this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
+    this.cypherEditor.onSearchChanged(this.searchChanged);
     this.cypherEditor.onLineNumberClick(this.lineNumberClick);
     this.cypherEditor.onKeyDown(this.keyDown);
 
@@ -152,6 +168,7 @@ class CypherEditor extends Component {
       this.cypherEditor.offScrollChanged(this.scrollChanged);
       this.cypherEditor.offPositionChanged(this.positionChanged);
       this.cypherEditor.offAutocompleteChanged(this.autocompleteChanged);
+      this.cypherEditor.offSearchChanged(this.searchChanged);
       this.cypherEditor.offLineNumberClick(this.lineNumberClick);
       this.cypherEditor.offKeyDown(this.keyDown);
 
@@ -206,6 +223,15 @@ class CypherEditor extends Component {
 
     if (autofocusProps.includes(key)) {
       this.cypherEditor.focus();
+    }
+
+    const clearHistoryProps =
+      this.props.clearHistoryProps !== undefined
+        ? this.props.clearHistoryProps
+        : defaultOptions.clearHistoryProps;
+
+    if (clearHistoryProps.includes(key)) {
+      this.cypherEditor.clearHistory();
     }
   }
 

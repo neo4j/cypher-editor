@@ -1,5 +1,5 @@
 import * as React from "react";
-// import type { Extension } from "@codemirror/state";
+import type { Extension } from "@codemirror/state";
 import type { EditorSupportSchema } from "@neo4j-cypher/editor-support";
 import type {
   PositionAny,
@@ -10,6 +10,7 @@ import type {
   PositionChangedListener,
   FocusChangedListener,
   ScrollChangedListener,
+  SearchChangedListener,
   ValueChangedListener,
   KeyDownListener,
   LineNumberClickListener,
@@ -33,7 +34,7 @@ export interface CypherEditorProps {
    */
   autocompleteCloseOnBlur?: boolean;
   /**
-   * Whether the autocomplete window is open
+   * Whether the autocomplete panel is open
    *
    * @remarks
    *
@@ -60,6 +61,24 @@ export interface CypherEditorProps {
    * @defaultValue ["position", "readOnly", "value"]
    */
   autofocusProps?: AutofocusProp[];
+  /**
+   * setting any of these props will trigger the editor to clear its undo/redo history
+   *
+   * @defaultValue ["cypherLanguage"]
+   */
+  clearHistoryProps?: AutofocusProp[];
+  /**
+   * Whether the wide cursor should be shown
+   *
+   * @defaultValue true
+   */
+  cursorWide?: boolean;
+  /**
+   * Whether or not cypher language extensions are enabled
+   *
+   * @defaultValue true
+   */
+  cypherLanguage?: boolean;
   /**
    * Whether the editor maintains an undo/redo history
    *
@@ -133,6 +152,36 @@ export interface CypherEditorProps {
    */
   search?: boolean;
   /**
+   * The max number of search matches to be included with search changed callbacks
+   *
+   * @remarks
+   *
+   * Must be between 0 and 1000, 0 means no searching for matches (better for performance)
+   * 
+   * @defaultValue 0
+   */
+  searchMatches?: number;
+  /**
+   * Whether the search panel is open
+   *
+   * @remarks
+   *
+   * Changing this can be used to manually control the search open state
+   *
+   * @defaultValue `false`
+   */
+  searchOpen?: boolean;
+  /**
+   * The search text for the search panel
+   *
+   * @remarks
+   *
+   * Changing this can be used to manually control the search panel text
+   *
+   * @defaultValue ""
+   */
+  searchText?: string;
+  /**
    * Whether search is shown at the top of the editor window
    *
    * @defaultValue false
@@ -196,6 +245,10 @@ export interface CypherEditorProps {
    */
   onAutocompleteChanged?: AutocompleteChangedListener;
   /**
+   * A listener for when the editor search state changes
+   */
+  onSearchChanged?: SearchChangedListener;
+  /**
    * A listener for when the user clicks an editor line number
    */
   onLineNumberClick?: LineNumberClickListener;
@@ -204,9 +257,18 @@ export interface CypherEditorProps {
    */
   onKeyDown?: KeyDownListener;
 
-  // TODO - add these props
-  // preExtensions?: Extension[],
-  // postExtensions?: Extension[]
+  /**
+   * The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.
+   *
+   * @defaultValue undefined
+   */
+  preExtensions?: Extension[];
+  /**
+   * The codemirror 6 extensions that should be added to the editor after the cypher language support extensions.
+   *
+   * @defaultValue undefined
+   */
+  postExtensions?: Extension[];
 }
 
 /**

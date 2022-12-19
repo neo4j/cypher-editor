@@ -20,6 +20,7 @@
 
 export const THEME_LIGHT = "light";
 export const THEME_DARK = "dark";
+export const THEME_AUTO = "auto";
 
 export const defaultLineNumberFormatter = (line, lineCount) => {
   if (lineCount === 1) {
@@ -47,7 +48,10 @@ export const defaultOptions = {
   autocompleteOpen: false,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true,
-  autofocusProps: ["position", "readOnly", "value"],
+  autofocusProps: ["cursorWide", "position", "readOnly", "value"],
+  clearHistoryProps: ["cypherLanguage"],
+  cursorWide: true,
+  cypherLanguage: true,
   history: true,
   indentUnit: "  ",
   lineNumberFormatter: defaultLineNumberFormatter,
@@ -61,11 +65,16 @@ export const defaultOptions = {
   readOnlyCursor: false,
   schema: undefined,
   search: true,
+  searchMatches: 0,
+  searchOpen: false,
+  searchText: "",
   searchTop: false,
   tabKey: true,
   theme: THEME_LIGHT,
   tooltipAbsolute: true,
-  value: ""
+  value: "",
+  preExtensions: [],
+  postExtensions: []
 };
 
 export const reactiveOptionKeys = [
@@ -73,6 +82,8 @@ export const reactiveOptionKeys = [
   "autocompleteCloseOnBlur",
   "autocompleteOpen",
   "autocompleteTriggerStrings",
+  "cursorWide",
+  "cypherLanguage",
   // "autofocus",
   "history",
   "indentUnit",
@@ -86,12 +97,17 @@ export const reactiveOptionKeys = [
   "readOnlyCursor",
   "schema",
   "search",
+  "searchMatches",
+  "searchOpen",
+  "searchText",
   "searchTop",
   "tabKey",
   "theme",
   "tooltipAbsolute",
   // "parseOnSetValue",
-  "value"
+  "value",
+  "preExtensions",
+  "postExtensions"
 ];
 
 export const isNumber = (v) =>
@@ -158,5 +174,9 @@ export const createEventHandlers = () => {
     }
   };
 
-  return { on, off, listeners, fire };
+  const count = () => {
+    return listeners.length;
+  };
+
+  return { on, off, listeners, fire, count };
 };

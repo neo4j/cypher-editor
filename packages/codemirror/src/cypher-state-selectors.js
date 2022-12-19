@@ -18,6 +18,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { search } from "@codemirror/search";
+import { autocompletion, pickedCompletion } from "@codemirror/autocomplete";
+import { StateField } from "@codemirror/state";
+
+const getStateField = (mainExtension, label) => {
+  const extensions = mainExtension();
+  if (Array.isArray(extensions)) {
+    const stateField = extensions.find((ex) => ex instanceof StateField);
+    if (stateField) {
+      return stateField;
+    }
+  }
+  const length = Array.isArray(extensions) ? extensions.length : "no";
+  throw new Error(
+    "getStateField for " + label + " failed (" + length + " extensions found)"
+  );
+};
+
+export const searchStateField = getStateField(search, "search");
+export const autocompletionStateField = getStateField(
+  autocompletion,
+  "autocompletion"
+);
+
 import {
   isInteger,
   isAbsolutePosition,
@@ -104,3 +128,108 @@ export const getStatePositionForAny = (state, positionValue) => {
 
 export const getStateHasSelection = (state) =>
   state.selection.ranges.some((r) => !r.empty);
+
+export const getSearchState = (state) => state.field(searchStateField, false);
+
+export const getStateSearchOpen = (state) =>
+  (getSearchState(state) || { panel: null }).panel !== null;
+
+export const getStateSearchMatches = (state, maxCount = 1000) => {
+  const matches = (
+    getSearchState(state) || { query: { matchAll: () => null } }
+  ).query.matchAll(state, 1000);
+  return matches ? matches.slice(0, maxCount) : matches;
+};
+
+export const getStateSearchSpec = (state) =>
+  (getSearchState(state) || { query: { spec: null } }).query.spec;
+
+export const getStateSearchText = (state) =>
+  (getSearchState(state) || { query: { spec: { search: null } } }).query.spec
+    .search;
+
+export const getAutocompleteState = (state) =>
+  state.field(autocompletionStateField, false);
+
+export const getStateAutocompleteOpen = (state) =>
+  (getAutocompleteState(state) || { open: null }).open !== null;
+
+export const getFormattedAutocompleteOption = (option) => ({
+  from: option.source.from,
+  ...option.completion
+});
+
+export const getStateAutocompleteOptions = (state, format = false) => {
+  const { open } = getAutocompleteState(state) || { open: null };
+  if (open !== null) {
+    const { options } = open;
+    if (options) {
+      return format ? options.map(getFormattedAutocompleteOption) : options;
+    }
+    return [];
+  }
+  return null;
+};
+
+export const areViewUpdateAutocompleteOptionsEqual = (v) => {
+  const { startState: oldState, state: newState } = v;
+  const { open: oldOpen } = getAutocompleteState(oldState) || { open: null };
+  const { open: newOpen } = getAutocompleteState(newState) || { open: null };
+  if (oldOpen === null || newOpen === null) {
+    return oldOpen === newOpen;
+  } else {
+    const { options: oldOptions } = oldOpen;
+    const { options: newOptions } = newOpen;
+    if (!oldOptions || !newOptions) {
+      return oldOptions === newOptions;
+    } else {
+      const { length: oldLength } = oldOptions;
+      const { length: newLength } = newOptions;
+      if (!oldLength || !newLength || oldLength !== oldLength) {
+        return oldLength === newLength;
+      }
+      for (let i = 0; i < newLength; i++) {
+        const oldOption = oldOptions[i];
+        const newOption = oldOptions[i];
+        if (
+          oldOption.source.from !== newOption.source.from ||
+          oldOption.completion !== newOption.completion
+        ) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+};
+
+export const getViewUpdateAnnotationValueForType = (v, type) => {
+  for (let transaction of v.transactions) {
+    const { annotations } = transaction;
+    const foundAnnotation = annotations.find((a) => a.type === type);
+    if (foundAnnotation && foundAnnotation.value) {
+      return foundAnnotation.value;
+    }
+  }
+  return null;
+};
+
+export const getViewUpdatePickedAutocompleteOption = (v, format = false) => {
+  const pickedAutocompletion = getViewUpdateAnnotationValueForType(
+    v,
+    pickedCompletion
+  );
+  if (pickedAutocompletion) {
+    const pickedAutocompleteOption = getStateAutocompleteOptions(
+      v.startState,
+      false
+    ).find(({ completion }) => completion == pickedAutocompletion);
+    if (pickedAutocompleteOption) {
+      return format
+        ? getFormattedAutocompleteOption(pickedAutocompleteOption)
+        : pickedAutocompleteOption;
+    }
+  }
+
+  return null;
+};
