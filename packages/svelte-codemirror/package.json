@@ -7,7 +7,7 @@
     "codemirror",
     "codemirror 6"
   ],
-  "version": "1.0.0-next.14",
+  "version": "1.0.0-next.15",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "svelte": "src/svelte-codemirror.js",
@@ -29,7 +29,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@neo4j-cypher/codemirror": "1.0.0-next.12",
+    "@neo4j-cypher/codemirror": "1.0.0-next.13",
     "codemirror": "^6.0.1"
   },
   "peerDependencies": {
