@@ -415,11 +415,14 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     }
 
     if (searchChanged) {
-      const newSearchMatches = activeSearchMatches
-        ? getStateSearchMatches(v.state, searchMatches)
-        : undefined;
-      handleSearchChanged(newSearchOpen, newSearchText, newSearchMatches);
-    } else if (valueChanged && activeSearchMatches) {
+      if (oldSearchOpen || newSearchOpen) {
+        const newSearchMatches =
+          activeSearchMatches && newSearchOpen
+            ? getStateSearchMatches(v.state, searchMatches)
+            : undefined;
+        handleSearchChanged(newSearchOpen, newSearchText, newSearchMatches);
+      }
+    } else if (valueChanged && activeSearchMatches && newSearchOpen) {
       handleSearchChanged(
         newSearchOpen,
         newSearchText,
@@ -945,7 +948,9 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       handleSearchChanged(
         searchOpen,
         searchText,
-        getStateSearchMatches(editor.state, searchMatches)
+        searchOpen
+          ? getStateSearchMatches(editor.state, searchMatches)
+          : undefined
       );
     }
   };
