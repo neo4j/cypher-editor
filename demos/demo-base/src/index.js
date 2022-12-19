@@ -122,6 +122,8 @@ export const initialOptions = {
   autocompleteOpen: false,
   autocompleteTriggerStrings: defaultAutocompleteTriggerStrings,
   autofocus: true, // if true the editor will be focused once created
+  bracketMatching: true,
+  closeBrackets: true,
   cursorWide: true,
   cypherLanguage: true,
   history: true,

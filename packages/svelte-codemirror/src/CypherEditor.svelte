@@ -38,7 +38,13 @@
 
   export let autofocusProps = defaultOptions.autofocusProps;
 
+  export let bracketMatching = defaultOptions.bracketMatching;
+  $: updateOption({ bracketMatching });
+
   export let clearHistoryProps = defaultOptions.clearHistoryProps;
+
+  export let closeBrackets = defaultOptions.closeBrackets;
+  $: updateOption({ closeBrackets });
 
   export let cursorWide = defaultOptions.cursorWide;
   $: updateOption({ cursorWide });
@@ -212,6 +218,8 @@
       autocompleteOpen,
       autocompleteTriggerStrings,
       autofocus,
+      bracketMatching,
+      closeBrackets,
       cursorWide,
       cypherLanguage,
       history,

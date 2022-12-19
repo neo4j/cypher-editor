@@ -58,6 +58,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     initialOptions.autocompleteTriggerStrings
   );
   const [autofocus, setAutofocus] = useState(initialOptions.autofocus);
+  const [bracketMatching, setBracketMatching] = useState(
+    initialOptions.bracketMatching
+  );
+  const [closeBrackets, setCloseBrackets] = useState(
+    initialOptions.closeBrackets
+  );
   const [cursorWide, setCursorWide] = useState(initialOptions.cursorWide);
   const [cypherLanguage, setCypherLanguage] = useState(
     initialOptions.cypherLanguage
@@ -341,6 +347,26 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const setAutocompleteTriggerStringsNone = () => {
     addCommandLog("setAutocompleteTriggerStrings", false);
     setAutocompleteTriggerStrings(false);
+  };
+
+  const setBracketMatchingOn = () => {
+    addCommandLog("setBracketMatching", true);
+    setBracketMatching(true);
+  };
+
+  const setBracketMatchingOff = () => {
+    addCommandLog("setBracketMatching", false);
+    setBracketMatching(false);
+  };
+
+  const setCloseBracketsOn = () => {
+    addCommandLog("setCloseBrackets", true);
+    setCloseBrackets(true);
+  };
+
+  const setCloseBracketsOff = () => {
+    addCommandLog("setCloseBrackets", false);
+    setCloseBrackets(false);
   };
 
   const setCursorWideOn = () => {
@@ -784,6 +810,42 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
                   : undefined
               }
               onClick={setAutocompleteTriggerStringsNone}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting setting-long">
+          <div className="setting-label">Bracket Matching</div>
+          <div className="setting-values">
+            <button
+              className={bracketMatching ? "setting-active" : undefined}
+              onClick={setBracketMatchingOn}
+            >
+              True
+            </button>
+            <button
+              className={!bracketMatching ? "setting-active" : undefined}
+              onClick={setBracketMatchingOff}
+            >
+              False
+            </button>
+          </div>
+        </div>
+
+        <div className="setting">
+          <div className="setting-label">Close Brackets</div>
+          <div className="setting-values">
+            <button
+              className={closeBrackets ? "setting-active" : undefined}
+              onClick={setCloseBracketsOn}
+            >
+              True
+            </button>
+            <button
+              className={!closeBrackets ? "setting-active" : undefined}
+              onClick={setCloseBracketsOff}
             >
               False
             </button>
@@ -1296,6 +1358,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             autocompleteOpen={autocompleteOpen}
             autocompleteTriggerStrings={autocompleteTriggerStrings}
             autofocus={autofocus}
+            bracketMatching={bracketMatching}
+            closeBrackets={closeBrackets}
             cursorWide={cursorWide}
             cypherLanguage={cypherLanguage}
             history={history}

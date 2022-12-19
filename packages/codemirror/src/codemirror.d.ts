@@ -308,6 +308,14 @@ export interface EditorApi {
    */
   setAutocompleteTriggerStrings(autocompleteTriggerStrings?: string[]): void;
   /**
+   * Set whether to show matching brackets in the editor view
+   */
+  setBracketMatching(bracketMatching?: boolean): void;
+  /**
+   * Set whether to automatically close brackets or wrap selected text with quotes on quote press
+   */
+  setCloseBrackets(closeBrackets?: boolean): void;
+  /**
    * Set whether the wide cursor should be shown
    */
   setCursorWide(cursorWide?: boolean): void;
@@ -536,6 +544,18 @@ export interface EditorOptions {
    * @defaultValue true
    */
   autofocus?: boolean;
+  /**
+   * Whether to show matching brackets in the editor view
+   *
+   * @defaultValue true
+   */
+  bracketMatching?: boolean;
+  /**
+   * Whether to automatically close brackets or wrap selected text with quotes on quote press
+   *
+   * @defaultValue true
+   */
+  closeBrackets?: boolean;
   /**
    * Whether the wide cursor should be shown
    *

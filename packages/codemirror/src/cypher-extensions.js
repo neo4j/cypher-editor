@@ -22,7 +22,9 @@ import {
   autocompletion as autocompletionExtension,
   completionKeymap,
   completionStatus,
-  acceptCompletion
+  acceptCompletion,
+  closeBrackets as closeBracketsExtension,
+  closeBracketsKeymap
 } from "@codemirror/autocomplete";
 import {
   history as historyExtension,
@@ -37,7 +39,8 @@ import {
   foldKeymap,
   syntaxHighlighting,
   HighlightStyle,
-  indentUnit as indentUnitExtension
+  indentUnit as indentUnitExtension,
+  bracketMatching as bracketMatchingExtension
 } from "@codemirror/language";
 import { linter, lintKeymap } from "@codemirror/lint";
 import { searchKeymap, search } from "@codemirror/search";
@@ -438,3 +441,11 @@ export const getTooltipAbsoluteExtensions = ({ tooltipAbsolute }) =>
   tooltipAbsolute
     ? [tooltips({ position: "absolute" })]
     : [tooltips({ position: "fixed" })];
+
+export const getCloseBracketsExtensions = ({ closeBrackets }) =>
+  closeBrackets
+    ? [closeBracketsExtension(), keymap.of(closeBracketsKeymap)]
+    : [];
+
+export const getBracketMatchingExtensions = ({ bracketMatching }) =>
+  bracketMatching ? [bracketMatchingExtension()] : [];

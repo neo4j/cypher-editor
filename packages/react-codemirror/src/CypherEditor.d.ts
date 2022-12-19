@@ -62,11 +62,23 @@ export interface CypherEditorProps {
    */
   autofocusProps?: AutofocusProp[];
   /**
-   * setting any of these props will trigger the editor to clear its undo/redo history
+   * Whether to show matching brackets in the editor view
+   *
+   * @defaultValue true
+   */
+  bracketMatching?: boolean;
+  /**
+   * Setting any of these props will trigger the editor to clear its undo/redo history
    *
    * @defaultValue ["cypherLanguage"]
    */
   clearHistoryProps?: AutofocusProp[];
+  /**
+   * Whether to automatically close brackets or wrap selected text with quotes on quote press
+   *
+   * @defaultValue true
+   */
+  closeBrackets?: boolean;
   /**
    * Whether the wide cursor should be shown
    *

@@ -75,7 +75,9 @@ import {
   getTabKeyExtensions,
   getLintExtensions,
   getCursorWideExtensions,
-  getCypherLanguageExtensions
+  getCypherLanguageExtensions,
+  getBracketMatchingExtensions,
+  getCloseBracketsExtensions
 } from "./cypher-extensions";
 
 export * from "./cypher-codemirror-base";
@@ -99,6 +101,8 @@ export const getExtensions = (
   {
     lintConf = new Compartment(),
     autocompleteConf = new Compartment(),
+    bracketMatchingConf = new Compartment(),
+    closeBracketsConf = new Compartment(),
     cursorWideConf = new Compartment(),
     cypherLanguageConf = new Compartment(),
     readableConf = new Compartment(),
@@ -121,6 +125,8 @@ export const getExtensions = (
   const {
     autocomplete,
     autocompleteCloseOnBlur,
+    bracketMatching,
+    closeBrackets,
     cursorWide,
     cypherLanguage,
     history,
@@ -167,7 +173,9 @@ export const getExtensions = (
     cursorWideConf.of(getCursorWideExtensions({ cursorWide })),
     searchConf.of(getSearchExtensions({ readOnly, search, searchTop })),
     tooltipAbsoluteConf.of(getTooltipAbsoluteExtensions({ tooltipAbsolute })),
-    readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor }))
+    readOnlyConf.of(getReadOnlyExtensions({ readOnly, readOnlyCursor })),
+    bracketMatchingConf.of(getBracketMatchingExtensions({ bracketMatching })),
+    closeBracketsConf.of(getCloseBracketsExtensions({ closeBrackets }))
   ];
 };
 
@@ -434,6 +442,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const preConf = new Compartment();
   const lintConf = new Compartment();
   const autocompleteConf = new Compartment();
+  const bracketMatchingConf = new Compartment();
+  const closeBracketsConf = new Compartment();
   const readableConf = new Compartment();
   const readOnlyConf = new Compartment();
   const showLinesConf = new Compartment();
@@ -463,6 +473,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       ...getExtensions(createOptions, {
         lintConf,
         autocompleteConf,
+        bracketMatchingConf,
+        closeBracketsConf,
         cursorWideConf,
         cypherLanguageConf,
         tabKeyConf,
@@ -1002,6 +1014,24 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     });
   };
 
+  const setBracketMatching = (
+    bracketMatching = defaultOptions.bracketMatching
+  ) => {
+    editor.dispatch({
+      effects: bracketMatchingConf.reconfigure(
+        getBracketMatchingExtensions({ bracketMatching })
+      )
+    });
+  };
+
+  const setCloseBrackets = (closeBrackets = defaultOptions.closeBrackets) => {
+    editor.dispatch({
+      effects: closeBracketsConf.reconfigure(
+        getCloseBracketsExtensions({ closeBrackets })
+      )
+    });
+  };
+
   const editorAPI = {
     clearHistory,
     destroy,
@@ -1014,6 +1044,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setAutocompleteCloseOnBlur,
     setAutocompleteOpen,
     setAutocompleteTriggerStrings,
+    setBracketMatching,
+    setCloseBrackets,
     setCursorWide,
     setCypherLanguage,
     setHistory,

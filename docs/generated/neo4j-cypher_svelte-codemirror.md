@@ -84,8 +84,10 @@ export interface CypherEditorProps
 |  [autocompleteTriggerStrings?](#cyphereditorprops.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#cyphereditorprops.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
 |  [autofocusProps?](#cyphereditorprops.autofocusprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["position", "readOnly", "value"\] | <i>(Optional)</i> setting any of these props will trigger the editor gaining focus |
+|  [bracketMatching?](#cyphereditorprops.bracketmatching) | boolean | true | <i>(Optional)</i> Whether to show matching brackets in the editor view |
 |  [className?](#cyphereditorprops.classname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element |
-|  [clearHistoryProps?](#cyphereditorprops.clearhistoryprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["cypherLanguage"\] | <i>(Optional)</i> setting any of these props will trigger the editor to clear its undo/redo history |
+|  [clearHistoryProps?](#cyphereditorprops.clearhistoryprops) | [AutofocusProp](./neo4j-cypher_codemirror.md#autofocusprop)<!-- -->\[\] | \["cypherLanguage"\] | <i>(Optional)</i> Setting any of these props will trigger the editor to clear its undo/redo history |
+|  [closeBrackets?](#cyphereditorprops.closebrackets) | boolean | true | <i>(Optional)</i> Whether to automatically close brackets or wrap selected text with quotes on quote press |
 |  [cursorWide?](#cyphereditorprops.cursorwide) | boolean | true | <i>(Optional)</i> Whether the wide cursor should be shown |
 |  [cypherLanguage?](#cyphereditorprops.cypherlanguage) | boolean | true | <i>(Optional)</i> Whether or not cypher language extensions are enabled |
 |  [focusedClassName?](#cyphereditorprops.focusedclassname) | string |  | <i>(Optional)</i> A css class name to be added to the root editor dom element when it is focused |
@@ -230,6 +232,23 @@ autofocusProps?: AutofocusProp[];
 
 <br>
 
+<a name="cyphereditorprops.bracketmatching"></a>
+
+#### CypherEditorProps.bracketMatching property
+
+Whether to show matching brackets in the editor view
+
+<b>Signature:</b>
+
+```typescript
+bracketMatching?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
 <a name="cyphereditorprops.classname"></a>
 
 #### CypherEditorProps.className property
@@ -248,7 +267,7 @@ className?: string;
 
 #### CypherEditorProps.clearHistoryProps property
 
-setting any of these props will trigger the editor to clear its undo/redo history
+Setting any of these props will trigger the editor to clear its undo/redo history
 
 <b>Signature:</b>
 
@@ -258,6 +277,23 @@ clearHistoryProps?: AutofocusProp[];
 <b>Default Value:</b>
 
 \["cypherLanguage"\]
+
+<br>
+
+<a name="cyphereditorprops.closebrackets"></a>
+
+#### CypherEditorProps.closeBrackets property
+
+Whether to automatically close brackets or wrap selected text with quotes on quote press
+
+<b>Signature:</b>
+
+```typescript
+closeBrackets?: boolean;
+```
+<b>Default Value:</b>
+
+true
 
 <br>
 

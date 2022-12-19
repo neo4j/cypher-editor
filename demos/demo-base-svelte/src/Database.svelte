@@ -56,6 +56,8 @@
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
   let autofocus = initialOptions.autofocus;
+  let bracketMatching = initialOptions.bracketMatching;
+  let closeBrackets = initialOptions.closeBrackets;
   let cursorWide = initialOptions.cursorWide;
   let cypherLanguage = initialOptions.cypherLanguage;
   let history = initialOptions.history;
@@ -255,6 +257,8 @@
   $: logs = appendLog(
     commandLog("setAutocompleteTriggerStrings", autocompleteTriggerStrings)
   );
+  $: logs = appendLog(commandLog("setBracketMatching", bracketMatching));
+  $: logs = appendLog(commandLog("setCloseBrackets", closeBrackets));
   $: logs = appendLog(commandLog("setCursorWide", cursorWide));
   $: logs = appendLog(commandLog("setCypherLanguage", cypherLanguage));
   $: logs = appendLog(commandLog("setHistory", history));
@@ -485,6 +489,34 @@
             ? "setting-active"
             : undefined}
           on:click={() => (autocompleteTriggerStrings = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting setting-long">
+      <div class="setting-label">Bracket Matching</div>
+      <div class="setting-values">
+        <button
+          class={bracketMatching ? "setting-active" : undefined}
+          on:click={() => (bracketMatching = true)}>True</button
+        >
+        <button
+          class={!bracketMatching ? "setting-active" : undefined}
+          on:click={() => (bracketMatching = false)}>False</button
+        >
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-label">Close Brackets</div>
+      <div class="setting-values">
+        <button
+          class={closeBrackets ? "setting-active" : undefined}
+          on:click={() => (closeBrackets = true)}>True</button
+        >
+        <button
+          class={!closeBrackets ? "setting-active" : undefined}
+          on:click={() => (closeBrackets = false)}>False</button
         >
       </div>
     </div>
@@ -888,6 +920,8 @@
         {autocompleteOpen}
         {autocompleteCloseOnBlur}
         {autocompleteTriggerStrings}
+        {bracketMatching}
+        {closeBrackets}
         {cursorWide}
         {cypherLanguage}
         {history}

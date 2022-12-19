@@ -519,6 +519,8 @@ editorSupport: CypherEditorSupport;
 |  [setAutocompleteCloseOnBlur(autocompleteCloseOnBlur)](#editorapi.setautocompletecloseonblur) | Set whether or not the autocomplete auto closes whenever the editor loses focus |
 |  [setAutocompleteOpen(autocompleteOpen)](#editorapi.setautocompleteopen) | Set whether or not the autocomplete panel is shown to the user |
 |  [setAutocompleteTriggerStrings(autocompleteTriggerStrings)](#editorapi.setautocompletetriggerstrings) | Set the keys that when typed will automatically open the autocomplete menu |
+|  [setBracketMatching(bracketMatching)](#editorapi.setbracketmatching) | Set whether to show matching brackets in the editor view |
+|  [setCloseBrackets(closeBrackets)](#editorapi.setclosebrackets) | Set whether to automatically close brackets or wrap selected text with quotes on quote press |
 |  [setCursorWide(cursorWide)](#editorapi.setcursorwide) | Set whether the wide cursor should be shown |
 |  [setCypherLanguage(cypherLanguage)](#editorapi.setcypherlanguage) | Set whether or not cypher language extensions are enabled |
 |  [setHistory(history)](#editorapi.sethistory) | Set whether or not the editor maintains an undo/redo history |
@@ -1153,6 +1155,52 @@ void
 
 <br>
 
+<a name="editorapi.setbracketmatching"></a>
+
+#### EditorApi.setBracketMatching() method
+
+Set whether to show matching brackets in the editor view
+
+<b>Signature:</b>
+
+```typescript
+setBracketMatching(bracketMatching?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  bracketMatching | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.setclosebrackets"></a>
+
+#### EditorApi.setCloseBrackets() method
+
+Set whether to automatically close brackets or wrap selected text with quotes on quote press
+
+<b>Signature:</b>
+
+```typescript
+setCloseBrackets(closeBrackets?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  closeBrackets | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.setcursorwide"></a>
 
 #### EditorApi.setCursorWide() method
@@ -1732,6 +1780,8 @@ export interface EditorOptions
 |  [autocompleteOpen?](#editoroptions.autocompleteopen) | boolean | false | <i>(Optional)</i> Whether the autocomplete panel is initially shown to the user |
 |  [autocompleteTriggerStrings?](#editoroptions.autocompletetriggerstrings) | string\[\] | \[".",":","\[\]","()","<!-- -->{<!-- -->}<!-- -->","\[","(","<!-- -->{<!-- -->","$"\] | <i>(Optional)</i> The keys that when typed will automatically open the autocomplete menu |
 |  [autofocus?](#editoroptions.autofocus) | boolean | true | <i>(Optional)</i> Whether the editor should be auto focused on first creation |
+|  [bracketMatching?](#editoroptions.bracketmatching) | boolean | true | <i>(Optional)</i> Whether to show matching brackets in the editor view |
+|  [closeBrackets?](#editoroptions.closebrackets) | boolean | true | <i>(Optional)</i> Whether to automatically close brackets or wrap selected text with quotes on quote press |
 |  [cursorWide?](#editoroptions.cursorwide) | boolean | true | <i>(Optional)</i> Whether the wide cursor should be shown |
 |  [cypherLanguage?](#editoroptions.cypherlanguage) | boolean | true | <i>(Optional)</i> Whether or not cypher language extensions are enabled |
 |  [history?](#editoroptions.history) | boolean | true | <i>(Optional)</i> Whether the editor maintains an undo/redo history |
@@ -1838,6 +1888,40 @@ Whether the editor should be auto focused on first creation
 
 ```typescript
 autofocus?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.bracketmatching"></a>
+
+#### EditorOptions.bracketMatching property
+
+Whether to show matching brackets in the editor view
+
+<b>Signature:</b>
+
+```typescript
+bracketMatching?: boolean;
+```
+<b>Default Value:</b>
+
+true
+
+<br>
+
+<a name="editoroptions.closebrackets"></a>
+
+#### EditorOptions.closeBrackets property
+
+Whether to automatically close brackets or wrap selected text with quotes on quote press
+
+<b>Signature:</b>
+
+```typescript
+closeBrackets?: boolean;
 ```
 <b>Default Value:</b>
 
