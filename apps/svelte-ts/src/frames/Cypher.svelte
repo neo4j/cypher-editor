@@ -31,5 +31,6 @@
     background-color: #fafafa;
     border-radius: 6px;
     padding: 8px;
+    overflow-x: auto;
   }
 </style>

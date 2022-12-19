@@ -23,9 +23,11 @@ import neo4j, { type Driver, type QueryResult } from "neo4j-driver";
 export const schemaQuery = `
 CALL db.labels() YIELD label
 WITH collect(label) AS labels
+RETURN labels AS result
+UNION ALL
 CALL db.relationshipTypes() YIELD relationshipType
-WITH labels, collect(relationshipType) AS relationshipTypes
-RETURN labels, relationshipTypes
+WITH collect(relationshipType) AS relationshipTypes
+RETURN relationshipTypes as result
 `;
 
 export function runQuery(driver: Driver, q: string): Promise<QueryResult> {

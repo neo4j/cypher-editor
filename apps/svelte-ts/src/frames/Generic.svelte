@@ -32,5 +32,6 @@
     font-size: 1rem;
     padding: 8px;
     border-radius: 6px;
+    overflow: auto;
   }
 </style>

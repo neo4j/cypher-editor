@@ -61,11 +61,15 @@
   async function updateEditorSchema() {
     try {
       const res = await runQuery(driver, schemaQuery);
-      const obj = res.records[0].toObject();
+      // labels
+      const labelsRow = res.records?.[0];
+      const relsRow = res.records?.[1];
+      const labels = labelsRow ? labelsRow.toObject() : { result: [] };
+      const relationshipTypes = relsRow ? relsRow.toObject() : { result: [] };
       schema = {
         consoleCommands,
-        labels: obj.labels.map((x: string) => `:${x}`),
-        relationshipTypes: obj.relationshipTypes.map((x: string) => `:${x}`)
+        labels: labels.result.map((x: string) => `:${x}`),
+        relationshipTypes: relationshipTypes.result.map((x: string) => `:${x}`)
       };
     } catch (e) {
       schema = {
@@ -174,6 +178,7 @@
       {#each responses as response (response.id)}
         <div class="response" transition:slide>
           <div class="header">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               title={response.cmd}
               class="cypher"
@@ -228,7 +233,6 @@
   .editor-wrapper {
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    overflow: hidden;
     min-height: 44px;
     padding-top: 8px;
   }
@@ -289,7 +293,7 @@
 
     max-height: 400px;
     padding: 16px;
-    overflow: auto;
+    overflow-y: auto;
   }
   .error {
     color: red;
@@ -309,7 +313,6 @@
   :global(.cm-editor) {
     max-height: 200px;
     font-size: 18px;
-    outline: none !important;
   }
   :global(.cm-editor .cm-gutters) {
     border: 0;
