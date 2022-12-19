@@ -80,7 +80,7 @@ const tokenBase = (stream) => {
     return "string";
   }
 
-  // stream.next();
+  stream.next();
   stream.eatWhile(/[_\p{Letter}\p{Emoji}\d]/u);
 
   return "variable";
