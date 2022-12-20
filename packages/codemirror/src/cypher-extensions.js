@@ -205,7 +205,7 @@ const cypherCompletions = (context) => {
 };
 
 export const cypherCompletion = ({
-  activateOnTyping = false,
+  activateOnTyping = false, /* Could be made an option... */
   closeOnBlur = true
 } = {}) => [
   autocompletionExtension({
