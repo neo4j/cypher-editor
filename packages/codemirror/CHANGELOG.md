@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.14
+
+### Patch Changes
+
+- 77cb7d3: add missing pre/post extensions props to components, fix autocomplete change typo bug
+
 ## 1.0.0-next.13
 
 ### Patch Changes
