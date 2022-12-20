@@ -115,7 +115,9 @@ class CypherEditor extends Component {
       tooltipAbsolute,
       parseOnSetValue,
       value,
-      onEditorCreated
+      onEditorCreated,
+      preExtensions,
+      postExtensions
     } = this.props;
 
     this.value = value;
@@ -150,7 +152,9 @@ class CypherEditor extends Component {
       theme,
       tooltipAbsolute,
       parseOnSetValue,
-      value
+      value,
+      preExtensions,
+      postExtensions
     });
     this.cypherEditor = editor;
     this.cypherEditor.onValueChanged(this.valueChanged);

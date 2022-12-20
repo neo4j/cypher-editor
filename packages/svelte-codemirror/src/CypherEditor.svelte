@@ -112,6 +112,12 @@
   export let value = defaultOptions.value;
   $: updateOption({ value });
 
+  export let preExtensions = defaultOptions.preExtensions;
+  $: updateOption({ preExtensions });
+
+  export let postExtensions = defaultOptions.postExtensions;
+  $: updateOption({ postExtensions });
+
   export let className = "";
   export let focusedClassName = "";
   export let autofocus = defaultOptions.autofocus;
@@ -242,7 +248,9 @@
       theme,
       tooltipAbsolute,
       parseOnSetValue,
-      value
+      value,
+      preExtensions,
+      postExtensions
     });
     cypherEditor = editor;
     cypherEditor.onValueChanged(valueChanged);
