@@ -185,7 +185,7 @@ export const areViewUpdateAutocompleteOptionsEqual = (v) => {
     } else {
       const { length: oldLength } = oldOptions;
       const { length: newLength } = newOptions;
-      if (!oldLength || !newLength || oldLength !== oldLength) {
+      if (!oldLength || !newLength || oldLength !== newLength) {
         return oldLength === newLength;
       }
       for (let i = 0; i < newLength; i++) {
