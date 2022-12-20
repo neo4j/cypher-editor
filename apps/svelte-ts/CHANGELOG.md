@@ -1,5 +1,14 @@
 # svelte-ts
 
+## 1.0.0-next.15
+
+### Patch Changes
+
+- 1500721: Fix meta query - the last one didn't work with Neo4j 5.2
+- 1500721: Bump deps to use Vite 4
+- Updated dependencies [0a21042]
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.15
+
 ## 1.0.0-next.14
 
 ### Patch Changes

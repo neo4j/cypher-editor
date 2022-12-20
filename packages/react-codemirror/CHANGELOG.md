@@ -1,5 +1,14 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.14
+
+### Patch Changes
+
+- 0a21042: add bracketMatching & closeBrackets options (both default true)
+- Updated dependencies [b8d7618]
+- Updated dependencies [0a21042]
+  - @neo4j-cypher/codemirror@1.0.0-next.13
+
 ## 1.0.0-next.13
 
 ### Patch Changes
