@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.15
+
+### Patch Changes
+
+- b0dc3cb: fix css line-height of gutters to match content
+
 ## 1.0.0-next.14
 
 ### Patch Changes
