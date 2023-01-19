@@ -1,5 +1,12 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.17
+
+### Patch Changes
+
+- b5add94: fix bug where decorations were not being cleared properly
+- 05bcaef: undo changes from last version, they broke things
+
 ## 1.0.0-next.16
 
 ### Patch Changes

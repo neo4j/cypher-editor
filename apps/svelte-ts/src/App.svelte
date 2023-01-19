@@ -291,7 +291,7 @@
   .response .body {
     white-space: pre;
 
-    max-height: 400px;
+    max-height: 700px;
     padding: 16px;
     overflow-y: auto;
   }
