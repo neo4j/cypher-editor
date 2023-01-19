@@ -1,5 +1,11 @@
 # svelte-ts
 
+## 1.0.0-next.19
+
+### Patch Changes
+
+- @neo4j-cypher/svelte-codemirror@1.0.0-next.19
+
 ## 1.0.0-next.18
 
 ### Patch Changes
