@@ -86,11 +86,12 @@ const typeMarkerFromTo = (view, options = {}) => {
 };
 
 export const resetColors = (view, editorSupport) => {
-  view.dispatch(clearTypeMarkersEffect.of());
+  const effects = [clearTypeMarkersEffect.of()];
+  view.dispatch({ effects });
 };
 
 export const fixColors = (view, editorSupport) => {
-  view.dispatch(clearTypeMarkersEffect.of());
+  resetColors(view, editorSupport);
   if (editorSupport.parseTree == null) {
     return;
   }

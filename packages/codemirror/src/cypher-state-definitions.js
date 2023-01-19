@@ -42,7 +42,7 @@ export const typeMarkerField = StateField.define({
     typeMarkers = typeMarkers.map(tr.changes);
     for (let e of tr.effects) {
       if (e.is(clearTypeMarkersEffect)) {
-        typeMarkers = typeMarkers.filter(() => false);
+        typeMarkers = Decoration.none;
       } else if (e.is(addTypeMarkerEffect)) {
         if (e.value.from !== e.value.to) {
           typeMarkers = typeMarkers.update({
