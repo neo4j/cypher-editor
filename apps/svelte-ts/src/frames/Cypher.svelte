@@ -20,7 +20,8 @@
  */
 -->
 <script lang="ts">
-  import { Node, isInt, type QueryResult } from "neo4j-driver";
+  import { isInt, type QueryResult } from "neo4j-driver";
+  import CopyIcon from "../CopyIcon.svelte";
   export let result: QueryResult;
   const recordObjs: { keys: string[]; rows: any[] } = result.records.reduce(
     (all, r, index) => {
@@ -72,13 +73,18 @@
 
     return x;
   }
+  function copy(what: string) {
+    navigator.clipboard.writeText(what);
+  }
 </script>
 
 <table>
   <thead
     ><tr>
       {#each recordObjs.keys as key}
-        <td>{key}</td>
+        <th>
+          {key}
+        </th>
       {/each}
     </tr></thead
   >
@@ -86,7 +92,12 @@
     {#each recordObjs.rows as row}
       <tr>
         {#each row as col}
-          <td><pre>{col}</pre></td>
+          <td
+            ><pre>{col}</pre>
+            <button class="copy-icon" on:click={() => copy(col)}
+              ><CopyIcon /></button
+            ></td
+          >
         {/each}
       </tr>
     {/each}
@@ -94,21 +105,53 @@
 </table>
 
 <style>
+  .copy-icon {
+    border: 0;
+    margin: 0;
+    padding: 1px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    cursor: pointer;
+    display: none;
+    background-color: transparent;
+  }
+  :global(.copy-icon svg) {
+    fill: #bbb;
+  }
+  :global(.copy-icon:active svg) {
+    fill: #888;
+  }
   table {
     width: 100%;
+    border-spacing: 16px 8px;
+    border-collapse: separate;
+    text-align: left;
   }
-  thead td {
+  th {
     border-bottom: 1px solid #ccc;
     font-size: 1rem;
   }
 
+  tr {
+    vertical-align: top;
+  }
+
   td {
-    min-width: 200px;
+    white-space: nowrap;
+    min-width: 100px;
+    position: relative;
+    border-bottom: 1px solid #efefef;
+  }
+  td:hover .copy-icon {
+    display: block;
   }
   pre {
     background-color: #fafafa;
     border-radius: 6px;
     padding: 8px;
-    overflow-x: auto;
+    white-space: pre-wrap;
   }
 </style>
