@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.18
+
+### Patch Changes
+
+- d4ef48e: disable syntax highlighting when editor is empty to fix a bug
+
 ## 1.0.0-next.17
 
 ### Patch Changes
