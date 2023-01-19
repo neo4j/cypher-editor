@@ -92,7 +92,7 @@ export const resetColors = (view, editorSupport) => {
 
 export const fixColors = (view, editorSupport) => {
   resetColors(view, editorSupport);
-  if (editorSupport.parseTree == null) {
+  if (!editorSupport.parseTree || !editorSupport.input) {
     return;
   }
   editorSupport.applyHighlighthing((element, type) => {
