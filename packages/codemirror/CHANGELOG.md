@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.16
+
+### Patch Changes
+
+- f20de4e: fix rare decoration update error by removing unneeded code
+
 ## 1.0.0-next.15
 
 ### Patch Changes
