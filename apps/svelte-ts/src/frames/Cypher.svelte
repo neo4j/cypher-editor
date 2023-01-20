@@ -133,6 +133,7 @@
   th {
     border-bottom: 1px solid #ccc;
     font-size: 1rem;
+    white-space: normal;
   }
 
   tr {

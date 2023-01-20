@@ -155,6 +155,8 @@
   <div class="editor-section">
     <div class="editor-wrapper">
       <CypherEditor
+        className="cool-editor"
+        lineWrapping={true}
         bind:value={$history}
         readOnly={viewState === "executing"}
         readOnlyCursor={true}
@@ -320,7 +322,7 @@
     max-height: 200px;
     font-size: 18px;
   }
-  :global(.cm-editor .cm-gutters) {
+  :global(.cool-editor > .cm-editor .cm-gutters) {
     border: 0;
   }
 </style>

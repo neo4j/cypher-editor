@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --port 5273",
     "deploy": "vite build",
+    "upload": "npm run deploy && surge dist $([ -f .env ] && grep CNAME .env | awk -F '=' '{print $2}' || true)",
     "preview": "vite preview --port 5273",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
