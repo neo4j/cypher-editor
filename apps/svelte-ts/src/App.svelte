@@ -151,7 +151,7 @@
   }
 </script>
 
-<div class="wrapper">
+<main>
   <div class="editor-section">
     <div class="editor-wrapper">
       <CypherEditor
@@ -208,7 +208,7 @@
       {/each}
     {/if}
   </div>
-</div>
+</main>
 <ConnectModal
   open={viewState === "connection-modal"}
   on:connect={({ detail }) => didConnect(detail.driver)}
@@ -216,19 +216,24 @@
 />
 
 <style>
-  .wrapper {
+  main {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1080px;
   }
   .stream-section {
-    padding: 16px;
-    overflow-y: auto;
+    padding: 16px 0;
+    height: 100%;
+    margin-bottom: 16px;
   }
   .editor-section {
     padding: 16px;
     border-bottom: 1px solid rgb(238 241 246);
     background-color: white;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
   }
   .editor-wrapper {
     border: 1px solid var(--border-color);
@@ -299,7 +304,8 @@
     color: red;
     background-color: pink;
     padding: 16px;
-    margin: 0;
+    margin: 8px 0;
+    border-radius: 6px;
   }
   .connect-btn {
     border: 1px solid rgba(255, 0, 0, 0.5);
