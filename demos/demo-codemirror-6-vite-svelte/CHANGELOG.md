@@ -1,5 +1,13 @@
 # demo-codemirror-6-vite-svelte
 
+## 1.0.0-next.20
+
+### Patch Changes
+
+- Updated dependencies [d4ef48e]
+  - @neo4j-cypher/codemirror@1.0.0-next.18
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.20
+
 ## 1.0.0-next.19
 
 ### Patch Changes

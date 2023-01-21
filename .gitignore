@@ -30,3 +30,4 @@ dist-ssr
 
 /playwright-results/
 /playwright/.cache/
+.env

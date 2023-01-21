@@ -1,5 +1,13 @@
 # svelte-ts
 
+## 1.0.0-next.20
+
+### Patch Changes
+
+- 37252c7: Format Cypher results nicely in the Svelte demo app
+- cec110d: Styling fixes and copy action on results
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.20
+
 ## 1.0.0-next.19
 
 ### Patch Changes
