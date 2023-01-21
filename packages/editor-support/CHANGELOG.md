@@ -1,5 +1,11 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- 6e6269f: remove use of constructor.name in editor-support package
+
 ## 1.0.0-next.2
 
 ### Patch Changes
