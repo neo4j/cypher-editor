@@ -61,16 +61,16 @@ export default (element) => {
   // Iterate over parameters, and stop when we found current one.
   for (let i = 0; i < consoleCommand.children.length; i += 1) {
     const child = consoleCommand.children[i];
-    if (child.constructor.name === CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
+    if (child instanceof CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
       path.push(child.getText());
     }
     if (
-      child.constructor.name === CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT
+      child instanceof CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT
     ) {
       for (let j = 0; j < child.children.length; j += 1) {
         const parameterChild = child.children[j];
         if (
-          parameterChild.constructor.name ===
+          parameterChild instanceof
           CypherTypes.CONSOLE_COMMAND_PARAMETER_CONTEXT
         ) {
           path.push(parameterChild.getText());

@@ -32,7 +32,7 @@ export default (element) => {
     );
     const resultOutput = TreeUtils.findAnyParent(
       element,
-      CypherTypes.PROCEDURE_RESULTS_CONTEXT
+      [CypherTypes.PROCEDURE_RESULTS_CONTEXT]
     );
 
     if (procedure == null || resultOutput == null) {

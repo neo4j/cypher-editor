@@ -54,7 +54,7 @@ class Index {
     // If variable is inside atom, then variable is inside expression.
     // Therefore, variables is node defined here.
     const parent = ctx.parentCtx;
-    if (parent && parent.constructor.name === CypherTypes.ATOM_CONTEXT) {
+    if (parent && parent instanceof CypherTypes.ATOM_CONTEXT) {
       addName = false;
     }
     this.add(ctx, addName);
@@ -66,15 +66,19 @@ export class ReferencesListener extends CypherListener {
   queriesAndCommands = [];
   statements = [];
   raw = [];
-  indexes = CypherTypes.SYMBOLIC_CONTEXTS.reduce(
-    (acc, t) => ({
-      ...acc,
-      [t]: new Index(t)
-    }),
-    {}
-  );
+  
+  indexes = new Map();
 
   inConsoleCommand = false;
+
+  constructor() {
+    super();
+    CypherTypes.SYMBOLIC_CONTEXTS.forEach(
+      (sc) => {
+        this.indexes.set(sc, new Index(sc));
+      }
+    );
+  }
 
   enterRaw(ctx) {
     this.raw.push(ctx);
@@ -97,7 +101,7 @@ export class ReferencesListener extends CypherListener {
 
   enterCypherConsoleCommand(ctx) {
     this.queriesAndCommands.push(ctx);
-    Object.keys(this.indexes).forEach((k) => this.indexes[k].addQuery());
+    this.indexes.forEach((index) => index.addQuery());
     this.inConsoleCommand = true;
   }
 
@@ -108,41 +112,41 @@ export class ReferencesListener extends CypherListener {
   enterCypherQuery(ctx) {
     this.queries.push(ctx);
     this.queriesAndCommands.push(ctx);
-    Object.keys(this.indexes).forEach((k) => this.indexes[k].addQuery());
+    this.indexes.forEach((index) => index.addQuery());
   }
 
   exitVariable(ctx) {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.VARIABLE_CONTEXT].addVariable(ctx);
+    this.indexes.get(CypherTypes.VARIABLE_CONTEXT).addVariable(ctx);
   }
 
   exitLabelName(ctx) {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.LABEL_NAME_CONTEXT].add(ctx);
+    this.indexes.get(CypherTypes.LABEL_NAME_CONTEXT).add(ctx);
   }
 
   exitRelTypeName(ctx) {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.RELATIONSHIP_TYPE_NAME_CONTEXT].add(ctx);
+    this.indexes.get(CypherTypes.RELATIONSHIP_TYPE_NAME_CONTEXT).add(ctx);
   }
 
   exitPropertyKeyName(ctx) {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.PROPERTY_KEY_NAME_CONTEXT].add(ctx);
+    this.indexes.get(CypherTypes.PROPERTY_KEY_NAME_CONTEXT).add(ctx);
   }
 
   exitParameterName(ctx) {
     if (this.inConsoleCommand) {
       return;
     }
-    this.indexes[CypherTypes.PARAMETER_NAME_CONTEXT].add(ctx);
+    this.indexes.get(CypherTypes.PARAMETER_NAME_CONTEXT).add(ctx);
   }
 }

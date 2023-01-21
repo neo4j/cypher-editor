@@ -26,7 +26,7 @@ export class TreeUtils {
       if (el == null) {
         return null;
       }
-      if (el.constructor.name === type) {
+      if (el instanceof type) {
         return el;
       }
       el = el.parentCtx;
@@ -40,9 +40,12 @@ export class TreeUtils {
       if (el == null) {
         return null;
       }
-      if (types.indexOf(el.constructor.name) > -1) {
-        return el;
+      for (let type of types) {
+        if (el instanceof type) {
+          return el;
+        }
       }
+      
       el = el.parentCtx;
     }
   }
@@ -52,7 +55,7 @@ export class TreeUtils {
       return null;
     }
 
-    if (element.constructor.name === type) {
+    if (element instanceof type) {
       return element;
     }
 

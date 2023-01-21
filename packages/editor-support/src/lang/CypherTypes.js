@@ -22,94 +22,94 @@
 import { CypherParser } from "@neo4j-cypher/antlr4";
 
 export const VARIABLE_CONTEXT =
-  CypherParser.VariableContext.prototype.constructor.name;
+  CypherParser.VariableContext;
 export const LABEL_NAME_CONTEXT =
-  CypherParser.LabelNameContext.prototype.constructor.name;
+  CypherParser.LabelNameContext;
 export const RELATIONSHIP_TYPE_NAME_CONTEXT =
-  CypherParser.RelTypeNameContext.prototype.constructor.name;
+  CypherParser.RelTypeNameContext;
 export const PROPERTY_KEY_NAME_CONTEXT =
-  CypherParser.PropertyKeyNameContext.prototype.constructor.name;
+  CypherParser.PropertyKeyNameContext;
 export const PARAMETER_NAME_CONTEXT =
-  CypherParser.ParameterNameContext.prototype.constructor.name;
+  CypherParser.ParameterNameContext;
 export const PARAMETER_CONTEXT =
-  CypherParser.ParameterContext.prototype.constructor.name;
+  CypherParser.ParameterContext;
 export const FUNCTION_NAME_CONTEXT =
-  CypherParser.FunctionInvocationBodyContext.prototype.constructor.name;
+  CypherParser.FunctionInvocationBodyContext;
 export const PROCEDURE_NAME_CONTEXT =
-  CypherParser.ProcedureInvocationBodyContext.prototype.constructor.name;
+  CypherParser.ProcedureInvocationBodyContext;
 export const CONSOLE_COMMAND_NAME_CONTEXT =
-  CypherParser.CypherConsoleCommandNameContext.prototype.constructor.name;
+  CypherParser.CypherConsoleCommandNameContext;
 export const CONSOLE_COMMAND_CONTEXT =
-  CypherParser.CypherConsoleCommandContext.prototype.constructor.name;
+  CypherParser.CypherConsoleCommandContext;
 export const CONSOLE_COMMAND_PARAMETERS_CONTEXT =
-  CypherParser.CypherConsoleCommandParametersContext.prototype.constructor.name;
+  CypherParser.CypherConsoleCommandParametersContext;
 export const CONSOLE_COMMAND_PARAMETER_CONTEXT =
-  CypherParser.CypherConsoleCommandParameterContext.prototype.constructor.name;
+  CypherParser.CypherConsoleCommandParameterContext;
 export const CONSOLE_COMMAND_SUBCOMMAND_CONTEXT =
-  CypherParser.SubCommandContext.prototype.constructor.name;
+  CypherParser.SubCommandContext;
 export const CONSOLE_COMMAND_PATH_CONTEXT =
-  CypherParser.CommandPathContext.prototype.constructor.name;
+  CypherParser.CommandPathContext;
 export const PROCEDURE_OUTPUT_CONTEXT =
-  CypherParser.ProcedureOutputContext.prototype.constructor.name;
+  CypherParser.ProcedureOutputContext;
 export const PROCEDURE_RESULTS_CONTEXT =
-  CypherParser.ProcedureResultsContext.prototype.constructor.name;
+  CypherParser.ProcedureResultsContext;
 
 export const ALL_FUNCTION_NAME_CONTEXT =
-  CypherParser.AllFunctionNameContext.prototype.constructor.name;
+  CypherParser.AllFunctionNameContext;
 export const ANY_FUNCTION_NAME_CONTEXT =
-  CypherParser.AnyFunctionNameContext.prototype.constructor.name;
+  CypherParser.AnyFunctionNameContext;
 export const SINGLE_FUNCTION_NAME_CONTEXT =
-  CypherParser.SingleFunctionNameContext.prototype.constructor.name;
+  CypherParser.SingleFunctionNameContext;
 export const NONE_FUNCTION_NAME_CONTEXT =
-  CypherParser.NoneFunctionNameContext.prototype.constructor.name;
+  CypherParser.NoneFunctionNameContext;
 export const EXTRACT_FUNCTION_NAME_CONTEXT =
-  CypherParser.ExtractFunctionNameContext.prototype.constructor.name;
+  CypherParser.ExtractFunctionNameContext;
 export const REDUCE_FUNCTION_NAME_CONTEXT =
-  CypherParser.ReduceFunctionNameContext.prototype.constructor.name;
+  CypherParser.ReduceFunctionNameContext;
 export const SHORTEST_PATH_FUNCTION_NAME_CONTEXT =
-  CypherParser.ShortestPathFunctionNameContext.prototype.constructor.name;
+  CypherParser.ShortestPathFunctionNameContext;
 export const ALL_SHORTEST_PATH_FUNCTION_NAME_CONTEXT =
-  CypherParser.AllShortestPathFunctionNameContext.prototype.constructor.name;
+  CypherParser.AllShortestPathFunctionNameContext;
 export const FILTER_FUNCTION_NAME_CONTEXT =
-  CypherParser.FilterFunctionNameContext.prototype.constructor.name;
+  CypherParser.FilterFunctionNameContext;
 export const EXISTS_FUNCTION_NAME_CONTEXT =
-  CypherParser.ExistsFunctionNameContext.prototype.constructor.name;
+  CypherParser.ExistsFunctionNameContext;
 
-export const CALL_CONTEXT = CypherParser.CallContext.prototype.constructor.name;
+export const CALL_CONTEXT = CypherParser.CallContext;
 export const EXPRESSION_CONTEXT =
-  CypherParser.ExpressionContext.prototype.constructor.name;
+  CypherParser.ExpressionContext;
 export const PATTERN_ELEMENT_CONTEXT =
-  CypherParser.PatternElementContext.prototype.constructor.name;
+  CypherParser.PatternElementContext;
 export const NODE_PATTERN_CONTEXT =
-  CypherParser.NodePatternContext.prototype.constructor.name;
+  CypherParser.NodePatternContext;
 export const NODE_LABEL_CONTEXT =
-  CypherParser.NodeLabelContext.prototype.constructor.name;
+  CypherParser.NodeLabelContext;
 export const NODE_LABELS_CONTEXT =
-  CypherParser.NodeLabelsContext.prototype.constructor.name;
+  CypherParser.NodeLabelsContext;
 export const RELATIONSHIP_TYPE_CONTEXT =
-  CypherParser.RelationshipTypeContext.prototype.constructor.name;
+  CypherParser.RelationshipTypeContext;
 export const RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT =
-  CypherParser.RelationshipTypeOptionalColonContext.prototype.constructor.name;
+  CypherParser.RelationshipTypeOptionalColonContext;
 export const RELATIONSHIP_TYPES_CONTEXT =
-  CypherParser.RelationshipTypesContext.prototype.constructor.name;
+  CypherParser.RelationshipTypesContext;
 export const RELATIONSHIP_PATTERN_CONTEXT =
-  CypherParser.RelationshipPatternContext.prototype.constructor.name;
+  CypherParser.RelationshipPatternContext;
 export const PROPERTY_LOOKUP_CONTEXT =
-  CypherParser.PropertyLookupContext.prototype.constructor.name;
+  CypherParser.PropertyLookupContext;
 export const MAP_LITERAL_CONTEXT =
-  CypherParser.MapLiteralContext.prototype.constructor.name;
+  CypherParser.MapLiteralContext;
 export const PROPERTIES_CONTEXT =
-  CypherParser.PropertiesContext.prototype.constructor.name;
+  CypherParser.PropertiesContext;
 export const MAP_LITERAL_ENTRY =
-  CypherParser.LiteralEntryContext.prototype.constructor.name;
+  CypherParser.LiteralEntryContext;
 export const STRING_LITERAL_CONTEXT =
-  CypherParser.StringLiteralContext.prototype.constructor.name;
-export const ATOM_CONTEXT = CypherParser.AtomContext.prototype.constructor.name;
+  CypherParser.StringLiteralContext;
+export const ATOM_CONTEXT = CypherParser.AtomContext;
 
 export const QUERY_CONTEXT =
-  CypherParser.CypherQueryContext.prototype.constructor.name;
+  CypherParser.CypherQueryContext;
 export const SYMBOLIC_NAME_CONTEXT =
-  CypherParser.SymbolicNameContext.prototype.constructor.name;
+  CypherParser.SymbolicNameContext;
 
 export const COMPLETION_CANDIDATES = [
   STRING_LITERAL_CONTEXT,

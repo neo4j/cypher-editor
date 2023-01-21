@@ -23,7 +23,7 @@ import * as CompletionTypes from "../CompletionTypes";
 
 // Specify place where no autocompletion should be triggered
 export default (element) => {
-  if (element.constructor.name === CypherTypes.STRING_LITERAL_CONTEXT) {
+  if (element instanceof CypherTypes.STRING_LITERAL_CONTEXT) {
     return [{ type: CompletionTypes.NOOP }];
   }
 

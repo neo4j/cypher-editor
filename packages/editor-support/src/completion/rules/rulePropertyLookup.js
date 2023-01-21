@@ -27,7 +27,7 @@ export default (element) => {
 
   if (lookupContext) {
     if (
-      lookupContext.constructor.name === CypherTypes.PROPERTY_LOOKUP_CONTEXT &&
+      lookupContext instanceof CypherTypes.PROPERTY_LOOKUP_CONTEXT &&
       text === "."
     ) {
       return [{ type: CompletionTypes.PROPERTY_KEY }];

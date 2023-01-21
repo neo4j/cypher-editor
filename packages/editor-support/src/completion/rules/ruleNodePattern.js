@@ -23,12 +23,12 @@ import * as CompletionTypes from "../CompletionTypes";
 
 // If we are in relationship pattern then return variables and types
 export default (element) => {
-  const parent = element.getParent();
+  const parent = element.getParent ? element.getParent() : null;
   const text = element.getText();
   // Special case. We are at the beginning of first node pattern.
   if (parent) {
     if (
-      parent.constructor.name === CypherTypes.PATTERN_ELEMENT_CONTEXT &&
+      parent instanceof CypherTypes.PATTERN_ELEMENT_CONTEXT &&
       text === "("
     ) {
       return [
@@ -37,7 +37,7 @@ export default (element) => {
       ];
     }
 
-    if (parent.constructor.name === CypherTypes.NODE_PATTERN_CONTEXT) {
+    if (parent instanceof CypherTypes.NODE_PATTERN_CONTEXT) {
       // We are at the begining of node pattern
       if (text === "(") {
         return [

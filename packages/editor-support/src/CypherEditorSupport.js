@@ -35,7 +35,7 @@ export class CypherEditorSupport {
 
   parseTree = null;
   parseErrors = [];
-  referencesProviders = {};
+  referencesProviders = new Map();
   completion = new AutoCompletion();
   queriesAndCommands = [];
   statements = [];
@@ -161,13 +161,12 @@ export class CypherEditorSupport {
       return [];
     }
 
-    const type = e.constructor.name;
     const query =
-      type === CypherTypes.VARIABLE_CONTEXT
+      e instanceof CypherTypes.VARIABLE_CONTEXT
         ? TreeUtils.findAnyParent(e, [CypherTypes.QUERY_CONTEXT])
         : null;
 
-    return this.referencesProviders[type].getReferences(e.getText(), query);
+    return this.referencesProviders.get(e).getReferences(e.getText(), query);
   }
 
   getCompletionInfo(line, column) {
@@ -233,8 +232,7 @@ export class CypherEditorSupport {
     return {
       items: this.completion.getItems(types, {
         filter,
-        query,
-        elementType: element ? element.constructor.name : "unknown"
+        query
       }),
       ...replaceRange
     };

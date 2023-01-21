@@ -28,7 +28,7 @@ export default (element) => {
     return [];
   }
 
-  if (parent.constructor.name === CypherTypes.CALL_CONTEXT) {
+  if (parent instanceof CypherTypes.CALL_CONTEXT) {
     const secondChild = parent.getChild(1);
     if (secondChild === element) {
       return [{ type: CompletionTypes.PROCEDURE_NAME }];

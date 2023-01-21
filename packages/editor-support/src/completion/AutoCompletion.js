@@ -181,7 +181,7 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
     super();
     this.providers = {
       [CompletionTypes.VARIABLE]: (query) =>
-        (referenceProviders[CypherTypes.VARIABLE_CONTEXT] || this.emptyProvider)
+        (referenceProviders.get(CypherTypes.VARIABLE_CONTEXT) || this.emptyProvider)
           .getNames(query)
           .map((name) => ({
             type: CompletionTypes.VARIABLE,
@@ -271,7 +271,7 @@ export class AutoCompletion {
     if (
       text === ":" &&
       parent != null &&
-      parent.constructor.name === CypherTypes.MAP_LITERAL_ENTRY
+      parent instanceof CypherTypes.MAP_LITERAL_ENTRY
     ) {
       return false;
     }
@@ -292,8 +292,8 @@ export class AutoCompletion {
     // This means that we typed in just ':' and Antlr consumed other tokens in element
     // In this case replace only ':'
     if (
-      element.constructor.name === CypherTypes.RELATIONSHIP_TYPE_CONTEXT ||
-      element.constructor.name === CypherTypes.NODE_LABEL_CONTEXT
+      element instanceof CypherTypes.RELATIONSHIP_TYPE_CONTEXT ||
+      element instanceof CypherTypes.NODE_LABEL_CONTEXT
     ) {
       if (TreeUtils.hasErrorNode(element)) {
         return { filterText: ":", start, stop: start };
