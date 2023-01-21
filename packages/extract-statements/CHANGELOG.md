@@ -1,5 +1,12 @@
 # @neo4j-cypher/extract-statements
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies [6e6269f]
+  - @neo4j-cypher/editor-support@1.0.0-next.3
+
 ## 1.0.0-next.2
 
 ### Patch Changes

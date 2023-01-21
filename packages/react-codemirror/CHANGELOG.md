@@ -1,5 +1,11 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.20
+
+### Patch Changes
+
+- @neo4j-cypher/codemirror@1.0.0-next.19
+
 ## 1.0.0-next.19
 
 ### Patch Changes
