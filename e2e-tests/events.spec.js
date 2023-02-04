@@ -14,10 +14,15 @@ function getLogElement(page) {
 function getEditor(page) {
   return page.locator(".database-editor");
 }
+
+/**
+ * @param {import('@playwright/test').Page} page
+ * @returns {Promise<string>}
+ * */
 async function getEditorContents(page) {
   const cm6Locator = page.locator(".cm-content");
   if ((await cm6Locator.count()) > 0) {
-    return await cm6Locator.textContent();
+    return await cm6Locator.innerText();
   }
   const cm5Content = await page
     .locator(".CodeMirror-code .CodeMirror-line")
@@ -82,7 +87,7 @@ test.describe("Commands and Editor events", () => {
 
     // Empty getEditor
     await clearCypherBtn.click();
-    expect(await getEditorContents(page)).toBe("");
+    expect((await getEditorContents(page)).trim()).toBe("");
 
     // Click simple schema
     await simpleButton.click();
@@ -146,5 +151,62 @@ test.describe("Commands and Editor events", () => {
 
     // Check event side
     expect(lastEntries).toContain("event valueChanged 0");
+  });
+
+  test.describe.skip("Paste events", () => {
+    // These tests pass perfectly locally, but fail on CI
+    // See https://github.com/microsoft/playwright/issues/18901
+    // so we skip them for now but keep them here for when the issue is fixed
+    // Setup
+    const isMac = process.platform === "darwin";
+    const modifier = isMac ? "Meta" : "Control";
+
+    test("handles pasting <= than 32 lines", async ({ page, browserName }) => {
+      if (browserName === "chromium") {
+        // This test doesn't work in chromium
+        // because of clipboard permissions
+        test.skip();
+        return;
+      }
+
+      const text_10_lines = Array(10).fill("MATCH (n) RETURN n").join("\n");
+      const clearCypherBtn = page.locator(".cypher >> text=/clear/i");
+
+      // Empty getEditor
+      await clearCypherBtn.click();
+      await getEditor(page).click();
+      await page.evaluate(
+        (text) => navigator.clipboard.writeText(text),
+        text_10_lines
+      );
+      await page.keyboard.press(`${modifier}+KeyV`);
+
+      const text = await getEditorContents(page);
+
+      expect(text.trim()).toEqual(text_10_lines);
+    });
+    test("handles pasting > than 32 lines", async ({ page, browserName }) => {
+      if (browserName === "chromium") {
+        // This test doesn't work in chromium
+        // because of clipboard permissions
+        test.skip();
+        return;
+      }
+      const text_33_lines = Array(33).fill("MATCH (n) RETURN n").join("\n");
+      const clearCypherBtn = page.locator(".cypher >> text=/clear/i");
+
+      // Empty getEditor
+      await clearCypherBtn.click();
+      await getEditor(page).click();
+      await page.evaluate(
+        async (text) => await navigator.clipboard.writeText(text),
+        text_33_lines
+      );
+      await page.keyboard.press(`${modifier}+KeyV`);
+
+      const text = await getEditorContents(page);
+
+      await expect(text.trim()).toEqual(text_33_lines);
+    });
   });
 });

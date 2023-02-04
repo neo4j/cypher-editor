@@ -318,6 +318,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     ) {
       let changedText = [];
       changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
+        // If changes have more than 32 lines, inserted will have a children property
+        // with 32 lines in each child.
+        if (inserted.children) {
+          changedText = inserted.children.map((c) => c.text);
+          return;
+        }
         changedText = inserted.text;
       });
 

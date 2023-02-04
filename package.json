@@ -9,7 +9,7 @@
     "@babel/plugin-transform-react-jsx": "^7.19.0",
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
-    "@playwright/test": "^1.28.1",
+    "@playwright/test": "^1.30.0",
     "api-docdown": "^1.0.2",
     "cross-env": "^7.0.3",
     "pm2": "^5.2.2",
@@ -40,7 +40,7 @@
     "prettier": "prettier --write .",
     "release": "npm run build:libs && npm run build:demos && changeset publish",
     "start:demos": "turbo run start",
-    "start:e2e": "turbo run e2e",
+    "start:e2e": "turbo run e2e --filter='!./apps/*'",
     "stop:e2e": "turbo run unserve"
   },
   "name": "cypher-editor",
