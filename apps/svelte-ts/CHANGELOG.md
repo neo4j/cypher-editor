@@ -1,5 +1,13 @@
 # svelte-ts
 
+## 1.0.0-next.22
+
+### Patch Changes
+
+- 543e2bb: Add npm upload command to publish to surge
+- 543e2bb: Wrap lines in editor + result headers on svelte-ts
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 ### Patch Changes

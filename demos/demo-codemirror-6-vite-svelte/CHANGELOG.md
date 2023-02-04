@@ -1,5 +1,14 @@
 # demo-codemirror-6-vite-svelte
 
+## 1.0.0-next.22
+
+### Patch Changes
+
+- c6d605c: Bump vite to v4 in demo
+- Updated dependencies [d88078d]
+  - @neo4j-cypher/codemirror@1.0.0-next.20
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 ### Patch Changes
