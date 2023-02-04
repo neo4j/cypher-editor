@@ -1,5 +1,11 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.20
+
+### Patch Changes
+
+- d88078d: Fix paste bug that happened when the pasted contents was more than 32 lines
+
 ## 1.0.0-next.19
 
 ### Patch Changes

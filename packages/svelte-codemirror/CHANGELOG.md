@@ -1,5 +1,12 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.22
+
+### Patch Changes
+
+- Updated dependencies [d88078d]
+  - @neo4j-cypher/codemirror@1.0.0-next.20
+
 ## 1.0.0-next.21
 
 ### Patch Changes
