@@ -96,6 +96,26 @@ export const withDefaultOptions = (options) => {
   return combinedOptions;
 };
 
+const isTruthyObject = obj => obj && typeof obj === "object";
+
+const areSchemasDifferent = (oldSchema, newSchema) => {
+  const oldIsObject = isTruthyObject(oldSchema);
+  const newIsObject = isTruthyObject(newSchema);
+  if (oldIsObject !== newIsObject) {
+    return true;
+  } else if (oldIsObject) {
+    const oldKeys = Object.keys(oldSchema);
+    const newKeys = Object.keys(newSchema);
+    if (oldKeys.length !== newKeys.length) {
+      return true;
+    } else {
+      return oldKeys.some(key => oldSchema[key] !== newSchema[key]);
+    }
+  } else {
+    return false;
+  }
+};
+
 export const getExtensions = (
   options = {},
   {
@@ -279,15 +299,13 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const {
     on: onAutocompleteChanged,
     off: offAutocompleteChanged,
-    fire: fireAutocompleteChanged,
-    count: autocompleteCount
+    fire: fireAutocompleteChanged
   } = createEventHandlers();
 
   const {
     on: onSearchChanged,
     off: offSearchChanged,
-    fire: fireSearchChanged,
-    count: searchCount
+    fire: fireSearchChanged
   } = createEventHandlers();
 
   const {
@@ -811,10 +829,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   };
 
   const setSchema = (newSchema = defaultOptions.schema) => {
+    const schemaChanged = areSchemasDifferent(schema, newSchema);
     schema = newSchema;
     if (cypherLanguage) {
       editorSupport.setSchema(schema);
-      if (autocomplete && autocompleteOpen) {
+      if (schemaChanged && autocomplete && autocompleteOpen) {
         showAutocomplete();
       }
     }
