@@ -27,10 +27,7 @@ export default (element) => {
   const text = element.getText();
   // Special case. We are at the beginning of first node pattern.
   if (parent) {
-    if (
-      parent instanceof CypherTypes.PATTERN_ELEMENT_CONTEXT &&
-      text === "("
-    ) {
+    if (parent instanceof CypherTypes.PATTERN_ELEMENT_CONTEXT && text === "(") {
       return [
         { type: CompletionTypes.VARIABLE },
         { type: CompletionTypes.LABEL }

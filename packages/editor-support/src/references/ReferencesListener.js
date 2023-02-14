@@ -66,18 +66,16 @@ export class ReferencesListener extends CypherListener {
   queriesAndCommands = [];
   statements = [];
   raw = [];
-  
+
   indexes = new Map();
 
   inConsoleCommand = false;
 
   constructor() {
     super();
-    CypherTypes.SYMBOLIC_CONTEXTS.forEach(
-      (sc) => {
-        this.indexes.set(sc, new Index(sc));
-      }
-    );
+    CypherTypes.SYMBOLIC_CONTEXTS.forEach((sc) => {
+      this.indexes.set(sc, new Index(sc));
+    });
   }
 
   enterRaw(ctx) {

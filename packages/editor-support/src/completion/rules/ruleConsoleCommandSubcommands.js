@@ -64,9 +64,7 @@ export default (element) => {
     if (child instanceof CypherTypes.CONSOLE_COMMAND_NAME_CONTEXT) {
       path.push(child.getText());
     }
-    if (
-      child instanceof CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT
-    ) {
+    if (child instanceof CypherTypes.CONSOLE_COMMAND_PARAMETERS_CONTEXT) {
       for (let j = 0; j < child.children.length; j += 1) {
         const parameterChild = child.children[j];
         if (

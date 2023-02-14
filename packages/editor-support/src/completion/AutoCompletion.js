@@ -181,7 +181,10 @@ class QueryBasedCompletion extends AbstractCachingCompletion {
     super();
     this.providers = {
       [CompletionTypes.VARIABLE]: (query) =>
-        (referenceProviders.get(CypherTypes.VARIABLE_CONTEXT) || this.emptyProvider)
+        (
+          referenceProviders.get(CypherTypes.VARIABLE_CONTEXT) ||
+          this.emptyProvider
+        )
           .getNames(query)
           .map((name) => ({
             type: CompletionTypes.VARIABLE,

@@ -44,10 +44,11 @@ export const extractStatements = (input) => {
   const { queries, indexes } = referencesListener;
 
   const referencesProviders = new Map();
-  CypherTypes.SYMBOLIC_CONTEXTS.forEach(
-    (sc) => {
-      referencesProviders.set(sc, new ReferencesProvider(queries, indexes.get(sc)));
-    }
-  );
+  CypherTypes.SYMBOLIC_CONTEXTS.forEach((sc) => {
+    referencesProviders.set(
+      sc,
+      new ReferencesProvider(queries, indexes.get(sc))
+    );
+  });
   return { parseTree, referencesListener, errorListener, referencesProviders };
 };

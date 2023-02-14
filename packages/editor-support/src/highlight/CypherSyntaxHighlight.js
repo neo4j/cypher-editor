@@ -56,8 +56,7 @@ export class CypherSyntaxHighlight {
 
       if (
         e instanceof CypherTypes.RELATIONSHIP_TYPE_CONTEXT ||
-        e instanceof
-          CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT
+        e instanceof CypherTypes.RELATIONSHIP_TYPE_OPTIONAL_COLON_CONTEXT
       ) {
         callback(e, "relationshipType");
         return true;
@@ -89,10 +88,8 @@ export class CypherSyntaxHighlight {
         e instanceof CypherTypes.FILTER_FUNCTION_NAME_CONTEXT ||
         e instanceof CypherTypes.NONE_FUNCTION_NAME_CONTEXT ||
         e instanceof CypherTypes.EXTRACT_FUNCTION_NAME_CONTEXT ||
-        e instanceof
-          CypherTypes.SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
-        e instanceof
-          CypherTypes.ALL_SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
+        e instanceof CypherTypes.SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
+        e instanceof CypherTypes.ALL_SHORTEST_PATH_FUNCTION_NAME_CONTEXT ||
         e instanceof CypherTypes.SINGLE_FUNCTION_NAME_CONTEXT ||
         e instanceof CypherTypes.EXISTS_FUNCTION_NAME_CONTEXT ||
         e instanceof CypherTypes.ANY_FUNCTION_NAME_CONTEXT

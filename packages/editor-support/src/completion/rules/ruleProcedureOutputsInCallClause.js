@@ -30,10 +30,9 @@ export default (element) => {
       call,
       CypherTypes.PROCEDURE_NAME_CONTEXT
     );
-    const resultOutput = TreeUtils.findAnyParent(
-      element,
-      [CypherTypes.PROCEDURE_RESULTS_CONTEXT]
-    );
+    const resultOutput = TreeUtils.findAnyParent(element, [
+      CypherTypes.PROCEDURE_RESULTS_CONTEXT
+    ]);
 
     if (procedure == null || resultOutput == null) {
       return [];

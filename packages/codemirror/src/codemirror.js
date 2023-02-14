@@ -96,7 +96,7 @@ export const withDefaultOptions = (options) => {
   return combinedOptions;
 };
 
-const isTruthyObject = obj => obj && typeof obj === "object";
+const isTruthyObject = (obj) => obj && typeof obj === "object";
 
 const areSchemasDifferent = (oldSchema, newSchema) => {
   const oldIsObject = isTruthyObject(oldSchema);
@@ -109,7 +109,7 @@ const areSchemasDifferent = (oldSchema, newSchema) => {
     if (oldKeys.length !== newKeys.length) {
       return true;
     } else {
-      return oldKeys.some(key => oldSchema[key] !== newSchema[key]);
+      return oldKeys.some((key) => oldSchema[key] !== newSchema[key]);
     }
   } else {
     return false;
