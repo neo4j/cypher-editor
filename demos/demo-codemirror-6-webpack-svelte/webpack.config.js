@@ -3,7 +3,7 @@ const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackDeployPlugin = require("html-webpack-deploy-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+// const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const sveltePreprocess = require("svelte-preprocess");
 
 const { NODE_ENV } = process.env;

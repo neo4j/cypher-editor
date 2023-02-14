@@ -3,7 +3,7 @@ const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackDeployPlugin = require("html-webpack-deploy-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+// const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 
@@ -20,10 +20,8 @@ module.exports = {
   resolve: {
     alias: {},
     modules: [
-      path.resolve(basePath, "../../node_modules"),
-      path.resolve(basePath, "node_modules")
-      // path.resolve(basePath, 'packages'),
-      // path.resolve(basePath, 'src')
+      path.resolve(basePath, "node_modules"),
+      path.resolve(basePath, "../../node_modules")
     ],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".mjs"],
     // plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
@@ -34,7 +32,6 @@ module.exports = {
   output: {
     filename: "app-[hash].js",
     chunkFilename: "[name]-[hash].bundle.js",
-    // publicPath: publicPath,
     publicPath,
     path: USE_STATIC
       ? path.join(basePath, "dist/static")
@@ -74,17 +71,6 @@ module.exports = {
           configFile: babelConfigPath
         }
       },
-      // Disable sass for now
-      // {
-      //   test: /\.scss$/,
-      //   // include: sassPath,
-      //   exclude: /node_modules/,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     "css-loader",
-      //     "sass-loader"
-      //   ]
-      // },
       {
         test: /\.css$/, // global css files that don't need any processing
         // include: [path.join(basePath, 'src')],
