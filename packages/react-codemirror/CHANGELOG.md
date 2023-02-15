@@ -1,5 +1,11 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.0-next.23
+
+### Patch Changes
+
+- 1d97f58: remove unneeded codemirror global package dependency
+
 ## 1.0.0-next.22
 
 ### Patch Changes

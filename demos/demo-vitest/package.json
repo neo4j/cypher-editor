@@ -3,7 +3,7 @@
   "private": true,
   "description": "demo of tests of the editor using vitest",
   "keywords": [],
-  "version": "1.0.0-next.2",
+  "version": "1.0.0-next.3",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "type": "module",
@@ -25,7 +25,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@neo4j-cypher/react-codemirror": "1.0.0-next.22"
+    "@neo4j-cypher/react-codemirror": "1.0.0-next.23"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

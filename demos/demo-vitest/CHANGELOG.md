@@ -1,5 +1,12 @@
 # demo-vitest
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies [1d97f58]
+  - @neo4j-cypher/react-codemirror@1.0.0-next.23
+
 ## 1.0.0-next.2
 
 ### Patch Changes
