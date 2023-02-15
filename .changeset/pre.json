@@ -16,7 +16,8 @@
     "@neo4j-cypher/extract-statements": "0.0.0",
     "@neo4j-cypher/react-codemirror": "0.0.0",
     "@neo4j-cypher/svelte-codemirror": "0.0.0",
-    "@neo4j-cypher/antlr4-browser": "0.0.0"
+    "@neo4j-cypher/antlr4-browser": "0.0.0",
+    "demo-vitest": "1.0.0-next.1"
   },
   "changesets": [
     "angry-seahorses-double",
@@ -30,6 +31,7 @@
     "gentle-gorillas-carry",
     "giant-eagles-repair",
     "good-nails-relax",
+    "great-beds-retire",
     "grumpy-pillows-begin",
     "hungry-pots-sleep",
     "hungry-seas-wait",
