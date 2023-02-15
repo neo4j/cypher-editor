@@ -1,16 +1,5 @@
 # demo-codemirror-6-webpack-svelte
 
-## 1.0.0-next.23
-
-### Patch Changes
-
-- 32fb986: Fix module exports + add shallow comparision on schema updates
-- Updated dependencies [32fb986]
-  - demo-base@1.0.0-next.7
-  - demo-base-svelte@1.0.0-next.7
-  - @neo4j-cypher/codemirror@1.0.0-next.21
-  - @neo4j-cypher/svelte-codemirror@1.0.0-next.23
-
 ## 1.0.0-next.22
 
 ### Patch Changes

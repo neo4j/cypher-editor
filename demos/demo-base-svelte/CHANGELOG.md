@@ -1,11 +1,5 @@
 # demo-base-svelte
 
-## 1.0.0-next.7
-
-### Patch Changes
-
-- 32fb986: Fix module exports + add shallow comparision on schema updates
-
 ## 1.0.0-next.6
 
 ### Patch Changes
