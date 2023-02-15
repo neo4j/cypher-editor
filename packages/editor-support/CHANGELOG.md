@@ -1,5 +1,13 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- 32fb986: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [32fb986]
+  - @neo4j-cypher/antlr4@1.0.0-next.3
+
 ## 1.0.0-next.3
 
 ### Patch Changes
