@@ -1,5 +1,13 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.0-next.21
+
+### Patch Changes
+
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [91cb80a]
+  - @neo4j-cypher/editor-support@1.0.0-next.4
+
 ## 1.0.0-next.20
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @neo4j-cypher/extract-statements
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [91cb80a]
+  - @neo4j-cypher/antlr4-simple@1.0.0-next.3
+  - @neo4j-cypher/editor-support@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 ### Patch Changes

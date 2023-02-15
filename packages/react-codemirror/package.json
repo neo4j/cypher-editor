@@ -7,7 +7,7 @@
     "codemirror",
     "codemirror 6"
   ],
-  "version": "1.0.0-next.21",
+  "version": "1.0.0-next.22",
   "author": "Neo4j Inc.",
   "license": "GPL-3.0",
   "main": "./lib/react-codemirror.js",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "@neo4j-cypher/codemirror": "1.0.0-next.20",
+    "@neo4j-cypher/codemirror": "1.0.0-next.21",
     "codemirror": "^6.0.1"
   },
   "peerDependencies": {

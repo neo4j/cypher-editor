@@ -1,5 +1,13 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0-next.23
+
+### Patch Changes
+
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [91cb80a]
+  - @neo4j-cypher/codemirror@1.0.0-next.21
+
 ## 1.0.0-next.22
 
 ### Patch Changes
