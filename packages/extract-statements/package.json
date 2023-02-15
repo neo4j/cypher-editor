@@ -22,10 +22,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+    "url": "git://github.com/neo4j/cypher-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+    "url": "https://github.com/neo4j/cypher-editor/issues"
   },
   "scripts": {
     "build-lib": "babel --config-file ../../babel.config.js --extensions \".js\" --out-dir lib ./src",
