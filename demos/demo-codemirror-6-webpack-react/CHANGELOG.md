@@ -1,5 +1,16 @@
 # demo-codemirror-6-webpack-react
 
+## 1.0.0-next.22
+
+### Patch Changes
+
+- 32fb986: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [32fb986]
+  - demo-base@1.0.0-next.7
+  - demo-base-react@1.0.0-next.7
+  - @neo4j-cypher/codemirror@1.0.0-next.21
+  - @neo4j-cypher/react-codemirror@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 ### Patch Changes
