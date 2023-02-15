@@ -50,8 +50,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "@neo4j-cypher/codemirror": "1.0.0-next.21",
-    "codemirror": "^6.0.1"
+    "@neo4j-cypher/codemirror": "1.0.0-next.21"
   },
   "peerDependencies": {
     "react": ">=16"
