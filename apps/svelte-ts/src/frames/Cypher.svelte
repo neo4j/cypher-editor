@@ -1,6 +1,3 @@
-<!--
-
--->
 <script lang="ts">
   import { isInt, type QueryResult } from "neo4j-driver";
   import CopyIcon from "../CopyIcon.svelte";

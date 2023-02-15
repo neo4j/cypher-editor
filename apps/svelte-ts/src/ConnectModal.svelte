@@ -1,6 +1,3 @@
-<!--
-
--->
 <script lang="ts">
   import type { Driver } from "neo4j-driver";
   import { onMount, createEventDispatcher, onDestroy } from "svelte";

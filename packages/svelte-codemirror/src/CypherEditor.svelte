@@ -1,6 +1,3 @@
-<!--
-
--->
 <script>
   import { onMount, onDestroy } from "svelte";
   import { createCypherEditor, defaultOptions } from "@neo4j-cypher/codemirror";

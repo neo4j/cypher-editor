@@ -1,6 +1,3 @@
-<!--
-
--->
 <script lang="ts">
   import type { GenericResult } from "./Generic.types";
   export let result: GenericResult;

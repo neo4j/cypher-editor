@@ -1,6 +1,3 @@
-<!--
-
--->
 <script lang="ts">
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
