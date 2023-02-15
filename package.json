@@ -48,7 +48,7 @@
     "@changesets/cli": "^2.26.0"
   },
   "engines": {
-    "npm": "8.x",
+    "npm": "8.x || 9.x",
     "node": "18.x"
   }
 }
