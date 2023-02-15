@@ -16,6 +16,9 @@
       "import": "./es/codemirror.js",
       "require": "./lib/codemirror.js"
     },
+    "./src/codemirror.d.ts": {
+      "import": "./src/codemirror.d.ts"
+    },
     "./src/codemirror.js": {
       "import": "./src/codemirror.js"
     },

@@ -14,6 +14,9 @@
       "import": "./es/editor-support.js",
       "require": "./lib/editor-support.js"
     },
+    "./src/editor-support.d.ts": {
+      "import": "./src/editor-support.d.ts"
+    },
     "./src/editor-support.js": {
       "import": "./src/editor-support.js"
     }

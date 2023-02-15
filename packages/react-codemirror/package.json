@@ -17,6 +17,9 @@
       "import": "./es/react-codemirror.js",
       "require": "./lib/react-codemirror.js"
     },
+    "./src/react-codemirror.d.ts": {
+      "import": "./src/react-codemirror.d.ts"
+    },
     "./src/react-codemirror.js": {
       "import": "./src/react-codemirror.js"
     }
