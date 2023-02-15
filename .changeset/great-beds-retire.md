@@ -7,7 +7,6 @@
 "demo-codemirror-6-webpack-svelte": patch
 "demo-vitest": patch
 "@neo4j-cypher/antlr4": patch
-"@neo4j-cypher/antlr4-browser": patch
 "@neo4j-cypher/antlr4-simple": patch
 "@neo4j-cypher/codemirror": patch
 "@neo4j-cypher/editor-support": patch
