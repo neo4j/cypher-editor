@@ -11,6 +11,15 @@
   "license": "GPL-3.0",
   "main": "./lib/index.js",
   "module": "./es/index.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./src/index.js": {
+      "import": "./src/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j-contrib/cypher-editor.git"
@@ -34,15 +43,15 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.6",
+    "@babel/runtime": "^7.20.13",
     "@neo4j-cypher/antlr4-simple": "1.0.0-next.2",
     "@neo4j-cypher/editor-support": "1.0.0-next.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-regenerator": "^7.20.5",
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2"

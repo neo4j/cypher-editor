@@ -12,6 +12,15 @@
   "license": "GPL-3.0",
   "main": "./lib/react-codemirror.js",
   "module": "./es/react-codemirror.js",
+  "exports": {
+    ".": {
+      "import": "./es/react-codemirror.js",
+      "require": "./lib/react-codemirror.js"
+    },
+    "./src/react-codemirror.js": {
+      "import": "./src/react-codemirror.js"
+    }
+  },
   "types": "src/react-codemirror.d.ts",
   "repository": {
     "type": "git",
@@ -37,7 +46,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.6",
+    "@babel/runtime": "^7.20.13",
     "@neo4j-cypher/codemirror": "1.0.0-next.20",
     "codemirror": "^6.0.1"
   },

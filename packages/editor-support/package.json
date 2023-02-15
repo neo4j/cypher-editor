@@ -9,6 +9,15 @@
   "license": "GPL-3.0",
   "main": "lib/editor-support.js",
   "module": "es/editor-support.js",
+  "exports": {
+    ".": {
+      "import": "./es/editor-support.js",
+      "require": "./lib/editor-support.js"
+    },
+    "./src/editor-support.js": {
+      "import": "./src/editor-support.js"
+    }
+  },
   "types": "src/editor-support.d.ts",
   "repository": {
     "type": "git",
@@ -34,18 +43,17 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.6",
+    "@babel/runtime": "^7.20.13",
     "@neo4j-cypher/antlr4": "1.0.0-next.2",
-    "antlr4": "4.10.1",
     "fuse.js": "^6.6.2",
     "lodash.find": "^4.6.0",
     "lodash.includes": "^4.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-regenerator": "^7.20.5",
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2"
