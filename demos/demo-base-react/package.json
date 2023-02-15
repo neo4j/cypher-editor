@@ -5,7 +5,7 @@
   "keywords": [],
   "version": "1.0.0-next.7",
   "author": "Neo4j Inc.",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "repository": {
