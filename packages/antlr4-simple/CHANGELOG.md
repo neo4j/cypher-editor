@@ -1,5 +1,11 @@
 # @neo4j-cypher/antlr4-simple
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- 32fb986: Fix module exports + add shallow comparision on schema updates
+
 ## 1.0.0-next.2
 
 ### Patch Changes
