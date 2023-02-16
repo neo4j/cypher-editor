@@ -1,15 +1,5 @@
 # demo-vitest
 
-## 1.0.0-next.4
-
-### Patch Changes
-
-- acd35e1: Update repo url after move
-- 45a590b: Change license from GPL-3.0 to Apache-2.0
-- Updated dependencies [acd35e1]
-- Updated dependencies [45a590b]
-  - @neo4j-cypher/react-codemirror@1.0.0-next.24
-
 ## 1.0.0-next.3
 
 ### Patch Changes

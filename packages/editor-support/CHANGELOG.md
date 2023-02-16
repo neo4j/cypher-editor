@@ -1,15 +1,5 @@
 # @neo4j-cypher/editor-support
 
-## 1.0.0-next.5
-
-### Patch Changes
-
-- acd35e1: Update repo url after move
-- 45a590b: Change license from GPL-3.0 to Apache-2.0
-- Updated dependencies [acd35e1]
-- Updated dependencies [45a590b]
-  - @neo4j-cypher/antlr4@1.0.0-next.4
-
 ## 1.0.0-next.4
 
 ### Patch Changes
