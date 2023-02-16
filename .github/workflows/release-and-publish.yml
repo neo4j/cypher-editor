@@ -18,6 +18,11 @@ jobs:
       - name: Setup node / npm env and install deps
         uses: ./.github/workflows/reusable/env-setup
 
+      - name: Config git
+        run: |
+          git config --global user.name "Github Actions Releaser"
+          git config --global user.email "devtools@neo4j.com"
+
       - name: Version and release
         run: npm run release
 
