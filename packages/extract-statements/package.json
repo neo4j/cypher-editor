@@ -6,7 +6,7 @@
     "extract",
     "statements"
   ],
-  "version": "1.0.0-next.6",
+  "version": "1.0.0",
   "author": "Neo4j Inc.",
   "license": "Apache-2.0",
   "main": "./lib/index.js",
@@ -44,8 +44,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "@neo4j-cypher/antlr4-simple": "1.0.0-next.5",
-    "@neo4j-cypher/editor-support": "1.0.0-next.6"
+    "@neo4j-cypher/antlr4-simple": "1.0.0",
+    "@neo4j-cypher/editor-support": "1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

@@ -1,5 +1,55 @@
 # demo-codemirror-6-webpack-svelte
 
+## 1.0.0
+
+### Major Changes
+
+- 13f7151: Initial pre-release
+
+### Patch Changes
+
+- 8ba2deb: Exit pre-release mode
+- de33476: Add indentWithTab prop / option
+- 8549a61: Apply workaround for node 18.14.0 support
+- 48363de: add antlr4-browser package (remove fs dependency)
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [4af77ae]
+- Updated dependencies [896eddf]
+- Updated dependencies [8ba2deb]
+- Updated dependencies [6dcf015]
+- Updated dependencies [a2750e5]
+- Updated dependencies [b35f29a]
+- Updated dependencies [b8d7618]
+- Updated dependencies [b0dc3cb]
+- Updated dependencies [b5ca4c5]
+- Updated dependencies [4a8e102]
+- Updated dependencies [d925e37]
+- Updated dependencies [de33476]
+- Updated dependencies [0a21042]
+- Updated dependencies [de36649]
+- Updated dependencies [b5add94]
+- Updated dependencies [05bcaef]
+- Updated dependencies [95e70e0]
+- Updated dependencies [8549a61]
+- Updated dependencies [42dc131]
+- Updated dependencies [1982d54]
+- Updated dependencies [95e6d25]
+- Updated dependencies [48363de]
+- Updated dependencies [77cb7d3]
+- Updated dependencies [acd35e1]
+- Updated dependencies [1d97f58]
+- Updated dependencies [45a590b]
+- Updated dependencies [91cb80a]
+- Updated dependencies [f20de4e]
+- Updated dependencies [13f7151]
+- Updated dependencies [d4ef48e]
+- Updated dependencies [d88078d]
+  - @neo4j-cypher/svelte-codemirror@1.0.0
+  - demo-base@1.0.0
+  - @neo4j-cypher/codemirror@1.0.0
+  - demo-base-svelte@1.0.0
+
 ## 1.0.0-next.26
 
 ### Patch Changes

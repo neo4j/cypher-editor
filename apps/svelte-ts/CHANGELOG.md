@@ -1,5 +1,49 @@
 # svelte-ts
 
+## 1.0.0
+
+### Major Changes
+
+- 13f7151: Initial pre-release
+
+### Patch Changes
+
+- 4af77ae: Drop the styled component version due to technical compatibility and tooling limitations. Manually import CSS file to get a styled editor.
+- 896eddf: add missing @babel/runtime dependency
+- 8ba2deb: Exit pre-release mode
+- 1500721: Fix meta query - the last one didn't work with Neo4j 5.2
+- de33476: Add indentWithTab prop / option
+- 37252c7: Format Cypher results nicely in the Svelte demo app
+- 543e2bb: Add npm upload command to publish to surge
+- cec110d: Styling fixes and copy action on results
+- 8549a61: Apply workaround for node 18.14.0 support
+- 48363de: add antlr4-browser package (remove fs dependency)
+- 1500721: Bump deps to use Vite 4
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- 543e2bb: Wrap lines in editor + result headers on svelte-ts
+- Updated dependencies [4af77ae]
+- Updated dependencies [896eddf]
+- Updated dependencies [8ba2deb]
+- Updated dependencies [6dcf015]
+- Updated dependencies [b35f29a]
+- Updated dependencies [b5ca4c5]
+- Updated dependencies [4a8e102]
+- Updated dependencies [de33476]
+- Updated dependencies [0a21042]
+- Updated dependencies [95e70e0]
+- Updated dependencies [8549a61]
+- Updated dependencies [42dc131]
+- Updated dependencies [1982d54]
+- Updated dependencies [95e6d25]
+- Updated dependencies [48363de]
+- Updated dependencies [77cb7d3]
+- Updated dependencies [acd35e1]
+- Updated dependencies [1d97f58]
+- Updated dependencies [45a590b]
+- Updated dependencies [91cb80a]
+- Updated dependencies [13f7151]
+  - @neo4j-cypher/svelte-codemirror@1.0.0
+
 ## 1.0.0-next.26
 
 ### Patch Changes

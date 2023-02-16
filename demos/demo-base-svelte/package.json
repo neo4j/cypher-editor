@@ -3,7 +3,7 @@
   "description": "demo base svelte components",
   "private": true,
   "keywords": [],
-  "version": "1.0.0-next.9",
+  "version": "1.0.0",
   "author": "Neo4j Inc.",
   "license": "Apache-2.0",
   "svelte": "src/index.js",

@@ -1,5 +1,62 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.0
+
+### Major Changes
+
+- 13f7151: Initial pre-release
+
+### Patch Changes
+
+- 4af77ae: Drop the styled component version due to technical compatibility and tooling limitations. Manually import CSS file to get a styled editor.
+- 896eddf: add missing @babel/runtime dependency
+- 8ba2deb: Exit pre-release mode
+- 6dcf015: Forward bind:value from wrapper component
+- b35f29a: make sure calls to editorApi.set function apply defaults, fixup react types
+- b5ca4c5: rename indentWithTab -> tabKey, fix tab with autocomplete
+- 4a8e102: tooltipAbsolute default to true, fix tab key bugs
+- de33476: Add indentWithTab prop / option
+- 0a21042: add bracketMatching & closeBrackets options (both default true)
+- 95e70e0: add tooltipAbsolute option / prop
+- 8549a61: Apply workaround for node 18.14.0 support
+- 42dc131: fix position/selection bug, add search & indentUnit options
+- 1982d54: Fix svelte type issues
+- 95e6d25: add cypherLanguage & various search/cursor options, misc improvements
+- 48363de: add antlr4-browser package (remove fs dependency)
+- 77cb7d3: add missing pre/post extensions props to components, fix autocomplete change typo bug
+- acd35e1: Update repo url after move
+- 1d97f58: remove unneeded codemirror global package dependency
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [896eddf]
+- Updated dependencies [8ba2deb]
+- Updated dependencies [a2750e5]
+- Updated dependencies [b35f29a]
+- Updated dependencies [b8d7618]
+- Updated dependencies [b0dc3cb]
+- Updated dependencies [b5ca4c5]
+- Updated dependencies [4a8e102]
+- Updated dependencies [d925e37]
+- Updated dependencies [de33476]
+- Updated dependencies [0a21042]
+- Updated dependencies [de36649]
+- Updated dependencies [b5add94]
+- Updated dependencies [05bcaef]
+- Updated dependencies [95e70e0]
+- Updated dependencies [8549a61]
+- Updated dependencies [42dc131]
+- Updated dependencies [95e6d25]
+- Updated dependencies [48363de]
+- Updated dependencies [77cb7d3]
+- Updated dependencies [acd35e1]
+- Updated dependencies [45a590b]
+- Updated dependencies [91cb80a]
+- Updated dependencies [f20de4e]
+- Updated dependencies [13f7151]
+- Updated dependencies [d4ef48e]
+- Updated dependencies [d88078d]
+  - @neo4j-cypher/codemirror@1.0.0
+
 ## 1.0.0-next.26
 
 ### Patch Changes
