@@ -1,5 +1,17 @@
 # demo-codemirror-6-vite-svelte
 
+## 1.0.0-next.25
+
+### Patch Changes
+
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- Updated dependencies [acd35e1]
+- Updated dependencies [45a590b]
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.25
+  - demo-base-svelte@1.0.0-next.8
+  - @neo4j-cypher/codemirror@1.0.0-next.22
+  - demo-base@1.0.0-next.8
+
 ## 1.0.0-next.24
 
 ### Patch Changes
