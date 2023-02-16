@@ -6,7 +6,7 @@
     "codemirror",
     "codemirror 6"
   ],
-  "version": "1.0.0-next.22",
+  "version": "1.0.0-next.23",
   "author": "Neo4j Inc.",
   "license": "Apache-2.0",
   "main": "./lib/codemirror.js",
@@ -62,7 +62,7 @@
     "@codemirror/state": "^6.2.0",
     "@codemirror/view": "^6.9.0",
     "@lezer/highlight": "^1.1.3",
-    "@neo4j-cypher/editor-support": "1.0.0-next.5"
+    "@neo4j-cypher/editor-support": "1.0.0-next.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

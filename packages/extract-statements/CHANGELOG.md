@@ -1,5 +1,14 @@
 # @neo4j-cypher/extract-statements
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+- Updated dependencies [8549a61]
+  - @neo4j-cypher/antlr4-simple@1.0.0-next.5
+  - @neo4j-cypher/editor-support@1.0.0-next.6
+
 ## 1.0.0-next.5
 
 ### Patch Changes

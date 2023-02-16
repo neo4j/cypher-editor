@@ -1,5 +1,11 @@
 # @neo4j-cypher/antlr4-browser
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+
 ## 1.0.0-next.2
 
 ### Patch Changes

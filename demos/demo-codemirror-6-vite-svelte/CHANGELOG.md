@@ -1,5 +1,16 @@
 # demo-codemirror-6-vite-svelte
 
+## 1.0.0-next.26
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+- Updated dependencies [8549a61]
+  - demo-base@1.0.0-next.9
+  - demo-base-svelte@1.0.0-next.9
+  - @neo4j-cypher/codemirror@1.0.0-next.23
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 ### Patch Changes

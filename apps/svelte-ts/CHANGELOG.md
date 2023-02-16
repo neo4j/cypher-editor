@@ -1,5 +1,13 @@
 # svelte-ts
 
+## 1.0.0-next.26
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+- Updated dependencies [8549a61]
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 ### Patch Changes
