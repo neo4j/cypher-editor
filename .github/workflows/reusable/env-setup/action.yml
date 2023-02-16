@@ -4,7 +4,7 @@ inputs:
   NODE_VERSION:
     description: 'Node version'
     required: false
-    default: 18.12.1
+    default: 18.x
   
 runs:
   using: 'composite'
