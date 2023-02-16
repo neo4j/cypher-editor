@@ -1,5 +1,31 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.0
+
+### Major Changes
+
+- 13f7151: Initial pre-release
+
+### Patch Changes
+
+- 6e6269f: remove use of constructor.name in editor-support package
+- 896eddf: add missing @babel/runtime dependency
+- 8ba2deb: Exit pre-release mode
+- 8549a61: Apply workaround for node 18.14.0 support
+- 48363de: add antlr4-browser package (remove fs dependency)
+- acd35e1: Update repo url after move
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- 91cb80a: Fix module exports + add shallow comparision on schema updates
+- Updated dependencies [896eddf]
+- Updated dependencies [8ba2deb]
+- Updated dependencies [8549a61]
+- Updated dependencies [48363de]
+- Updated dependencies [acd35e1]
+- Updated dependencies [45a590b]
+- Updated dependencies [91cb80a]
+- Updated dependencies [13f7151]
+  - @neo4j-cypher/antlr4@1.0.0
+
 ## 1.0.0-next.6
 
 ### Patch Changes
