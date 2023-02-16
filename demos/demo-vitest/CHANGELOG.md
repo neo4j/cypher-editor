@@ -1,5 +1,13 @@
 # demo-vitest
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+- Updated dependencies [8549a61]
+  - @neo4j-cypher/react-codemirror@1.0.0-next.25
+
 ## 1.0.0-next.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.0-next.6
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+- Updated dependencies [8549a61]
+  - @neo4j-cypher/antlr4@1.0.0-next.5
+
 ## 1.0.0-next.5
 
 ### Patch Changes

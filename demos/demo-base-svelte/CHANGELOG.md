@@ -1,5 +1,11 @@
 # demo-base-svelte
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- 8549a61: Apply workaround for node 18.14.0 support
+
 ## 1.0.0-next.8
 
 ### Patch Changes

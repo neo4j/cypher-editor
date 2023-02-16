@@ -3,7 +3,7 @@
   "private": true,
   "description": "demo base files for cypher editor",
   "keywords": [],
-  "version": "1.0.0-next.8",
+  "version": "1.0.0-next.9",
   "author": "Neo4j Inc.",
   "license": "Apache-2.0",
   "main": "./lib/index.js",
