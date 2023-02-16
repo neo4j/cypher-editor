@@ -41,7 +41,7 @@
     "start:demos": "turbo run start",
     "start:e2e": "turbo run e2e --filter='!./apps/*'",
     "stop:e2e": "turbo run unserve",
-    "release": "changeset version && npm ci && git add . && git commit -am \"Release\" && changeset tag",
+    "release": "changeset version && npm i --package-lock-only && git add . && git commit -am \"Release\" && changeset tag",
     "publish": "npm run build:libs && npm run build:demos && changeset publish"
   },
   "name": "cypher-editor",
