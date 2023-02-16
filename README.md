@@ -1,5 +1,24 @@
 ### cypher-editor
 
+### How to use
+
+Go to the relevant docs in the [docs/generated](./docs/generated) folder to read the docs on the package you're about to use.
+
+Shortcuts:  
+[React](https://github.com/neo4j/cypher-editor/blob/main/docs/generated/neo4j-cypher_react-codemirror.md)
+
+```bash
+npm install @neo4j-cypher/react-codemirror
+```
+
+[Svelte](https://github.com/neo4j/cypher-editor/blob/main/docs/generated/neo4j-cypher_svelte-codemirror.md)
+
+```bash
+npm install @neo4j-cypher/svelte-codemirror
+```
+
+### Cloning
+
 This repository is a monorepo, and all packages are located in the `packages` directory.
 
 To install the dependencies for the monorepo, run the following the base directory:
