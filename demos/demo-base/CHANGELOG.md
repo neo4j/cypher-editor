@@ -1,5 +1,12 @@
 # demo-base
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- acd35e1: Update repo url after move
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+
 ## 1.0.0-next.7
 
 ### Patch Changes

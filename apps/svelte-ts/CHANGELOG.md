@@ -1,5 +1,14 @@
 # svelte-ts
 
+## 1.0.0-next.25
+
+### Patch Changes
+
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- Updated dependencies [acd35e1]
+- Updated dependencies [45a590b]
+  - @neo4j-cypher/svelte-codemirror@1.0.0-next.25
+
 ## 1.0.0-next.24
 
 ### Patch Changes
