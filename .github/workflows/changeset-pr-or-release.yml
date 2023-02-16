@@ -1,16 +1,13 @@
-name: Create changeset PR or Release
+name: Release and Publish
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  pr-or-release:
-    name: Changeset or Release
+  release-and-publish:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -21,12 +18,13 @@ jobs:
       - name: Setup node / npm env and install deps
         uses: ./.github/workflows/reusable/env-setup
 
-      - name: Create Release Pull Request or Publish to npm if no pending changes
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
-          title: Upcoming package versions and changelogs
+      - name: Version and release
+        run: npm run release
+
+      - name: Publish
+        run: npm run publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Push tag and changes to GitHub
+        run: git push && git push --tags

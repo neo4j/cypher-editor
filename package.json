@@ -38,10 +38,11 @@
     "pm2": "pm2",
     "prepublishOnly": "npm run build:libs",
     "prettier": "prettier --write .",
-    "release": "npm run build:libs && npm run build:demos && changeset publish",
     "start:demos": "turbo run start",
     "start:e2e": "turbo run e2e --filter='!./apps/*'",
-    "stop:e2e": "turbo run unserve"
+    "stop:e2e": "turbo run unserve",
+    "release": "changeset version && npm ci && git add . && git commit -am \"Release\" && changeset tag",
+    "publish": "npm run build:libs && npm run build:demos && changeset publish"
   },
   "name": "cypher-editor",
   "dependencies": {
