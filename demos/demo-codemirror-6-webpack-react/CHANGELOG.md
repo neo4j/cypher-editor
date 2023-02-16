@@ -1,5 +1,17 @@
 # demo-codemirror-6-webpack-react
 
+## 1.0.0-next.24
+
+### Patch Changes
+
+- 45a590b: Change license from GPL-3.0 to Apache-2.0
+- Updated dependencies [acd35e1]
+- Updated dependencies [45a590b]
+  - @neo4j-cypher/react-codemirror@1.0.0-next.24
+  - demo-base-react@1.0.0-next.8
+  - @neo4j-cypher/codemirror@1.0.0-next.22
+  - demo-base@1.0.0-next.8
+
 ## 1.0.0-next.23
 
 ### Patch Changes
