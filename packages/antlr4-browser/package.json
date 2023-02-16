@@ -7,7 +7,7 @@
   ],
   "version": "1.0.0-next.1",
   "author": "Neo4j Inc.",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "exports": {
@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+    "url": "git://github.com/neo4j/cypher-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+    "url": "https://github.com/neo4j/cypher-editor/issues"
   },
   "scripts": {
     "build-lib": "babel --config-file ../../babel.antlr4-browser.config.js --extensions \".js\" --out-dir lib ./src",

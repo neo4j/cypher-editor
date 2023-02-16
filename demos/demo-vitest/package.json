@@ -5,14 +5,14 @@
   "keywords": [],
   "version": "1.0.0-next.3",
   "author": "Neo4j Inc.",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git://github.com/neo4j-contrib/cypher-editor.git"
+    "url": "git://github.com/neo4j/cypher-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/neo4j-contrib/cypher-editor/issues"
+    "url": "https://github.com/neo4j/cypher-editor/issues"
   },
   "scripts": {
     "dev": "vite",
