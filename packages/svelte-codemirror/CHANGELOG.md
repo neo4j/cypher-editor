@@ -1,5 +1,11 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.1
+
+### Patch Changes
+
+- 9379a74: Export types from svelte type file
+
 ## 1.0.0
 
 ### Major Changes
