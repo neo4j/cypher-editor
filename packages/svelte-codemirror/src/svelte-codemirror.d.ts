@@ -18,5 +18,5 @@
 
 export {
   default as CypherEditor,
-  CypherEditorProps
+  type CypherEditorProps
 } from "./CypherEditor.svelte";
