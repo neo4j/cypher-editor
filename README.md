@@ -17,6 +17,24 @@ npm install @neo4j-cypher/react-codemirror
 npm install @neo4j-cypher/svelte-codemirror
 ```
 
+### Styling the view components
+
+To make the view components framework agnostic, the CSS are separate since importing CSS isn't a thing in many tools.
+If your build tool supports importing CSS, you can import like this:
+
+```js
+import "@neo4j-cypher/codemirror/css/cypher-codemirror.css";
+```
+
+If not, you can load the styles from a CDN in yout HTML like:
+
+```html
+<link
+  href="https://unpkg.com/@neo4j-cypher/codemirror/css/cypher-codemirror.css"
+  rel="stylesheet"
+/>
+```
+
 ### Cloning
 
 This repository is a monorepo, and all packages are located in the `packages` directory.
