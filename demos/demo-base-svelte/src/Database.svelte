@@ -176,6 +176,13 @@
     );
   };
 
+  const onKeyUp = (event) => {
+    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
+    logs = logs.concat(
+      eventLog("keyUp", { code, altKey, key, controlKey, metaKey, shiftKey })
+    );
+  };
+
   const onLineNumberClick = (line, event) => {
     logs = logs.concat(eventLog("lineNumberClick", line));
   };
@@ -895,6 +902,7 @@
         {onValueChanged}
         {onLineNumberClick}
         {onKeyDown}
+        {onKeyUp}
         {autocomplete}
         {autocompleteOpen}
         {autocompleteCloseOnBlur}

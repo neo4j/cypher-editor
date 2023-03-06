@@ -224,9 +224,9 @@ export interface ValueChangedListener {
 }
 
 /**
- * Listener for editor key down events
+ * Listener for editor key events
  */
-export interface KeyDownListener {
+export interface KeyListener {
   /**
    * @param event - the native keyboard event
    */
@@ -434,11 +434,21 @@ export interface EditorApi {
    *
    * @returns A cleanup function that when called removes the listener
    */
-  onKeyDown(listener: KeyDownListener): () => void;
+  onKeyDown(listener: KeyListener): () => void;
   /**
    * Remove an event listener for editor key down events
    */
-  offKeyDown(listener: KeyDownListener): void;
+  offKeyDown(listener: KeyListener): void;
+  /**
+   * Add an event listener for editor key up events
+   *
+   * @returns A cleanup function that when called removes the listener
+   */
+  onKeyUp(listener: KeyListener): () => void;
+  /**
+   * Remove an event listener for editor key up events
+   */
+  offKeyUp(listener: KeyListener): void;
   /**
    * Add an event listener for editor line number click events
    *
