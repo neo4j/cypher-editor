@@ -315,7 +315,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
       !event.ctrlKey &&
       !event.altKey &&
       event.key &&
-      event.key.length === 1
+      event.key.length > 0 &&
+      event.key.length < 3
         ? event.key
         : null;
     fireKeyDown(event);
@@ -351,7 +352,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
           inserted.text.length == 1
         ) {
           changedText = inserted.text[0];
-          // { {}
         }
       });
 
