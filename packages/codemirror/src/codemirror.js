@@ -357,7 +357,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
       if (
         changedText &&
-        autocompleteTriggerStrings.indexOf(changedText) !== -1
+        autocompleteTriggerStrings.includes(changedText)
       ) {
         deferredAutocomplete = true;
       }
