@@ -20,6 +20,7 @@
       "import": "./src/index.js"
     }
   },
+  "types": "src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/neo4j/cypher-editor.git"
