@@ -160,7 +160,7 @@ declare function parse(input: string): {
 };
 declare interface QueryOrCommand {
   getText: () => string;
-  start: CypherPosition;
-  stop: CypherPosition;
+  start: EditorSupportPosition;
+  stop: EditorSupportPosition;
   cypherConsoleCommandName: () => { getText: () => string };
 }
