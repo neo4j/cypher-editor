@@ -1,5 +1,13 @@
 # @neo4j-cypher/extract-statements
 
+## 1.0.1
+
+### Patch Changes
+
+- 54698be: Export util functions and types for usage in Neo4j Browser
+- Updated dependencies [54698be]
+  - @neo4j-cypher/editor-support@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

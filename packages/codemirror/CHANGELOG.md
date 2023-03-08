@@ -1,5 +1,13 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.1
+
+### Patch Changes
+
+- c1989f8: add keyUp option/prop, improve autocomplete trigger logic
+- Updated dependencies [54698be]
+  - @neo4j-cypher/editor-support@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
