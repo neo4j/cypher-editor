@@ -1,5 +1,12 @@
 # demo-vitest
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [c1989f8]
+  - @neo4j-cypher/react-codemirror@1.0.1
+
 ## 1.0.0
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # svelte-ts
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [c1989f8]
+  - @neo4j-cypher/svelte-codemirror@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

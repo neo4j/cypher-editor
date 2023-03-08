@@ -1,5 +1,13 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.1
+
+### Patch Changes
+
+- c1989f8: add keyUp option/prop, improve autocomplete trigger logic
+- Updated dependencies [c1989f8]
+  - @neo4j-cypher/codemirror@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

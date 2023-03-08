@@ -1,5 +1,13 @@
 # demo-codemirror-6-webpack-svelte
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [c1989f8]
+  - @neo4j-cypher/svelte-codemirror@1.0.2
+  - @neo4j-cypher/codemirror@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes
