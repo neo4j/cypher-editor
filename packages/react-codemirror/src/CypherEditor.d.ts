@@ -12,7 +12,7 @@ import type {
   ScrollChangedListener,
   SearchChangedListener,
   ValueChangedListener,
-  KeyDownListener,
+  KeyListener,
   LineNumberClickListener,
   LineNumberFormatter
 } from "@neo4j-cypher/codemirror";
@@ -265,9 +265,13 @@ export interface CypherEditorProps {
    */
   onLineNumberClick?: LineNumberClickListener;
   /**
-   * A listener for when the user presses a key down in the editor
+   * A listener for when the user performs a key down in the editor
    */
-  onKeyDown?: KeyDownListener;
+  onKeyDown?: KeyListener;
+  /**
+   * A listener for when the user performs a key up in the editor
+   */
+  onKeyUp?: KeyListener;
 
   /**
    * The codemirror 6 extensions that should be added to the editor before the cypher language support extensions.

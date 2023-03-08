@@ -100,7 +100,8 @@ export interface CypherEditorProps
 |  [onAutocompleteChanged?](#cyphereditorprops.onautocompletechanged) | [AutocompleteChangedListener](./neo4j-cypher_codemirror.md#autocompletechangedlistener) |  | <i>(Optional)</i> A listener for when the editor autocompletion state changes |
 |  [onEditorCreated?](#cyphereditorprops.oneditorcreated) | [EditorCreatedListener](./neo4j-cypher_codemirror.md#editorcreatedlistener) |  | <i>(Optional)</i> A listener for when the editor api gets created |
 |  [onFocusChanged?](#cyphereditorprops.onfocuschanged) | [FocusChangedListener](./neo4j-cypher_codemirror.md#focuschangedlistener) |  | <i>(Optional)</i> A listener for when the editor focus changes |
-|  [onKeyDown?](#cyphereditorprops.onkeydown) | [KeyDownListener](./neo4j-cypher_codemirror.md#keydownlistener) |  | <i>(Optional)</i> A listener for when the user presses a key down in the editor |
+|  [onKeyDown?](#cyphereditorprops.onkeydown) | [KeyListener](./neo4j-cypher_codemirror.md#keylistener) |  | <i>(Optional)</i> A listener for when the user performs a key down in the editor |
+|  [onKeyUp?](#cyphereditorprops.onkeyup) | [KeyListener](./neo4j-cypher_codemirror.md#keylistener) |  | <i>(Optional)</i> A listener for when the user performs a key up in the editor |
 |  [onLineNumberClick?](#cyphereditorprops.onlinenumberclick) | [LineNumberClickListener](./neo4j-cypher_codemirror.md#linenumberclicklistener) |  | <i>(Optional)</i> A listener for when the user clicks an editor line number |
 |  [onPositionChanged?](#cyphereditorprops.onpositionchanged) | [PositionChangedListener](./neo4j-cypher_codemirror.md#positionchangedlistener) |  | <i>(Optional)</i> A listener for when the editor cursor position changes |
 |  [onScrollChanged?](#cyphereditorprops.onscrollchanged) | [ScrollChangedListener](./neo4j-cypher_codemirror.md#scrollchangedlistener) |  | <i>(Optional)</i> A listener for when the editor scroll position changes |
@@ -493,12 +494,26 @@ onFocusChanged?: FocusChangedListener;
 
 #### CypherEditorProps.onKeyDown property
 
-A listener for when the user presses a key down in the editor
+A listener for when the user performs a key down in the editor
 
 <b>Signature:</b>
 
 ```typescript
-onKeyDown?: KeyDownListener;
+onKeyDown?: KeyListener;
+```
+
+<br>
+
+<a name="cyphereditorprops.onkeyup"></a>
+
+#### CypherEditorProps.onKeyUp property
+
+A listener for when the user performs a key up in the editor
+
+<b>Signature:</b>
+
+```typescript
+onKeyUp?: KeyListener;
 ```
 
 <br>

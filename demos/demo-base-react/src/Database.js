@@ -265,6 +265,18 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     });
   };
 
+  const onKeyUp = (event) => {
+    const { code, altKey, key, controlKey, metaKey, shiftKey } = event;
+    addEventLog("keyUp", {
+      code,
+      altKey,
+      key,
+      controlKey,
+      metaKey,
+      shiftKey
+    });
+  };
+
   const cypherLength = cypher.length;
   const positionString = position ? JSON.stringify(position) : "";
   const focusedString = focused + "";
@@ -1333,6 +1345,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onValueChanged={onValueChanged}
             onLineNumberClick={onLineNumberClick}
             onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
             autocomplete={autocomplete}
             autocompleteCloseOnBlur={autocompleteCloseOnBlur}
             autocompleteOpen={autocompleteOpen}

@@ -87,7 +87,8 @@ export const fixColors = (view, editorSupport) => {
 export const domListener = ({
   onFocusChanged = () => {},
   onScrollChanged = () => {},
-  onKeyDown = () => {}
+  onKeyDown = () => {},
+  onKeyUp = () => {}
 }) => [
   EditorView.domEventHandlers({
     focus: () => {
@@ -118,6 +119,9 @@ export const domListener = ({
     },
     keydown: (event) => {
       onKeyDown(event);
+    },
+    keyup: (event) => {
+      onKeyUp(event);
     }
   })
 ];

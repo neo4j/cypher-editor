@@ -61,7 +61,7 @@ An editor api that wraps the created editor instance
 |  [AutocompleteChangedListener](#autocompletechangedlistener) | Listener for editor autocomplete changes |
 |  [EditorCreatedListener](#editorcreatedlistener) | Listener for editor creation |
 |  [FocusChangedListener](#focuschangedlistener) | Listener for editor focus changes |
-|  [KeyDownListener](#keydownlistener) | Listener for editor key down events |
+|  [KeyListener](#keylistener) | Listener for editor key events |
 |  [LineNumberClickListener](#linenumberclicklistener) | Listener for editor line number click events |
 |  [LineNumberFormatter](#linenumberformatter) | Formats a line number for display beside the editor text |
 |  [PositionChangedListener](#positionchangedlistener) | Listener for editor cursor position changes |
@@ -152,16 +152,16 @@ void
 
 <br>
 
-<a name="keydownlistener"></a>
+<a name="keylistener"></a>
 
-### KeyDownListener call signature
+### KeyListener call signature
 
-Listener for editor key down events
+Listener for editor key events
 
 <b>Signature:</b>
 
 ```typescript
-export interface KeyDownListener {
+export interface KeyListener {
   (event: KeyboardEvent): void;
 }
 ```
@@ -501,6 +501,7 @@ editorSupport: CypherEditorSupport;
 |  [offAutocompleteChanged(listener)](#editorapi.offautocompletechanged) | Remove an event listener for editor autocomplete changes |
 |  [offFocusChanged(listener)](#editorapi.offfocuschanged) | Remove an event listener for editor focus changes |
 |  [offKeyDown(listener)](#editorapi.offkeydown) | Remove an event listener for editor key down events |
+|  [offKeyUp(listener)](#editorapi.offkeyup) | Remove an event listener for editor key up events |
 |  [offLineNumberClick(listener)](#editorapi.offlinenumberclick) | Remove an event listener for editor line number click events |
 |  [offPositionChanged(listener)](#editorapi.offpositionchanged) | Remove an event listener for editor curosor position changes |
 |  [offScrollChanged(listener)](#editorapi.offscrollchanged) | Remove an event listener for editor scroll position changes |
@@ -509,6 +510,7 @@ editorSupport: CypherEditorSupport;
 |  [onAutocompleteChanged(listener)](#editorapi.onautocompletechanged) | Add an event listener for editor autocomplete changes |
 |  [onFocusChanged(listener)](#editorapi.onfocuschanged) | Add an event listener for editor focus changes |
 |  [onKeyDown(listener)](#editorapi.onkeydown) | Add an event listener for editor key down events |
+|  [onKeyUp(listener)](#editorapi.onkeyup) | Add an event listener for editor key up events |
 |  [onLineNumberClick(listener)](#editorapi.onlinenumberclick) | Add an event listener for editor line number click events |
 |  [onPositionChanged(listener)](#editorapi.onpositionchanged) | Add an event listener for editor cursor position changes |
 |  [onScrollChanged(listener)](#editorapi.onscrollchanged) | Add an event listener for editor scroll position changes |
@@ -711,13 +713,36 @@ Remove an event listener for editor key down events
 <b>Signature:</b>
 
 ```typescript
-offKeyDown(listener: KeyDownListener): void;
+offKeyDown(listener: KeyListener): void;
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type |
 |  --- | --- |
-|  listener | [KeyDownListener](#keydownlistener) |
+|  listener | [KeyListener](#keylistener) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.offkeyup"></a>
+
+#### EditorApi.offKeyUp() method
+
+Remove an event listener for editor key up events
+
+<b>Signature:</b>
+
+```typescript
+offKeyUp(listener: KeyListener): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [KeyListener](#keylistener) |
 
 <b>Returns:</b>
 
@@ -899,13 +924,38 @@ Add an event listener for editor key down events
 <b>Signature:</b>
 
 ```typescript
-onKeyDown(listener: KeyDownListener): () => void;
+onKeyDown(listener: KeyListener): () => void;
 ```
 <b>Parameters:</b>
 
 |  Parameter | Type |
 |  --- | --- |
-|  listener | [KeyDownListener](#keydownlistener) |
+|  listener | [KeyListener](#keylistener) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+
+<br>
+
+<a name="editorapi.onkeyup"></a>
+
+#### EditorApi.onKeyUp() method
+
+Add an event listener for editor key up events
+
+<b>Signature:</b>
+
+```typescript
+onKeyUp(listener: KeyListener): () => void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [KeyListener](#keylistener) |
 
 <b>Returns:</b>
 

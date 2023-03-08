@@ -63,6 +63,11 @@ class CypherEditor extends Component {
     onKeyDown && onKeyDown(event);
   };
 
+  keyUp = (event) => {
+    const { onKeyUp } = this.props;
+    onKeyUp && onKeyUp(event);
+  };
+
   componentDidMount() {
     const {
       autocomplete,
@@ -145,6 +150,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onSearchChanged(this.searchChanged);
     this.cypherEditor.onLineNumberClick(this.lineNumberClick);
     this.cypherEditor.onKeyDown(this.keyDown);
+    this.cypherEditor.onKeyUp(this.keyUp);
 
     onEditorCreated && onEditorCreated(this.cypherEditor);
   }
@@ -159,6 +165,7 @@ class CypherEditor extends Component {
       this.cypherEditor.offSearchChanged(this.searchChanged);
       this.cypherEditor.offLineNumberClick(this.lineNumberClick);
       this.cypherEditor.offKeyDown(this.keyDown);
+      this.cypherEditor.offKeyUp(this.keyUp);
 
       this.cypherEditor.destroy();
     }

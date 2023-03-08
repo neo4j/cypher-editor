@@ -118,7 +118,8 @@ export const getExtensions = (
     onLineNumberClick = () => {},
     onFocusChanged = () => {},
     onScrollChanged = () => {},
-    onKeyDown = () => {}
+    onKeyDown = () => {},
+    onKeyUp = () => {}
   } = {}
 ) => {
   const combinedOptions = withDefaultOptions(options);
@@ -146,7 +147,7 @@ export const getExtensions = (
   } = combinedOptions;
 
   return [
-    domListener({ onFocusChanged, onScrollChanged, onKeyDown }),
+    domListener({ onFocusChanged, onScrollChanged, onKeyDown, onKeyUp }),
     cypherLanguageConf.of(getCypherLanguageExtensions({ cypherLanguage })),
     lintConf.of(getLintExtensions({ cypherLanguage, readOnly, lint })),
     autocompleteConf.of(
@@ -243,6 +244,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   let lastPosition = null;
   let searchInitializing = false;
   let detectedThemeDark = theme === "auto" ? detectThemeDark() : null;
+  let pressedKey = null;
+  let deferredAutocomplete = false;
 
   const setDetectedThemeDark = (dark) => {
     detectedThemeDark = dark;
@@ -300,43 +303,68 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     fire: fireKeyDown
   } = createEventHandlers();
 
+  const { on: onKeyUp, off: offKeyUp, fire: fireKeyUp } = createEventHandlers();
+
   const lineNumberClick = (line, event) => {
     fireLineNumberClick(line, event);
   };
 
   const keyDown = (event) => {
+    pressedKey =
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.altKey &&
+      event.key &&
+      event.key.length === 1
+        ? event.key
+        : null;
     fireKeyDown(event);
   };
 
-  const handleValueChanged = (value, changes) => {
+  const keyUp = (event) => {
+    if (deferredAutocomplete) {
+      showAutocomplete();
+      deferredAutocomplete = false;
+    }
+
+    pressedKey = null;
+    fireKeyUp(event);
+  };
+
+  const deferAutocompleteForChanges = (changes) => {
+    const { length = 0, newLength = 0 } = changes;
+    const isSmallInsert = newLength > length && newLength - length <= 2;
     if (
+      pressedKey &&
       cypherLanguage &&
       autocomplete &&
-      Array.isArray(autocompleteTriggerStrings)
+      Array.isArray(autocompleteTriggerStrings) &&
+      isSmallInsert
     ) {
-      let changedText = [];
+      let changedText = null;
       changes.iterChanges((fromA, toA, fromB, toB, inserted) => {
-        // If changes have more than 32 lines, inserted will have a children property
-        // with 32 lines in each child.
-        if (inserted.children) {
-          changedText = inserted.children.map((c) => c.text);
-          return;
+        if (
+          !changedText &&
+          inserted &&
+          typeof inserted === "object" &&
+          Array.isArray(inserted.text) &&
+          inserted.text.length == 1
+        ) {
+          changedText = inserted.text[0];
         }
-        changedText = inserted.text;
       });
 
-      if (changedText.length > 0 && changedText.length <= 2) {
-        const text = changedText[0];
-        if (autocompleteTriggerStrings.indexOf(text) !== -1) {
-          showDeferredAutocomplete();
-        } else if (changedText.length === 2) {
-          const longerText = text + changedText[1];
-          if (autocompleteTriggerStrings.indexOf(longerText) !== -1) {
-            showDeferredAutocomplete();
-          }
-        }
+      if (
+        changedText &&
+        autocompleteTriggerStrings.includes(changedText)
+      ) {
+        deferredAutocomplete = true;
       }
     }
+  };
+
+  const handleValueChanged = (value, changes) => {
+    deferAutocompleteForChanges(changes);
 
     fireValueChanged(value, changes);
   };
@@ -495,7 +523,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         onLineNumberClick: lineNumberClick,
         onFocusChanged: handleFocusChanged,
         onScrollChanged: handleScrollChanged,
-        onKeyDown: keyDown
+        onKeyDown: keyDown,
+        onKeyUp: keyUp
       }),
       updateListener,
       postConf.of(postExtensions)
@@ -533,18 +562,6 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         );
       }
     }
-  };
-
-  let deferredAutocomplete = false;
-
-  const showDeferredAutocomplete = () => {
-    deferredAutocomplete = true;
-    setTimeout(() => {
-      if (deferredAutocomplete) {
-        deferredAutocomplete = false;
-        showAutocomplete();
-      }
-    }, 50);
   };
 
   const showAutocomplete = () => {
@@ -1080,6 +1097,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offFocusChanged,
     onKeyDown,
     offKeyDown,
+    onKeyUp,
+    offKeyUp,
     onLineNumberClick,
     offLineNumberClick,
     onPositionChanged,
