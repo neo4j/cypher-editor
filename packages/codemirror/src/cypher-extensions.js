@@ -38,7 +38,12 @@ import {
 import { tags } from "@lezer/highlight";
 import { TreeUtils } from "@neo4j-cypher/editor-support";
 
-import { THEME_DARK, THEME_AUTO } from "./cypher-codemirror-base";
+import {
+  THEME_LIGHT,
+  THEME_DARK,
+  THEME_AUTO,
+  THEME_NONE
+} from "./cypher-codemirror-base";
 import { cypher } from "./cypher";
 import {
   typeMarkerField,
@@ -258,6 +263,11 @@ const themeLightExtensions = [
   EditorView.editorAttributes.of({ class: "cm-light" })
 ];
 
+const themeNone = [
+  EditorView.theme(themeOverrides, {}),
+  EditorView.editorAttributes.of({ class: "cm-none" })
+];
+
 const themeAutoExtensions = [
   EditorView.theme(themeOverrides, {}),
   EditorView.editorAttributes.of({ class: "cm-auto" })
@@ -413,11 +423,12 @@ export const getTabKeyExtensions = ({ tabKey, indentUnit }) =>
   tabKey ? tabKeyExtensions.concat(indentUnitExtension.of(indentUnit)) : [];
 
 export const getThemeExtensions = ({ theme }) =>
-  theme === THEME_DARK
-    ? themeDarkExtensions
-    : theme === THEME_AUTO
-    ? themeAutoExtensions
-    : themeLightExtensions;
+  ({
+    [THEME_DARK]: themeDarkExtensions,
+    [THEME_LIGHT]: themeLightExtensions,
+    [THEME_AUTO]: themeAutoExtensions,
+    [THEME_NONE]: themeNone
+  }[theme] ?? themeLightExtensions);
 
 export const getSearchExtensions = ({ readOnly, search, searchTop }) =>
   search ? (searchTop ? searchTopExtensions : searchBottomExtensions) : [];

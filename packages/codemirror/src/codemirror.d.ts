@@ -59,7 +59,7 @@ export type PositionAny = PositionObject | PartialPositionObject | number;
 /**
  * The current editor theme
  */
-export type Theme = "light" | "dark" | "auto";
+export type Theme = "light" | "dark" | "auto" | "none";
 
 /**
  * The prop keys that can be used with autofocusProps

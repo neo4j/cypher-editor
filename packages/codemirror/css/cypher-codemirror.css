@@ -337,6 +337,36 @@ green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 }
 
 /***********
+ * No theme
+ */
+.cm-editor.cm-cypher.cm-none .cm-comment,
+.cm-editor.cm-cypher.cm-none .cm-string,
+.cm-editor.cm-cypher.cm-none .cm-number,
+.cm-editor.cm-cypher.cm-none .cm-keyword,
+.cm-editor.cm-cypher.cm-none .cm-label,
+.cm-editor.cm-cypher.cm-none .cm-p-relationshipType,
+.cm-editor.cm-cypher.cm-none .cm-p-relationshipType .cm-keyword 
+.cm-editor.cm-cypher.cm-none .cm-p-variable,
+.cm-editor.cm-cypher.cm-none .cm-p-variable .cm-variable,
+.cm-editor.cm-cypher.cm-none .cm-p-variable .cm-keyword,
+.cm-editor.cm-cypher.cm-none .cm-p-procedure,
+.cm-editor.cm-cypher.cm-none .cm-p-procedure .cm-keyword,
+.cm-editor.cm-cypher.cm-none .cm-p-function,
+.cm-editor.cm-cypher.cm-none .cm-p-function .cm-keyword ,
+.cm-editor.cm-cypher.cm-none .cm-p-parameter,
+.cm-editor.cm-cypher.cm-none .cm-p-parameter .cm-keyword ,
+.cm-editor.cm-cypher.cm-none .cm-p-property,
+.cm-editor.cm-cypher.cm-none .cm-p-property .cm-keyword ,
+.cm-editor.cm-cypher.cm-none .cm-p-consoleCommand,
+.cm-editor.cm-cypher.cm-none .cm-p-consoleCommand .cm-keyword ,
+.cm-editor.cm-cypher.cm-none .cm-p-procedureOutput,
+.cm-editor.cm-cypher.cm-none .cm-p-procedureOutput .cm-keyword ,
+.cm-editor.cm-cypher.cm-none .cm-operator {
+    color: #888888;
+}
+
+
+/***********
  * Parser
  */
 

@@ -847,6 +847,10 @@
           on:click={() => (theme = "dark")}>Dark</button
         >
         <button
+          class={theme === "none" ? "setting-active" : undefined}
+          on:click={() => (theme = "none")}>None</button
+        >
+        <button
           class={theme === "auto" ? "setting-active" : undefined}
           on:click={() => (theme = "auto")}>Auto</button
         >

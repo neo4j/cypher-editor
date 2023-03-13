@@ -593,6 +593,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     setTheme("dark");
   };
 
+  const setThemeNone = () => {
+    addCommandLog("setTheme", "none");
+    setTheme("none");
+  };
+
   const setThemeAuto = () => {
     addCommandLog("setTheme", "auto");
     setTheme("auto");
@@ -1273,6 +1278,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               onClick={setThemeDark}
             >
               Dark
+            </button>
+            <button
+              className={theme === "none" ? "setting-active" : undefined}
+              onClick={setThemeNone}
+            >
+              None
             </button>
             <button
               className={theme === "auto" ? "setting-active" : undefined}
