@@ -150,5 +150,8 @@ export const cypher = {
     if (context.type === "keywords") return null; // return CodeMirror.commands.newlineAndIndent;
     if (context.align) return context.col + (closing ? 0 : 1);
     return context.indent + (closing ? 0 : cx.unit);
+  },
+  languageData: {
+    commentTokens: { line: "//", block: { open: "/*", close: "*/" } }
   }
 };
