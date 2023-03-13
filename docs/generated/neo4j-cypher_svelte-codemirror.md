@@ -106,6 +106,7 @@ export interface CypherEditorProps
 |  [onPositionChanged?](#cyphereditorprops.onpositionchanged) | [PositionChangedListener](./neo4j-cypher_codemirror.md#positionchangedlistener) |  | <i>(Optional)</i> A listener for when the editor cursor position changes |
 |  [onScrollChanged?](#cyphereditorprops.onscrollchanged) | [ScrollChangedListener](./neo4j-cypher_codemirror.md#scrollchangedlistener) |  | <i>(Optional)</i> A listener for when the editor scroll position changes |
 |  [onSearchChanged?](#cyphereditorprops.onsearchchanged) | [SearchChangedListener](./neo4j-cypher_codemirror.md#searchchangedlistener) |  | <i>(Optional)</i> A listener for when the editor search state changes |
+|  [onSelectionChanged?](#cyphereditorprops.onselectionchanged) | [SelectionChangedListener](./neo4j-cypher_codemirror.md#selectionchangedlistener) |  | <i>(Optional)</i> A listener for when the editor text selection changes |
 |  [onValueChanged?](#cyphereditorprops.onvaluechanged) | [ValueChangedListener](./neo4j-cypher_codemirror.md#valuechangedlistener) |  | <i>(Optional)</i> A listener for when the editor value changes |
 |  [parseOnSetValue?](#cyphereditorprops.parseonsetvalue) | boolean | true | <i>(Optional)</i> Whether to run the cypher language parser immediately after every call to set the value |
 |  [placeholder?](#cyphereditorprops.placeholder) | string |  | <i>(Optional)</i> The text to be shown to the user when the editor value is empty |
@@ -120,6 +121,7 @@ export interface CypherEditorProps
 |  [searchOpen?](#cyphereditorprops.searchopen) | boolean | <code>false</code> | <i>(Optional)</i> Whether the search panel is open |
 |  [searchText?](#cyphereditorprops.searchtext) | string | "" | <i>(Optional)</i> The search text for the search panel |
 |  [searchTop?](#cyphereditorprops.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
+|  [selection?](#cyphereditorprops.selection) | EditorSelection | undefined | <i>(Optional)</i> The editor text selection |
 |  [tabKey?](#cyphereditorprops.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
@@ -574,6 +576,20 @@ onSearchChanged?: SearchChangedListener;
 
 <br>
 
+<a name="cyphereditorprops.onselectionchanged"></a>
+
+#### CypherEditorProps.onSelectionChanged property
+
+A listener for when the editor text selection changes
+
+<b>Signature:</b>
+
+```typescript
+onSelectionChanged?: SelectionChangedListener;
+```
+
+<br>
+
 <a name="cyphereditorprops.onvaluechanged"></a>
 
 #### CypherEditorProps.onValueChanged property
@@ -809,6 +825,23 @@ searchTop?: boolean;
 <b>Default Value:</b>
 
 false
+
+<br>
+
+<a name="cyphereditorprops.selection"></a>
+
+#### CypherEditorProps.selection property
+
+The editor text selection
+
+<b>Signature:</b>
+
+```typescript
+selection?: EditorSelection;
+```
+<b>Default Value:</b>
+
+undefined
 
 <br>
 

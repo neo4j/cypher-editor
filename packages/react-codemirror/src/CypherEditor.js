@@ -13,6 +13,7 @@ class CypherEditor extends Component {
     };
     this.lastValue = null;
     this.lastPosition = null;
+    this.lastSelection = null;
   }
 
   setEditorRef = (ref) => {
@@ -40,6 +41,12 @@ class CypherEditor extends Component {
     this.lastPosition = (positionObject || { position: null }).position;
     const { onPositionChanged } = this.props;
     onPositionChanged && onPositionChanged(positionObject);
+  };
+
+  selectionChanged = (selection) => {
+    this.lastSelection = selection;
+    const { onSelectionChanged } = this.props;
+    onSelectionChanged && onSelectionChanged(selection);
   };
 
   autocompleteChanged = (autocompleteOpen, options, option) => {
@@ -95,6 +102,7 @@ class CypherEditor extends Component {
       searchOpen,
       searchText,
       searchTop,
+      selection,
       tabKey,
       theme,
       tooltipAbsolute,
@@ -133,6 +141,7 @@ class CypherEditor extends Component {
       searchOpen,
       searchText,
       searchTop,
+      selection,
       tabKey,
       theme,
       tooltipAbsolute,
@@ -146,6 +155,7 @@ class CypherEditor extends Component {
     this.cypherEditor.onFocusChanged(this.focusChanged);
     this.cypherEditor.onScrollChanged(this.scrollChanged);
     this.cypherEditor.onPositionChanged(this.positionChanged);
+    this.cypherEditor.onSelectionChanged(this.selectionChanged);
     this.cypherEditor.onAutocompleteChanged(this.autocompleteChanged);
     this.cypherEditor.onSearchChanged(this.searchChanged);
     this.cypherEditor.onLineNumberClick(this.lineNumberClick);
@@ -161,6 +171,7 @@ class CypherEditor extends Component {
       this.cypherEditor.offFocusChanged(this.focusChanged);
       this.cypherEditor.offScrollChanged(this.scrollChanged);
       this.cypherEditor.offPositionChanged(this.positionChanged);
+      this.cypherEditor.offSelectionChanged(this.selectionChanged);
       this.cypherEditor.offAutocompleteChanged(this.autocompleteChanged);
       this.cypherEditor.offSearchChanged(this.searchChanged);
       this.cypherEditor.offLineNumberClick(this.lineNumberClick);
@@ -203,6 +214,13 @@ class CypherEditor extends Component {
         return;
       } else {
         this.lastPosition = position;
+      }
+    }
+    if (key === "selection") {
+      if (prop[key] === this.lastSelection) {
+        return;
+      } else {
+        this.lastSelection = prop[key];
       }
     }
 

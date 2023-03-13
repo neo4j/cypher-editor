@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Extension } from "@codemirror/state";
+import type { Extension, EditorSelection } from "@codemirror/state";
 import type { EditorSupportSchema } from "@neo4j-cypher/editor-support";
 import type {
   PositionAny,
@@ -14,7 +14,8 @@ import type {
   ValueChangedListener,
   KeyListener,
   LineNumberClickListener,
-  LineNumberFormatter
+  LineNumberFormatter,
+  SelectionChangedListener
 } from "@neo4j-cypher/codemirror";
 
 /**
@@ -200,6 +201,12 @@ export interface CypherEditorProps {
    */
   searchTop?: boolean;
   /**
+   * The editor text selection
+   *
+   * @defaultValue undefined
+   */
+  selection?: EditorSelection;
+  /**
    * Whether the tab key is enabled
    *
    * @defaultValue true
@@ -260,6 +267,10 @@ export interface CypherEditorProps {
    * A listener for when the editor search state changes
    */
   onSearchChanged?: SearchChangedListener;
+  /**
+   * A listener for when the editor text selection changes
+   */
+  onSelectionChanged?: SelectionChangedListener;
   /**
    * A listener for when the user clicks an editor line number
    */

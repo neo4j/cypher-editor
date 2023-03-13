@@ -67,6 +67,7 @@ An editor api that wraps the created editor instance
 |  [PositionChangedListener](#positionchangedlistener) | Listener for editor cursor position changes |
 |  [ScrollChangedListener](#scrollchangedlistener) | Listener for editor scroll position changes |
 |  [SearchChangedListener](#searchchangedlistener) | Listener for editor search changes |
+|  [SelectionChangedListener](#selectionchangedlistener) | Listener for editor text selection changes |
 |  [ValueChangedListener](#valuechangedlistener) | Listener for editor value changes |
 
 <br>
@@ -310,6 +311,31 @@ void
 
 <br>
 
+<a name="selectionchangedlistener"></a>
+
+### SelectionChangedListener call signature
+
+Listener for editor text selection changes
+
+<b>Signature:</b>
+
+```typescript
+export interface SelectionChangedListener {
+  (selection: EditorSelection): void;
+}
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  selection | EditorSelection | the new editor text selection |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="valuechangedlistener"></a>
 
 ### ValueChangedListener call signature
@@ -498,6 +524,7 @@ editorSupport: CypherEditorSupport;
 |  [getLineCount()](#editorapi.getlinecount) | Get the number of lines in the current editor value |
 |  [getPosition()](#editorapi.getposition) | Get the current editor cursor position |
 |  [getPositionForValue(positionValue)](#editorapi.getpositionforvalue) | Get a full position object for any supported position value or null if position value is invalid |
+|  [getSelection()](#editorapi.getselection) | Get the current editor text selection |
 |  [offAutocompleteChanged(listener)](#editorapi.offautocompletechanged) | Remove an event listener for editor autocomplete changes |
 |  [offFocusChanged(listener)](#editorapi.offfocuschanged) | Remove an event listener for editor focus changes |
 |  [offKeyDown(listener)](#editorapi.offkeydown) | Remove an event listener for editor key down events |
@@ -506,6 +533,7 @@ editorSupport: CypherEditorSupport;
 |  [offPositionChanged(listener)](#editorapi.offpositionchanged) | Remove an event listener for editor curosor position changes |
 |  [offScrollChanged(listener)](#editorapi.offscrollchanged) | Remove an event listener for editor scroll position changes |
 |  [offSearchChanged(listener)](#editorapi.offsearchchanged) | Remove an event listener for editor search changes |
+|  [offSelectionChanged(listener)](#editorapi.offselectionchanged) | Remove an event listener for editor text selection changes |
 |  [offValueChanged(listener)](#editorapi.offvaluechanged) | Remove an event listener for editor value changes |
 |  [onAutocompleteChanged(listener)](#editorapi.onautocompletechanged) | Add an event listener for editor autocomplete changes |
 |  [onFocusChanged(listener)](#editorapi.onfocuschanged) | Add an event listener for editor focus changes |
@@ -515,6 +543,7 @@ editorSupport: CypherEditorSupport;
 |  [onPositionChanged(listener)](#editorapi.onpositionchanged) | Add an event listener for editor cursor position changes |
 |  [onScrollChanged(listener)](#editorapi.onscrollchanged) | Add an event listener for editor scroll position changes |
 |  [onSearchChanged(listener)](#editorapi.onsearchchanged) | Add an event listener for editor search changes |
+|  [onSelectionChanged(listener)](#editorapi.onselectionchanged) | Add an event listener for editor text selection changes |
 |  [onValueChanged(listener)](#editorapi.onvaluechanged) | Add an event listener for editor value changes |
 |  [selectAutocompleteOption(autocompleteOptionIndex)](#editorapi.selectautocompleteoption) | Select the autocomplete option with the given index, causing it to be applied to the editor value |
 |  [setAutocomplete(autocomplete)](#editorapi.setautocomplete) | Set whether or not the autocomplete feature is enabled |
@@ -543,6 +572,7 @@ editorSupport: CypherEditorSupport;
 |  [setSearchOpen(searchOpen)](#editorapi.setsearchopen) | Set whether or not the search panel is shown to the user |
 |  [setSearchText(searchText)](#editorapi.setsearchtext) | Set the search text value in the search panel |
 |  [setSearchTop(searchTop)](#editorapi.setsearchtop) | Set whether search is appears at the top of the editor window |
+|  [setSelection(selection, scrollIntoView)](#editorapi.setselection) | Set the text selection for the editor |
 |  [setTabKey(tabKey)](#editorapi.settabkey) | Set whether the tab key is enabled |
 |  [setTheme(theme)](#editorapi.settheme) | Set whether to use the light or dark theme for the editor |
 |  [setTooltipAbsolute(tooltipAbsolute)](#editorapi.settooltipabsolute) | Set whether or not the tooltips use simple absolute position styling (vs fixed and trying to stay within bounds) |
@@ -655,6 +685,23 @@ getPositionForValue(positionValue: PositionAny): PositionObject | null;
 <b>Returns:</b>
 
 [PositionObject](#positionobject) \| null
+
+<br>
+
+<a name="editorapi.getselection"></a>
+
+#### EditorApi.getSelection() method
+
+Get the current editor text selection
+
+<b>Signature:</b>
+
+```typescript
+getSelection(): EditorSelection;
+```
+<b>Returns:</b>
+
+EditorSelection
 
 <br>
 
@@ -835,6 +882,29 @@ offSearchChanged(listener: SearchChangedListener): void;
 |  Parameter | Type |
 |  --- | --- |
 |  listener | [SearchChangedListener](#searchchangedlistener) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
+<a name="editorapi.offselectionchanged"></a>
+
+#### EditorApi.offSelectionChanged() method
+
+Remove an event listener for editor text selection changes
+
+<b>Signature:</b>
+
+```typescript
+offSelectionChanged(listener: SelectionChangedListener): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [SelectionChangedListener](#selectionchangedlistener) |
 
 <b>Returns:</b>
 
@@ -1056,6 +1126,31 @@ onSearchChanged(listener: SearchChangedListener): () => void;
 |  Parameter | Type |
 |  --- | --- |
 |  listener | [SearchChangedListener](#searchchangedlistener) |
+
+<b>Returns:</b>
+
+() =&gt; void
+
+A cleanup function that when called removes the listener
+
+<br>
+
+<a name="editorapi.onselectionchanged"></a>
+
+#### EditorApi.onSelectionChanged() method
+
+Add an event listener for editor text selection changes
+
+<b>Signature:</b>
+
+```typescript
+onSelectionChanged(listener: SelectionChangedListener): () => void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type |
+|  --- | --- |
+|  listener | [SelectionChangedListener](#selectionchangedlistener) |
 
 <b>Returns:</b>
 
@@ -1475,8 +1570,8 @@ setPosition(position?: PositionAny, scrollIntoView?: boolean): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  position | [PositionAny](#positionany) | <i>(Optional)</i> |
-|  scrollIntoView | boolean | <i>(Optional)</i> |
+|  position | [PositionAny](#positionany) | <i>(Optional)</i> The new cursor position (position, { line, column }<!-- -->, { position, line, column }<!-- -->) |
+|  scrollIntoView | boolean | <i>(Optional)</i> Whether to scroll the editor to the new cursor position (defaults to true) |
 
 <b>Returns:</b>
 
@@ -1714,6 +1809,30 @@ void
 
 <br>
 
+<a name="editorapi.setselection"></a>
+
+#### EditorApi.setSelection() method
+
+Set the text selection for the editor
+
+<b>Signature:</b>
+
+```typescript
+setSelection(selection?: EditorSelection, scrollIntoView?: boolean): void;
+```
+<b>Parameters:</b>
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  selection | EditorSelection | <i>(Optional)</i> The new editor selection |
+|  scrollIntoView | boolean | <i>(Optional)</i> Whether to scroll the editor to the new selection (defaults to true) |
+
+<b>Returns:</b>
+
+void
+
+<br>
+
 <a name="editorapi.settabkey"></a>
 
 #### EditorApi.setTabKey() method
@@ -1853,6 +1972,7 @@ export interface EditorOptions
 |  [searchOpen?](#editoroptions.searchopen) | boolean | false | <i>(Optional)</i> Whether the search panel is initially shown to the user |
 |  [searchText?](#editoroptions.searchtext) | string | "" | <i>(Optional)</i> The initial search text for the search panel |
 |  [searchTop?](#editoroptions.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
+|  [selection?](#editoroptions.selection) | EditorSelection | undefined | <i>(Optional)</i> The initial editor text selection |
 |  [tabKey?](#editoroptions.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#editoroptions.theme) | [Theme](#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#editoroptions.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
@@ -2337,6 +2457,23 @@ searchTop?: boolean;
 <b>Default Value:</b>
 
 false
+
+<br>
+
+<a name="editoroptions.selection"></a>
+
+#### EditorOptions.selection property
+
+The initial editor text selection
+
+<b>Signature:</b>
+
+```typescript
+selection?: EditorSelection;
+```
+<b>Default Value:</b>
+
+undefined
 
 <br>
 

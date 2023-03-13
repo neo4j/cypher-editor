@@ -16,7 +16,9 @@ import {
   eventLog,
   getChangedScrollInfo,
   eventTypes,
-  createEventTypeFilterMap
+  createEventTypeFilterMap,
+  selectionGrowing,
+  selectionZigzag
 } from "demo-base";
 
 const driver = createDriver();
@@ -70,6 +72,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const [positionPosition, setPositionPosition] = useState("0");
   const [positionLine, setPositionLine] = useState("1");
   const [positionColumn, setPositionColumn] = useState("1");
+  const [selection, setSelection] = useState(initialOptions.selection);
   const [readOnly, setReadOnly] = useState(initialOptions.readOnly);
   const [readOnlyCursor, setReadOnlyCursor] = useState(
     initialOptions.readOnlyCursor
@@ -212,6 +215,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
     addEventLog("editorCreated", "");
     setEditor(editor);
     setPosition(editor.getPosition());
+    setSelection(editor.getSelection());
     setLineCount(editor.getLineCount());
     updateGoButtons({ cypherEditor: editor });
   };
@@ -224,6 +228,11 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const onPositionChanged = (positionObject) => {
     addEventLog("positionChanged", positionObject);
     setPosition(positionObject);
+  };
+
+  const onSelectionChanged = (selection) => {
+    addEventLog("selectionChanged", selection);
+    setSelection(selection);
   };
 
   const onScrollChanged = (scrollInfo) => {
@@ -571,6 +580,16 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const setSearchTopOff = () => {
     addCommandLog("setSearchTop", false);
     setSearchTop(false);
+  };
+
+  const setSelectionGrowing = () => {
+    addCommandLog("setSelection:", selectionGrowing);
+    setSelection(selectionGrowing);
+  };
+
+  const setSelectionZigzag = () => {
+    addCommandLog("setSelection:", selectionZigzag);
+    setSelection(selectionZigzag);
   };
 
   const setTabKeyOff = () => {
@@ -1036,8 +1055,8 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
-        <div className="setting setting-long">
-          <div className="setting-label">
+        <div className="setting setting-long position">
+          <div className="setting-label position-start-end">
             Position
             <button title="start" onClick={setPositionToStart}>
               start
@@ -1046,7 +1065,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               end
             </button>
           </div>
-          <div className="setting-values">
+          <div className="setting-values position-position">
             <label htmlFor="position">position</label>
             <input
               name="position"
@@ -1061,7 +1080,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
               Go
             </button>
           </div>
-          <div className="setting-values">
+          <div className="setting-values position-line-column">
             <label htmlFor="line">line</label>
             <input
               className="short-input"
@@ -1241,6 +1260,28 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
           </div>
         </div>
 
+        <div className="setting setting-long selection">
+          <div className="setting-label">Selection</div>
+          <div className="setting-values">
+            <button
+              className={
+                selection === selectionZigzag ? "setting-active" : undefined
+              }
+              onClick={setSelectionZigzag}
+            >
+              Zigzag
+            </button>
+            <button
+              className={
+                selection === selectionGrowing ? "setting-active" : undefined
+              }
+              onClick={setSelectionGrowing}
+            >
+              Growing
+            </button>
+          </div>
+        </div>
+
         <div className="setting setting-long">
           <div className="setting-label">Tab Key Enabled</div>
           <div className="setting-values">
@@ -1340,6 +1381,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             onEditorCreated={onEditorCreated}
             onFocusChanged={onFocusChanged}
             onPositionChanged={onPositionChanged}
+            onSelectionChanged={onSelectionChanged}
             onScrollChanged={onScrollChanged}
             onSearchChanged={onSearchChanged}
             onValueChanged={onValueChanged}
@@ -1371,6 +1413,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             searchOpen={searchOpen}
             searchText={searchText}
             searchTop={searchTop}
+            selection={selection}
             tabKey={tabKey}
             theme={theme}
             tooltipAbsolute={tooltipAbsolute}

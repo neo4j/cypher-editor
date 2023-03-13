@@ -12,7 +12,12 @@ import {
   closeSearchPanel,
   SearchQuery
 } from "@codemirror/search";
-import { EditorState, Compartment } from "@codemirror/state";
+import {
+  EditorState,
+  Compartment,
+  EditorSelection,
+  SelectionRange
+} from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
 import {
@@ -29,6 +34,7 @@ import {
   getStateLength,
   getStatePosition,
   getStatePositionForAny,
+  getStateSelection,
   getStateSearchOpen,
   getStateSearchSpec,
   getStateSearchMatches,
@@ -210,6 +216,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const {
     autofocus,
     position,
+    selection,
     parseOnSetValue,
     value,
     preExtensions,
@@ -242,6 +249,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   } = combinedOptions;
   let editorSupport = null;
   let lastPosition = null;
+  let lastSelection = null;
   let searchInitializing = false;
   let detectedThemeDark = theme === "auto" ? detectThemeDark() : null;
   let pressedKey = null;
@@ -277,6 +285,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     on: onPositionChanged,
     off: offPositionChanged,
     fire: firePositionChanged
+  } = createEventHandlers();
+
+  const {
+    on: onSelectionChanged,
+    off: offSelectionChanged,
+    fire: fireSelectionChanged
   } = createEventHandlers();
 
   const {
@@ -354,10 +368,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
         }
       });
 
-      if (
-        changedText &&
-        autocompleteTriggerStrings.includes(changedText)
-      ) {
+      if (changedText && autocompleteTriggerStrings.includes(changedText)) {
         deferredAutocomplete = true;
       }
     }
@@ -372,6 +383,11 @@ export function createCypherEditor(parentDOMElement, options = {}) {
   const handlePositionChanged = (positionObject) => {
     lastPosition = (positionObject || { position: null }).position;
     firePositionChanged(positionOldToNew(positionObject));
+  };
+
+  const handleSelectionChanged = (selection) => {
+    lastSelection = selection;
+    fireSelectionChanged(selection);
   };
 
   const handleAutocompleteChanged = (newAutocompleteOpen, options, option) => {
@@ -437,9 +453,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     if (positionChanged) {
       handlePositionChanged(getStatePosition(v.state));
     }
-    if (selectionChanged && deferredAutocomplete) {
-      deferredAutocomplete = false;
-      showAutocomplete();
+    // if (selectionChanged && deferredAutocomplete) {
+    //   deferredAutocomplete = false;
+    //   showAutocomplete();
+    // }
+    if (selectionChanged) {
+      handleSelectionChanged(getStateSelection(v.state));
     }
 
     if (autocompleteChanged) {
@@ -554,6 +573,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     if (positionObject) {
       const { position } = positionObject;
       if (position !== lastPosition) {
+        lastPosition = position;
         editor.dispatch(
           editor.state.update({
             scrollIntoView,
@@ -561,6 +581,39 @@ export function createCypherEditor(parentDOMElement, options = {}) {
           })
         );
       }
+    }
+  };
+
+  const setSelection = (selection, scrollIntoView = true) => {
+    const ranges = [
+      SelectionRange.fromJSON({
+        from: 0,
+        to: 2,
+        anchor: 0,
+        head: 2
+      }),
+      SelectionRange.fromJSON({
+        from: 3,
+        to: 4,
+        anchor: 3,
+        head: 4
+      }),
+      SelectionRange.fromJSON({
+        from: 6,
+        to: 8,
+        anchor: 6,
+        head: 8
+      })
+    ];
+    let newSelection = EditorSelection.create(ranges, 2);
+    if (selection && selection !== lastSelection) {
+      lastSelection = selection;
+      editor.dispatch(
+        editor.state.update({
+          scrollIntoView,
+          selection
+        })
+      );
     }
   };
 
@@ -590,9 +643,12 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   if (position !== undefined) {
     setPosition(position);
+  } else if (selection !== undefined) {
+    setSelection(selection);
   }
   lastPosition = (getStatePosition(editor.state) || { position: null })
     .position;
+  lastSelection = getStateSelection(editor.state) || null;
   if (cypherLanguage && schema !== undefined) {
     editorSupport.setSchema(schema);
   }
@@ -819,6 +875,10 @@ export function createCypherEditor(parentDOMElement, options = {}) {
 
   const getPosition = () => {
     return positionOldToNew(getStatePosition(editor.state));
+  };
+
+  const getSelection = () => {
+    return getStateSelection(editor.state);
   };
 
   const getLineCount = () => {
@@ -1061,6 +1121,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     getLineCount,
     getPosition,
     getPositionForValue,
+    getSelection,
     selectAutocompleteOption,
     setAutocomplete,
     setAutocompleteCloseOnBlur,
@@ -1086,6 +1147,7 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     setSearchOpen,
     setSearchText,
     setSearchTop,
+    setSelection,
     setTabKey,
     setTheme,
     setTooltipAbsolute,
@@ -1107,6 +1169,8 @@ export function createCypherEditor(parentDOMElement, options = {}) {
     offScrollChanged,
     onSearchChanged,
     offSearchChanged,
+    onSelectionChanged,
+    offSelectionChanged,
     onValueChanged,
     offValueChanged,
 

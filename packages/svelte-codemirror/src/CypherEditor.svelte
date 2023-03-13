@@ -79,6 +79,9 @@
   export let searchTop = defaultOptions.searchTop;
   $: updateOption({ searchTop });
 
+  export let selection = defaultOptions.selection;
+  $: updateOption({ selection });
+
   export let tabKey = defaultOptions.tabKey;
   $: updateOption({ tabKey });
 
@@ -107,6 +110,7 @@
   export let onScrollChanged = undefined;
   export let onSearchChanged = undefined;
   export let onPositionChanged = undefined;
+  export let onSelectionChanged = undefined;
   export let onEditorCreated = undefined;
   export let onAutocompleteChanged = undefined;
   export let onLineNumberClick = undefined;
@@ -118,6 +122,7 @@
   let cypherEditor;
   let lastValue = null;
   let lastPosition = null;
+  let lastSelection = null;
 
   $: editorClassName =
     (className ? className + " " : "") +
@@ -144,6 +149,13 @@
         return;
       } else {
         lastPosition = position;
+      }
+    }
+    if (key === "selection") {
+      if (prop[key] === lastSelection) {
+        return;
+      } else {
+        lastSelection = prop[key];
       }
     }
 
@@ -178,6 +190,11 @@
   const positionChanged = (positionObject) => {
     lastPosition = (positionObject || { position: null }).position;
     onPositionChanged && onPositionChanged(positionObject);
+  };
+
+  const selectionChanged = (selection) => {
+    lastSelection = selection || null;
+    onSelectionChanged && onSelectionChanged(selection);
   };
 
   const autocompleteChanged = (autocompleteOpen, options, option) => {
@@ -241,6 +258,7 @@
     cypherEditor.onFocusChanged(focusChanged);
     cypherEditor.onScrollChanged(scrollChanged);
     cypherEditor.onPositionChanged(positionChanged);
+    cypherEditor.onSelectionChanged(selectionChanged);
     cypherEditor.onAutocompleteChanged(autocompleteChanged);
     cypherEditor.onSearchChanged(searchChanged);
     cypherEditor.onLineNumberClick(lineNumberClick);
@@ -256,6 +274,7 @@
       cypherEditor.offFocusChanged(focusChanged);
       cypherEditor.offScrollChanged(scrollChanged);
       cypherEditor.offPositionChanged(positionChanged);
+      cypherEditor.offSelectionChanged(selectionChanged);
       cypherEditor.offAutocompleteChanged(autocompleteChanged);
       cypherEditor.offSearchChanged(searchChanged);
       cypherEditor.offLineNumberClick(lineNumberClick);
