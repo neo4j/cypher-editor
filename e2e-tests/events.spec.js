@@ -202,7 +202,7 @@ test.describe("Commands and Editor events", () => {
     );
 
     expect(selectionLogsA).toEqual([
-      `command setSelection: {"ranges":[{"anchor":1,"head":2},{"anchor":3,"head":5},{"anchor":6,"head":9}],"main":2}`
+      `command setSelection {"ranges":[{"anchor":1,"head":2},{"anchor":3,"head":5},{"anchor":6,"head":9}],"main":2}`
     ]);
     expect(selectionEventsA).toEqual([
       `event selectionChanged {"ranges":[{"anchor":1,"head":2},{"anchor":3,"head":5},{"anchor":6,"head":9}],"main":2}`
@@ -230,7 +230,7 @@ test.describe("Commands and Editor events", () => {
     );
 
     expect(selectionLogsB).toEqual([
-      `command setSelection: {"ranges":[{"anchor":0,"head":2},{"anchor":6,"head":4},{"anchor":8,"head":10},{"anchor":14,"head":12}],"main":1}`
+      `command setSelection {"ranges":[{"anchor":0,"head":2},{"anchor":6,"head":4},{"anchor":8,"head":10},{"anchor":14,"head":12}],"main":1}`
     ]);
     expect(selectionEventsB).toEqual([
       `event selectionChanged {"ranges":[{"anchor":0,"head":2},{"anchor":6,"head":4},{"anchor":8,"head":10},{"anchor":14,"head":12}],"main":1}`

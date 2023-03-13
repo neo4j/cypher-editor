@@ -305,7 +305,6 @@
   const setPositionTo = (newPosition) => {
     logs = logs.concat(commandLog("setPosition", newPosition));
     position = newPosition;
-    cypherEditor && cypherEditor.setPosition(position);
   };
 
   const setPositionToStart = () => {

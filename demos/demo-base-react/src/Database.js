@@ -474,7 +474,6 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const setPositionTo = (position) => {
     addCommandLog("setPosition", position);
     setPosition(position);
-    editor && editor.focus();
   };
 
   const setPositionToStart = () => {
@@ -583,12 +582,12 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   };
 
   const setSelectionGrowing = () => {
-    addCommandLog("setSelection:", selectionGrowing);
+    addCommandLog("setSelection", selectionGrowing);
     setSelection(selectionGrowing);
   };
 
   const setSelectionZigzag = () => {
-    addCommandLog("setSelection:", selectionZigzag);
+    addCommandLog("setSelection", selectionZigzag);
     setSelection(selectionZigzag);
   };
 
