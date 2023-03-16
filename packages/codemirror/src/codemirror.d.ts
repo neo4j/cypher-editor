@@ -10,7 +10,7 @@
  * @packageDocumentation
  */
 
-import type { ChangeSet, Extension } from "@codemirror/state";
+import type { ChangeSet, Extension, EditorSelection } from "@codemirror/state";
 import type { EditorView } from "@codemirror/view";
 
 import type {
@@ -193,6 +193,16 @@ export interface PositionChangedListener {
 }
 
 /**
+ * Listener for editor text selection changes
+ */
+export interface SelectionChangedListener {
+  /**
+   * @param selection - the new editor text selection
+   */
+  (selection: EditorSelection): void;
+}
+
+/**
  * Listener for editor focus changes
  */
 export interface FocusChangedListener {
@@ -288,6 +298,10 @@ export interface EditorApi {
    */
   getPositionForValue(positionValue: PositionAny): PositionObject | null;
   /**
+   * Get the current editor text selection
+   */
+  getSelection(): EditorSelection;
+  /**
    * Select the autocomplete option with the given index, causing it to be applied to the editor value
    */
   selectAutocompleteOption(autocompleteOptionIndex: number): void;
@@ -355,6 +369,9 @@ export interface EditorApi {
   setPlaceholder(placeholder?: string | undefined): void;
   /**
    * Set the current editor cursor position
+   *
+   * @param position - The new cursor position (position, { line, column }, { position, line, column })
+   * @param scrollIntoView - Whether to scroll the editor to the new cursor position (defaults to true)
    */
   setPosition(position?: PositionAny, scrollIntoView?: boolean): void;
   /**
@@ -389,6 +406,13 @@ export interface EditorApi {
    * Set whether search is appears at the top of the editor window
    */
   setSearchTop(searchTop?: boolean): void;
+  /**
+   * Set the text selection for the editor
+   *
+   * @param selection - The new editor selection
+   * @param scrollIntoView - Whether to scroll the editor to the new selection (defaults to true)
+   */
+  setSelection(selection?: EditorSelection, scrollIntoView?: boolean): void;
   /**
    * Set whether the tab key is enabled
    */
@@ -489,6 +513,16 @@ export interface EditorApi {
    * Remove an event listener for editor search changes
    */
   offSearchChanged(listener: SearchChangedListener): void;
+  /**
+   * Add an event listener for editor text selection changes
+   *
+   * @returns A cleanup function that when called removes the listener
+   */
+  onSelectionChanged(listener: SelectionChangedListener): () => void;
+  /**
+   * Remove an event listener for editor text selection changes
+   */
+  offSelectionChanged(listener: SelectionChangedListener): void;
   /**
    * Add an event listener for editor value changes
    *
@@ -684,6 +718,12 @@ export interface EditorOptions {
    * @defaultValue false
    */
   searchTop?: boolean;
+  /**
+   * The initial editor text selection
+   *
+   * @defaultValue undefined
+   */
+  selection?: EditorSelection;
   /**
    * Whether the tab key is enabled
    *

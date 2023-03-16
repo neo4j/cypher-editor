@@ -1,3 +1,4 @@
+import { EditorSelection, SelectionRange } from "@codemirror/state";
 import neo4j from "neo4j-driver";
 import {
   THEME_LIGHT,
@@ -122,6 +123,7 @@ export const initialOptions = {
   searchOpen: false,
   searchText: "",
   searchTop: false,
+  selection: undefined,
   tabKey: true,
   theme: defaultTheme,
   tooltipAbsolute: true,
@@ -277,6 +279,58 @@ export const getChangedScrollInfo = (oldScrollInfo, newScrollInfo) => {
   }
 };
 
+const rangesGrowing = [
+  SelectionRange.fromJSON({
+    from: 1,
+    to: 2,
+    anchor: 1,
+    head: 2
+  }),
+  SelectionRange.fromJSON({
+    from: 3,
+    to: 5,
+    anchor: 3,
+    head: 5
+  }),
+  SelectionRange.fromJSON({
+    from: 6,
+    to: 9,
+    anchor: 6,
+    head: 9
+  })
+];
+
+const rangesZigzag = [
+  SelectionRange.fromJSON({
+    from: 0,
+    to: 2,
+    anchor: 0,
+    head: 2
+  }),
+  SelectionRange.fromJSON({
+    from: 4,
+    to: 6,
+    anchor: 6,
+    head: 4
+  }),
+  SelectionRange.fromJSON({
+    from: 8,
+    to: 10,
+    anchor: 8,
+    head: 10
+  }),
+  SelectionRange.fromJSON({
+    from: 12,
+    to: 14,
+    anchor: 14,
+    head: 12
+  })
+];
+
+export const selectionGrowing = EditorSelection.create(rangesGrowing, 2);
+
+export const selectionZigzag = EditorSelection.create(rangesZigzag, 1);
+
 export const eventTypes = [
   "autocompleteChanged",
   "editorCreated",
@@ -285,6 +339,7 @@ export const eventTypes = [
   "keyDown",
   "keyUp",
   "positionChanged",
+  "selectionChanged",
   "scrollChanged",
   "valueChanged",
   "searchChanged"

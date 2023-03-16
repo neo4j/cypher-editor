@@ -106,6 +106,8 @@ export const getStatePositionForAny = (state, positionValue) => {
   return position;
 };
 
+export const getStateSelection = (state) => state.selection;
+
 export const getStateHasSelection = (state) =>
   state.selection.ranges.some((r) => !r.empty);
 

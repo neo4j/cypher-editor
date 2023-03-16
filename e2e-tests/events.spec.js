@@ -8,6 +8,32 @@ async function getLogEntry(page, i) {
   }
   return arr[arr.length + i];
 }
+
+const COMMAND_PREFIX = "command ";
+const EVENT_PREFIX = "event ";
+
+async function getCommandLogEntries(page, filter) {
+  return getLogEntries(
+    page,
+    (line) =>
+      line.startsWith(COMMAND_PREFIX) &&
+      filter(line.substring(COMMAND_PREFIX.length))
+  );
+}
+async function getEventLogEntries(page, filter) {
+  return getLogEntries(
+    page,
+    (line) =>
+      line.startsWith(EVENT_PREFIX) &&
+      filter(line.substring(EVENT_PREFIX.length))
+  );
+}
+async function getLogEntries(page, filter) {
+  const str = await getLogElement(page).inputValue();
+  const lines = str.split("\n");
+  return lines.filter(filter);
+}
+
 function getLogElement(page) {
   return page.locator("#log");
 }
@@ -151,6 +177,125 @@ test.describe("Commands and Editor events", () => {
 
     // Check event side
     expect(lastEntries).toContain("event valueChanged 0");
+  });
+
+  test("selection and position", async ({ page }) => {
+    const longCypherBtn = page.locator(".cypher >> text=/long/i");
+    const clearLogsBtn = page.locator(".logs-header >> text=/clear/i");
+    await longCypherBtn.click();
+
+    await clearLogsBtn.click();
+    const growingSelectionBtn = page.locator(".selection >> text=/growing/i");
+    await growingSelectionBtn.click();
+
+    const selectionLogsA = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setSelection")
+    );
+    const selectionEventsA = await getEventLogEntries(page, (line) =>
+      line.startsWith("selectionChanged")
+    );
+    const positionLogsA = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setPosition")
+    );
+    const positionEventsA = await getEventLogEntries(page, (line) =>
+      line.startsWith("positionChanged")
+    );
+
+    expect(selectionLogsA).toEqual([
+      `command setSelection {"ranges":[{"anchor":1,"head":2},{"anchor":3,"head":5},{"anchor":6,"head":9}],"main":2}`
+    ]);
+    expect(selectionEventsA).toEqual([
+      `event selectionChanged {"ranges":[{"anchor":1,"head":2},{"anchor":3,"head":5},{"anchor":6,"head":9}],"main":2}`
+    ]);
+    expect(positionLogsA).toEqual([]);
+    expect(positionEventsA).toEqual([
+      `event positionChanged {"line":1,"column":10,"position":9}`
+    ]);
+
+    await clearLogsBtn.click();
+    const zigzagSelectionBtn = page.locator(".selection >> text=/zigzag/i");
+    await zigzagSelectionBtn.click();
+
+    const selectionLogsB = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setSelection")
+    );
+    const selectionEventsB = await getEventLogEntries(page, (line) =>
+      line.startsWith("selectionChanged")
+    );
+    const positionLogsB = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setPosition")
+    );
+    const positionEventsB = await getEventLogEntries(page, (line) =>
+      line.startsWith("positionChanged")
+    );
+
+    expect(selectionLogsB).toEqual([
+      `command setSelection {"ranges":[{"anchor":0,"head":2},{"anchor":6,"head":4},{"anchor":8,"head":10},{"anchor":14,"head":12}],"main":1}`
+    ]);
+    expect(selectionEventsB).toEqual([
+      `event selectionChanged {"ranges":[{"anchor":0,"head":2},{"anchor":6,"head":4},{"anchor":8,"head":10},{"anchor":14,"head":12}],"main":1}`
+    ]);
+    expect(positionLogsB).toEqual([]);
+    expect(positionEventsB).toEqual([
+      `event positionChanged {"line":1,"column":5,"position":4}`
+    ]);
+
+    await clearLogsBtn.click();
+    const setPositionStartBtn = page.locator(
+      ".position-start-end >> text=/start/i "
+    );
+    await setPositionStartBtn.click();
+
+    const selectionLogsC = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setSelection")
+    );
+    const selectionEventsC = await getEventLogEntries(page, (line) =>
+      line.startsWith("selectionChanged")
+    );
+    const positionLogsC = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setPosition")
+    );
+    const positionEventsC = await getEventLogEntries(page, (line) =>
+      line.startsWith("positionChanged")
+    );
+
+    expect(selectionLogsC).toEqual([]);
+    expect(selectionEventsC).toEqual([
+      `event selectionChanged {"ranges":[{"anchor":0,"head":0}],"main":0}`
+    ]);
+    expect(positionLogsC).toEqual([`command setPosition 0`]);
+    expect(positionEventsC).toEqual([
+      `event positionChanged {"line":1,"column":1,"position":0}`
+    ]);
+
+    await clearLogsBtn.click();
+    await page.fill(".position-position input", "55");
+    const setPositionPositionBtn = page.locator(
+      ".position-position >> text=/go/i "
+    );
+    await setPositionPositionBtn.click();
+
+    const selectionLogsD = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setSelection")
+    );
+    const selectionEventsD = await getEventLogEntries(page, (line) =>
+      line.startsWith("selectionChanged")
+    );
+    const positionLogsD = await getCommandLogEntries(page, (line) =>
+      line.startsWith("setPosition")
+    );
+    const positionEventsD = await getEventLogEntries(page, (line) =>
+      line.startsWith("positionChanged")
+    );
+
+    expect(selectionLogsD).toEqual([]);
+    expect(selectionEventsD).toEqual([
+      `event selectionChanged {"ranges":[{"anchor":55,"head":55}],"main":0}`
+    ]);
+    expect(positionLogsD).toEqual([`command setPosition 55`]);
+    expect(positionEventsD).toEqual([
+      `event positionChanged {"line":2,"column":26,"position":55}`
+    ]);
   });
 
   test.describe.skip("Paste events", () => {

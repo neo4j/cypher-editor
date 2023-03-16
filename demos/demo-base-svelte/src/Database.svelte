@@ -17,7 +17,9 @@
     eventLog,
     getChangedScrollInfo,
     eventTypes,
-    createEventTypeFilterMap
+    createEventTypeFilterMap,
+    selectionGrowing,
+    selectionZigzag
   } from "demo-base";
 
   export let codemirrorVersion = undefined;
@@ -56,6 +58,7 @@
   let searchOpen = initialOptions.searchOpen;
   let searchText = initialOptions.searchText;
   let searchTop = initialOptions.searchTop;
+  let selection = initialOptions.selection;
   let tabKey = initialOptions.tabKey;
   let theme = initialOptions.theme;
   let tooltipAbsolute = initialOptions.tooltipAbsolute;
@@ -128,6 +131,7 @@
     logs = logs.concat(eventLog("editorCreated", ""));
     cypherEditor = editor;
     position = editor.getPosition();
+    selection = editor.getSelection();
     lineCount = cypherEditor.getLineCount();
     updateGoButtons();
   };
@@ -140,6 +144,11 @@
   const onPositionChanged = (positionObject) => {
     logs = logs.concat(eventLog("positionChanged", positionObject));
     position = positionObject;
+  };
+
+  const onSelectionChanged = (newSelection) => {
+    logs = logs.concat(eventLog("selectionChanged", newSelection));
+    selection = newSelection;
   };
 
   const onScrollChanged = (scrollInfo) => {
@@ -296,7 +305,6 @@
   const setPositionTo = (newPosition) => {
     logs = logs.concat(commandLog("setPosition", newPosition));
     position = newPosition;
-    cypherEditor && cypherEditor.setPosition(position);
   };
 
   const setPositionToStart = () => {
@@ -317,6 +325,16 @@
     if (isNumberString(positionLine) && isNumberString(positionColumn)) {
       setPositionTo({ line: +positionLine, column: +positionColumn });
     }
+  };
+
+  const setSelectionGrowing = () => {
+    logs = logs.concat(commandLog("setSelection", selectionGrowing));
+    selection = selectionGrowing;
+  };
+
+  const setSelectionZigzag = () => {
+    logs = logs.concat(commandLog("setSelection", selectionZigzag));
+    selection = selectionZigzag;
   };
 
   const setValueLong = () => {
@@ -656,13 +674,13 @@
       </div>
     </div>
 
-    <div class="setting setting-long">
-      <div class="setting-label">
+    <div class="setting setting-long position">
+      <div class="setting-label position-start-end">
         Position
         <button title="start" on:click={setPositionToStart}>start</button>
         <button title="end" on:click={setPositionToEnd}>end</button>
       </div>
-      <div class="setting-values">
+      <div class="setting-values position-position">
         <label for="position">position</label>
         <input
           name="position"
@@ -675,7 +693,7 @@
           on:click={setPositionToAbsolute}>Go</button
         >
       </div>
-      <div class="setting-values">
+      <div class="setting-values position-line-column">
         <label for="line">line</label>
         <input
           class="short-input"
@@ -821,6 +839,24 @@
       </div>
     </div>
 
+    <div class="setting setting-long selection">
+      <div class="setting-label">Selection</div>
+      <div class="setting-values">
+        <button
+          class={selection === selectionZigzag ? "setting-active" : undefined}
+          on:click={setSelectionZigzag}
+        >
+          Zigzag
+        </button>
+        <button
+          class={selection === selectionGrowing ? "setting-active" : undefined}
+          on:click={setSelectionGrowing}
+        >
+          Growing
+        </button>
+      </div>
+    </div>
+
     <div class="setting setting-long">
       <div class="setting-label">Tab Key Enabled</div>
       <div class="setting-values">
@@ -899,6 +935,7 @@
         {onPositionChanged}
         {onScrollChanged}
         {onSearchChanged}
+        {onSelectionChanged}
         {onValueChanged}
         {onLineNumberClick}
         {onKeyDown}
@@ -918,6 +955,7 @@
         {lineWrapping}
         {lint}
         {placeholder}
+        {position}
         {readOnly}
         {readOnlyCursor}
         {schema}
@@ -926,6 +964,7 @@
         {searchOpen}
         {searchText}
         {searchTop}
+        {selection}
         {tabKey}
         {theme}
         {tooltipAbsolute}
