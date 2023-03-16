@@ -1,5 +1,13 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.3
+
+### Patch Changes
+
+- f14489b: Add selection & onSelectionChanged options/props
+- Updated dependencies [f14489b]
+  - @neo4j-cypher/codemirror@1.0.2
+
 ## 1.0.2
 
 ### Patch Changes
