@@ -28,7 +28,7 @@ module.exports = {
       "babel-plugin-replace-imports",
       {
         test: /^antlr4$/,
-        replacer: "@neo4j-cypher/antlr4-browser"
+        replacer: "antlr4-js-exports"
       }
     ]
   ]

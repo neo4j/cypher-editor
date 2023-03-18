@@ -1,4 +1,4 @@
-import antlr4 from "@neo4j-cypher/antlr4-browser";
+import antlr4 from "antlr4-js-exports";
 
 export class ErrorListener extends antlr4.error.ErrorListener {
   errors = [];

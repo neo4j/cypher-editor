@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "@neo4j-cypher/antlr4-browser": "1.0.0"
+    "antlr4-js-exports": "4.12.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
