@@ -241,6 +241,9 @@ const themeOverrides = {
       outline: "none"
     }
   },
+  ".cm-content": {
+    fontFamily: "Fira Code, Menlo, Monaco, Lucida Console, monospace"
+  },
   ".cm-cursor .cm-cursor-wide": {
     borderLeft: "0.67em solid rgba(147, 161, 161, 0.37)"
   }
