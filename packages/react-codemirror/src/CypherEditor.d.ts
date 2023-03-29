@@ -238,7 +238,10 @@ export interface CypherEditorProps {
    * A css class name to be added to the root editor dom element when it is focused
    */
   focusedClassName?: string;
-
+  /**
+   * a style prop to be applied to the root editor dom element
+   */
+  style?: React.CSSProperties;
   /**
    * A listener for when the editor api gets created
    */

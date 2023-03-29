@@ -28,6 +28,11 @@ const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
 const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
   const title = getTitle({ codemirrorVersion, framework, bundler });
 
+  const [styled, setStyled] = useState(false);
+  const style = styled
+    ? { width: "200px", minWidth: "200px", maxWidth: "200px" }
+    : undefined;
+
   const [autocomplete, setAutocomplete] = useState(initialOptions.autocomplete);
   const [autocompleteCloseOnBlur, setAutocompleteCloseOnBlur] = useState(
     initialOptions.autocompleteCloseOnBlur
@@ -645,6 +650,14 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
       addCommandLog("setValue", "0 (clear)");
       updateValue("");
     }
+  };
+
+  const setStyledOn = () => {
+    setStyled(true);
+  };
+
+  const setStyledOff = () => {
+    setStyled(false);
   };
 
   const positionPositionChanged = (e) => {
@@ -1368,6 +1381,24 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             </button>
           </div>
         </div>
+
+        <div className="setting style">
+          <div className="setting-label">Style</div>
+          <div className="setting-values">
+            <button
+              className={styled ? "setting-active" : undefined}
+              onClick={setStyledOn}
+            >
+              Styled
+            </button>
+            <button
+              className={!styled ? "setting-active" : undefined}
+              onClick={setStyledOff}
+            >
+              Unstyled
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="right">
@@ -1419,6 +1450,7 @@ const Database = ({ CypherEditor, codemirrorVersion, framework, bundler }) => {
             parseOnSetValue={parseOnSetValue}
             value={cypher}
             className="database-editor"
+            style={style}
           />
         </div>
         <div className="card">

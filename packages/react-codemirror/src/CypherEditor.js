@@ -249,13 +249,19 @@ class CypherEditor extends Component {
   }
 
   render() {
-    const { className, focusedClassName } = this.props;
+    const { className, focusedClassName, style } = this.props;
     const { focused } = this.state;
     const editorClassName =
       (className ? className + " " : "") +
       (focused && focusedClassName ? focusedClassName : "");
 
-    return <div className={editorClassName} ref={this.setEditorRef}></div>;
+    return (
+      <div
+        className={editorClassName}
+        style={style}
+        ref={this.setEditorRef}
+      ></div>
+    );
   }
 }
 

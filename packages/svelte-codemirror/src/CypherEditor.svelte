@@ -102,6 +102,7 @@
 
   export let className = "";
   export let focusedClassName = "";
+  export let style = undefined;
   export let autofocus = defaultOptions.autofocus;
   export let parseOnSetValue = defaultOptions.parseOnSetValue;
 
@@ -286,4 +287,4 @@
   });
 </script>
 
-<div class={editorClassName} bind:this={cypherEditorRef} />
+<div class={editorClassName} {style} bind:this={cypherEditorRef} />
