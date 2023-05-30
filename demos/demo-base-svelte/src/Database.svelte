@@ -33,6 +33,11 @@
 
   const isNumberString = (v) => v === "0" || /^([1-9])([0-9])*$/.test(v);
 
+  let styled = false;
+  $: style = styled
+    ? "max-width: 200px; min-width: 200px; width: 200px;"
+    : undefined;
+
   let autocomplete = initialOptions.autocomplete;
   let autocompleteCloseOnBlur = initialOptions.autocompleteCloseOnBlur;
   let autocompleteTriggerStrings = initialOptions.autocompleteTriggerStrings;
@@ -357,6 +362,13 @@
       logs = appendLog(commandLog("setValue", "0 (clear)"));
       updateValue("");
     }
+  };
+
+  const setStyledOn = () => {
+    styled = true;
+  };
+  const setStyledOff = () => {
+    styled = false;
   };
 
   const positionPositionChanged = (e) => {
@@ -920,6 +932,20 @@
         >
       </div>
     </div>
+
+    <div class="setting style">
+      <div class="setting-label">Style</div>
+      <div class="setting-values">
+        <button
+          class={styled ? "setting-active" : undefined}
+          on:click={setStyledOn}>Styled</button
+        >
+        <button
+          class={!styled ? "setting-active" : undefined}
+          on:click={setStyledOff}>Unstyled</button
+        >
+      </div>
+    </div>
   </div>
 
   <div class="right">
@@ -972,6 +998,7 @@
         {autofocus}
         {parseOnSetValue}
         className="database-editor"
+        {style}
       />
     </div>
     <div class="card">

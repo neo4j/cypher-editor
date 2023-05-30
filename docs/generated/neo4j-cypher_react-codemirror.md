@@ -121,6 +121,7 @@ export interface CypherEditorProps
 |  [searchText?](#cyphereditorprops.searchtext) | string | "" | <i>(Optional)</i> The search text for the search panel |
 |  [searchTop?](#cyphereditorprops.searchtop) | boolean | false | <i>(Optional)</i> Whether search is shown at the top of the editor window |
 |  [selection?](#cyphereditorprops.selection) | EditorSelection | undefined | <i>(Optional)</i> The editor text selection |
+|  [style?](#cyphereditorprops.style) | React.CSSProperties |  | <i>(Optional)</i> a style prop to be applied to the root editor dom element |
 |  [tabKey?](#cyphereditorprops.tabkey) | boolean | true | <i>(Optional)</i> Whether the tab key is enabled |
 |  [theme?](#cyphereditorprops.theme) | [Theme](./neo4j-cypher_codemirror.md#theme) | "light" | <i>(Optional)</i> Whether to use the light or dark theme for the editor |
 |  [tooltipAbsolute?](#cyphereditorprops.tooltipabsolute) | boolean | true | <i>(Optional)</i> Whether or not the tooltips use simple absolute position styling (vs trying to stay within bounds) |
@@ -841,6 +842,20 @@ selection?: EditorSelection;
 <b>Default Value:</b>
 
 undefined
+
+<br>
+
+<a name="cyphereditorprops.style"></a>
+
+#### CypherEditorProps.style property
+
+a style prop to be applied to the root editor dom element
+
+<b>Signature:</b>
+
+```typescript
+style?: React.CSSProperties;
+```
 
 <br>
 
