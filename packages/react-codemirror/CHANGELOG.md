@@ -1,5 +1,12 @@
 # @neo4j-cypher/react-codemirror
 
+## 1.0.3
+
+### Patch Changes
+
+- eaf7435: add style prop
+- 44d7f5f: add style prop
+
 ## 1.0.2
 
 ### Patch Changes

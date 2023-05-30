@@ -1,5 +1,12 @@
 # @neo4j-cypher/svelte-codemirror
 
+## 1.0.4
+
+### Patch Changes
+
+- eaf7435: add style prop
+- 44d7f5f: add style prop
+
 ## 1.0.3
 
 ### Patch Changes
