@@ -1,7 +1,7 @@
 {
   "name": "demo-codemirror-6-vite-svelte",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "start": "vite --port 5175",
@@ -23,7 +23,7 @@
     "@codemirror/view": "^6.8.1",
     "@lezer/highlight": "^1.1.3",
     "@neo4j-cypher/codemirror": "1.0.2",
-    "@neo4j-cypher/svelte-codemirror": "1.0.3",
+    "@neo4j-cypher/svelte-codemirror": "1.0.4",
     "demo-base": "1.0.0",
     "demo-base-svelte": "1.0.0",
     "neo4j-driver": "^5.5.0"
