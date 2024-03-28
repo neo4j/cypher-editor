@@ -12,7 +12,8 @@
   "exports": {
     ".": {
       "import": "./es/editor-support.js",
-      "require": "./lib/editor-support.js"
+      "require": "./lib/editor-support.js",
+      "types": "./src/editor-support.d.ts"
     },
     "./src/editor-support.d.ts": {
       "import": "./src/editor-support.d.ts"
