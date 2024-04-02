@@ -1,5 +1,12 @@
 # @neo4j-cypher/codemirror
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [bdae809]
+  - @neo4j-cypher/editor-support@1.0.2
+
 ## 1.0.2
 
 ### Patch Changes

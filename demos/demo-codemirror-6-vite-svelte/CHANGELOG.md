@@ -1,5 +1,12 @@
 # demo-codemirror-6-vite-svelte
 
+## 1.0.5
+
+### Patch Changes
+
+- @neo4j-cypher/codemirror@1.0.3
+- @neo4j-cypher/svelte-codemirror@1.0.5
+
 ## 1.0.4
 
 ### Patch Changes
