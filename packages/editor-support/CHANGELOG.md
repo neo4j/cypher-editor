@@ -1,5 +1,11 @@
 # @neo4j-cypher/editor-support
 
+## 1.0.2
+
+### Patch Changes
+
+- bdae809: Update `exports` field to fix issue with TypeScript `Bundler` module resolution mode
+
 ## 1.0.1
 
 ### Patch Changes
